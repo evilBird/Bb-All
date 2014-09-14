@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BSDInlet.h"
+#import "BSDPortView.h"
 
 @interface BSDPortConnectionDescription : NSObject
 
@@ -14,5 +16,6 @@
 @property (nonatomic,strong)NSString *senderPortName;
 @property (nonatomic,strong)NSString *receiverParentId;
 @property (nonatomic,strong)NSString *receiverPortName;
+@property (nonatomic,strong)BSDPortView *receiverPortView;
 
 @end

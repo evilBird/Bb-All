@@ -17,7 +17,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"multiply";
+    self.name = @"*";
     NSNumber *initFactor = arguments;
     if (initFactor) {
         self.coldInlet.value = initFactor;

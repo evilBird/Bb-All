@@ -97,6 +97,7 @@
 		F21E534919C51BC300E51383 /* BSDSpeedLimit.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52F119C51BC300E51383 /* BSDSpeedLimit.m */; };
 		F21E534A19C51BC300E51383 /* BSDTestVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52F319C51BC300E51383 /* BSDTestVariable.m */; };
 		F21E534B19C51BC300E51383 /* BSDVelocity.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52F519C51BC300E51383 /* BSDVelocity.m */; };
+		F21E535119C5249100E51383 /* BSDBangControlBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E534F19C5249100E51383 /* BSDBangControlBox.m */; };
 		F2F5131D19B8D97C00323096 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5131C19B8D97C00323096 /* main.m */; };
 		F2F5132019B8D97C00323096 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5131F19B8D97C00323096 /* AppDelegate.m */; };
 		F2F5132319B8D97C00323096 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5132219B8D97C00323096 /* ViewController.m */; };
@@ -307,6 +308,8 @@
 		F21E52F319C51BC300E51383 /* BSDTestVariable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTestVariable.m; sourceTree = "<group>"; };
 		F21E52F419C51BC300E51383 /* BSDVelocity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDVelocity.h; sourceTree = "<group>"; };
 		F21E52F519C51BC300E51383 /* BSDVelocity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDVelocity.m; sourceTree = "<group>"; };
+		F21E534F19C5249100E51383 /* BSDBangControlBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDBangControlBox.m; sourceTree = "<group>"; };
+		F21E535019C5249100E51383 /* BSDBangControlBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDBangControlBox.h; sourceTree = "<group>"; };
 		F2F5131719B8D97C00323096 /* BlackBox.UI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackBox.UI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F5131B19B8D97C00323096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2F5131C19B8D97C00323096 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -730,6 +733,8 @@
 				F2F5138819B9031C00323096 /* BSDCanvas.m */,
 				F21E50D219C3F63200E51383 /* BSDBox.h */,
 				F21E50D319C3F63200E51383 /* BSDBox.m */,
+				F21E535019C5249100E51383 /* BSDBangControlBox.h */,
+				F21E534F19C5249100E51383 /* BSDBangControlBox.m */,
 				F21E50D819C4240D00E51383 /* BSDStringBox.h */,
 				F21E50D919C4240D00E51383 /* BSDStringBox.m */,
 				F21E50D519C3FE1A00E51383 /* BSDNumberBox.h */,
@@ -927,6 +932,7 @@
 				F21E533F19C51BC300E51383 /* BSDBasicAnimation.m in Sources */,
 				F21E532B19C51BC300E51383 /* BSDSin.m in Sources */,
 				F21E531819C51BC300E51383 /* BSDDivide.m in Sources */,
+				F21E535119C5249100E51383 /* BSDBangControlBox.m in Sources */,
 				F2F5138F19B91DC600323096 /* BSDCanvasCompiler.m in Sources */,
 				F21E533619C51BC300E51383 /* BSDAccum.m in Sources */,
 				F21E532619C51BC300E51383 /* BSDCos.m in Sources */,

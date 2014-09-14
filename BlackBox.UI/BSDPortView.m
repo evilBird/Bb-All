@@ -8,7 +8,7 @@
 
 #import "BSDPortView.h"
 #import "BSDPortConnection.h"
-
+#import <QuartzCore/QuartzCore.h>
 
 @implementation BSDPortView
 
@@ -20,6 +20,8 @@
         _delegate = delegate;
         _connectedPortViews = [NSMutableArray array];
         _portName = name;
+        self.layer.borderWidth = 1;
+        self.layer.borderColor = [UIColor colorWithWhite:0.1 alpha:1].CGColor;
     }
     
     return self;

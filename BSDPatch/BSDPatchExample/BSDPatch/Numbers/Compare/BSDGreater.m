@@ -18,7 +18,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"greater than";
+    self.name = @">";
     NSNumber *initVal = (NSNumber *)arguments;
     if (initVal) {
         self.coldInlet.value = initVal;

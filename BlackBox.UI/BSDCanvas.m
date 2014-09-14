@@ -9,14 +9,13 @@
 #import "BSDCanvas.h"
 #import "BSDCompiledPatch.h"
 #import "BSDNumberBox.h"
+#import "BSDBangControlBox.h"
 
 @interface BSDCanvas ()
 
 @property (nonatomic,strong)NSValue *connectionOriginPoint;
 @property (nonatomic,strong)NSValue *connectionDestinationPoint;
 @property (nonatomic,strong)NSMutableArray *connectionPaths;
-@property (nonatomic,strong)UIButton *compileButton;
-@property (nonatomic,strong)BSDCompiledPatch *compiledPatch;
 
 
 @end
@@ -28,24 +27,15 @@
     self = [super initWithFrame:frame];
     if (self){
         _graphBoxes = [NSMutableArray array];
+        _boxes = [NSMutableDictionary dictionary];
         _doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
         _doubleTap.numberOfTapsRequired = 2;
         _connectionPaths = [NSMutableArray array];
         [self addGestureRecognizer:_doubleTap];
         self.backgroundColor = [UIColor whiteColor];
-        _compileButton = [UIButton new];
-        [_compileButton setTitle:@"Compile" forState:UIControlStateNormal];
-        [_compileButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_compileButton addTarget:self action:@selector(tapInCompileButton:) forControlEvents:UIControlEventTouchUpInside];
-        CGRect frame = self.bounds;
-        frame.size.width *= 0.1;
-        frame.size.height *= 0.05;
-        frame.origin.x = self.bounds.size.width - frame.size.width - 20;
-        frame.origin.y = 20;
-        _compileButton.frame = frame;
-        _compileButton.backgroundColor = [UIColor colorWithWhite:0.3 alpha:1];
-        _compiledPatch = [[BSDCompiledPatch alloc]initWithArguments:nil];
+        
         CGPoint pt = self.center;
+        pt.y = 250;
         pt.x -= 100;
         [self addNumberBoxAtPoint:pt];
         pt.x += 200;
@@ -58,6 +48,22 @@
         [self addNumberBoxAtPoint:pt];
         pt.x += 200;
         [self addNumberBoxAtPoint:pt];
+        pt.y += 120;
+        [self addNumberBoxAtPoint:pt];
+        pt.x -= 200;
+        [self addNumberBoxAtPoint:pt];
+        pt.y += 120;
+        [self addBangBoxAtPoint:pt];
+        pt.x += 200;
+        [self addBangBoxAtPoint:pt];
+        pt.y += 120;
+        [self addBangBoxAtPoint:pt];
+        pt.x -= 200;
+        [self addBangBoxAtPoint:pt];
+        pt.y += 120;
+        
+
+        
         
 
         //[self addSubview:_compileButton];
@@ -79,6 +85,8 @@
         graphBox.center = loc;
         [self addSubview:graphBox];
         [self.graphBoxes addObject:graphBox];
+        [self.boxes setValue:graphBox forKey:[graphBox uniqueId]];
+        
     }else if ([theView isKindOfClass:[BSDGraphBox class]]){
         [self.graphBoxes removeObject:theView];
         [theView removeFromSuperview];
@@ -128,13 +136,7 @@
 
 - (void)box:(id)sender instantiateObjectWithName:(NSString *)name
 {
-    BSDBox *gb = sender;
-    if (name) {
-        BSDObjectDescription *desc = [[BSDObjectDescription alloc]init];
-        desc.className = gb.className;
-        desc.uniqueId = gb.uniqueId;
-        [self.compiledPatch addObjectWithDescription:desc];
-    }
+
 }
 
 - (void)connectPortView:(BSDPortView *)sender toPortView:(BSDPortView *)receiver
@@ -144,7 +146,9 @@
     cd.senderPortName = [sender portName];
     cd.receiverParentId = [receiver.delegate parentId];
     cd.receiverPortName = [receiver portName];
-    [self.compiledPatch addConnectionWithDescription:cd];
+    cd.receiverPortView = receiver;
+    BSDBox *sb = (BSDBox *)sender.delegate;
+    [sb makeConnectionWithDescription:cd];
 }
 
 - (NSArray *)allConnections
@@ -177,9 +181,20 @@
     numberBox.center = point;
     [self addSubview:numberBox];
     [self.graphBoxes addObject:numberBox];
+    [self.boxes setValue:numberBox forKey:[numberBox uniqueId]];
     [self box:numberBox instantiateObjectWithName:numberBox.className];
 }
 
+- (void)addBangBoxAtPoint:(CGPoint)point
+{
+    CGRect rect = CGRectMake(100, 100, 60, 60);
+    BSDBangControlBox *bangBox = [[BSDBangControlBox alloc]initWithFrame:rect];
+    bangBox.delegate = self;
+    bangBox.center = point;
+    [self addSubview:bangBox];
+    [self.graphBoxes addObject:bangBox];
+    [self.boxes setValue:bangBox forKey:[bangBox uniqueId]];
+}
 
 - (void)drawRect:(CGRect)rect
 {

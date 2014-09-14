@@ -15,6 +15,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.className = @"BSDValue";
+        
     }
     return self;
 }

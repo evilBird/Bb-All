@@ -17,7 +17,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"equal or less than";
+    self.name = @"<=";
     NSNumber *initVal = (NSNumber *)arguments;
     if (initVal) {
         self.coldInlet.value = initVal;

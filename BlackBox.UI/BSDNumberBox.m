@@ -17,6 +17,11 @@
     if (self) {
         // Initialization code
         self.className = @"BSDValue";
+        [self makeObjectInstance];
+        NSArray *inletViews = [self inlets];
+        self.inletViews = [NSMutableArray arrayWithArray:inletViews];
+        NSArray *outletViews = [self outlets];
+        self.outletViews = [NSMutableArray arrayWithArray:outletViews];
         _stepper = [[UIStepper alloc]init];
         _stepper.tintColor = [UIColor whiteColor];
         _stepper.minimumValue = -1e10;
@@ -76,10 +81,19 @@
     return @[mainOutletView];
 }
 
+- (void)senderValueChanged:(id)value
+{
+    self.label.text = [NSString stringWithFormat:@"%@",value];
+    [[self.object outletNamed:@"main"]setValue:value];
+}
+
 - (void)stepperValueDidChange:(id)sender
 {
     UIStepper *stepper = sender;
     self.label.text = [NSString stringWithFormat:@"%@",@(stepper.value)];
+    [[self.object inletNamed:@"cold"]input:@(stepper.value)];
+    [[self.object inletNamed:@"hot"]input:[BSDBang bang]];
+    /*
     NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueDidChangeNotification",self.uniqueId];
     NSMutableDictionary *object = [@{@"id":self.uniqueId,
                                      @"event":@(1),
@@ -91,6 +105,7 @@
     object[@"value"] = [BSDBang bang];
     [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:object];
     NSLog(@"stepper value will change to %@",@(stepper.value));
+     */
 }
 
 - (void)dealloc

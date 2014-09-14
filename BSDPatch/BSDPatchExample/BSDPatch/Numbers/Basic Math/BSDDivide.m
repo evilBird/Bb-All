@@ -17,7 +17,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"divide";
+    self.name = @"/";
     NSNumber *initDenominator = (NSNumber *)arguments;
     if (initDenominator) {
         self.coldInlet.value = initDenominator;

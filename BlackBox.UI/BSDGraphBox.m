@@ -10,6 +10,7 @@
 #import "BSDPatch.h"
 #import "BSDPortView.h"
 #import "BSDPortConnection.h"
+#import <objc/runtime.h>
 
 
 @interface BSDGraphBox () {
@@ -41,39 +42,6 @@
     return self;
 }
 
-- (NSArray *)inlets
-{
-    CGRect bounds = self.bounds;
-    CGRect frame;
-    frame.origin = bounds.origin;
-    frame.size.width = bounds.size.width * 0.25;
-    frame.size.height = bounds.size.height * 0.25;
-    BSDPortView *hotInletView = [[BSDPortView alloc]initWithName:@"hot" delegate:self];
-    hotInletView.frame = frame;
-    [self addSubview:hotInletView];
-    BSDPortView *coldInletView = [[BSDPortView alloc]initWithName:@"cold" delegate:self];
-    frame.origin.x = bounds.size.width - frame.size.width;
-    coldInletView.frame = frame;
-    [self addSubview:coldInletView];
-    return @[hotInletView,coldInletView];
-}
-
-- (NSArray *)outlets
-{
-    CGRect bounds = self.bounds;
-    CGRect frame;
-    frame.origin = bounds.origin;
-    frame.size.width = bounds.size.width * 0.25;
-    frame.size.height = bounds.size.height * 0.25;
-    BSDPortView *mainOutletView = [[BSDPortView alloc]initWithName:@"main" delegate:self];
-    frame.origin.x = 0;
-    frame.origin.y = bounds.size.height - frame.size.height;
-    mainOutletView.frame = frame;
-    [self addSubview:mainOutletView];
-    return @[mainOutletView];
-}
-
-
 - (void)updatePortFrames
 {
     self.frame = CGRectInset([self.superview convertRect:self.textField.frame fromView:self],
@@ -104,13 +72,6 @@
         frame.origin.y = bounds.size.height - frame.size.height;
         outletView.frame = frame;
     }
-    /*
-    CGRect f = self.textField.frame;
-    CGRect frame = [self.inletViews.firstObject frame];
-    f.origin.x += frame.size.width;
-    self.textField.frame = frame;
-     */
-
     
 }
 
@@ -133,7 +94,7 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     self.className = nil;
-    self.selected = YES;
+    self.selected = NO;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -142,21 +103,50 @@
     [textField resignFirstResponder];
     [textField.nextResponder becomeFirstResponder];
     [self handleText:textField.text];
-    //UITextField *t = [[UITextField alloc]initWithFrame:textField];
-    //t.frame = textField.frame;
-    //t.text = textField.text;
-    //[t sizeToFit];
-    //CGRect frame = textField.frame;
-    //frame.size.width = t.frame.size.width;
-    //[textField sizeToFit];
-    //[self updatePortFrames];
-    [self.delegate box:self instantiateObjectWithName:textField.text];
 }
 
 - (void)handleText:(NSString *)text
 {
-    self.className = text;
-    kAllowEdit = YES;
+    NSMutableArray *components = [[text componentsSeparatedByString:@" "]mutableCopy];
+    NSString *name = nil;
+    if (components) {
+        name = components.firstObject;
+        [components removeObject:name];
+    }
+    
+    NSMutableArray *argsList = nil;
+    if (components.count) {
+        for (NSString *comp in components) {
+            NSRange r = [comp rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]];
+            if (r.length > 0) {
+                NSNumber *arg = @(comp.floatValue);
+                if (!argsList) {
+                    argsList = [NSMutableArray array];
+                }
+                
+                [argsList addObject:arg];
+            }else{
+                if (!argsList) {
+                    argsList = [NSMutableArray array];
+                }
+                [argsList addObject:comp];
+            }
+        }
+    }
+    
+    [self createObjectWithName:name arguments:argsList];
+}
+
+- (void)createObjectWithName:(NSString *)name arguments:(NSArray *)args
+{
+    self.className = name;
+    [self makeObjectInstanceArgs:args];
+    [self.textField setText:[self.object name]];
+    NSArray *inletViews = [self inlets];
+    self.inletViews = [NSMutableArray arrayWithArray:inletViews];
+    NSArray *outletViews = [self outlets];
+    self.outletViews = [NSMutableArray arrayWithArray:outletViews];
+    kAllowEdit = NO;
 }
 
 

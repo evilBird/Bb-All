@@ -17,7 +17,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"subtract";
+    self.name = @"-";
     NSNumber *diffValue = arguments;
     if (diffValue) {
         self.coldInlet.value = diffValue;

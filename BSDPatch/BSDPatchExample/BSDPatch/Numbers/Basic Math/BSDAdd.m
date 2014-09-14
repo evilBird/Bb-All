@@ -17,7 +17,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"add";
+    self.name = @"+";
     NSNumber *plusValue = arguments;
     if (plusValue) {
         self.coldInlet.value = plusValue;

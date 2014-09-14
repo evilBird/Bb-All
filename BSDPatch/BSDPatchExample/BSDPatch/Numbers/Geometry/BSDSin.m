@@ -12,7 +12,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"sine";
+    self.name = @"sin";
 }
 
 - (void)calculateOutput

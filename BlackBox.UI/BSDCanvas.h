@@ -13,6 +13,7 @@
 @interface BSDCanvas : UIView<BSDBoxDelegate,BSDCanvasCompilerDelegate>
 
 @property (nonatomic,strong)NSMutableArray *graphBoxes;
+@property (nonatomic,strong)NSMutableDictionary *boxes;
 @property (nonatomic,strong)UITapGestureRecognizer *doubleTap;
 
 @end
