@@ -7,12 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F21E50D419C3F63200E51383 /* BSDBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E50D319C3F63200E51383 /* BSDBox.m */; };
+		F21E50D719C3FE1A00E51383 /* BSDNumberBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E50D619C3FE1A00E51383 /* BSDNumberBox.m */; };
+		F21E50DA19C4240D00E51383 /* BSDStringBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E50D919C4240D00E51383 /* BSDStringBox.m */; };
+		F21E50DD19C433ED00E51383 /* UIColor+HBVHarmonies.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E50DB19C433ED00E51383 /* UIColor+HBVHarmonies.m */; };
 		F2F5131D19B8D97C00323096 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5131C19B8D97C00323096 /* main.m */; };
 		F2F5132019B8D97C00323096 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5131F19B8D97C00323096 /* AppDelegate.m */; };
 		F2F5132319B8D97C00323096 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5132219B8D97C00323096 /* ViewController.m */; };
 		F2F5132619B8D97C00323096 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2F5132419B8D97C00323096 /* Main.storyboard */; };
 		F2F5132819B8D97C00323096 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2F5132719B8D97C00323096 /* Images.xcassets */; };
 		F2F5133419B8D97C00323096 /* BlackBox_UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5133319B8D97C00323096 /* BlackBox_UITests.m */; };
+		F2F5133F19B8DAB800323096 /* BSDGraphBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5133E19B8DAB800323096 /* BSDGraphBox.m */; };
+		F2F5134219B8E54400323096 /* BSDPortView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5134119B8E54400323096 /* BSDPortView.m */; };
+		F2F5138919B9031C00323096 /* BSDCanvas.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5138819B9031C00323096 /* BSDCanvas.m */; };
+		F2F5138C19B90F3300323096 /* BSDPortConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5138B19B90F3300323096 /* BSDPortConnection.m */; };
+		F2F5138F19B91DC600323096 /* BSDCanvasCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5138E19B91DC600323096 /* BSDCanvasCompiler.m */; };
+		F2F5139219B927A700323096 /* BSDObjectDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5139119B927A700323096 /* BSDObjectDescription.m */; };
+		F2F5139519B92C9600323096 /* BSDPortConnectionDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5139419B92C9600323096 /* BSDPortConnectionDescription.m */; };
+		F2F5139819B9342400323096 /* BSDCompiledPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5139719B9342400323096 /* BSDCompiledPatch.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +38,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F21E50D219C3F63200E51383 /* BSDBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDBox.h; sourceTree = "<group>"; };
+		F21E50D319C3F63200E51383 /* BSDBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDBox.m; sourceTree = "<group>"; };
+		F21E50D519C3FE1A00E51383 /* BSDNumberBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDNumberBox.h; sourceTree = "<group>"; };
+		F21E50D619C3FE1A00E51383 /* BSDNumberBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDNumberBox.m; sourceTree = "<group>"; };
+		F21E50D819C4240D00E51383 /* BSDStringBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDStringBox.h; sourceTree = "<group>"; };
+		F21E50D919C4240D00E51383 /* BSDStringBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDStringBox.m; sourceTree = "<group>"; };
+		F21E50DB19C433ED00E51383 /* UIColor+HBVHarmonies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HBVHarmonies.m"; sourceTree = "<group>"; };
+		F21E50DC19C433ED00E51383 /* UIColor+HBVHarmonies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HBVHarmonies.h"; sourceTree = "<group>"; };
 		F2F5131719B8D97C00323096 /* BlackBox.UI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackBox.UI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F5131B19B8D97C00323096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2F5131C19B8D97C00323096 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -38,6 +58,22 @@
 		F2F5132D19B8D97C00323096 /* BlackBox.UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlackBox.UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F5133219B8D97C00323096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2F5133319B8D97C00323096 /* BlackBox_UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlackBox_UITests.m; sourceTree = "<group>"; };
+		F2F5133D19B8DAB800323096 /* BSDGraphBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDGraphBox.h; sourceTree = "<group>"; };
+		F2F5133E19B8DAB800323096 /* BSDGraphBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDGraphBox.m; sourceTree = "<group>"; };
+		F2F5134019B8E54400323096 /* BSDPortView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPortView.h; sourceTree = "<group>"; };
+		F2F5134119B8E54400323096 /* BSDPortView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPortView.m; sourceTree = "<group>"; };
+		F2F5138719B9031C00323096 /* BSDCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDCanvas.h; sourceTree = "<group>"; };
+		F2F5138819B9031C00323096 /* BSDCanvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCanvas.m; sourceTree = "<group>"; };
+		F2F5138A19B90F3300323096 /* BSDPortConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPortConnection.h; sourceTree = "<group>"; };
+		F2F5138B19B90F3300323096 /* BSDPortConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPortConnection.m; sourceTree = "<group>"; };
+		F2F5138D19B91DC600323096 /* BSDCanvasCompiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDCanvasCompiler.h; sourceTree = "<group>"; };
+		F2F5138E19B91DC600323096 /* BSDCanvasCompiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCanvasCompiler.m; sourceTree = "<group>"; };
+		F2F5139019B927A700323096 /* BSDObjectDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDObjectDescription.h; sourceTree = "<group>"; };
+		F2F5139119B927A700323096 /* BSDObjectDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDObjectDescription.m; sourceTree = "<group>"; };
+		F2F5139319B92C9600323096 /* BSDPortConnectionDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPortConnectionDescription.h; sourceTree = "<group>"; };
+		F2F5139419B92C9600323096 /* BSDPortConnectionDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPortConnectionDescription.m; sourceTree = "<group>"; };
+		F2F5139619B9342400323096 /* BSDCompiledPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDCompiledPatch.h; sourceTree = "<group>"; };
+		F2F5139719B9342400323096 /* BSDCompiledPatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCompiledPatch.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,10 +115,34 @@
 		F2F5131919B8D97C00323096 /* BlackBox.UI */ = {
 			isa = PBXGroup;
 			children = (
+				F21E50DC19C433ED00E51383 /* UIColor+HBVHarmonies.h */,
+				F21E50DB19C433ED00E51383 /* UIColor+HBVHarmonies.m */,
 				F2F5131E19B8D97C00323096 /* AppDelegate.h */,
 				F2F5131F19B8D97C00323096 /* AppDelegate.m */,
 				F2F5132119B8D97C00323096 /* ViewController.h */,
 				F2F5132219B8D97C00323096 /* ViewController.m */,
+				F2F5138719B9031C00323096 /* BSDCanvas.h */,
+				F2F5138819B9031C00323096 /* BSDCanvas.m */,
+				F21E50D219C3F63200E51383 /* BSDBox.h */,
+				F21E50D319C3F63200E51383 /* BSDBox.m */,
+				F21E50D819C4240D00E51383 /* BSDStringBox.h */,
+				F21E50D919C4240D00E51383 /* BSDStringBox.m */,
+				F21E50D519C3FE1A00E51383 /* BSDNumberBox.h */,
+				F21E50D619C3FE1A00E51383 /* BSDNumberBox.m */,
+				F2F5133D19B8DAB800323096 /* BSDGraphBox.h */,
+				F2F5133E19B8DAB800323096 /* BSDGraphBox.m */,
+				F2F5134019B8E54400323096 /* BSDPortView.h */,
+				F2F5134119B8E54400323096 /* BSDPortView.m */,
+				F2F5138A19B90F3300323096 /* BSDPortConnection.h */,
+				F2F5138B19B90F3300323096 /* BSDPortConnection.m */,
+				F2F5138D19B91DC600323096 /* BSDCanvasCompiler.h */,
+				F2F5138E19B91DC600323096 /* BSDCanvasCompiler.m */,
+				F2F5139019B927A700323096 /* BSDObjectDescription.h */,
+				F2F5139119B927A700323096 /* BSDObjectDescription.m */,
+				F2F5139319B92C9600323096 /* BSDPortConnectionDescription.h */,
+				F2F5139419B92C9600323096 /* BSDPortConnectionDescription.m */,
+				F2F5139619B9342400323096 /* BSDCompiledPatch.h */,
+				F2F5139719B9342400323096 /* BSDCompiledPatch.m */,
 				F2F5132419B8D97C00323096 /* Main.storyboard */,
 				F2F5132719B8D97C00323096 /* Images.xcassets */,
 				F2F5131A19B8D97C00323096 /* Supporting Files */,
@@ -215,8 +275,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2F5133F19B8DAB800323096 /* BSDGraphBox.m in Sources */,
+				F21E50D419C3F63200E51383 /* BSDBox.m in Sources */,
+				F21E50D719C3FE1A00E51383 /* BSDNumberBox.m in Sources */,
+				F2F5138C19B90F3300323096 /* BSDPortConnection.m in Sources */,
 				F2F5132319B8D97C00323096 /* ViewController.m in Sources */,
+				F2F5134219B8E54400323096 /* BSDPortView.m in Sources */,
+				F21E50DA19C4240D00E51383 /* BSDStringBox.m in Sources */,
+				F2F5139219B927A700323096 /* BSDObjectDescription.m in Sources */,
+				F2F5138919B9031C00323096 /* BSDCanvas.m in Sources */,
+				F2F5138F19B91DC600323096 /* BSDCanvasCompiler.m in Sources */,
+				F21E50DD19C433ED00E51383 /* UIColor+HBVHarmonies.m in Sources */,
+				F2F5139819B9342400323096 /* BSDCompiledPatch.m in Sources */,
 				F2F5132019B8D97C00323096 /* AppDelegate.m in Sources */,
+				F2F5139519B92C9600323096 /* BSDPortConnectionDescription.m in Sources */,
 				F2F5131D19B8D97C00323096 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,6 +407,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = BlackBox.UI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -346,6 +419,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = BlackBox.UI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -406,6 +480,7 @@
 				F2F5133919B8D97C00323096 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F2F5133A19B8D97C00323096 /* Build configuration list for PBXNativeTarget "BlackBox.UITests" */ = {
 			isa = XCConfigurationList;
@@ -414,6 +489,7 @@
 				F2F5133C19B8D97C00323096 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

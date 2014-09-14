@@ -7,9 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "BSDCanvas.h"
 
 @interface ViewController ()
-            
+
+@property (nonatomic,strong)BSDCanvas *canvas;
 
 @end
 
@@ -17,8 +19,11 @@
             
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.canvas = [[BSDCanvas alloc]initWithFrame:self.view.bounds];
+    [self.view addSubview:self.canvas];
     // Do any additional setup after loading the view, typically from a nib.
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
