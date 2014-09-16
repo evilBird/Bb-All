@@ -52,7 +52,45 @@
     
     return self;
 }
-
+/*
+- (instancetype)initWithDescription:(BSDObjectDescription *)desc
+{
+    self = [super initWithDescription:desc];
+    if (self) {
+        NSArray *inletViews = [self inlets];
+        self.inletViews = [NSMutableArray arrayWithArray:inletViews];
+        NSArray *outletViews = [self outlets];
+        self.outletViews = [NSMutableArray arrayWithArray:outletViews];
+        _stepper = [[UIStepper alloc]init];
+        _stepper.tintColor = [UIColor whiteColor];
+        _stepper.minimumValue = -1e10;
+        _stepper.maximumValue = 1e10;
+        CGRect frame = _stepper.frame;
+        frame.origin.y = CGRectGetMaxY(self.bounds) - frame.size.height - 5;
+        frame.origin.x = (CGRectGetWidth(self.bounds) - frame.size.width)/2 + 9;
+        _stepper.frame = frame;
+        //_stepper.tintAdjustmentMode =  UIViewTintAdjustmentModeDimmed;
+        [_stepper addTarget:self action:@selector(stepperValueDidChange:) forControlEvents:UIControlEventValueChanged];
+        [self insertSubview:_stepper atIndex:0];
+        [self setSelected:YES];
+        NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",[self uniqueId]];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleObjectValueShouldChangeNotification:) name:notificationName object:nil];
+        [_stepper setBackgroundImage:self.emptyImageForStepper forState:UIControlStateNormal];
+        [_stepper setBackgroundImage:self.emptyImageForStepper forState:UIControlStateHighlighted];
+        
+        _label = [[UILabel alloc]initWithFrame:frame];
+        _label.textAlignment = NSTextAlignmentCenter;
+        _label.text = [NSString stringWithFormat:@"%@",@(0)];
+        _label.textColor = self.backgroundColor;
+        frame = _label.frame;
+        frame.origin.y -= frame.size.height + 10;
+        _label.frame = frame;
+        [self insertSubview:_label belowSubview:_stepper];
+    }
+    
+    return self;
+}
+*/
 - (NSArray *)inlets
 {
     CGRect bounds = self.bounds;

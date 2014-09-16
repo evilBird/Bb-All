@@ -16,6 +16,10 @@
 @property (nonatomic,strong)NSString *senderPortName;
 @property (nonatomic,strong)NSString *receiverParentId;
 @property (nonatomic,strong)NSString *receiverPortName;
+@property (nonatomic,strong)NSArray *initialPoints;
 @property (nonatomic,strong)BSDPortView *receiverPortView;
+
++ (BSDPortConnectionDescription *)connectionDescriptionWithDictionary:(NSDictionary *)dictionary;
+- (NSDictionary *)dictionaryRespresentation;
 
 @end

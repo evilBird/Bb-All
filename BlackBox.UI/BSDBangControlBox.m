@@ -37,6 +37,22 @@
     return self;
 }
 
+/*
+- (instancetype)initWithDescription:(BSDObjectDescription *)desc
+{
+    self = [super initWithDescription:desc];
+    if (self) {
+        NSArray *inletViews = [self inlets];
+        self.inletViews = [NSMutableArray arrayWithArray:inletViews];
+        NSArray *outletViews = [self outlets];
+        self.outletViews = [NSMutableArray arrayWithArray:outletViews];
+        self.defaultColor = [UIColor colorWithWhite:0.8 alpha:1];
+        self.highightColor = [UIColor colorWithWhite:0.5 alpha:1];
+        self.currentColor = self.defaultColor;
+    }
+    return self;
+}
+*/
 - (void)senderValueChanged:(id)value
 {
     [self doHighlight];
@@ -47,7 +63,8 @@
 {
     self.currentColor = self.highightColor;
     [self setNeedsDisplay];
-    [[self.object outletNamed:@"main"]setValue:[BSDBang bang]];
+    [self.object calculateOutput];
+    //[[self.object outletNamed:@"main"]setValue:[BSDBang bang]];
 }
 
 - (void)endHighlight

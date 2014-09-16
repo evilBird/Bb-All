@@ -31,7 +31,9 @@
 {
     id hot = self.hotInlet.value;
     NSString *key = self.coldInlet.value;
-    self.mainOutlet.value = @{key: hot};
+    NSDictionary *output = @{key:hot};
+    
+    self.mainOutlet.value = output;
 }
 
 @end

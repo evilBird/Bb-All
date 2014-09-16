@@ -17,6 +17,7 @@
 
 - (instancetype)initWithUIView:(UIView *)view;
 - (UIView *)view;
+- (void)setSuperView:(UIView *)superview;
 
 @property (nonatomic,strong)BSDInlet *getterInlet;
 @property (nonatomic,strong)BSDOutlet *getterOutlet;

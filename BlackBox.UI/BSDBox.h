@@ -9,15 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "BSDPortView.h"
 #import "BSDObject.h"
+#import "BSDObjectDescription.h"
 #import "BSDPortConnectionDescription.h"
 
-
+@class BSDCanvas;
 @protocol BSDBoxDelegate
 
 - (void)box:(id)sender portView:(id)portView drawLineToPoint:(CGPoint)point;
 - (void)box:(id)sender portView:(id)portView endedAtPoint:(CGPoint)point;
-- (void)box:(id)sender instantiateObjectWithName:(NSString *)name;
 - (void)boxDidMove:(id)sender;
+- (id)boxWithUniqueId:(NSString *)uniqueId;
+- (UIView *)displayViewForBox:(id)sender;
+- (NSString *)getClassNameForText:(NSString *)text;
 
 @end
 
@@ -34,8 +37,11 @@
 @property (nonatomic,weak)id<BSDBoxDelegate>delegate;
 @property (nonatomic)BOOL selected;
 @property (nonatomic,strong)id object;
-@property (nonatomic,strong)NSArray *creationArguments;
+@property (nonatomic,strong)id creationArguments;
+@property (nonatomic,strong)NSString *assignedId;
 
+
+- (instancetype)initWithDescription:(BSDObjectDescription *)desc;
 - (void)makeConnectionWithDescription:(BSDPortConnectionDescription *)description;
 - (void)senderValueChanged:(id)value;
 
@@ -44,6 +50,10 @@
 - (NSArray *)connections;
 - (NSArray *)connectionVectors;
 - (NSString *)uniqueId;
+- (NSString *)boxClassName;
+- (id)objectDescription;
+- (NSArray *)connectionDescriptions;
+- (id)makeCreationArgs;
 - (void)makeObjectInstance;
 - (void)makeObjectInstanceArgs:(id)args;
 - (void)updatePortFrames;

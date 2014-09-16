@@ -37,11 +37,27 @@
     }
 }
 
+- (void)inletReceievedBang:(BSDInlet *)inlet
+{
+    if (inlet == self.hotInlet) {
+        [self calculateOutput];
+    }
+}
+
 - (void)calculateOutput
 {
+    NSInteger idx = self.outlets.count - 1;
+    
+    while (idx > 0) {
+        BSDOutlet *anOutlet = self.outlets[idx];
+        anOutlet.value = self.hotInlet.value;
+        idx --;
+    }
+    /*
     for (BSDOutlet *anOutlet in self.outlets) {
         anOutlet.value = self.hotInlet.value;
     }
+     */
 }
 
 //add outlets

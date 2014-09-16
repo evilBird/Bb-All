@@ -10,12 +10,18 @@
 #import "BSDCompiledPatch.h"
 #import "BSDNumberBox.h"
 #import "BSDBangControlBox.h"
+#import <ObjC/runtime.h>
 
 @interface BSDCanvas ()
 
 @property (nonatomic,strong)NSValue *connectionOriginPoint;
 @property (nonatomic,strong)NSValue *connectionDestinationPoint;
 @property (nonatomic,strong)NSMutableArray *connectionPaths;
+@property (nonatomic,strong)NSMutableArray *highlightedPaths;
+
+
+@property (nonatomic,strong)UIView *testView;
+@property (nonatomic,strong)NSArray *allowedObjects;
 
 
 @end
@@ -26,77 +32,85 @@
 {
     self = [super initWithFrame:frame];
     if (self){
+        self.allowedObjects = [self classList];
+        
         _graphBoxes = [NSMutableArray array];
         _boxes = [NSMutableDictionary dictionary];
         _doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
         _doubleTap.numberOfTapsRequired = 2;
-        _connectionPaths = [NSMutableArray array];
         [self addGestureRecognizer:_doubleTap];
+        _longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+        _longPress.allowableMovement = 10;
+        [self addGestureRecognizer:_longPress];
+        _connectionPaths = [NSMutableArray array];
         self.backgroundColor = [UIColor whiteColor];
-        
-        CGPoint pt = self.center;
-        pt.y = 250;
-        pt.x -= 100;
-        [self addNumberBoxAtPoint:pt];
-        pt.x += 200;
-        [self addNumberBoxAtPoint:pt];
-        pt.y += 120;
-        [self addNumberBoxAtPoint:pt];
-        pt.x -= 200;
-        [self addNumberBoxAtPoint:pt];
-        pt.y += 120;
-        [self addNumberBoxAtPoint:pt];
-        pt.x += 200;
-        [self addNumberBoxAtPoint:pt];
-        pt.y += 120;
-        [self addNumberBoxAtPoint:pt];
-        pt.x -= 200;
-        [self addNumberBoxAtPoint:pt];
-        pt.y += 120;
-        [self addBangBoxAtPoint:pt];
-        pt.x += 200;
-        [self addBangBoxAtPoint:pt];
-        pt.y += 120;
-        [self addBangBoxAtPoint:pt];
-        pt.x -= 200;
-        [self addBangBoxAtPoint:pt];
-        pt.y += 120;
-        
-
-        
-        
-
-        //[self addSubview:_compileButton];
+        //[self addUtilityObjects];
+        //[self testBangBox];
+        //[self testNumberBox];
     }
     
     return self;
 }
 
+- (void)addUtilityObjects
+{
+    CGFloat y = 50;
+    CGFloat step = 70;
+    for (NSInteger i = 0; i < 8; i++) {
+        CGPoint pt;
+        pt.x = self.bounds.size.width - 150;
+        pt.y = i * step + y;
+        [self addNumberBoxAtPoint:pt];
+    }
+    
+    for (NSInteger i = 8; i < 14; i++) {
+        CGPoint pt;
+        pt.x = self.bounds.size.width - 150;
+        pt.y = i * step + y;
+        [self addBangBoxAtPoint:pt];
+    }
+}
 
 - (void)handleDoubleTap:(id)sender
 {
     CGPoint loc = [sender locationOfTouch:0 inView:self];
     UIView *theView = [self hitTest:loc withEvent:UITouchPhaseBegan];
-    if (![theView isKindOfClass:[BSDGraphBox class]] && ![theView isKindOfClass:[BSDPortView class]] && ![theView isKindOfClass:[UITextField class]]) {
-        
-        CGRect rect = CGRectMake(0, 0, 140, 50);
-        BSDGraphBox *graphBox = [[BSDGraphBox alloc]initWithFrame:rect];
-        graphBox.delegate = self;
-        graphBox.center = loc;
-        [self addSubview:graphBox];
-        [self.graphBoxes addObject:graphBox];
-        [self.boxes setValue:graphBox forKey:[graphBox uniqueId]];
-        
-    }else if ([theView isKindOfClass:[BSDGraphBox class]]){
-        [self.graphBoxes removeObject:theView];
-        [theView removeFromSuperview];
-    }else if ([theView isKindOfClass:[UITextField class]]){
-        
-        [self.graphBoxes removeObject:theView.superview];
-        [theView.superview removeFromSuperview];
+    
+    if ([theView isKindOfClass:[BSDBox class]] || [theView.superview isKindOfClass:[BSDBox class]]) {
+        return;
     }
     
+    CGRect rect = CGRectMake(0, 0, 140, 50);
+    BSDGraphBox *graphBox = [[BSDGraphBox alloc]initWithFrame:rect];
+    graphBox.delegate = self;
+    graphBox.center = loc;
+    [self addSubview:graphBox];
+    [self.graphBoxes addObject:graphBox];
+    [self.boxes setValue:graphBox forKey:[graphBox uniqueId]];
+    
+    
 }
+
+- (void)handleLongPress:(id)sender
+{
+    CGPoint loc = [sender locationOfTouch:0 inView:self];
+    UIView *theView = [self hitTest:loc withEvent:UITouchPhaseBegan];
+    if (![theView isKindOfClass:[BSDBox class]] && ![theView.superview isKindOfClass:[BSDBox class]]) {
+        return;
+    }
+    
+    
+    /*
+    BSDBox *box = nil;
+    if ([theView isKindOfClass:[BSDBox class]]) {
+        box = (BSDBox *)theView;
+        NSLog(@"tap in %@ box",box.className);
+        return;
+    }
+     */
+}
+
+#pragma mark - BSDBoxDelegate
 
 - (void)box:(id)sender portView:(id)portView drawLineToPoint:(CGPoint)point
 {
@@ -134,10 +148,36 @@
     [self setNeedsDisplay];
 }
 
-- (void)box:(id)sender instantiateObjectWithName:(NSString *)name
+- (id)boxWithUniqueId:(NSString *)uniqueId
 {
-
+    if ([self.boxes.allKeys containsObject:uniqueId]) {
+        return self.boxes[uniqueId];
+    }
+    
+    return nil;
 }
+
+- (NSString *)getClassNameForText:(NSString *)text
+{
+    NSMutableArray *lowercase = [NSMutableArray array];
+    for (NSString *className in self.allowedObjects) {
+        [lowercase addObject:[className lowercaseString]];
+    }
+    
+    if ([lowercase containsObject:[text lowercaseString]]){
+        NSInteger idx = [lowercase indexOfObject:[text lowercaseString]];
+        return self.allowedObjects[idx];
+    }
+    
+    return nil;
+}
+
+- (UIView *)displayViewForBox:(id)sender
+{
+    return [self.delegate viewForCanvas:self];
+}
+
+#pragma mark - manage connections
 
 - (void)connectPortView:(BSDPortView *)sender toPortView:(BSDPortView *)receiver
 {
@@ -150,6 +190,7 @@
     BSDBox *sb = (BSDBox *)sender.delegate;
     [sb makeConnectionWithDescription:cd];
 }
+
 
 - (NSArray *)allConnections
 {
@@ -173,6 +214,103 @@
     return self;
 }
 
+- (NSDictionary *)currentPatch
+{
+    NSMutableArray *objectDescriptions = [NSMutableArray array];
+    NSMutableArray *connectionDescriptions = [NSMutableArray array];
+    //enumerate all boxes, get object descriptions for each
+    for (BSDBox *box in self.boxes.allValues) {
+        BSDObjectDescription *desc = [box objectDescription];
+        NSDictionary *d = [desc dictionaryRespresentation];
+        if (d) {
+            [objectDescriptions addObject:d];
+        }
+        
+        NSArray *cd = [box connectionDescriptions];
+        if (cd) {
+            [connectionDescriptions addObjectsFromArray:cd];
+        }
+    }
+    
+    NSDictionary *result = @{@"objectDescriptions":[NSArray arrayWithArray:objectDescriptions],
+                             @"connectionDescriptions":[NSArray arrayWithArray:connectionDescriptions]
+                             };
+    return result;
+}
+
+- (NSArray *)classList;
+{
+    unsigned outCount;
+    Class *classes = objc_copyClassList(&outCount);
+    NSMutableSet *result = nil;
+    for (unsigned i = 0; i < outCount; i++) {
+        Class theClass = classes[i];
+        Class superClass = class_getSuperclass(theClass);
+        NSString *className = NSStringFromClass(theClass);
+        NSString *superClassName = NSStringFromClass(superClass);
+        if ([superClassName isEqualToString:@"BSDObject"]) {
+            
+            if (!result) {
+                result = [NSMutableSet set];
+            }
+            [result addObject:className];
+        }
+    }
+    
+    free(classes);
+    return result.allObjects;
+}
+
+- (void)loadPatchWithDictionary:(NSDictionary *)dictionary
+{
+    NSArray *objs = dictionary[@"objectDescriptions"];
+    NSArray *connects = dictionary[@"connectionDescriptions"];
+
+    for (NSDictionary *dict in objs) {
+        BSDObjectDescription *desc = [BSDObjectDescription objectDescriptionWithDictionary:dict];
+        [self makeBoxWithDescription:desc];
+    }
+    
+    for (NSDictionary *dict in connects) {
+        BSDPortConnectionDescription *desc = [BSDPortConnectionDescription connectionDescriptionWithDictionary:dict];
+        BSDBox *sender = self.boxes[desc.senderParentId];
+        BSDBox *receiver = self.boxes[desc.receiverParentId];
+        NSPredicate *r_predicate = [NSPredicate predicateWithFormat:@"%K = %@",@"portName",desc.receiverPortName];
+        NSPredicate *s_predicate = [NSPredicate predicateWithFormat:@"%K = %@",@"portName",desc.senderPortName];
+        NSArray *s = [sender.outletViews filteredArrayUsingPredicate:s_predicate];
+        NSArray *r = [receiver.inletViews filteredArrayUsingPredicate:r_predicate];
+        if (s && r) {
+            BSDPortView *outletView = s.firstObject;
+            BSDPortView *inletView = r.firstObject;
+            desc.receiverPortView = inletView;
+            [sender makeConnectionWithDescription:desc];
+            [outletView addConnectionToPortView:inletView];
+            [self boxDidMove:sender];
+        }
+        
+    }
+    
+    
+}
+
+- (void) makeBoxWithDescription:(BSDObjectDescription *)desc
+{
+    const char *class = [desc.boxClassName UTF8String];
+    id c = objc_getClass(class);
+    id instance = [c alloc];
+    SEL aSelector = NSSelectorFromString(@"initWithDescription:");
+    
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:aSelector]];
+    invocation.target = instance;
+    invocation.selector = aSelector;
+    [invocation setArgument:&desc atIndex:2];
+    [invocation invoke];
+    [instance setValue:self forKey:@"delegate"];
+    [self.graphBoxes addObject:instance];
+    self.boxes[[instance uniqueId]] = instance;
+    [self addSubview:instance];
+}
+
 - (void)addNumberBoxAtPoint:(CGPoint)point
 {
     CGRect rect = CGRectMake(100, 100, 120, 44);
@@ -182,7 +320,6 @@
     [self addSubview:numberBox];
     [self.graphBoxes addObject:numberBox];
     [self.boxes setValue:numberBox forKey:[numberBox uniqueId]];
-    [self box:numberBox instantiateObjectWithName:numberBox.className];
 }
 
 - (void)addBangBoxAtPoint:(CGPoint)point
@@ -194,6 +331,24 @@
     [self addSubview:bangBox];
     [self.graphBoxes addObject:bangBox];
     [self.boxes setValue:bangBox forKey:[bangBox uniqueId]];
+}
+
+- (void)clearCurrentPatch
+{
+    for (UIView *subview in self.subviews) {
+        [subview removeFromSuperview];
+    }
+    
+    self.boxes = nil;
+    self.graphBoxes = nil;
+    self.connectionPaths = nil;
+    self.connectionOriginPoint = nil;
+    self.connectionDestinationPoint = nil;
+    self.boxes = [NSMutableDictionary dictionary];
+    self.graphBoxes = [NSMutableArray array];
+    self.connectionPaths = [NSMutableArray array];
+    [self setNeedsDisplay];
+    
 }
 
 - (void)drawRect:(CGRect)rect
@@ -218,5 +373,17 @@
         }
     }
 }
+
+- (void)testNumberBox
+{
+    [self addNumberBoxAtPoint:self.center];
+    
+}
+
+- (void)testBangBox
+{
+    [self addBangBoxAtPoint:self.center];
+}
+
 
 @end

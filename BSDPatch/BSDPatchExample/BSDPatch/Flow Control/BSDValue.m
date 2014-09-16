@@ -26,9 +26,13 @@
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
     if ([inlet isEqual:self.hotInlet]) {
-        self.mainOutlet.value = self.coldInlet.value;
+        [self calculateOutput];
     }
 }
 
+- (void)calculateOutput
+{
+    [self.mainOutlet setValue:[self.coldInlet value]];
+}
 
 @end

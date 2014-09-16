@@ -10,6 +10,8 @@
 #import "BSDPortView.h"
 #import "BSDPortConnection.h"
 #import <QuartzCore/QuartzCore.h>
+#import "BSDObjectDescription.h"
+#import "BSDCanvas.h"
 
 @implementation BSDBox
 
@@ -26,6 +28,21 @@
         self.backgroundColor = [UIColor colorWithWhite:0.21 alpha:1];
         self.layer.borderWidth = 1.0f;
         self.layer.borderColor = self.backgroundColor.CGColor;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithDescription:(BSDObjectDescription *)desc
+{
+    CGRect frame = desc.displayRect.CGRectValue;
+    self = [self initWithFrame:frame];
+    if (self) {
+        
+        self.assignedId = desc.uniqueId;
+        self.className = desc.className;
+        self.creationArguments = desc.creationArguments;
+        [self makeObjectInstanceArgs:self.creationArguments];
     }
     
     return self;
@@ -48,7 +65,6 @@
 
 - (void)senderValueChanged:(id)value
 {
-    NSLog(@"object %@ %@ received value %@",self.className,self.uniqueId,value);
 }
 
 - (NSArray *)inlets
@@ -157,11 +173,19 @@
 
 - (NSString *)parentId
 {
+    if (self.assignedId) {
+        return self.assignedId;
+    }
+    
     return [self uniqueId];
 }
 
 - (NSString *)uniqueId
 {
+    if (self.assignedId) {
+        return self.assignedId;
+    }
+    
     return [NSString stringWithFormat:@"%p",self];
 }
 
@@ -169,7 +193,7 @@
 {
     NSMutableArray *temp = [NSMutableArray array];
     NSMutableArray *portviews = [NSMutableArray array];
-    [portviews addObjectsFromArray:self.inletViews];
+    //[portviews addObjectsFromArray:self.inletViews];
     [portviews addObjectsFromArray:self.outletViews];
     for (BSDPortView *portView in portviews) {
         if (portView.connectedPortViews.count > 0) {
@@ -188,7 +212,7 @@
 {
     NSMutableArray *temp = [NSMutableArray array];
     NSMutableArray *portviews = [NSMutableArray array];
-    [portviews addObjectsFromArray:self.inletViews];
+    //[portviews addObjectsFromArray:self.inletViews];
     [portviews addObjectsFromArray:self.outletViews];
     for (BSDPortView *portView in portviews) {
         if (portView.connectedPortViews.count > 0) {
@@ -236,6 +260,10 @@
 
 - (void)makeObjectInstanceArgs:(id)args
 {
+    if (!self.className) {
+        return;
+    }
+    
     const char *class = [self.className UTF8String];
     id c = objc_getClass(class);
     id instance = [c alloc];
@@ -259,6 +287,56 @@
     self.object = instance;
 }
 
+- (NSString *)boxClassName
+{
+    return NSStringFromClass([self class]);
+}
+
+- (id)objectDescription
+{
+    BSDObjectDescription *desc = [[BSDObjectDescription alloc]init];
+    desc.className = self.className;
+    desc.boxClassName = [self boxClassName];
+    desc.uniqueId = self.uniqueId;
+    desc.creationArguments = self.creationArguments;
+    desc.displayRect = [NSValue valueWithCGRect:self.frame];
+    return desc;
+}
+
+- (id)makeCreationArgs
+{
+    return self.creationArguments;
+}
+
+- (NSArray *)connectionDescriptions
+{
+    NSMutableArray *result = nil;
+    
+    for (BSDPortView *outletView in self.outletViews) {
+        NSArray *connectedInletViews = outletView.connectedPortViews;
+        for (BSDPortView *inletView in connectedInletViews) {
+            BSDPortConnectionDescription *desc = [[BSDPortConnectionDescription alloc]init];
+            desc.senderPortName = [outletView portName];
+            desc.senderParentId = [outletView.delegate parentId];
+            desc.receiverPortName = [inletView portName];
+            desc.receiverParentId = [inletView.delegate parentId];
+            BSDPortConnection *connection = [BSDPortConnection connectionWithOwner:outletView target:inletView];
+            CGPoint o = [connection origin];
+            CGPoint d = [connection destination];
+            CGPoint ao = [self.superview convertPoint:o fromView:outletView.superview];
+            CGPoint ad = [self.superview convertPoint:d fromView:inletView.superview];
+            NSArray *points = @[[NSValue valueWithCGPoint:ao],[NSValue valueWithCGPoint:ad]];
+            desc.initialPoints = points;
+            if (!result) {
+                result = [NSMutableArray array];
+            }
+            
+            [result addObject:[desc dictionaryRespresentation]];
+        }
+    }
+    
+    return result;
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

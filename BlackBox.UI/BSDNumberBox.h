@@ -12,5 +12,6 @@
 
 @property (nonatomic,strong)UILabel *label;
 @property (nonatomic,strong)UIStepper *stepper;
+//- (instancetype)initWithDescription:(BSDObjectDescription *)desc;
 
 @end

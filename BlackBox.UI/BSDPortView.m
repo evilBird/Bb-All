@@ -65,18 +65,8 @@
 
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:@"center"]) {
-        NSLog(@"object: %@",object);
-    }
-}
 
-- (void)dealloc
-{
-    for (BSDPortView *portView in self.connectedPortViews) {
-        [portView removeObserver:self forKeyPath:@"frame"];
-    }
-}
+
+
 
 @end

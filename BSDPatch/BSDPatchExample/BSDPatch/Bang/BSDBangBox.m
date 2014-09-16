@@ -10,6 +10,11 @@
 
 @implementation BSDBangBox
 
+- (instancetype)initWithArguments:(id)arguments
+{
+    return [super initWithArguments:arguments];
+}
+
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"bang box";

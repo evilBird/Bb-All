@@ -10,4 +10,6 @@
 
 @interface BSDBangControlBox : BSDBox
 
+//- (instancetype)initWithDescription:(BSDObjectDescription *)desc;
+
 @end

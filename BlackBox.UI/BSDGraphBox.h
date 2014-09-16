@@ -9,7 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "BSDBox.h"
 
+@class BSDCanvas;
 @interface BSDGraphBox : BSDBox <UITextFieldDelegate>
+
++ (BSDGraphBox *)graphBoxWithFrame:(CGRect)frame className:(NSString *)className args:(id)args;
+- (instancetype)initWithDescription:(BSDObjectDescription *)desc;
+
 
 @property (nonatomic,strong)UITextField *textField;
 

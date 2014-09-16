@@ -18,6 +18,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
+    self.name = @"2d point";
     self.xInlet = [[BSDInlet alloc]initHot];
     self.xInlet.name = @"x";
     self.xInlet.value = @0;

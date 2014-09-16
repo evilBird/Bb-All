@@ -11,6 +11,7 @@
 #import "BSDPortView.h"
 #import "BSDPortConnection.h"
 #import <objc/runtime.h>
+#import "BSDCanvas.h"
 
 
 @interface BSDGraphBox () {
@@ -37,6 +38,26 @@
         _textField.font = [UIFont boldSystemFontOfSize:frame.size.height * 0.35];
         [self insertSubview:_textField atIndex:0];
         kAllowEdit = YES;
+    }
+    
+    return self;
+}
+
++ (BSDGraphBox *)graphBoxWithFrame:(CGRect)frame className:(NSString *)className args:(id)args
+{
+    BSDGraphBox *graphBox = [[BSDGraphBox alloc]initWithFrame:frame];
+    [graphBox createObjectWithName:className arguments:args];
+    return graphBox;
+}
+
+- (instancetype)initWithDescription:(BSDObjectDescription *)desc
+{
+    CGRect frame = desc.displayRect.CGRectValue;
+    
+    self = [self initWithFrame:frame];
+    if (self) {
+        self.assignedId = desc.uniqueId;
+        [self createObjectWithName:desc.className arguments:desc.creationArguments];
     }
     
     return self;
@@ -75,6 +96,11 @@
     
 }
 
+- (NSString *)boxClassName
+{
+    return NSStringFromClass([self class]);
+}
+
 - (void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];
@@ -83,6 +109,20 @@
         self.textField.backgroundColor = [UIColor clearColor];
     }else{
         self.textField.backgroundColor = [UIColor clearColor];
+    }
+}
+
+- (void)setDelegate:(id<BSDBoxDelegate>)delegate
+{
+    [super setDelegate:delegate];
+    if (self.object != NULL) {
+        UIView *myView = [[self.object coldInlet]value];
+        if ([myView isKindOfClass:[UIView class]]) {
+            UIView *superview = [self.delegate displayViewForBox:self];
+            BSDCanvas *canvas = (BSDCanvas *)self.delegate;
+            myView.center = [myView convertPoint:superview.center toView:myView];
+            [superview insertSubview:myView atIndex:0];
+        }
     }
 }
 
@@ -99,10 +139,12 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [textField endEditing:YES];
-    [textField resignFirstResponder];
-    [textField.nextResponder becomeFirstResponder];
-    [self handleText:textField.text];
+    if (textField.text && textField.text.length > 3) {
+        [textField endEditing:YES];
+        [textField resignFirstResponder];
+        [textField.nextResponder becomeFirstResponder];
+        [self handleText:textField.text];
+    }
 }
 
 - (void)handleText:(NSString *)text
@@ -137,18 +179,62 @@
     [self createObjectWithName:name arguments:argsList];
 }
 
+
+
 - (void)createObjectWithName:(NSString *)name arguments:(NSArray *)args
 {
-    self.className = name;
-    [self makeObjectInstanceArgs:args];
-    [self.textField setText:[self.object name]];
-    NSArray *inletViews = [self inlets];
-    self.inletViews = [NSMutableArray arrayWithArray:inletViews];
-    NSArray *outletViews = [self outlets];
-    self.outletViews = [NSMutableArray arrayWithArray:outletViews];
-    kAllowEdit = NO;
+    self.className = nil;
+    
+    if (self.delegate) {
+        self.className = [self.delegate getClassNameForText:name];
+    }else{
+        self.className = name;
+    }
+    
+    if (self.className) {
+        if ([name isEqualToString:@"BSDView"]) {
+
+            if (self.delegate) {
+                UIView *view = [self.delegate displayViewForBox:self];
+                self.creationArguments = args;
+                [self makeObjectInstanceArgs:@[view]];
+            }else{
+                [self makeObjectInstance];
+            }
+            
+        }else{
+            
+            self.creationArguments = args;
+            if (args) {
+                [self makeObjectInstanceArgs:args];
+            }else{
+                [self makeObjectInstance];
+            }
+        }
+        NSMutableString *displayName = [[NSMutableString alloc]initWithString:[self.object name]];
+        for (id arg in args) {
+            if ([arg isKindOfClass:[NSNumber class]]|| [arg isKindOfClass:[NSString class]]) {
+                [displayName appendFormat:@" %@",arg];
+            }
+        }
+        
+        [self.textField setText:displayName];
+        NSArray *inletViews = [self inlets];
+        self.inletViews = [NSMutableArray arrayWithArray:inletViews];
+        NSArray *outletViews = [self outlets];
+        self.outletViews = [NSMutableArray arrayWithArray:outletViews];
+        kAllowEdit = NO;
+    }else{
+        
+        self.textField.text = name;
+        [self.textField becomeFirstResponder];
+    }
+
 }
 
-
+- (id)makeCreationArgs
+{
+    return self.creationArguments;
+}
 
 @end
