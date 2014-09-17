@@ -16,97 +16,164 @@
 #import "BSDPortConnectionDescription.h"
 #import <objc/runtime.h>
 #import "BSDPatch.h"
+#import "NSUserDefaults+HBVUtils.h"
 
 @interface BSDCompiledPatch ()
 
 @property (nonatomic,strong)NSMutableDictionary *objectGraph;
+@property (nonatomic,strong)NSMutableArray *views;
 
 @end
 
 @implementation BSDCompiledPatch
 
-- (instancetype)initWithCanvas:(BSDCanvas *)canvas
+- (instancetype)initWithArguments:(id)arguments
 {
-    return [super initWithArguments:canvas];
+    return [super initWithArguments:arguments];
 }
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"Compiled patch";
-    self.objectGraph = [NSMutableDictionary dictionary];
-}
-
-- (void)handleBoxUpdateNotification:(NSNotification *)notification
-{
-    NSDictionary *object = notification.object;
-    if (!object) {
-        return;
-    }
-    
-    NSString *uniqueId = object[@"id"];
-    NSNumber *eventType = object[@"event"];
-    NSString *port = object[@"port"];
-    id value = object[@"value"];
-    
-    id toUpdate = self.objectGraph[uniqueId];
-    if (!toUpdate) {
-        return;
-    }
-    
-    if (eventType.integerValue == 1) {
-        //input event
-        [[toUpdate inletNamed:port]input:value];
+    self.name = @"patch";
+    NSString *patchName = arguments;
+    if (patchName) {
+        NSDictionary *patch = [self patchWithName:patchName];
+        if (patch) {
+            [self loadPatchWithDictionary:patch];
+        }
     }
 }
 
-- (void)addObjectWithDescription:(BSDObjectDescription *)description
+- (NSDictionary *)patchWithName:(NSString *)patchName
 {
-    const char *class = [description.className UTF8String];
+    NSDictionary *savedPatches = [NSUserDefaults valueForKey:@"patches"];
+    if (!savedPatches) {
+        return nil;
+    }
+    
+    if (!patchName || ![savedPatches.allKeys containsObject:patchName]) {
+        return nil;
+    }
+    
+    return savedPatches[patchName];
+}
+
+- (void)loadPatchWithDictionary:(NSDictionary *)dictionary
+{
+    NSArray *objs = dictionary[@"objectDescriptions"];
+    NSArray *connects = dictionary[@"connectionDescriptions"];
+    
+    for (NSDictionary *dict in objs) {
+        BSDObjectDescription *desc = [BSDObjectDescription objectDescriptionWithDictionary:dict];
+        [self createObjectWithDescription:desc];
+        NSString *className = desc.className;
+        if ([className isEqualToString:@"BSDPatchInlet"]) {
+            self.patchInlet = self.objectGraph[desc.uniqueId];
+            [self.hotInlet forwardToPort:[self.patchInlet inletNamed:@"hot"]];
+        }else if ([className isEqualToString:@"BSDPatchOutlet"]){
+            self.patchOutlet = self.objectGraph[desc.uniqueId];
+        }
+        
+        if ([self.objectGraph[desc.uniqueId] respondsToSelector:@selector(view)]) {
+            UIView *view = [self.objectGraph[desc.uniqueId] view];
+            if (!self.views) {
+                self.views = [NSMutableArray array];
+            }
+            [self.views addObject:view];
+        }
+    }
+    
+    [self.coldInlet setValue:self.views];
+    
+    NSString *key = @"superview";
+    NSString *base = @"com.birdSound.BlockBox-UI.compiledPatchNeedsSomethingNotification";
+    NSString *hollaBack = [NSString stringWithFormat:@"%@-reply-%@",base,self.objectId];
+    NSDictionary *noticationInfo = @{@"key":key,
+                                     @"hollaBack":hollaBack
+                                     };
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleCanvasResponseNotification:) name:hollaBack object:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:base object:noticationInfo];
+    
+    for (NSDictionary *dict in connects) {
+        BSDPortConnectionDescription *desc = [BSDPortConnectionDescription connectionDescriptionWithDictionary:dict];
+        id sender = self.objectGraph[desc.senderParentId];
+        id receiver = self.objectGraph[desc.receiverParentId];
+        [[sender outletNamed:desc.senderPortName]connectToInlet:[receiver inletNamed:desc.receiverPortName]];
+    }
+    
+    [self.hotInlet forwardToPort:[self.patchInlet inletNamed:@"hot"]];
+    [self.patchOutlet forwardToPort:self.mainOutlet];
+
+}
+
+- (void) createObjectWithDescription:(BSDObjectDescription *)desc
+{
+    if (!self.objectGraph) {
+        self.objectGraph = [NSMutableDictionary dictionary];
+    }
+    
+    const char *class = [desc.className UTF8String];
     id c = objc_getClass(class);
-    //id s = objc_getClass([@"BSDObject" UTF8String]);
     id instance = [c alloc];
     SEL aSelector = NSSelectorFromString(@"initWithArguments:");
+    
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:aSelector]];
     invocation.target = instance;
     invocation.selector = aSelector;
+    id creationArgs = nil;
+    creationArgs = desc.creationArguments;
+    if (creationArgs != nil) {
+        NSArray *a = creationArgs;
+        if (a.count == 1) {
+            id arg = a.firstObject;
+            [invocation setArgument:&arg atIndex:2];
+        }else{
+            
+            [invocation setArgument:&a atIndex:2];
+        }
+    }
+    
     [invocation invoke];
-    self.objectGraph[description.uniqueId] = instance;
-    
-    NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueDidChangeNotification",description.uniqueId];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleBoxUpdateNotification:) name:notificationName object:nil];
-}
-
-- (void)addConnectionWithDescription:(BSDPortConnectionDescription *)description
-{
-    if (!self.objectGraph || !description) {
-        return;
-    }
-    BSDObject *sender = self.objectGraph[description.senderParentId];
-    BSDObject *receiver = self.objectGraph[description.receiverParentId];
-    
-    if (!sender || !receiver) {
-        return;
-    }
-    [sender setDebug:YES];
-    [receiver setDebug:YES];
-    [sender connectOutlet:[sender outletNamed:description.senderPortName] toInlet:[receiver inletNamed:description.receiverPortName]];
-    NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",description.receiverParentId];
-    sender.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
-        
-        NSDictionary *info = @{@"id":description.receiverParentId,
-                               @"event":@(0),
-                               @"port":@"hot",
-                               @"value":outlet.value
-                               };
-        [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:info];
-        
-    };
+    self.objectGraph[desc.uniqueId] = instance;
     
 }
 
-- (void)dealloc
+- (void)handleCanvasResponseNotification:(NSNotification *)notification
 {
+    id response = notification.object;
+    NSDictionary *dict = response;
+    if (dict) {
+        if ([dict.allKeys containsObject:@"superview"] && [dict.allKeys containsObject:@"canvas"]) {
+            UIView *superview = dict[@"superview"];
+            UIView *canvas = dict[@"canvas"];
+            for (UIView *aView in self.views) {
+                
+                UIView *oldSuper = aView.superview;
+                
+                [superview insertSubview:aView belowSubview:canvas];
+            }
+        }
+    }
+    
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
+
+- (void)inletReceievedBang:(BSDInlet *)inlet
+{
+    
+}
+
+- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
+{
+    if (inlet == self.hotInlet) {
+        //[self.patchInlet input:value];
+    }
+}
+
+- (void)calculateOutput
+{
+    
+}
+
 
 @end

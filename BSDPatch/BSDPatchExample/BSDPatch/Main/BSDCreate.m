@@ -420,9 +420,9 @@
 {
     return [[BSDLabel alloc]initWithArguments:nil];
 }
-+ (BSDLabel *)labelWithUILabel:(UILabel*)label
++ (BSDLabel *)labelWithSuperview:(UIView *)superview
 {
-    return [[BSDLabel alloc]initWithUILabel:label];
+    return [[BSDLabel alloc]initWithSuperview:superview];
 }
 
 @end

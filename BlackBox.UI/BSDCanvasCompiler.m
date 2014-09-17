@@ -76,7 +76,7 @@
 
 - (BSDCompiledPatch *)compiledPatchDescriptions:(NSArray *)descriptions withGraph:(NSMutableDictionary *)graph
 {
-    BSDCompiledPatch *patch = [[BSDCompiledPatch alloc]initWithCanvas:[self.delegate canvas]];
+    BSDCompiledPatch *patch = nil;
 
     return patch;
 }

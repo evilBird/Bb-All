@@ -143,6 +143,7 @@
 + (BSDFormatString *)formatString:(NSString *)coldInletValue;
 
 + (BSDLabel *)label;
-+ (BSDLabel *)labelWithUILabel:(UILabel*)label;
+//+ (BSDLabel *)labelWithUILabel:(UILabel*)label;
++ (BSDLabel *)labelWithSuperview:(UIView *)superview;
 
 @end

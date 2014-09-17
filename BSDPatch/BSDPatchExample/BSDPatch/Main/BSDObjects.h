@@ -40,6 +40,12 @@
 #import "BSDSequence.h"
 #import "BSDArrayClassify.h"
 #import "BSDRandom.h"
+#import "BSDGPS.h"
+#import "BSDClient.h"
+#import "BSDMessage.h"
+#import "BSDPatchInlet.h"
+#import "BSDPatchOutlet.h"
+#import "BSDCompiledPatch.h"
 
 #import "BSDSelect.h"
 #import "BSDBang.h"

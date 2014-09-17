@@ -31,6 +31,7 @@
 }
 
 @property (nonatomic,strong)UIPanGestureRecognizer *panGesture;
+@property (nonatomic,strong)UILongPressGestureRecognizer *longPressGesture;
 @property (nonatomic,strong)NSMutableArray *outletViews;
 @property (nonatomic,strong)NSMutableArray *inletViews;
 @property (nonatomic,strong)NSString *className;

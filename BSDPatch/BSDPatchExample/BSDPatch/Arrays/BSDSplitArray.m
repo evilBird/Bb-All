@@ -37,9 +37,9 @@
 
 - (void)calculateOutput
 {
-    NSNumber *hot = self.hotInlet.value;
-    NSUInteger i = hot.integerValue;
-    NSArray *array = self.coldInlet.value;
+    NSNumber *cold = self.coldInlet.value;
+    NSUInteger i = cold.integerValue;
+    NSArray *array = self.hotInlet.value;
     
     if (array && i>0 && i<array.count + 1) {
         NSRange leftRange;

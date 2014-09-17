@@ -37,6 +37,30 @@
     return self;
 }
 
+
+- (NSArray *)inlets
+{
+    if (self.object == NULL) {
+        return nil;
+    }
+    
+    NSArray *inlets = [self.object inlets];
+    CGRect bounds = self.bounds;
+    CGRect frame;
+    frame.size.width = bounds.size.width * 0.25;
+    frame.size.height = bounds.size.height * 0.35;
+    frame.origin.y = 0;
+    NSMutableArray *result = [NSMutableArray array];
+    BSDInlet *inlet = inlets.firstObject;
+    frame.origin.x = 0;
+    BSDPortView *portView = [[BSDPortView alloc]initWithName:inlet.name delegate:self];
+    portView.frame = frame;
+    [result addObject:portView];
+    [self addSubview:portView];
+    
+    return result;
+}
+
 /*
 - (instancetype)initWithDescription:(BSDObjectDescription *)desc
 {
@@ -104,7 +128,8 @@
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
-    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectInset(self.bounds, 6, 6)];
+    CGRect offsetRect = CGRectOffset(self.bounds, 4, 0);
+    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectInset(offsetRect, 6, 6)];
     [self.currentColor setFill];
     [path fill];
 }

@@ -20,11 +20,17 @@
 @property (nonatomic,strong) NSString *name;
 // Unique per-object identifier
 @property (nonatomic,readonly) NSString *objectId;
+@property (nonatomic,strong)NSString *assignedId;
 
 // Default port configuration
 @property (nonatomic,strong) BSDInlet *hotInlet;
 @property (nonatomic,strong) BSDInlet *coldInlet;
 @property (nonatomic,strong) BSDOutlet *mainOutlet;
+
+// Override methods for default port config
+- (BSDInlet *)makeLeftInlet;
+- (BSDInlet *)makeRightInlet;
+- (BSDOutlet *)makeLeftOutlet;
 
 // Keep a collection of additional ports
 @property (nonatomic,strong) NSMutableArray *inlets;

@@ -25,21 +25,25 @@
         _subobjects = [NSMutableArray array];
         
         _name = @"BSDObject";
-        _hotInlet = [[BSDInlet alloc]initHot];
+        _hotInlet = [self makeLeftInlet];
+        if (_hotInlet != nil) {
+            [self addPort:_hotInlet];
+        }
+        /*
         _hotInlet.name = @"hot";
         _hotInlet.objectId = [self objectId];
         _hotInlet.delegate = self;
         [self addPort:_hotInlet];
-
-        _coldInlet = [[BSDInlet alloc]initCold];
-        _coldInlet.name = @"cold";
-        _coldInlet.objectId = [self objectId];
-        [self addPort:_coldInlet];
+         */
+        _coldInlet = [self makeRightInlet];
+        if (_coldInlet != nil) {
+            [self addPort:_coldInlet];
+        }
         
-        _mainOutlet = [[BSDOutlet alloc]init];
-        _mainOutlet.name = @"main";
-        _mainOutlet.objectId = [self objectId];
-        [self addPort:_mainOutlet];
+        _mainOutlet = [self makeLeftOutlet];
+        if (_mainOutlet != nil) {
+            [self addPort:_mainOutlet];
+        }
 
         [self setupWithArguments:arguments];
         
@@ -59,6 +63,32 @@
 }
 
 #pragma mark - overrides
+
+// Override methods for default port config
+- (BSDInlet *)makeLeftInlet
+{
+    BSDInlet *hotInlet = [[BSDInlet alloc]initHot];
+    hotInlet.name = @"hot";
+    hotInlet.objectId = [self objectId];
+    hotInlet.delegate = self;
+    return hotInlet;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    BSDInlet *coldInlet = [[BSDInlet alloc]initCold];
+    coldInlet.name = @"cold";
+    coldInlet.objectId = [self objectId];
+    return coldInlet;
+}
+
+- (BSDOutlet *)makeLeftOutlet
+{
+    BSDOutlet *mainOutlet = [[BSDOutlet alloc]init];
+    mainOutlet.name = @"main";
+    mainOutlet.objectId = [self objectId];
+    return mainOutlet;
+}
 
 - (void)setupWithArguments:(id)arguments
 {
@@ -84,6 +114,8 @@
 {
     
 }
+
+
 
 #pragma mark - BSDPortDelegate methods
 
@@ -181,6 +213,10 @@
 
 - (NSString *)objectId
 {
+    if (self.assignedId != nil) {
+        return self.assignedId;
+    }
+    
     return [NSString stringWithFormat:@"%p",self];
 }
 

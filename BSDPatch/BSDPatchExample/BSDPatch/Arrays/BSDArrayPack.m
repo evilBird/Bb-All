@@ -47,19 +47,24 @@
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
     if (inlet == self.hotInlet) {
-        NSUInteger numberOfInlets = self.inlets.count - 2;
-        NSMutableArray *outputArray = [[NSMutableArray alloc]initWithCapacity:numberOfInlets];
-        for (NSUInteger idx = 0; idx < numberOfInlets; idx ++) {
-            id value = [self inletAtIndex:@(idx)];
-            if (value != NULL) {
-                [outputArray addObject:[NSNull null]];
-            }else{
-                [outputArray addObject:value];
-            }
-        }
-        
-        self.mainOutlet.value = outputArray;
+        [self calculateOutput];
     }
+}
+
+- (void)calculateOutput
+{
+    NSUInteger numberOfInlets = self.inlets.count - 2;
+    NSMutableArray *outputArray = [[NSMutableArray alloc]initWithCapacity:numberOfInlets];
+    for (NSUInteger idx = 0; idx < numberOfInlets; idx ++) {
+        BSDInlet *inlet = [self inletAtIndex:@(idx)];
+        if (inlet.value == NULL) {
+            [outputArray addObject:[NSNull null]];
+        }else{
+            [outputArray addObject:inlet.value];
+        }
+    }
+    
+    [self.mainOutlet setValue:outputArray];
 }
 
 - (BSDInlet *)inletAtIndex:(NSNumber *)index

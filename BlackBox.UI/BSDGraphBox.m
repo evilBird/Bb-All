@@ -36,6 +36,7 @@
         _textField.textColor = [UIColor whiteColor];
         _textField.textAlignment = NSTextAlignmentCenter;
         _textField.font = [UIFont boldSystemFontOfSize:frame.size.height * 0.35];
+        _textField.tintColor = [UIColor colorWithWhite:0.7 alpha:1];
         [self insertSubview:_textField atIndex:0];
         kAllowEdit = YES;
     }
@@ -119,9 +120,22 @@
         UIView *myView = [[self.object coldInlet]value];
         if ([myView isKindOfClass:[UIView class]]) {
             UIView *superview = [self.delegate displayViewForBox:self];
-            BSDCanvas *canvas = (BSDCanvas *)self.delegate;
             myView.center = [myView convertPoint:superview.center toView:myView];
             [superview insertSubview:myView atIndex:0];
+        }else{
+            /*
+            NSArray *views = [[self.object coldInlet]value];
+            if ([views isKindOfClass:[NSArray class]]) {
+                UIView *superview = [self.delegate displayViewForBox:self];
+                for (id obj in views) {
+                    UIView *myView = obj;
+                    if ([myView isKindOfClass:[UIView class]]) {
+                        myView.center = [myView convertPoint:superview.center toView:myView];
+                        [superview insertSubview:myView atIndex:0];
+                    }
+                }
+            }
+             */
         }
     }
 }
@@ -180,7 +194,6 @@
 }
 
 
-
 - (void)createObjectWithName:(NSString *)name arguments:(NSArray *)args
 {
     self.className = nil;
@@ -192,7 +205,7 @@
     }
     
     if (self.className) {
-        if ([name isEqualToString:@"BSDView"]) {
+        if ([name isEqualToString:@"BSDView"] || [name isEqualToString:@"BSDLabel"]) {
 
             if (self.delegate) {
                 UIView *view = [self.delegate displayViewForBox:self];
@@ -211,6 +224,7 @@
                 [self makeObjectInstance];
             }
         }
+        
         NSMutableString *displayName = [[NSMutableString alloc]initWithString:[self.object name]];
         for (id arg in args) {
             if ([arg isKindOfClass:[NSNumber class]]|| [arg isKindOfClass:[NSString class]]) {

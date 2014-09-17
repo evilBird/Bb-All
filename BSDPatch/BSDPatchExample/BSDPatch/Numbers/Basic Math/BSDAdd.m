@@ -19,8 +19,16 @@
 {
     self.name = @"+";
     NSNumber *plusValue = arguments;
-    if (plusValue) {
+    if (plusValue && [plusValue isKindOfClass:[NSNumber class]]) {
         self.coldInlet.value = plusValue;
+    }else if (plusValue && [plusValue isKindOfClass:[NSArray class]]){
+        NSArray *args = arguments;
+        id first = args.firstObject;
+        if ([first isKindOfClass:[NSNumber class]]) {
+            self.coldInlet.value = first;
+        }else{
+            self.coldInlet.value = @0;
+        }
     }else{
         self.coldInlet.value = @0;
     }

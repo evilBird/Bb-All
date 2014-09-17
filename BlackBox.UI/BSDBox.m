@@ -20,7 +20,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-
         _panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
         [self addGestureRecognizer:_panGesture];
         kAllowEdit = YES;
@@ -166,6 +165,7 @@
     }
 }
 
+
 - (NSString *)parentClass
 {
     return self.className;
@@ -193,7 +193,6 @@
 {
     NSMutableArray *temp = [NSMutableArray array];
     NSMutableArray *portviews = [NSMutableArray array];
-    //[portviews addObjectsFromArray:self.inletViews];
     [portviews addObjectsFromArray:self.outletViews];
     for (BSDPortView *portView in portviews) {
         if (portView.connectedPortViews.count > 0) {
@@ -212,7 +211,6 @@
 {
     NSMutableArray *temp = [NSMutableArray array];
     NSMutableArray *portviews = [NSMutableArray array];
-    //[portviews addObjectsFromArray:self.inletViews];
     [portviews addObjectsFromArray:self.outletViews];
     for (BSDPortView *portView in portviews) {
         if (portView.connectedPortViews.count > 0) {

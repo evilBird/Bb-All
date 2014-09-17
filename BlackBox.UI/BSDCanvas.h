@@ -27,5 +27,10 @@
 - (NSDictionary *)currentPatch;
 - (void)loadPatchWithDictionary:(NSDictionary *)dictionary;
 - (void)clearCurrentPatch;
+- (void)addBangBoxAtPoint:(CGPoint)point;
+- (void)addNumberBoxAtPoint:(CGPoint)point;
+- (void)addMessageBoxAtPoint:(CGPoint)point;
+- (void)addInletBoxAtPoint:(CGPoint)point;
+- (void)addOutletBoxAtPoint:(CGPoint)point;
 
 @end

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5EC7E8FBB4FC43EB8F4060BE /* libPods-BlackBox.UI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */; };
+		F21E4C5519C8FDD600D20D60 /* BSDClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E4C5419C8FDD600D20D60 /* BSDClient.m */; };
+		F21E4C5819C8FF4900D20D60 /* BSDGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E4C5719C8FF4900D20D60 /* BSDGPS.m */; };
 		F21E50D419C3F63200E51383 /* BSDBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E50D319C3F63200E51383 /* BSDBox.m */; };
 		F21E50D719C3FE1A00E51383 /* BSDNumberBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E50D619C3FE1A00E51383 /* BSDNumberBox.m */; };
 		F21E50DA19C4240D00E51383 /* BSDStringBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E50D919C4240D00E51383 /* BSDStringBox.m */; };
@@ -100,10 +103,18 @@
 		F21E535119C5249100E51383 /* BSDBangControlBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E534F19C5249100E51383 /* BSDBangControlBox.m */; };
 		F266521619C8E58A006E26CB /* BSDViewBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F266521519C8E58A006E26CB /* BSDViewBox.m */; };
 		F2789E4119C8D4C6006F6CA4 /* PopoverContentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */; };
+		F283A1FA19CA06DF005CC98B /* BSDPatchInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1F919CA06DF005CC98B /* BSDPatchInlet.m */; };
+		F283A1FD19CA0709005CC98B /* BSDPatchOutlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1FC19CA0709005CC98B /* BSDPatchOutlet.m */; };
+		F283A20019CA11C8005CC98B /* BSDInletBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1FF19CA11C8005CC98B /* BSDInletBox.m */; };
+		F283A20319CA11DF005CC98B /* BSDOutletBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A20219CA11DF005CC98B /* BSDOutletBox.m */; };
+		F283A20619CA1920005CC98B /* BSDTwoWayInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A20519CA1920005CC98B /* BSDTwoWayInlet.m */; };
+		F283A20919CA193C005CC98B /* BSDTwoWayOutlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A20819CA193C005CC98B /* BSDTwoWayOutlet.m */; };
 		F2AAF7A019C7CB97004EFE87 /* BSDPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF79F19C7CB97004EFE87 /* BSDPrint.m */; };
 		F2AAF7A319C7DD16004EFE87 /* BSDRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A219C7DD16004EFE87 /* BSDRandom.m */; };
 		F2AAF7A619C7FB4B004EFE87 /* BSDCanvasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */; };
 		F2AAF7A919C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A819C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m */; };
+		F2EE14B319C9EF9B008D83E2 /* BSDMessageBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EE14B219C9EF9B008D83E2 /* BSDMessageBox.m */; };
+		F2EE14B619C9F070008D83E2 /* BSDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EE14B519C9F070008D83E2 /* BSDMessage.m */; };
 		F2F5131D19B8D97C00323096 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5131C19B8D97C00323096 /* main.m */; };
 		F2F5132019B8D97C00323096 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5131F19B8D97C00323096 /* AppDelegate.m */; };
 		F2F5132319B8D97C00323096 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5132219B8D97C00323096 /* ViewController.m */; };
@@ -131,6 +142,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BlackBox.UI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F21E4C5319C8FDD600D20D60 /* BSDClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDClient.h; sourceTree = "<group>"; };
+		F21E4C5419C8FDD600D20D60 /* BSDClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDClient.m; sourceTree = "<group>"; };
+		F21E4C5619C8FF4900D20D60 /* BSDGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSDGPS.h; path = ../Utility/BSDGPS.h; sourceTree = "<group>"; };
+		F21E4C5719C8FF4900D20D60 /* BSDGPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSDGPS.m; path = ../Utility/BSDGPS.m; sourceTree = "<group>"; };
 		F21E50D219C3F63200E51383 /* BSDBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDBox.h; sourceTree = "<group>"; };
 		F21E50D319C3F63200E51383 /* BSDBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDBox.m; sourceTree = "<group>"; };
 		F21E50D519C3FE1A00E51383 /* BSDNumberBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDNumberBox.h; sourceTree = "<group>"; };
@@ -320,6 +336,18 @@
 		F266521519C8E58A006E26CB /* BSDViewBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDViewBox.m; sourceTree = "<group>"; };
 		F2789E3F19C8D4C6006F6CA4 /* PopoverContentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverContentTableViewController.h; sourceTree = "<group>"; };
 		F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverContentTableViewController.m; sourceTree = "<group>"; };
+		F283A1F819CA06DF005CC98B /* BSDPatchInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchInlet.h; sourceTree = "<group>"; };
+		F283A1F919CA06DF005CC98B /* BSDPatchInlet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchInlet.m; sourceTree = "<group>"; };
+		F283A1FB19CA0709005CC98B /* BSDPatchOutlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchOutlet.h; sourceTree = "<group>"; };
+		F283A1FC19CA0709005CC98B /* BSDPatchOutlet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchOutlet.m; sourceTree = "<group>"; };
+		F283A1FE19CA11C8005CC98B /* BSDInletBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDInletBox.h; sourceTree = "<group>"; };
+		F283A1FF19CA11C8005CC98B /* BSDInletBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDInletBox.m; sourceTree = "<group>"; };
+		F283A20119CA11DF005CC98B /* BSDOutletBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDOutletBox.h; sourceTree = "<group>"; };
+		F283A20219CA11DF005CC98B /* BSDOutletBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDOutletBox.m; sourceTree = "<group>"; };
+		F283A20419CA1920005CC98B /* BSDTwoWayInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTwoWayInlet.h; sourceTree = "<group>"; };
+		F283A20519CA1920005CC98B /* BSDTwoWayInlet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTwoWayInlet.m; sourceTree = "<group>"; };
+		F283A20719CA193C005CC98B /* BSDTwoWayOutlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTwoWayOutlet.h; sourceTree = "<group>"; };
+		F283A20819CA193C005CC98B /* BSDTwoWayOutlet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTwoWayOutlet.m; sourceTree = "<group>"; };
 		F2AAF79E19C7CB97004EFE87 /* BSDPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPrint.h; sourceTree = "<group>"; };
 		F2AAF79F19C7CB97004EFE87 /* BSDPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPrint.m; sourceTree = "<group>"; };
 		F2AAF7A119C7DD16004EFE87 /* BSDRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDRandom.h; sourceTree = "<group>"; };
@@ -328,6 +356,10 @@
 		F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCanvasViewController.m; sourceTree = "<group>"; };
 		F2AAF7A719C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+HBVUtils.h"; sourceTree = "<group>"; };
 		F2AAF7A819C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+HBVUtils.m"; sourceTree = "<group>"; };
+		F2EE14B119C9EF9B008D83E2 /* BSDMessageBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDMessageBox.h; sourceTree = "<group>"; };
+		F2EE14B219C9EF9B008D83E2 /* BSDMessageBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDMessageBox.m; sourceTree = "<group>"; };
+		F2EE14B419C9F070008D83E2 /* BSDMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDMessage.h; sourceTree = "<group>"; };
+		F2EE14B519C9F070008D83E2 /* BSDMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDMessage.m; sourceTree = "<group>"; };
 		F2F5131719B8D97C00323096 /* BlackBox.UI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackBox.UI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F5131B19B8D97C00323096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2F5131C19B8D97C00323096 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -356,6 +388,7 @@
 		F2F5139419B92C9600323096 /* BSDPortConnectionDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPortConnectionDescription.m; sourceTree = "<group>"; };
 		F2F5139619B9342400323096 /* BSDCompiledPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDCompiledPatch.h; sourceTree = "<group>"; };
 		F2F5139719B9342400323096 /* BSDCompiledPatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCompiledPatch.m; sourceTree = "<group>"; };
+		F7FDFF3A9D8F468DBAEB9C03 /* Pods-BlackBox.UI.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBox.UI.xcconfig"; path = "Pods/Pods-BlackBox.UI.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -363,6 +396,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EC7E8FBB4FC43EB8F4060BE /* libPods-BlackBox.UI.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,6 +410,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04119221047643E083A0AD2F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F21E523219C51BC300E51383 /* BSDPatch */ = {
 			isa = PBXGroup;
 			children = (
@@ -392,6 +434,8 @@
 				F21E52D719C51BC300E51383 /* Time */,
 				F21E52DA19C51BC300E51383 /* UI */,
 				F21E52ED19C51BC300E51383 /* Utility */,
+				F21E4C5319C8FDD600D20D60 /* BSDClient.h */,
+				F21E4C5419C8FDD600D20D60 /* BSDClient.m */,
 			);
 			name = BSDPatch;
 			path = BSDPatch/BSDPatchExample/BSDPatch;
@@ -489,6 +533,8 @@
 		F21E526E19C51BC300E51383 /* Generators */ = {
 			isa = PBXGroup;
 			children = (
+				F21E4C5619C8FF4900D20D60 /* BSDGPS.h */,
+				F21E4C5719C8FF4900D20D60 /* BSDGPS.m */,
 				F21E526F19C51BC300E51383 /* BSDGenerator.h */,
 				F21E527019C51BC300E51383 /* BSDGenerator.m */,
 				F21E527119C51BC300E51383 /* BSDMotionGenerator.h */,
@@ -659,6 +705,14 @@
 				F21E52D119C51BC300E51383 /* BSDOutlet.m */,
 				F21E52D219C51BC300E51383 /* BSDPort.h */,
 				F21E52D319C51BC300E51383 /* BSDPort.m */,
+				F283A20419CA1920005CC98B /* BSDTwoWayInlet.h */,
+				F283A20519CA1920005CC98B /* BSDTwoWayInlet.m */,
+				F283A20719CA193C005CC98B /* BSDTwoWayOutlet.h */,
+				F283A20819CA193C005CC98B /* BSDTwoWayOutlet.m */,
+				F283A1F819CA06DF005CC98B /* BSDPatchInlet.h */,
+				F283A1F919CA06DF005CC98B /* BSDPatchInlet.m */,
+				F283A1FB19CA0709005CC98B /* BSDPatchOutlet.h */,
+				F283A1FC19CA0709005CC98B /* BSDPatchOutlet.m */,
 			);
 			path = Ports;
 			sourceTree = "<group>";
@@ -719,6 +773,8 @@
 				F21E52F519C51BC300E51383 /* BSDVelocity.m */,
 				F2AAF79E19C7CB97004EFE87 /* BSDPrint.h */,
 				F2AAF79F19C7CB97004EFE87 /* BSDPrint.m */,
+				F2EE14B419C9F070008D83E2 /* BSDMessage.h */,
+				F2EE14B519C9F070008D83E2 /* BSDMessage.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -730,6 +786,8 @@
 				F2F5131919B8D97C00323096 /* BlackBox.UI */,
 				F2F5133019B8D97C00323096 /* BlackBox.UITests */,
 				F2F5131819B8D97C00323096 /* Products */,
+				F7FDFF3A9D8F468DBAEB9C03 /* Pods-BlackBox.UI.xcconfig */,
+				04119221047643E083A0AD2F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -761,8 +819,14 @@
 				F2F5138819B9031C00323096 /* BSDCanvas.m */,
 				F21E50D219C3F63200E51383 /* BSDBox.h */,
 				F21E50D319C3F63200E51383 /* BSDBox.m */,
+				F283A1FE19CA11C8005CC98B /* BSDInletBox.h */,
+				F283A1FF19CA11C8005CC98B /* BSDInletBox.m */,
+				F283A20119CA11DF005CC98B /* BSDOutletBox.h */,
+				F283A20219CA11DF005CC98B /* BSDOutletBox.m */,
 				F21E535019C5249100E51383 /* BSDBangControlBox.h */,
 				F21E534F19C5249100E51383 /* BSDBangControlBox.m */,
+				F2EE14B119C9EF9B008D83E2 /* BSDMessageBox.h */,
+				F2EE14B219C9EF9B008D83E2 /* BSDMessageBox.m */,
 				F21E50D819C4240D00E51383 /* BSDStringBox.h */,
 				F21E50D919C4240D00E51383 /* BSDStringBox.m */,
 				F21E50D519C3FE1A00E51383 /* BSDNumberBox.h */,
@@ -823,9 +887,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F2F5133719B8D97C00323096 /* Build configuration list for PBXNativeTarget "BlackBox.UI" */;
 			buildPhases = (
+				CDA6F22F2CDB437BA27823D2 /* Check Pods Manifest.lock */,
 				F2F5131319B8D97C00323096 /* Sources */,
 				F2F5131419B8D97C00323096 /* Frameworks */,
 				F2F5131519B8D97C00323096 /* Resources */,
+				68534D16C396424BB5D88124 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -910,6 +976,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		68534D16C396424BB5D88124 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-BlackBox.UI-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CDA6F22F2CDB437BA27823D2 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F2F5131319B8D97C00323096 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -917,10 +1016,13 @@
 			files = (
 				F21E531A19C51BC300E51383 /* BSDMod.m in Sources */,
 				F21E530A19C51BC300E51383 /* BSDCounter.m in Sources */,
+				F283A20019CA11C8005CC98B /* BSDInletBox.m in Sources */,
 				F2F5133F19B8DAB800323096 /* BSDGraphBox.m in Sources */,
 				F21E50D419C3F63200E51383 /* BSDBox.m in Sources */,
 				F21E531719C51BC300E51383 /* BSDAdd.m in Sources */,
 				F21E531019C51BC300E51383 /* BSDValue.m in Sources */,
+				F21E4C5519C8FDD600D20D60 /* BSDClient.m in Sources */,
+				F283A20319CA11DF005CC98B /* BSDOutletBox.m in Sources */,
 				F21E50D719C3FE1A00E51383 /* BSDNumberBox.m in Sources */,
 				F21E534819C51BC300E51383 /* BSDBuffer.m in Sources */,
 				F2AAF7A319C7DD16004EFE87 /* BSDRandom.m in Sources */,
@@ -976,12 +1078,16 @@
 				F21E533019C51BC300E51383 /* BSDRectSplit.m in Sources */,
 				F21E533319C51BC300E51383 /* BSDMedian.m in Sources */,
 				F21E533419C51BC300E51383 /* BSDPTest.m in Sources */,
+				F283A20619CA1920005CC98B /* BSDTwoWayInlet.m in Sources */,
 				F21E531D19C51BC300E51383 /* BSDReciprocal.m in Sources */,
+				F283A1FD19CA0709005CC98B /* BSDPatchOutlet.m in Sources */,
 				F21E532719C51BC300E51383 /* BSDDistance2D.m in Sources */,
 				F21E531519C51BC300E51383 /* BSDObject.m in Sources */,
 				F21E531F19C51BC300E51383 /* BSDEqual.m in Sources */,
 				F21E52F619C51BC300E51383 /* BSDArrayAccum.m in Sources */,
 				F21E531119C51BC300E51383 /* BSDGenerator.m in Sources */,
+				F2EE14B319C9EF9B008D83E2 /* BSDMessageBox.m in Sources */,
+				F2EE14B619C9F070008D83E2 /* BSDMessage.m in Sources */,
 				F21E533919C51BC300E51383 /* BSDInt.m in Sources */,
 				F21E532319C51BC300E51383 /* BSDLess.m in Sources */,
 				F2AAF7A919C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m in Sources */,
@@ -995,6 +1101,7 @@
 				F21E532E19C51BC300E51383 /* BSDPoint3D.m in Sources */,
 				F21E52FF19C51BC300E51383 /* BSDArrayPrepend.m in Sources */,
 				F2F5132019B8D97C00323096 /* AppDelegate.m in Sources */,
+				F283A20919CA193C005CC98B /* BSDTwoWayOutlet.m in Sources */,
 				F21E531219C51BC300E51383 /* BSDMotionGenerator.m in Sources */,
 				F21E534119C51BC300E51383 /* BSDFont.m in Sources */,
 				F21E531C19C51BC300E51383 /* BSDNaturalLog.m in Sources */,
@@ -1014,6 +1121,8 @@
 				F21E52F719C51BC300E51383 /* BSDArrayBox.m in Sources */,
 				F21E530019C51BC300E51383 /* BSDArraySerialize.m in Sources */,
 				F2F5131D19B8D97C00323096 /* main.m in Sources */,
+				F21E4C5819C8FF4900D20D60 /* BSDGPS.m in Sources */,
+				F283A1FA19CA06DF005CC98B /* BSDPatchInlet.m in Sources */,
 				F21E532C19C51BC300E51383 /* BSDTan.m in Sources */,
 				F21E530C19C51BC300E51383 /* BSDSelect.m in Sources */,
 				F21E532019C51BC300E51383 /* BSDEqualGreater.m in Sources */,
@@ -1136,6 +1245,7 @@
 		};
 		F2F5133819B8D97C00323096 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F7FDFF3A9D8F468DBAEB9C03 /* Pods-BlackBox.UI.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1148,6 +1258,7 @@
 		};
 		F2F5133919B8D97C00323096 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F7FDFF3A9D8F468DBAEB9C03 /* Pods-BlackBox.UI.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

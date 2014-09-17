@@ -9,12 +9,12 @@
 #import "BSDObject.h"
 #import "BSDObjectDescription.h"
 #import "BSDPortConnectionDescription.h"
+#import "BSDPatchInlet.h"
+#import "BSDPatchOutlet.h"
 
-@class BSDCanvas;
 @interface BSDCompiledPatch : BSDObject
 
-- (instancetype)initWithCanvas:(BSDCanvas *)canvas;
-- (void)addObjectWithDescription:(BSDObjectDescription *)description;
-- (void)addConnectionWithDescription:(BSDPortConnectionDescription *)description;
+@property (nonatomic,strong)BSDPatchInlet *patchInlet;
+@property (nonatomic,strong)BSDPatchOutlet *patchOutlet;
 
 @end

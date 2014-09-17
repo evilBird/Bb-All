@@ -10,6 +10,11 @@
 #import "BSDCompiledPatch.h"
 #import "BSDNumberBox.h"
 #import "BSDBangControlBox.h"
+#import "BSDObjects.h"
+#import "BSDObject.h"
+#import "BSDMessageBox.h"
+#import "BSDInletBox.h"
+#import "BSDOutletBox.h"
 #import <ObjC/runtime.h>
 
 @interface BSDCanvas ()
@@ -20,8 +25,8 @@
 @property (nonatomic,strong)NSMutableArray *highlightedPaths;
 
 
-@property (nonatomic,strong)UIView *testView;
 @property (nonatomic,strong)NSArray *allowedObjects;
+@property (nonatomic,strong)BSDView *canvasView;
 
 
 @end
@@ -39,17 +44,34 @@
         _doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
         _doubleTap.numberOfTapsRequired = 2;
         [self addGestureRecognizer:_doubleTap];
-        _longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
-        _longPress.allowableMovement = 10;
-        [self addGestureRecognizer:_longPress];
+        //_longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+        //_longPress.allowableMovement = 10;
+        //[self addGestureRecognizer:_longPress];
         _connectionPaths = [NSMutableArray array];
         self.backgroundColor = [UIColor whiteColor];
-        //[self addUtilityObjects];
-        //[self testBangBox];
-        //[self testNumberBox];
+        [self addCanvasBox];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleCompiledPatchNotification:) name:@"com.birdSound.BlockBox-UI.compiledPatchNeedsSomethingNotification" object:nil];
+        
     }
     
     return self;
+}
+
+- (void)handleCompiledPatchNotification:(NSNotification *)notification
+{
+    NSDictionary *object = notification.object;
+    if (object && [object.allKeys containsObject:@"key"] && [object.allKeys containsObject:@"hollaBack"]) {
+        NSString *key = object[@"key"];
+        NSString *notificationName = object[@"hollaBack"];
+        if ([key isEqualToString:@"superview"]) {
+            UIView *superview = [self.delegate viewForCanvas:self];
+            UIView *canvas = self;
+            NSDictionary *response = @{@"superview":superview,
+                                       @"canvas":canvas
+                                       };
+            [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:response];
+        }
+    }
 }
 
 - (void)addUtilityObjects
@@ -69,6 +91,18 @@
         pt.y = i * step + y;
         [self addBangBoxAtPoint:pt];
     }
+}
+
+- (void)addCanvasBox
+{
+    CGRect rect = CGRectMake(0, 0, 140, 50);
+    BSDGraphBox *graphBox = [BSDGraphBox graphBoxWithFrame:rect className:@"BSDView" args:NULL];
+    graphBox.center = self.center;
+    graphBox.delegate = self;
+    self.boxes[graphBox.uniqueId] = graphBox;
+    [self.graphBoxes addObject:graphBox];
+    [[graphBox.object coldInlet]setValue:[self.delegate viewForCanvas:self]];
+    [self addSubview:graphBox];
 }
 
 - (void)handleDoubleTap:(id)sender
@@ -333,6 +367,39 @@
     [self.boxes setValue:bangBox forKey:[bangBox uniqueId]];
 }
 
+- (void)addMessageBoxAtPoint:(CGPoint)point
+{
+    CGRect rect = CGRectMake(100, 100, 160, 44);
+    BSDMessageBox *messageBox = [[BSDMessageBox alloc]initWithFrame:rect];
+    messageBox.delegate = self;
+    messageBox.center = point;
+    [self addSubview:messageBox];
+    [self.graphBoxes addObject:messageBox];
+    [self.boxes setValue:messageBox forKey:[messageBox uniqueId]];
+}
+
+- (void)addInletBoxAtPoint:(CGPoint)point
+{
+    CGRect rect = CGRectMake(100, 100, 80, 44);
+    BSDInletBox *inletBox = [[BSDInletBox alloc]initWithFrame:rect];
+    inletBox.delegate = self;
+    inletBox.center = point;
+    [self addSubview:inletBox];
+    [self.graphBoxes addObject:inletBox];
+    [self.boxes setValue:inletBox forKey:[inletBox uniqueId]];
+}
+
+- (void)addOutletBoxAtPoint:(CGPoint)point
+{
+    CGRect rect = CGRectMake(100, 100, 80, 44);
+    BSDOutletBox *outletBox = [[BSDOutletBox alloc]initWithFrame:rect];
+    outletBox.delegate = self;
+    outletBox.center = point;
+    [self addSubview:outletBox];
+    [self.graphBoxes addObject:outletBox];
+    [self.boxes setValue:outletBox forKey:[outletBox uniqueId]];
+}
+
 - (void)clearCurrentPatch
 {
     for (UIView *subview in self.subviews) {
@@ -348,6 +415,7 @@
     self.graphBoxes = [NSMutableArray array];
     self.connectionPaths = [NSMutableArray array];
     [self setNeedsDisplay];
+    [self addCanvasBox];
     
 }
 
@@ -385,5 +453,9 @@
     [self addBangBoxAtPoint:self.center];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 
 @end

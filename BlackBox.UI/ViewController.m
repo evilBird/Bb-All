@@ -19,11 +19,13 @@
 @property (nonatomic)CGFloat previousScale;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) UIPopoverController *myPopoverController;
+@property (nonatomic)CGPoint lastTouchLocation;
 
 - (IBAction)tapInSwitchViewButton:(id)sender;
 - (IBAction)savePatchRequested:(id)sender;
 - (IBAction)loadPatchRequested:(id)sender;
 - (IBAction)clearCurrentPatchRequested:(id)sender;
+- (IBAction)tapInAddButton:(id)sender;
 
 @end
 
@@ -146,16 +148,58 @@
     [self.canvas clearCurrentPatch];
 }
 
+- (IBAction)tapInAddButton:(id)sender {
+    
+    if (self.myPopoverController == nil) {
+        PopoverContentTableViewController *sp = [self addObjectsTableViewController];
+        
+        self.myPopoverController = [self popoverControllerWithContentViewController:sp];
+        [self.myPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        
+    }else{
+        
+        [self.myPopoverController dismissPopoverAnimated:YES];
+        self.myPopoverController = nil;
+    }
+}
+
 - (void)itemWasSelected:(NSString *)patchName
 {
-    [self loadSavedPatchWithName:patchName];
+    NSArray *objects = @[@"bang box",@"number box",@"message box",@"inlet",@"outlet"];
+    if ([objects containsObject:patchName]) {
+        if ([patchName isEqualToString:@"bang box"]) {
+            [self.canvas addBangBoxAtPoint:[self getObjectPlacement]];
+        }else if ([patchName isEqualToString:@"number box"]){
+            [self.canvas addNumberBoxAtPoint:[self getObjectPlacement]];
+        }else if ([patchName isEqualToString:@"message box"]){
+            [self.canvas addMessageBoxAtPoint:[self getObjectPlacement]];
+        }else if ([patchName isEqualToString:@"inlet"]){
+            [self.canvas addInletBoxAtPoint:[self getObjectPlacement]];
+        }else if ([patchName isEqualToString:@"outlet"]){
+            [self.canvas addOutletBoxAtPoint:[self getObjectPlacement]];
+        }
+        
+    }else{
+        [self loadSavedPatchWithName:patchName];
+    }
     [self.myPopoverController dismissPopoverAnimated:YES];
     self.myPopoverController = nil;
 }
 
+- (CGPoint)getObjectPlacement
+{
+    CGPoint offset = self.scrollView.contentOffset;
+    CGPoint canvasCenter = self.canvas.center;
+    CGPoint point = canvasCenter;
+    point.x += offset.x;
+    point.y += offset.y;
+    
+    return point;
+}
+
 - (PopoverContentTableViewController *)savedPatchesTableViewController
 {
-    PopoverContentTableViewController *sptvc = [[PopoverContentTableViewController alloc]initWithStyle:UITableViewStylePlain];;
+    PopoverContentTableViewController *sptvc = [[PopoverContentTableViewController alloc]initWithStyle:UITableViewStylePlain];
     sptvc.delegate = self;
     NSDictionary *savedPatches = [NSUserDefaults valueForKey:@"patches"];
     if (savedPatches) {
@@ -165,6 +209,14 @@
     }
     
     return sptvc;
+}
+
+- (PopoverContentTableViewController *)addObjectsTableViewController
+{
+    PopoverContentTableViewController *tvc = [[PopoverContentTableViewController alloc]initWithStyle:UITableViewStylePlain];
+    tvc.delegate = self;
+    tvc.itemNames = @[@"bang box",@"number box",@"message box",@"inlet",@"outlet"];
+    return tvc;
 }
 
 - (UIPopoverController *)popoverControllerWithContentViewController:(UIViewController *)viewController

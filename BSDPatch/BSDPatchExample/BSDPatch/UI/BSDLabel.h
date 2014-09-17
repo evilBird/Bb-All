@@ -15,7 +15,11 @@
 //Cold inlet: Stores a UILabel instance
 //Main outlet: Emits the UILabel whenever its properties are updated
 
-- (instancetype)initWithUILabel:(UILabel *)label;
+//- (instancetype)initWithUILabel:(UILabel *)label;
+- (instancetype)initWithSuperview:(UIView *)superview;
 - (UILabel *)label;
+
+@property (nonatomic,strong)BSDInlet *getterInlet;
+@property (nonatomic,strong)BSDOutlet *getterOutlet;
 
 @end
