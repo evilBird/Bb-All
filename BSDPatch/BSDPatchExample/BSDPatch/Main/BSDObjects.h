@@ -46,6 +46,7 @@
 #import "BSDPatchInlet.h"
 #import "BSDPatchOutlet.h"
 #import "BSDCompiledPatch.h"
+#import "BSDNumber.h"
 
 #import "BSDSelect.h"
 #import "BSDBang.h"

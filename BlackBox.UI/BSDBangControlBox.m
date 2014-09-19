@@ -11,9 +11,6 @@
 
 @interface BSDBangControlBox ()
 
-@property (nonatomic,strong)UIColor *defaultColor;
-@property (nonatomic,strong)UIColor *highightColor;
-@property (nonatomic,strong)UIColor *currentColor;
 
 @end
 
@@ -30,13 +27,13 @@
         self.inletViews = [NSMutableArray arrayWithArray:inletViews];
         NSArray *outletViews = [self outlets];
         self.outletViews = [NSMutableArray arrayWithArray:outletViews];
-        self.defaultColor = [UIColor colorWithWhite:0.8 alpha:1];
-        self.highightColor = [UIColor colorWithWhite:0.5 alpha:1];
-        self.currentColor = self.defaultColor;
+        _defaultCenterColor = [UIColor colorWithWhite:0.8 alpha:1];
+        _highlightCenterColor = [UIColor colorWithWhite:0.55 alpha:1];
+        _currentCenterColor = _defaultCenterColor;
     }
     return self;
 }
-
+/*
 
 - (NSArray *)inlets
 {
@@ -60,23 +57,8 @@
     
     return result;
 }
-
-/*
-- (instancetype)initWithDescription:(BSDObjectDescription *)desc
-{
-    self = [super initWithDescription:desc];
-    if (self) {
-        NSArray *inletViews = [self inlets];
-        self.inletViews = [NSMutableArray arrayWithArray:inletViews];
-        NSArray *outletViews = [self outlets];
-        self.outletViews = [NSMutableArray arrayWithArray:outletViews];
-        self.defaultColor = [UIColor colorWithWhite:0.8 alpha:1];
-        self.highightColor = [UIColor colorWithWhite:0.5 alpha:1];
-        self.currentColor = self.defaultColor;
-    }
-    return self;
-}
 */
+
 - (void)senderValueChanged:(id)value
 {
     [self doHighlight];
@@ -85,15 +67,17 @@
 
 - (void)doHighlight
 {
-    self.currentColor = self.highightColor;
-    [self setNeedsDisplay];
-    [self.object calculateOutput];
-    //[[self.object outletNamed:@"main"]setValue:[BSDBang bang]];
+    self.currentCenterColor = self.highlightCenterColor;
 }
 
 - (void)endHighlight
 {
-    self.currentColor = self.defaultColor;
+    self.currentCenterColor = self.defaultCenterColor;
+}
+
+- (void)setCurrentCenterColor:(UIColor *)currentCenterColor
+{
+    _currentCenterColor = currentCenterColor;
     [self setNeedsDisplay];
 }
 
@@ -102,6 +86,7 @@
     UIView *view = [self hitTest:[touches.allObjects.lastObject locationInView:self] withEvent:event];
     if (![view isKindOfClass:[BSDPortView class]]) {
         
+        [[self.object hotInlet]input:[BSDBang bang]];
         [self doHighlight];
     }
 }
@@ -128,9 +113,8 @@
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
-    CGRect offsetRect = CGRectOffset(self.bounds, 4, 0);
-    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectInset(offsetRect, 6, 6)];
-    [self.currentColor setFill];
+    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectInset(self.bounds, 6, 6)];
+    [self.currentCenterColor setFill];
     [path fill];
 }
 

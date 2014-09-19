@@ -17,7 +17,24 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"bang box";
+    self.name = @"bang";
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
+
+- (void)inletReceievedBang:(BSDInlet *)inlet
+{
+    if (inlet == self.hotInlet) {
+        [self calculateOutput];
+    }
+}
+
+- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
+{
+    [self calculateOutput];
 }
 
 - (void)calculateOutput

@@ -13,6 +13,12 @@
 #import "BSDObjectDescription.h"
 #import "BSDCanvas.h"
 
+@interface BSDBox ()
+
+
+
+@end
+
 @implementation BSDBox
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -24,9 +30,12 @@
         [self addGestureRecognizer:_panGesture];
         kAllowEdit = YES;
         self.clipsToBounds = NO;
-        self.backgroundColor = [UIColor colorWithWhite:0.21 alpha:1];
+        self.defaultColor = [UIColor colorWithWhite:0.21 alpha:1];
+        self.selectedColor = [UIColor colorWithWhite:0.6 alpha:1];
+        _currentColor = self.defaultColor;
+        self.backgroundColor = _currentColor;
         self.layer.borderWidth = 1.0f;
-        self.layer.borderColor = self.backgroundColor.CGColor;
+        self.layer.borderColor = self.defaultColor.CGColor;
     }
     
     return self;
@@ -64,6 +73,24 @@
 
 - (void)senderValueChanged:(id)value
 {
+    
+}
+
+- (void)setSelected:(BOOL)selected
+{
+    _selected = selected;
+    if (selected) {
+        self.currentColor = self.selectedColor;
+    }else{
+        self.currentColor = self.defaultColor;
+    }
+}
+
+- (void)setCurrentColor:(UIColor *)currentColor
+{
+    _currentColor = currentColor;
+    self.backgroundColor = _currentColor;
+    
 }
 
 - (NSArray *)inlets
@@ -103,7 +130,6 @@
     }
     
     NSArray *outlets = [self.object outlets];
-    NSLog(@"class %@ has %@ outlets",self.className,@(outlets.count));
     CGRect bounds = self.bounds;
     CGRect frame;
     frame.size.width = bounds.size.width * 0.25;
@@ -127,10 +153,6 @@
     return result;
 }
 
-- (void)updatePortFrames
-{
-
-}
 
 - (void)handlePan:(id)sender
 {
@@ -194,12 +216,22 @@
     NSMutableArray *temp = [NSMutableArray array];
     NSMutableArray *portviews = [NSMutableArray array];
     [portviews addObjectsFromArray:self.outletViews];
-    for (BSDPortView *portView in portviews) {
+    for (BSDPortView *portView in self.outletViews) {
         if (portView.connectedPortViews.count > 0) {
             
             for (BSDPortView *connectedPortView in portView.connectedPortViews) {
-                BSDPortConnection *connection = [BSDPortConnection connectionWithOwner:portView target:connectedPortView];
-                [temp addObject:connection];
+                UIView *superview = connectedPortView.superview;
+                if (superview) {
+                    
+                    BSDPortConnection *connection = [BSDPortConnection connectionWithOwner:portView target:connectedPortView];
+                    [temp addObject:connection];
+                }else{
+                    [portView.connectedPortViews removeObject:connectedPortView];
+                    NSLog(@"connected portview has no superview");
+                }
+                
+                //BSDPortConnection *connection = [BSDPortConnection connectionWithOwner:portView target:connectedPortView];
+                //[temp addObject:connection];
             }
         }
     }
@@ -210,24 +242,49 @@
 - (NSArray *)connectionVectors
 {
     NSMutableArray *temp = [NSMutableArray array];
-    NSMutableArray *portviews = [NSMutableArray array];
-    [portviews addObjectsFromArray:self.outletViews];
-    for (BSDPortView *portView in portviews) {
+    for (BSDPortView *portView in self.outletViews) {
         if (portView.connectedPortViews.count > 0) {
             
             for (BSDPortView *connectedPortView in portView.connectedPortViews) {
-                BSDPortConnection *connection = [BSDPortConnection connectionWithOwner:portView target:connectedPortView];
-                CGPoint o = [connection origin];
-                CGPoint d = [connection destination];
-                CGPoint ao = [self.superview convertPoint:o fromView:portView.superview];
-                CGPoint ad = [self.superview convertPoint:d fromView:connectedPortView.superview];
-                NSArray *points = @[[NSValue valueWithCGPoint:ao],[NSValue valueWithCGPoint:ad]];
-                [temp addObject:points];
+                UIView *superview = connectedPortView.superview;
+                if (superview) {
+                    
+                    BSDPortConnection *connection = [BSDPortConnection connectionWithOwner:portView target:connectedPortView];
+                    CGPoint o = [connection origin];
+                    CGPoint d = [connection destination];
+                    CGPoint ao = [self.superview convertPoint:o fromView:portView.superview];
+                    CGPoint ad = [self.superview convertPoint:d fromView:connectedPortView.superview];
+                    NSArray *points = @[[NSValue valueWithCGPoint:ao],[NSValue valueWithCGPoint:ad]];
+                    [temp addObject:points];
+                    
+                }else{
+                    [portView.connectedPortViews removeObject:connectedPortView];
+                    NSLog(@"connected portview has no superview");
+                }
             }
         }
     }
     
     return temp;
+}
+
+- (void)setSelectedPortView:(BSDPortView *)portview
+{
+    if (portview == nil) {
+        if (selectedPort) {
+            selectedPort.selected = NO;
+        }
+        
+        selectedPort = nil;
+    }else{
+        
+        if (selectedPort) {
+            selectedPort.selected = NO;
+        }
+        
+        selectedPort = portview;
+        selectedPort.selected = YES;
+    }
 }
 
 - (void)tapInPortView:(id)sender
@@ -334,6 +391,28 @@
     }
     
     return result;
+}
+
+- (void)tearDown
+{
+    for (BSDPortView *inletView in self.inletViews) {
+        [inletView removeFromSuperview];
+    }
+    for (BSDPortView *outletView in self.outletViews) {
+        [outletView removeFromSuperview];
+    }
+    
+    [self.object tearDown];
+    self.object = nil;
+    self.inletViews = nil;
+    self.outletViews = nil;
+    self.delegate = nil;
+    self.creationArguments = nil;
+}
+
+- (void)dealloc
+{
+    [self tearDown];
 }
 
 /*

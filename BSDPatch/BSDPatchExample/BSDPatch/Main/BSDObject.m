@@ -283,6 +283,24 @@
     return description;
 }
 
+- (void)tearDown
+{
+    if (self.observedPorts.count) {
+        
+        for (BSDPort *port in self.observedPorts) {
+            [port removeObserver:self forKeyPath:@"value" context:nil];
+            port.delegate = nil;
+        }
+    }
+    
+    self.observedPorts = nil;
+    self.hotInlet = nil;
+    self.coldInlet = nil;
+    self.inlets = nil;
+    self.outlets = nil;
+    
+}
+
 - (void)dealloc
 {
     if (self.observedPorts.count) {

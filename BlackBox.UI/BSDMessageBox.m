@@ -13,9 +13,7 @@
     BOOL kCanEdit;
 }
 
-@property (nonatomic,strong)UIColor *defaultColor;
-@property (nonatomic,strong)UIColor *highightColor;
-@property (nonatomic,strong)UIColor *currentColor;
+
 @property (nonatomic,strong)UITapGestureRecognizer *taprecognizer;
 
 @end
@@ -34,7 +32,7 @@
         NSArray *outletViews = [self outlets];
         self.outletViews = [NSMutableArray arrayWithArray:outletViews];
         self.defaultColor = [UIColor colorWithWhite:0.9 alpha:1];
-        self.highightColor = [UIColor colorWithWhite:0.99 alpha:1];
+        self.selectedColor = [UIColor colorWithWhite:0.99 alpha:1];
         self.currentColor = self.defaultColor;
         _textField = [[UITextField alloc]initWithFrame:CGRectInset(self.bounds, 24, 10)];
         _textField.textColor = [UIColor colorWithWhite:0.2 alpha:1];
@@ -118,14 +116,6 @@
         [(BSDMessage *)self.object setTheMessage:theMessage];
         [self.textField setText:displayText];
     }
-}
-
-
-- (void)setCurrentColor:(UIColor *)currentColor
-{
-    _currentColor = currentColor;
-    self.backgroundColor = [UIColor clearColor];
-    [self setNeedsDisplay];
 }
 
 - (id)setTypeForString:(NSString *)string

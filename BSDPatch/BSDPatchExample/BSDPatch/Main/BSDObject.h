@@ -77,7 +77,7 @@
 
 // Optionally implement to reset an object to a specified state
 - (void) reset;
-
+- (void) tearDown;
 // Compare to other objects
 - (BOOL) isEqual:(id)object;
 

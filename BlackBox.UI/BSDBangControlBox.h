@@ -10,6 +10,9 @@
 
 @interface BSDBangControlBox : BSDBox
 
+@property (nonatomic,strong)UIColor *defaultCenterColor;
+@property (nonatomic,strong)UIColor *highlightCenterColor;
+@property (nonatomic,strong)UIColor *currentCenterColor;
 //- (instancetype)initWithDescription:(BSDObjectDescription *)desc;
 
 @end

@@ -20,6 +20,8 @@
 @property (nonatomic,strong)BSDPortView *receiverPortView;
 
 + (BSDPortConnectionDescription *)connectionDescriptionWithDictionary:(NSDictionary *)dictionary;
++ (BSDPortConnectionDescription *)connectionDescriptionWithDictionary:(NSDictionary *)dictionary appendId:(NSString *)appendId;
+
 - (NSDictionary *)dictionaryRespresentation;
 
 @end

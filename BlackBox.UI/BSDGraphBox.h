@@ -15,7 +15,6 @@
 + (BSDGraphBox *)graphBoxWithFrame:(CGRect)frame className:(NSString *)className args:(id)args;
 - (instancetype)initWithDescription:(BSDObjectDescription *)desc;
 
-
 @property (nonatomic,strong)UITextField *textField;
 
 @end

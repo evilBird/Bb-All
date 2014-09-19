@@ -20,4 +20,6 @@
 - (id)inletNamed:(NSString *)inletName;
 - (id)outletNamed:(NSString *)outletName;
 
+- (void)tearDown;
+
 @end

@@ -26,5 +26,6 @@ static NSString *kBoxClass = @"boxClassName";
 
 - (NSDictionary *)dictionaryRespresentation;
 + (BSDObjectDescription *)objectDescriptionWithDictionary:(NSDictionary *)dictionary;
++ (BSDObjectDescription *)objectDescriptionWithDictionary:(NSDictionary *)dictionary appendId:(NSString *)appendId;
 
 @end

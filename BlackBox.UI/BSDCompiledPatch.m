@@ -147,9 +147,6 @@
             UIView *superview = dict[@"superview"];
             UIView *canvas = dict[@"canvas"];
             for (UIView *aView in self.views) {
-                
-                UIView *oldSuper = aView.superview;
-                
                 [superview insertSubview:aView belowSubview:canvas];
             }
         }
@@ -160,12 +157,15 @@
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
-    
+    if (inlet == self.hotInlet) {
+        [self.patchInlet input:[BSDBang bang]];
+    }
 }
 
 - (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
 {
     if (inlet == self.hotInlet) {
+        NSLog(@"compiled patch got bang");
         //[self.patchInlet input:value];
     }
 }
@@ -175,5 +175,16 @@
     
 }
 
+- (void)tearDown
+{
+    for (NSString *uniqueId in self.objectGraph.allKeys) {
+        id obj = self.objectGraph[uniqueId];
+        [obj tearDown];
+    }
+    
+    [self.objectGraph removeAllObjects];
+    self.objectGraph = nil;
+    [super tearDown];
+}
 
 @end

@@ -8,12 +8,19 @@
 
 #import "BSDPortConnectionDescription.h"
 
+static CGFloat kOffset = 20;
+
 @implementation BSDPortConnectionDescription
 
 + (BSDPortConnectionDescription *)connectionDescriptionWithDictionary:(NSDictionary *)dictionary
 {
-    BSDPortConnectionDescription *desc = nil;
+    return [BSDPortConnectionDescription connectionDescriptionWithDictionary:dictionary appendId:nil];
+}
 
++ (BSDPortConnectionDescription *)connectionDescriptionWithDictionary:(NSDictionary *)dictionary appendId:(NSString *)appendId
+{
+    BSDPortConnectionDescription *desc = nil;
+    
     
     if ([dictionary isKindOfClass:[NSDictionary class]]) {
         NSLog(@"dictionary keys: %@, values: %@",dictionary.allKeys,dictionary.allValues);
@@ -24,24 +31,36 @@
         
     }
     
-    
     desc = [[BSDPortConnectionDescription alloc]init];
     desc.senderPortName = dictionary[@"senderPortName"];
-    desc.senderParentId = dictionary[@"senderParentId"];
+    desc.senderParentId = [desc appendId:dictionary[@"senderParentId"] withString:appendId];
     desc.receiverPortName = dictionary[@"receiverPortName"];
-    desc.receiverParentId = dictionary[@"receiverParentId"];
+    desc.receiverParentId = [desc appendId:dictionary[@"receiverParentId"] withString:appendId];
     NSArray *points = dictionary[@"initialPoints"];
     NSDictionary *startDict = points.firstObject;
     NSDictionary *stopDict = points.lastObject;
     CGPoint o;
-    o.x = [startDict[@"x"]doubleValue];
-    o.y = [startDict[@"y"]doubleValue];
+    CGFloat offset = 0;
+    if (appendId != nil && appendId.length) {
+        offset = kOffset;
+    }
+    o.x = [startDict[@"x"]doubleValue] + offset;
+    o.y = [startDict[@"y"]doubleValue] + offset;
     CGPoint e;
-    e.x = [stopDict[@"x"]doubleValue];
-    e.y = [stopDict[@"y"]doubleValue];
+    e.x = [stopDict[@"x"]doubleValue] + offset;
+    e.y = [stopDict[@"y"]doubleValue] + offset;
     desc.initialPoints = @[[NSValue valueWithCGPoint:o],[NSValue valueWithCGPoint:e]];
     
     return desc;
+}
+
+- (NSString *)appendId:(NSString *)uniqueId withString:(NSString *)toAppend
+{
+    if (toAppend != nil && toAppend.length) {
+        return [uniqueId stringByAppendingString:toAppend];
+    }
+    
+    return uniqueId;
 }
 
 - (NSDictionary *)dictionaryRespresentation

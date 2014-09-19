@@ -37,6 +37,8 @@
         _textField.textAlignment = NSTextAlignmentCenter;
         _textField.font = [UIFont boldSystemFontOfSize:frame.size.height * 0.35];
         _textField.tintColor = [UIColor colorWithWhite:0.7 alpha:1];
+        _textField.autocorrectionType = UITextAutocorrectionTypeNo;
+        _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         [self insertSubview:_textField atIndex:0];
         kAllowEdit = YES;
     }
@@ -97,22 +99,6 @@
     
 }
 
-- (NSString *)boxClassName
-{
-    return NSStringFromClass([self class]);
-}
-
-- (void)setSelected:(BOOL)selected
-{
-    [super setSelected:selected];
-    
-    if (selected) {
-        self.textField.backgroundColor = [UIColor clearColor];
-    }else{
-        self.textField.backgroundColor = [UIColor clearColor];
-    }
-}
-
 - (void)setDelegate:(id<BSDBoxDelegate>)delegate
 {
     [super setDelegate:delegate];
@@ -122,20 +108,7 @@
             UIView *superview = [self.delegate displayViewForBox:self];
             myView.center = [myView convertPoint:superview.center toView:myView];
             [superview insertSubview:myView atIndex:0];
-        }else{
-            /*
-            NSArray *views = [[self.object coldInlet]value];
-            if ([views isKindOfClass:[NSArray class]]) {
-                UIView *superview = [self.delegate displayViewForBox:self];
-                for (id obj in views) {
-                    UIView *myView = obj;
-                    if ([myView isKindOfClass:[UIView class]]) {
-                        myView.center = [myView convertPoint:superview.center toView:myView];
-                        [superview insertSubview:myView atIndex:0];
-                    }
-                }
-            }
-             */
+            self.selected = NO;
         }
     }
 }
@@ -151,9 +124,20 @@
     self.selected = NO;
 }
 
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField endEditing:YES];
+    return NO;
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if (textField.text && textField.text.length > 3) {
+    if (textField.text && textField.text.length > 0) {
         [textField endEditing:YES];
         [textField resignFirstResponder];
         [textField.nextResponder becomeFirstResponder];
@@ -238,6 +222,7 @@
         NSArray *outletViews = [self outlets];
         self.outletViews = [NSMutableArray arrayWithArray:outletViews];
         kAllowEdit = NO;
+        self.selected = NO;
     }else{
         
         self.textField.text = name;

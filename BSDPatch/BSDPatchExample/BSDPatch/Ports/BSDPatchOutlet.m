@@ -48,6 +48,18 @@
     return nil;
 }
 
+- (void)tearDown
+{
+    if (self.observedPorts) {
+        for (BSDPort *port in self.observedPorts) {
+            [port removeObserver:self forKeyPath:@"value"];
+        }
+    }
+    
+    self.observedPorts = nil;
+    self.delegate = nil;
+}
+
 - (id)inletNamed:(NSString *)inletName
 {
     if ([inletName isEqualToString:@"hot"] || [inletName isEqualToString:@"input element"]) {

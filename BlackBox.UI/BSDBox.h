@@ -31,7 +31,6 @@
 }
 
 @property (nonatomic,strong)UIPanGestureRecognizer *panGesture;
-@property (nonatomic,strong)UILongPressGestureRecognizer *longPressGesture;
 @property (nonatomic,strong)NSMutableArray *outletViews;
 @property (nonatomic,strong)NSMutableArray *inletViews;
 @property (nonatomic,strong)NSString *className;
@@ -40,6 +39,9 @@
 @property (nonatomic,strong)id object;
 @property (nonatomic,strong)id creationArguments;
 @property (nonatomic,strong)NSString *assignedId;
+@property (nonatomic,strong)UIColor *defaultColor;
+@property (nonatomic,strong)UIColor *selectedColor;
+@property (nonatomic,strong)UIColor *currentColor;
 
 
 - (instancetype)initWithDescription:(BSDObjectDescription *)desc;
@@ -52,11 +54,13 @@
 - (NSArray *)connectionVectors;
 - (NSString *)uniqueId;
 - (NSString *)boxClassName;
+- (void)setSelectedPortView:(BSDPortView *)portview;
 - (id)objectDescription;
 - (NSArray *)connectionDescriptions;
 - (id)makeCreationArgs;
 - (void)makeObjectInstance;
 - (void)makeObjectInstanceArgs:(id)args;
 - (void)updatePortFrames;
+- (void)tearDown;
 
 @end
