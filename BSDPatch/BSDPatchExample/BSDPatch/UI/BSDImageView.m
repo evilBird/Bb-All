@@ -10,62 +10,25 @@
 
 @implementation BSDImageView
 
-- (instancetype)initWithUIImageView:(UIImageView *)imageView;
+- (instancetype)initWithSuperview:(UIView *)superview;
 {
-    return [super initWithArguments:imageView];
+    return [super initWithArguments:superview];
 }
 
-- (void)setupWithArguments:(id)arguments
+- (NSString *)displayName
 {
-    self.name = @"image view";
-    UIImageView *imageView = (UIImageView *)arguments;
-    
-    if (imageView) {
-        self.coldInlet.value = imageView;
+    return @"image view";
+}
+
+- (UIView *)view
+{
+    UIImageView *myView = self.viewInlet.value;
+    if (!myView) {
+        myView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 88, 44)];
+        self.viewInlet.value = myView;
     }
     
-    self.getterInlet = [[BSDInlet alloc]init];
-    self.getterInlet.name = @"getter inlet";
-    self.getterInlet.hot = YES;
-    [self addPort:self.getterInlet];
-    
-    self.getterOutlet = [[BSDOutlet alloc]init];
-    self.getterOutlet.name = @"getter outlet";
-    [self addPort:self.getterOutlet];
-    
-}
-
-- (void)inletReceievedBang:(BSDInlet *)inlet
-{
-    if (inlet == self.hotInlet) {
-        [self hotInlet:self.hotInlet receivedValue:self.hotInlet.value];
-    }
-}
-
-- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
-{
-    if (inlet == self.hotInlet) {
-        NSDictionary *hot = self.hotInlet.value;
-        UIView *cold = self.coldInlet.value;
-        
-        if (hot && cold) {
-            for (NSString *aKey in hot.allKeys) {
-                [cold setValue:hot[aKey] forKey:aKey];
-            }
-            
-            self.mainOutlet.value = self.coldInlet.value;
-        }
-    }else if (inlet == self.getterInlet){
-        UIImageView *view = [self imageView];
-        NSString *keyPath = inlet.value;
-        self.getterOutlet.value = [view valueForKeyPath:keyPath];
-    }
-}
-
-
-- (UIImageView *)imageView
-{
-    return self.coldInlet.value;
+    return myView;
 }
 
 @end

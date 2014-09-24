@@ -72,7 +72,10 @@
     }
 }
 
-
+- (void)formatArray:(NSArray *)args
+{
+    
+}
 
 - (NSUInteger)countFormatSpecifiersInString:(NSString *)string
 {

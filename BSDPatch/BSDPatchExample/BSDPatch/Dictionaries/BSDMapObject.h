@@ -7,6 +7,7 @@
 //
 
 #import "BSDObject.h"
+#import <objc/runtime.h>
 
 @interface BSDMapObject : BSDObject
 
@@ -14,5 +15,9 @@
 //Hot inlet: takes any key-value coding compliant object
 //Cold inlet: NA
 //Main outlet: emits a dictionary
+
+- (NSDictionary *)dictionaryForObject:(id)object;
+
+NSDictionary* plist_for_object(id obj);
 
 @end

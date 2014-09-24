@@ -10,8 +10,13 @@
 
 @interface BSDBasicAnimation : BSDObject
 
-- (instancetype)initWithLayer:(CALayer *)layer animation:(CABasicAnimation *)animation;
+//- (instancetype)initWithLayer:(CALayer *)layer animation:(CABasicAnimation *)animation;
 
 @property(nonatomic,readonly)CALayer *layer;
+
+- (UIView *)superview;
+
+@property (nonatomic,strong)BSDInlet *viewInlet;
+@property (nonatomic,strong)BSDInlet *setterInlet;
 
 @end

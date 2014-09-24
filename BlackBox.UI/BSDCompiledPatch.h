@@ -17,4 +17,5 @@
 @property (nonatomic,strong)BSDPatchInlet *patchInlet;
 @property (nonatomic,strong)BSDPatchOutlet *patchOutlet;
 
+
 @end

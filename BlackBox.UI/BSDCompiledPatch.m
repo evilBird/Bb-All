@@ -74,7 +74,7 @@
             self.patchOutlet = self.objectGraph[desc.uniqueId];
         }
         
-        if ([self.objectGraph[desc.uniqueId] respondsToSelector:@selector(view)]) {
+        if ([self.objectGraph[desc.uniqueId] respondsToSelector:@selector(superview)]) {
             UIView *view = [self.objectGraph[desc.uniqueId] view];
             if (!self.views) {
                 self.views = [NSMutableArray array];

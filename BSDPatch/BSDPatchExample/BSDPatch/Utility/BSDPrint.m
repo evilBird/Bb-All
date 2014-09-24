@@ -22,7 +22,12 @@
 
 - (void)calculateOutput
 {
-    NSLog(@"\n%@print: %@\n",self.text,self.hotInlet.value);
+    id value = self.hotInlet.value;
+    if ([value isKindOfClass:[NSArray class]] || [value isKindOfClass:[NSDictionary class]]) {
+        NSLog(@"\n%@print: %@\n",self.text,[value mutableCopy]);
+    }else{
+        NSLog(@"\n%@print: %@\n",self.text,value);
+    }
 }
 
 @end

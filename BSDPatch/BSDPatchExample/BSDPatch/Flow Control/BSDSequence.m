@@ -8,17 +8,25 @@
 
 #import "BSDSequence.h"
 
+@interface BSDSequence ()
+
+@property (nonatomic,strong)NSMutableArray *outletsToSequence;
+
+@end
+
 @implementation BSDSequence
 
 - (instancetype)initWithNumberOfOutlets:(NSNumber *)numberOfOutlets
 {
     return [super initWithArguments:numberOfOutlets];
 }
-
+/*
 - (instancetype)initAndConnectToInlets:(NSArray *)inlets
 {
     return [super initWithArguments:inlets];
 }
+
+ */
 
 - (void)setupWithArguments:(id)arguments
 {
@@ -27,7 +35,15 @@
     if ([arguments isKindOfClass:[NSNumber class]]) {
         NSNumber *numberOfOutlets = arguments;
         for (NSUInteger i = 0; i < numberOfOutlets.integerValue; i++) {
-            [self addOutlet];
+            
+            if (!self.outletsToSequence) {
+                self.outletsToSequence = [NSMutableArray array];
+            }
+            
+            BSDOutlet *outlet = [self addOutlet];
+            
+            [self.outletsToSequence addObject:outlet];
+            
         }
     }else if ([arguments isKindOfClass:[NSArray class]]){
         NSArray *inlets = arguments;
@@ -37,10 +53,27 @@
     }
 }
 
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
+
+- (BSDOutlet *)makeLeftOutlet
+{
+    return nil;
+}
+
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
     if (inlet == self.hotInlet) {
-        [self calculateOutput];
+        NSInteger idx = self.outlets.count - 1;
+        
+        while (idx > -1) {
+            BSDOutlet *anOutlet = self.outletsToSequence[idx];
+            [anOutlet output:[BSDBang bang]];
+            idx --;
+        }
     }
 }
 
@@ -48,16 +81,12 @@
 {
     NSInteger idx = self.outlets.count - 1;
     
-    while (idx > 0) {
-        BSDOutlet *anOutlet = self.outlets[idx];
-        anOutlet.value = self.hotInlet.value;
+    while (idx >= 0) {
+        BSDOutlet *anOutlet = self.outletsToSequence[idx];
+        id value = self.hotInlet.value;
+        [anOutlet output:value];
         idx --;
     }
-    /*
-    for (BSDOutlet *anOutlet in self.outlets) {
-        anOutlet.value = self.hotInlet.value;
-    }
-     */
 }
 
 //add outlets
@@ -67,6 +96,7 @@
     BSDOutlet *anOutlet = [[BSDOutlet alloc]init];
     anOutlet.name = [NSString stringWithFormat:@"%lu",(unsigned long)numberOfOutlets];
     [self addPort:anOutlet];
+    
     
     return anOutlet;
 }

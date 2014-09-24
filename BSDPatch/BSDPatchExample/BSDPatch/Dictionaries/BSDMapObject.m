@@ -7,7 +7,6 @@
 //
 
 #import "BSDMapObject.h"
-#import <objc/runtime.h>
 
 @implementation BSDMapObject
 
@@ -22,6 +21,16 @@
     id hot = self.hotInlet.value;
     self.mainOutlet.value = plist_for_object(hot);
 }
+
+- (NSDictionary *)dictionaryForObject:(id)object
+{
+    if (object) {
+        return plist_for_object(object);
+    }
+    
+    return nil;
+}
+
 
 NSDictionary* plist_for_object(id obj)
 {

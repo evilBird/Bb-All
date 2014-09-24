@@ -25,8 +25,6 @@
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"GPS";
-    self.locationManager = [[CLLocationManager alloc]init];
-    self.locationManager.delegate = self;
     kLocating = NO;
 }
 
@@ -34,12 +32,21 @@
 {
     if (inlet == self.hotInlet) {
         if (!kLocating) {
+            self.locationManager = nil;
+            if (!self.locationManager) {
+                self.locationManager = [[CLLocationManager alloc]init];
+                self.locationManager = [[CLLocationManager alloc]init];
+                self.locationManager.delegate = self;
+            }
+            
             [self.locationManager startUpdatingLocation];
+            kLocating = YES;
         }else{
             [self.locationManager stopUpdatingLocation];
+            kLocating = NO;
         }
         
-        [self calculateOutput];
+        //[self calculateOutput];
     }
 }
 
@@ -54,6 +61,16 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     [self calculateOutput];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    
 }
 
 @end

@@ -47,7 +47,7 @@
 #import "BSDPatchOutlet.h"
 #import "BSDCompiledPatch.h"
 #import "BSDNumber.h"
-
+#import "BSDType.h"
 #import "BSDSelect.h"
 #import "BSDBang.h"
 #import "BSDBangBox.h"
@@ -55,9 +55,14 @@
 #import "BSDSplitArray.h"
 #import "BSDArrayPack.h"
 #import "BSDArraySerialize.h"
-
+#import "BSDAny2String.h"
 #import "BSDDictionarySerialize.h"
-
+#import "BSDSplitDictionary.h"
+#import "BSDDictionaryLength.h"
+#import "BSDDictionaryEnumerate.h"
+#import "BSDAtomizer.h"
+#import "BSDMake.h"
+#import "BSDWebImage.h"
 #import "BSDMax.h"
 #import "BSDMin.h"
 #import "BSDClipSoft.h"
@@ -69,13 +74,14 @@
 #import "BSDIntersect2Circles.h"
 #import "BSDIntersect2CirclesHelper.h"
 #import "BSDDistanceFrom2DPoint.h"
-
+#import "BSDDelay.h"
 #import "BSDView.h"
 #import "BSDRect.h"
 #import "BSDRectSplit.h"
 #import "BSDPoint2D.h"
 #import "BSDSplitPoint.h"
 #import "BSDLabel.h"
+#import "BSDMapSuper.h"
 
 #import "BSDAddKey.h"
 #import "BSDFormatString.h"

@@ -67,6 +67,7 @@
                 [self.scrollView addSubview:self.canvas];
                 [self.view insertSubview:self.scrollView belowSubview:self.toolbar];
                 [self updateBarButtonItemsForEditState:BSDCanvasEditStateDefault];
+                //[NSUserDefaults setUserValue:[NSMutableDictionary dictionary] forKey:@"patches"];
 
             }
         }
@@ -135,6 +136,10 @@
                                          cancelButtonTitle:@"Cancel"
                                          otherButtonTitles:@"Save", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    
+    if (self.currentPatchName) {
+        [[alert textFieldAtIndex:0]setText:self.currentPatchName];
+    }
     
     [alert show];
 }
@@ -274,6 +279,7 @@
         patches = [NSMutableDictionary dictionary];
     }
     patches[patchName] = patch;
+    self.currentPatchName = patchName;
     [NSUserDefaults setUserValue:patches forKey:@"patches"];
 }
 
@@ -281,6 +287,7 @@
 {
     NSDictionary *saved = [NSUserDefaults valueForKey:@"patches"];
     [self.canvas clearCurrentPatch];
+    self.currentPatchName = patchName;
     [self.canvas loadPatchWithDictionary:saved[patchName]];
 }
 

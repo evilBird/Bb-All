@@ -36,19 +36,38 @@
             BSDInlet *anInlet = routeKeysAndInlets[aRouteKey];
             [self addOutletForRouteKey:aRouteKey connectToInlet:anInlet];
         }
+    }else if ([arguments isKindOfClass:[NSString class]]){
+        [self addOutletForRouteKey:arguments];
     }
+    
+    self.passThroughOutlet = [[BSDOutlet alloc]init];
+    self.passThroughOutlet.name = @"pass through outlet";
+    [self addPort:self.passThroughOutlet];
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
+
+- (BSDOutlet *)makeLeftOutlet
+{
+    return nil;
 }
 
 - (void)calculateOutput
 {
     NSDictionary *hot = self.hotInlet.value;
-    for (NSString *aRouteKey in hot) {
+    for (NSString *aRouteKey in hot.allKeys) {
         BSDOutlet *anOutlet = [self outletForRouteKey:aRouteKey];
-        id value = hot[aRouteKey];
-        anOutlet.value = value;
+        id value = [hot valueForKeyPath:aRouteKey];
+        NSDictionary *output = @{aRouteKey:value};
+        if (anOutlet != nil) {
+            [anOutlet output:value];
+        }else{
+            [self.passThroughOutlet output:output];
+        }
     }
-    
-    self.mainOutlet.value = hot;
 }
 
 - (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey

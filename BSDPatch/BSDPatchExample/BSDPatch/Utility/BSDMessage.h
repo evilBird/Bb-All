@@ -12,4 +12,6 @@
 
 - (void)setTheMessage:(id)message;
 
+- (NSString *)notificationName;
+
 @end

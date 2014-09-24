@@ -32,7 +32,7 @@
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
     if (inlet == self.hotInlet) {
-        NSDictionary *dictionary = self.hotInlet.value;
+        NSMutableDictionary *dictionary = [self.coldInlet.value mutableCopy];
         if (dictionary && [dictionary isKindOfClass:[NSDictionary class]]) {
             for (id aKey in dictionary.allKeys) {
                 self.mainOutlet.value = @{aKey: dictionary[aKey]};

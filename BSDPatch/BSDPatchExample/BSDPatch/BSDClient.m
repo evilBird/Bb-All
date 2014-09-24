@@ -9,7 +9,6 @@
 #import "BSDClient.h"
 #import "AFNetworking.h"
 
-//static NSString *kAPIKey = @"AIzaSyAC-CxQjkbJWFV84VpkXGRl4bzFnbJ7pe0";
 static NSString *kDefaultBaseURL = @"https://api.foursquare.com/v2/venues/explore";
 static NSString *kFourSquareClientID = @"WEPI01NK1TIVICUFAZ50Q2KUGFO3D15VCBERCEOB0AH5TEYD";
 static NSString *kFourSquareClientSecret = @"OXJXXOG3IZYHGGFETE2OHLQ0W05NQOEBA0WKY45K3QPK1DQ3";
@@ -73,12 +72,15 @@ static NSString *kFourSquareClientSecret = @"OXJXXOG3IZYHGGFETE2OHLQ0W05NQOEBA0W
     [self updateParametersWithDictionary:parms];
     NSString *query = [self queryString];
     NSLog(@"queryString: %@",query);
+    __weak BSDClient *weakself = self;
     [self.client GET:query
           parameters:nil
              success:^(NSURLSessionDataTask *task, id responseObject) {
-                 [self.mainOutlet setValue:responseObject];
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [weakself.mainOutlet output:responseObject];
+                 });
              } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                 [self.mainOutlet setValue:NULL];
+                 //[self.mainOutlet setValue:NULL];
              }];
 }
 
@@ -107,8 +109,6 @@ static NSString *kFourSquareClientSecret = @"OXJXXOG3IZYHGGFETE2OHLQ0W05NQOEBA0W
     NSDate *now = [NSDate date];
     NSString *dateString = [dateFormatter stringFromDate:now];
     [query appendFormat:@"&v=%@",dateString];
-    //NSString *keyString = [NSString stringWithFormat:@"&key=%@",self.parameters[@"key"]];
-    //[query appendString:keyString];
 
     return query;//[query stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
 }

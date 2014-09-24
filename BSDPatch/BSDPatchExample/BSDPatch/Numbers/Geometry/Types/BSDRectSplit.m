@@ -47,6 +47,11 @@
     
 }
 
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
+
 - (void)calculateOutput
 {
     NSValue *hot = self.hotInlet.value;

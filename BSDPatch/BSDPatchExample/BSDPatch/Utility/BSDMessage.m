@@ -26,6 +26,7 @@
 {
     self.message = message;
     self.name = message;
+    [[NSNotificationCenter defaultCenter]postNotificationName:[self notificationName] object:[self notificationObject]];
 }
 
 - (void)setupWithArguments:(id)arguments
@@ -56,18 +57,27 @@
         if ([arr isKindOfClass:[NSArray class]] && arr.count == 2) {
             NSString *key = [arr firstObject];
             if ([key isEqualToString:@"set"]) {
-                [self setMessage:arr[1]];
+                [self setTheMessage:arr[1]];
                 self.name = self.message;
             }
         }else if ([dict isKindOfClass:[NSDictionary class]] && dict.allKeys.count == 1){
             NSString *key = dict.allKeys.firstObject;
             if ([key isEqualToString:@"set"]) {
-                [self setMessage:dict[key]];
+                [self setTheMessage:dict[key]];
                 self.name = self.message;
             }
         }
     }
 }
 
+- (NSString *)notificationName
+{
+    return [NSString stringWithFormat:@"com.birdSound.BlockBox-UI.messageBoxValueChanged-%@",self.objectId];
+}
+
+- (NSDictionary *)notificationObject
+{
+    return @{@"message":self.message};
+}
 
 @end

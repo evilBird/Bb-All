@@ -15,7 +15,7 @@
 
 - (instancetype) initWithNumberOfOutlets:(NSNumber *)numberOfOutlets;
 //convenience intitializer creates and connects an outlet for each intlet in the array
-- (instancetype) initAndConnectToInlets:(NSArray *)inlets;
+//- (instancetype) initAndConnectToInlets:(NSArray *)inlets;
 
 //get a specific outlet by index
 - (BSDOutlet *)outletAtIndex:(NSNumber *)index;

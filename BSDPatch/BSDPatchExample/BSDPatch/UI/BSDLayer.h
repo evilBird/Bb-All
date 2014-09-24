@@ -7,12 +7,19 @@
 //
 
 #import "BSDObject.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface BSDLayer : BSDObject
 
-- (instancetype)initWithCALayer:(CALayer *)layer;
+- (instancetype)initWithSuperView:(UIView *)superview;
 
-@property (nonatomic,strong)CALayer *layer;
+- (CALayer *)layer;
+- (CALayer *)superLayer;
+- (NSString *)displayName;
+
+@property (nonatomic,strong)BSDInlet *layerInlet;
+@property (nonatomic,strong)BSDInlet *viewInlet;
+@property (nonatomic,strong)BSDInlet *setterInlet;
 @property (nonatomic,strong)BSDInlet *getterInlet;
 @property (nonatomic,strong)BSDOutlet *getterOutlet;
 

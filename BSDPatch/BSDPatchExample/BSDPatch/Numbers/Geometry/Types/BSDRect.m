@@ -57,8 +57,18 @@
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
     if (inlet == self.hotInlet) {
-        [self calculateOutput];
+        //[self calculateOutput];
     }
+}
+
+- (BSDInlet *)makeLeftInlet
+{
+    return nil;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
 }
 
 - (void)calculateOutput

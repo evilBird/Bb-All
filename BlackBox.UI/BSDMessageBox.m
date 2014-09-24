@@ -27,6 +27,10 @@
         // Initialization code
         self.className = @"BSDMessage";
         [self makeObjectInstance];
+        [[NSNotificationCenter defaultCenter]addObserver:self
+                                                selector:@selector(handleMessageChangedNotification:)
+                                                    name:[self.object notificationName]
+                                                  object:nil];
         NSArray *inletViews = [self inlets];
         self.inletViews = [NSMutableArray arrayWithArray:inletViews];
         NSArray *outletViews = [self outlets];
@@ -47,6 +51,16 @@
         self.layer.borderColor = [UIColor clearColor].CGColor;
     }
     return self;
+}
+
+- (void)handleMessageChangedNotification:(NSNotification *)notification
+{
+    NSDictionary *object = notification.object;
+    if ([object.allKeys containsObject:@"message"]) {
+        self.textField.text = [NSString stringWithFormat:@"%@",object[@"message"]];
+        [self.textField sizeToFit];
+        [self setNeedsDisplay];
+    }
 }
 
 - (NSArray *)inlets
@@ -81,6 +95,12 @@
 {
     self.currentColor = self.defaultColor;
     [[self.object hotInlet]input:[BSDBang bang]];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField endEditing:YES];
+    return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -126,7 +146,7 @@
     
     NSRange r = [string rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]];
 
-    if (r.length == 0) {
+    if (r.length == string.length) {
         return string;
     }else{
         return @([string doubleValue]);
@@ -142,6 +162,7 @@
     // Drawing code
     UIBezierPath *path = [UIBezierPath bezierPath];
     CGRect bounds = self.bounds;
+    self.backgroundColor = [UIColor clearColor];
     [path moveToPoint:bounds.origin];
     CGPoint pt = CGPointMake(bounds.size.width, 0);
     [path addLineToPoint:pt];

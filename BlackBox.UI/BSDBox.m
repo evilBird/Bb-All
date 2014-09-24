@@ -326,6 +326,11 @@
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:aSelector]];
     invocation.target = instance;
     invocation.selector = aSelector;
+    SEL viewSelector = NSSelectorFromString(@"superview");
+    
+    if (args == NULL && self.delegate && [instance respondsToSelector:viewSelector]) {
+        args = @[[self.delegate displayViewForBox:self]];
+    }
     
     if (args != NULL) {
         NSArray *a = args;

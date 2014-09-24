@@ -28,4 +28,6 @@
 - (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey;
 - (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey connectToInlet:(BSDInlet *)inlet;
 
+@property (nonatomic,strong)BSDOutlet *passThroughOutlet;
+
 @end

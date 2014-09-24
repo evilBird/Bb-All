@@ -36,6 +36,16 @@
     }
 }
 
+- (BSDInlet *)makeLeftInlet
+{
+    return nil;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
+
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
     if (inlet == self.hotInlet) {
