@@ -30,8 +30,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         _textField = [[UITextField alloc]initWithFrame:self.bounds];
-        _textField.borderStyle = UITextBorderStyleRoundedRect;
-        _textField.backgroundColor = [UIColor clearColor];
         _textField.placeholder = @"Object";
         _textField.delegate = self;
         _textField.textColor = [UIColor whiteColor];
@@ -45,6 +43,35 @@
     }
     
     return self;
+}
+
+- (CGSize)intrinsicContentSize
+{
+    return self.textField.frame.size;
+}
+
+- (void)configureConstraints
+{
+    NSDictionary *views = NSDictionaryOfVariableBindings(_textField);
+    _textField.translatesAutoresizingMaskIntoConstraints = NO;
+    NSArray *constraints = nil;
+    NSLayoutConstraint *constraint = nil;    
+    constraints = [NSLayoutConstraint
+                   constraintsWithVisualFormat:@"H:|[_textField]|"
+                   options:0
+                   metrics:nil
+                   views:views];
+    [self addConstraints:constraints];
+    
+    constraints = [NSLayoutConstraint
+                   constraintsWithVisualFormat:@"V:|[_textField]|"
+                   options:0
+                   metrics:nil
+                   views:views];
+    [self addConstraints:constraints];
+    
+    [self setNeedsLayout];
+    
 }
 
 + (BSDGraphBox *)graphBoxWithFrame:(CGRect)frame className:(NSString *)className args:(id)args
@@ -65,39 +92,6 @@
     }
     
     return self;
-}
-
-- (void)updatePortFrames
-{
-    self.frame = CGRectInset([self.superview convertRect:self.textField.frame fromView:self],
-                             -5, -5);
-    
-    for (BSDPortView *inletView in self.inletViews) {
-        CGRect bounds = self.bounds;
-        CGRect frame;
-        frame.size.width = bounds.size.width * 0.25;
-        frame.size.height = bounds.size.height * 0.35;
-        if ([inletView.portName isEqualToString:@"hot"]) {
-            frame.origin = bounds.origin;
-            inletView.frame = frame;
-        }else if ([inletView.portName isEqualToString:@"cold"]){
-            frame.origin.x = bounds.size.width - frame.size.width;
-            frame.origin.y = 0;
-            inletView.frame = frame;
-        }
-    }
-    
-    for (BSDPortView *outletView in self.outletViews) {
-        
-        CGRect bounds = self.bounds;
-        CGRect frame;
-        frame.size.width = bounds.size.width * 0.25;
-        frame.size.height = bounds.size.height * 0.35;
-        frame.origin.x = 0;
-        frame.origin.y = bounds.size.height - frame.size.height;
-        outletView.frame = frame;
-    }
-    
 }
 
 - (void)setDelegate:(id<BSDBoxDelegate>)delegate
@@ -231,6 +225,17 @@
         }
         
         [self.textField setText:displayName];
+        NSDictionary *attributes = @{NSFontAttributeName:self.textField.font};
+                                    
+        CGSize size = [displayName sizeWithAttributes:attributes];
+        CGSize minSize = [self minimumSize];
+        CGRect frame = self.frame;
+        frame.size.width = size.width * 1.3;
+        if (frame.size.width < minSize.width) {
+            frame.size.width = minSize.width;
+        }
+        self.frame = frame;
+        self.textField.frame = CGRectInset(self.bounds, size.width * 0.15, 0);
         NSArray *inletViews = [self inlets];
         self.inletViews = [NSMutableArray arrayWithArray:inletViews];
         NSArray *outletViews = [self outlets];

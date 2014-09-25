@@ -35,7 +35,7 @@
         self.defaultColor = [UIColor colorWithWhite:0.9 alpha:1];
         self.selectedColor = [UIColor colorWithWhite:0.99 alpha:1];
         self.currentColor = self.defaultColor;
-        _textField = [[UITextField alloc]initWithFrame:CGRectInset(self.bounds, 24, 10)];
+        _textField = [[UITextField alloc]initWithFrame:self.bounds];
         _textField.textColor = [UIColor colorWithWhite:0.2 alpha:1];
         _textField.textAlignment = NSTextAlignmentCenter;
         _textField.placeholder = @"message";
@@ -44,8 +44,6 @@
         _textField.tintColor = [UIColor darkGrayColor];
         [self addSubview:_textField];
         kCanEdit = YES;
-        self.layer.borderWidth = 0;
-        self.layer.borderColor = [UIColor clearColor].CGColor;
     }
     return self;
 }
@@ -59,7 +57,7 @@
         [self setNeedsDisplay];
     }
 }
-
+/*
 - (NSArray *)inlets
 {
     if (self.object == NULL) {
@@ -82,6 +80,7 @@
     
     return result;
 }
+ */
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
@@ -113,28 +112,42 @@
 - (void)handleText:(NSString *)text
 {
     id theMessage = nil;
-    NSMutableString *displayText = [[NSMutableString alloc]init];
-    NSArray *components = [BSDTextParser argumentsFromArgsComponent:text];
+    NSArray *components = [text componentsSeparatedByString:@" "];
     
     if (components.count == 1) {
-        theMessage = components.firstObject;
-        [displayText appendFormat:@"%@ ",theMessage];
-    }else{
-        theMessage = components;
-        NSInteger idx = 0;
+        id component = components.firstObject;
+        theMessage = [self setTypeForString:component];
+    }else {
+        NSMutableArray *temp = nil;
         for (id component in components) {
-            [displayText appendFormat:@"%@",component];
-            if (idx < components.count -1) {
-                [displayText appendFormat:@", "];
+            
+            if (!temp) {
+                temp = [NSMutableArray array];
             }
             
-            idx ++;
+            [temp addObject:[self setTypeForString:component]];
         }
+        theMessage = [temp mutableCopy];
     }
     
+    if (theMessage!=nil) {
+        [[(BSDMessage *)self.object hotInlet]input:@{@"set":theMessage}];
+    }
+}
+
+- (void)resizeToFitText:(NSString *)messageText
+{
     if (self.object) {
-        [(BSDMessage *)self.object setTheMessage:theMessage];
-        [self.textField setText:displayText];
+        NSDictionary *attributes = @{NSFontAttributeName:self.textField.font};
+        CGSize size = [messageText sizeWithAttributes:attributes];
+        CGSize minSize = [self minimumSize];
+        CGRect frame = self.frame;
+        frame.size.width = size.width * 1.3;
+        if (frame.size.width < minSize.width) {
+            frame.size.width = minSize.width;
+        }
+        self.frame = frame;
+        self.textField.frame = CGRectInset(self.bounds, self.bounds.size.width * 0.15, 0);
     }
 }
 
@@ -143,28 +156,25 @@
     NSDictionary *changeInfo = notification.object;
     id val = changeInfo[@"value"];
     if (val) {
-        
-        self.textField.text = [NSString stringWithFormat:@"%@",val];
+        NSString *displayText = [NSString stringWithFormat:@"%@",val];
+        NSString *nws = [displayText stringByReplacingOccurrencesOfString:@" " withString:@""];
+        self.textField.text = nws;
+        [self resizeToFitText:self.textField.text];
     }
 }
 
 - (id)setTypeForString:(NSString *)string
 {
-    if (![string isKindOfClass:[NSString class]]) {
-        return string;
-    }
+    NSRange n = [string rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
     
-    NSRange r = [string rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]];
-
-    if (r.length == string.length) {
+    if (n.length > 0) {
         return string;
     }else{
         return @([string doubleValue]);
     }
 }
 
-
-
+/*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
@@ -172,13 +182,14 @@
     // Drawing code
     UIBezierPath *path = [UIBezierPath bezierPath];
     CGRect bounds = self.bounds;
-    self.backgroundColor = [UIColor clearColor];
+    //bounds.size.width += 10;
+    //self.backgroundColor = [UIColor clearColor];
     [path moveToPoint:bounds.origin];
     CGPoint pt = CGPointMake(bounds.size.width, 0);
     [path addLineToPoint:pt];
-    pt.x = bounds.size.width*0.9;
-    pt.y = bounds.size.height*0.5;
-    [path addLineToPoint:pt];
+    //pt.x = bounds.size.width-10;
+    //pt.y = bounds.size.height*0.5;
+    //[path addLineToPoint:pt];
     pt.x = bounds.size.width;
     pt.y = bounds.size.height;
     [path addLineToPoint:pt];
@@ -193,6 +204,6 @@
     [path stroke];
 
 }
-
+*/
 
 @end

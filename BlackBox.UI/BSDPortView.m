@@ -61,17 +61,27 @@
 {
     if (_selected != selected) {
         _selected = selected;
-        
+        __weak BSDPortView *weakself = self;
+        CGRect newFrame;
+        UIColor *newColor = nil;
         if (_selected) {
-            self.backgroundColor = [UIColor lightGrayColor];
-            CGRect newFrame = CGRectInset(self.frame, -5, -5);
-            self.frame = newFrame;
+            newColor = [UIColor lightGrayColor];
+            newFrame = CGRectInset(self.frame, -5, -5);
             
         }else{
-            self.backgroundColor = [UIColor whiteColor];
-            CGRect newFrame = CGRectInset(self.frame, 5, 5);
-            self.frame = newFrame;
+            newColor = [UIColor whiteColor];
+            newFrame = CGRectInset(self.frame, 5, 5);
         }
+        
+        [UIView animateWithDuration:0.2
+                              delay:0
+             usingSpringWithDamping:0.8
+              initialSpringVelocity:1
+                            options:0
+                         animations:^{
+                             weakself.frame = newFrame;
+                             weakself.backgroundColor = newColor;
+                         } completion:NULL];
     }
 
 }

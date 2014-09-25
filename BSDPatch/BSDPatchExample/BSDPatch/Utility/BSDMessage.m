@@ -10,8 +10,6 @@
 
 @interface BSDMessage ()
 
-@property (nonatomic,strong)id message;
-
 
 @end
 
@@ -22,20 +20,13 @@
     return [super initWithArguments:arguments];
 }
 
-- (void)setTheMessage:(id)message
-{
-    self.message = message;
-}
-
 - (void)setupWithArguments:(id)arguments
 {
     self.hotInlet.delegate = self;
     if (arguments != nil){
         self.name = [NSString stringWithFormat:@"%@",arguments];
-        self.message = arguments;
     }else{
-        self.name = @"";
-        self.message = nil;
+        self.name = @"message";
     }
 }
 
@@ -46,6 +37,10 @@
     }
 }
 
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
 
 - (void)calculateOutput
 {
@@ -94,14 +89,5 @@
     return nil;
 }
 
-- (NSString *)notificationName
-{
-    return [NSString stringWithFormat:@"com.birdSound.BlockBox-UI.messageBoxValueChanged-%@",self.objectId];
-}
-
-- (NSDictionary *)notificationObject
-{
-    return @{@"message":self.message};
-}
 
 @end

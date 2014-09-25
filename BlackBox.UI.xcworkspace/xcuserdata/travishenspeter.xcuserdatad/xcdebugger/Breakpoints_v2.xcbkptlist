@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BlackBox.UI/BSDGraphBox.m"
-            timestampString = "433286786.335077"
+            timestampString = "433371535.326883"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "-setDelegate:"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BlackBox.UI/BSDMessageBox.m"
-            timestampString = "433366651.156087"
+            timestampString = "433373664.602681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "-setTypeForString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BlackBox.UI/BSDMessageBox.m"
-            timestampString = "433366651.156087"
+            timestampString = "433373664.602681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
             landmarkName = "-setTypeForString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,27 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BlackBox.UI/BSDMessageBox.m"
-            timestampString = "433366651.156087"
+            timestampString = "433373664.602681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
-            landmarkName = "-setTypeForString:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BlackBox.UI/BSDMessageBox.m"
-            timestampString = "433366651.156087"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "-setTypeForString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -186,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BlackBox.UI/BSDGraphBox.m"
-            timestampString = "433286786.335077"
+            timestampString = "433371535.326883"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
             landmarkName = "-setDelegate:"
             landmarkType = "5">
          </BreakpointContent>
@@ -522,11 +506,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BlackBox.UI/BSDBox.m"
-            timestampString = "433365034.657074"
+            timestampString = "433372533.653125"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "334"
-            endingLineNumber = "334"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
             landmarkName = "-makeObjectInstanceArgs:"
             landmarkType = "5">
          </BreakpointContent>
@@ -538,11 +522,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BlackBox.UI/BSDBox.m"
-            timestampString = "433365034.657074"
+            timestampString = "433372533.653125"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "336"
-            endingLineNumber = "336"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
             landmarkName = "-makeObjectInstanceArgs:"
             landmarkType = "5">
          </BreakpointContent>
@@ -566,15 +550,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BlackBox.UI/BSDMessageBox.m"
-            timestampString = "433366651.156087"
+            timestampString = "433373664.602681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "-handleMessageChangedNotification:"
             landmarkType = "5">
          </BreakpointContent>
@@ -586,11 +570,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BlackBox.UI/BSDMessageBox.m"
-            timestampString = "433366651.156087"
+            timestampString = "433373664.602681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
             landmarkName = "-setTypeForString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -602,11 +586,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BlackBox.UI/BSDMessageBox.m"
-            timestampString = "433366651.156087"
+            timestampString = "433373664.602681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "-handleMessageChangedNotification:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1193,7 +1177,7 @@
                   symbolName = "-[BSDBasicAnimation updateAnimationDictionaryWithDictionary:]"
                   moduleName = "BlackBox.UI"
                   urlString = "file:///Users/travishenspeter/Documents/BlackBox.UI/BSDPatch/BSDPatchExample/BSDPatch/UI/BSDBasicAnimation.m"
-                  timestampString = "433368093.89662"
+                  timestampString = "433374178.46872"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "97"
@@ -1207,7 +1191,7 @@
                   symbolName = "-[BSDBasicAnimation updateAnimationDictionaryWithDictionary:]"
                   moduleName = "BlackBox.UI"
                   urlString = "file:///Users/travishenspeter/Documents/BlackBox.UI/BSDPatch/BSDPatchExample/BSDPatch/UI/BSDBasicAnimation.m"
-                  timestampString = "433368093.896825"
+                  timestampString = "433374178.468933"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "97"
@@ -1464,11 +1448,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BSDPatch/BSDPatchExample/BSDPatch/Arrays/BSDArrayAccum.m"
-            timestampString = "433368082.273457"
+            timestampString = "433368698.652366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
             landmarkName = "-hotInlet:receivedValue:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1496,11 +1480,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BSDPatch/BSDPatchExample/BSDPatch/Arrays/BSDArrayAccum.m"
-            timestampString = "433368119.199014"
+            timestampString = "433368698.652366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "-calculateOutput"
             landmarkType = "5">
          </BreakpointContent>
@@ -1512,11 +1496,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BSDPatch/BSDPatchExample/BSDPatch/Arrays/BSDArrayAccum.m"
-            timestampString = "433368152.902231"
+            timestampString = "433368698.652366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
             landmarkName = "-hotInlet:receivedValue:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1528,11 +1512,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BSDPatch/BSDPatchExample/BSDPatch/Arrays/BSDArrayAccum.m"
-            timestampString = "433368157.477508"
+            timestampString = "433368698.652366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "-hotInlet:receivedValue:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1560,7 +1544,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BSDPatch/BSDPatchExample/BSDPatch/Arrays/BSDArrayAccum.m"
-            timestampString = "433368176.853722"
+            timestampString = "433368698.652366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "40"
@@ -1598,6 +1582,134 @@
             startingLineNumber = "36"
             endingLineNumber = "36"
             landmarkName = "-inletReceievedBang:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlackBox.UI/BSDGraphBox.m"
+            timestampString = "433371535.326883"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
+            landmarkName = "-createObjectWithName:arguments:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlackBox.UI/BSDMessageBox.m"
+            timestampString = "433373664.602681"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "-handleObjectValueShouldChangeNotification:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlackBox.UI/BSDMessageBox.m"
+            timestampString = "433373664.602681"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "-handleObjectValueShouldChangeNotification:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlackBox.UI/BSDMessageBox.m"
+            timestampString = "433373664.602681"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "-resizeToFitText:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlackBox.UI/BSDMessageBox.m"
+            timestampString = "433373664.602681"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "-resizeToFitText:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlackBox.UI/BSDMessageBox.m"
+            timestampString = "433373664.602681"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "-resizeToFitText:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlackBox.UI/BSDMessageBox.m"
+            timestampString = "433373664.602681"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "-handleObjectValueShouldChangeNotification:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlackBox.UI/BSDMessageBox.m"
+            timestampString = "433373643.844132"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "-handleTap:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

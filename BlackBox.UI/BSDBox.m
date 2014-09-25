@@ -65,16 +65,7 @@
     BSDBox *rb = (BSDBox *)description.receiverPortView.delegate;
     BSDInlet *inlet = (BSDInlet *)[[rb object]inletNamed:description.receiverPortName];
     BSDOutlet *myOutlet = (BSDOutlet *)[self.object outletNamed:description.senderPortName];
-    //BSDObjectOutputBlock block = ^(BSDObject *object,BSDOutlet *outlet){
-      //  [rb senderValueChanged:outlet.value];
-    //};
-    //[myOutlet setOutputBlock:block];
     [myOutlet connectToInlet:inlet];
-}
-
-- (void)senderValueChanged:(id)value
-{
-    
 }
 
 - (void)setSelected:(BOOL)selected
@@ -103,8 +94,20 @@
     NSArray *inlets = [self.object inlets];
     CGRect bounds = self.bounds;
     CGRect frame;
-    frame.size.width = bounds.size.width * 0.25;
-    frame.size.height = bounds.size.height * 0.35;
+    //frame.size.width = bounds.size.width * 0.25;
+    //frame.size.height = bounds.size.height * 0.35;
+    frame.size.height = 14;
+    frame.size.width = 24;
+    
+    /*
+    if (frame.size.width > 44) {
+        frame.size.width = 44;
+    }
+    
+    if (frame.size.width < 28) {
+        frame.size.width = 28;
+    }
+    */
     frame.origin.y = 0;
     CGFloat step = 0;
     if (inlets.count > 1) {
@@ -134,8 +137,20 @@
     NSArray *outlets = [self.object outlets];
     CGRect bounds = self.bounds;
     CGRect frame;
-    frame.size.width = bounds.size.width * 0.25;
-    frame.size.height = bounds.size.height * 0.35;
+    //frame.size.width = bounds.size.width * 0.25;
+    frame.size.width = 24;
+    frame.size.height = 14;
+    /*
+    if (frame.size.width < 28) {
+        frame.size.width = 28;
+    }
+    
+    if (frame.size.width > 44) {
+        frame.size.width = 44;
+    }
+     */
+    
+    //frame.size.height = bounds.size.height * 0.35;
     frame.origin.y = bounds.size.height - frame.size.height;
     CGFloat step = 0;
     if (outlets.count > 1) {
@@ -229,11 +244,8 @@
                     [temp addObject:connection];
                 }else{
                     [portView.connectedPortViews removeObject:connectedPortView];
-                    NSLog(@"connected portview has no superview");
                 }
-                
-                //BSDPortConnection *connection = [BSDPortConnection connectionWithOwner:portView target:connectedPortView];
-                //[temp addObject:connection];
+
             }
         }
     }
@@ -402,6 +414,27 @@
     return result;
 }
 
+- (CGSize)minimumSize
+{
+    CGSize size;
+    size.height = self.bounds.size.height;
+    CGFloat multiplier = 3;
+    if (self.object) {
+        CGFloat i = [self.object inlets].count;
+        CGFloat o = [self.object outlets].count;
+        
+        if (i > 3 && i > o) {
+            multiplier = i + ((i - 1) * 0.1);
+        }
+        if (o > 3 && o > i) {
+            multiplier = o + ((o - 1) * 0.1);
+        }
+    }
+    
+    size.width = multiplier * 24;
+    return size;
+}
+
 - (void)handleObjectValueShouldChangeNotification:(NSNotification *)notification
 {
 
@@ -410,9 +443,7 @@
 
 - (void)tearDown
 {
-    
-   
-    
+
     for (BSDPortView *inletView in self.inletViews) {
         [inletView removeFromSuperview];
         [[NSNotificationCenter defaultCenter]removeObserver:inletView];

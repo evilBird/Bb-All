@@ -46,7 +46,6 @@
 
 - (instancetype)initWithDescription:(BSDObjectDescription *)desc;
 - (void)makeConnectionWithDescription:(BSDPortConnectionDescription *)description;
-- (void)senderValueChanged:(id)value;
 
 - (NSArray *)inlets;
 - (NSArray *)outlets;
@@ -60,9 +59,9 @@
 - (id)makeCreationArgs;
 - (void)makeObjectInstance;
 - (void)makeObjectInstanceArgs:(id)args;
-- (void)updatePortFrames;
 - (void)tearDown;
 - (void)handleObjectValueShouldChangeNotification:(NSNotification *)notification;
+- (CGSize)minimumSize;
 
 
 @end
