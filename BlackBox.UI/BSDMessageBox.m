@@ -8,6 +8,7 @@
 
 #import "BSDMessageBox.h"
 #import "BSDMessage.h"
+#import "BSDTextParser.h"
 
 @interface BSDMessageBox ()<UITextFieldDelegate,UIGestureRecognizerDelegate>{
     BOOL kCanEdit;
@@ -27,10 +28,6 @@
         // Initialization code
         self.className = @"BSDMessage";
         [self makeObjectInstance];
-        [[NSNotificationCenter defaultCenter]addObserver:self
-                                                selector:@selector(handleMessageChangedNotification:)
-                                                    name:[self.object notificationName]
-                                                  object:nil];
         NSArray *inletViews = [self inlets];
         self.inletViews = [NSMutableArray arrayWithArray:inletViews];
         NSArray *outletViews = [self outlets];
@@ -117,24 +114,37 @@
 {
     id theMessage = nil;
     NSMutableString *displayText = [[NSMutableString alloc]init];
-    NSArray *components = [text componentsSeparatedByString:@" "];
+    NSArray *components = [BSDTextParser argumentsFromArgsComponent:text];
+    
     if (components.count == 1) {
-        theMessage = [self setTypeForString:text];
+        theMessage = components.firstObject;
         [displayText appendFormat:@"%@ ",theMessage];
     }else{
-        NSMutableArray *temp = [NSMutableArray array];
-        for (NSString *component in components) {
-            id toAdd = [self setTypeForString:component];
-            [temp addObject:toAdd];
-            [displayText appendFormat:@"%@ ",toAdd];
-
+        theMessage = components;
+        NSInteger idx = 0;
+        for (id component in components) {
+            [displayText appendFormat:@"%@",component];
+            if (idx < components.count -1) {
+                [displayText appendFormat:@", "];
+            }
+            
+            idx ++;
         }
-        theMessage = temp;
     }
     
     if (self.object) {
         [(BSDMessage *)self.object setTheMessage:theMessage];
         [self.textField setText:displayText];
+    }
+}
+
+- (void)handleObjectValueShouldChangeNotification:(NSNotification *)notification
+{
+    NSDictionary *changeInfo = notification.object;
+    id val = changeInfo[@"value"];
+    if (val) {
+        
+        self.textField.text = [NSString stringWithFormat:@"%@",val];
     }
 }
 

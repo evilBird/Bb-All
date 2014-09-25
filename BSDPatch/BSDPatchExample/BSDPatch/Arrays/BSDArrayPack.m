@@ -12,11 +12,12 @@
 @interface BSDArrayPack ()
 
 @property (nonatomic,strong)NSArray *pairedInletNames;
+@property (nonatomic,strong)NSArray *orderedInlets;
 
 @end
 
 @implementation BSDArrayPack
-
+/*
 - (instancetype)initWithNumberOfInlets:(NSNumber *)numberOfInlets
 {
     return [super initWithArguments:numberOfInlets];
@@ -25,12 +26,80 @@
 {
     return [super initWithArguments:outlets];
 }
+*/
+
+- (instancetype)initWithArguments:(id)arguments
+{
+    return [super initWithArguments:arguments];
+}
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"array pack";
-    self.coldInlet.open = NO;
-    
+    self.name = @"pack";
+    NSString *args = arguments;
+    NSMutableArray *temp = nil;
+    if (args && [args isKindOfClass:[NSString class]]) {
+        NSArray *components = [args componentsSeparatedByString:@" "];
+        if (components) {
+            NSInteger idx = 0;
+            for (NSString *arg in components) {
+                BSDInlet *inlet = nil;
+                NSString *lower = [arg lowercaseString];
+                if ([lower isEqualToString:@"n"]) {
+                    if (idx == 0) {
+                        inlet = [[BSDNumberInlet alloc]initHot];
+                        inlet.delegate = self;
+                    }else{
+                        inlet = [[BSDNumberInlet alloc]initCold];
+                    }
+                    
+                }else if ([lower isEqualToString:@"s"]){
+                    if (idx == 0) {
+                        inlet = [[BSDStringInlet alloc]initHot];
+                        inlet.delegate = self;
+                    }else{
+                        inlet = [[BSDStringInlet alloc]initCold];
+                    }
+                }else if ([lower isEqualToString:@"a"]){
+                    if (idx == 0) {
+                        inlet = [[BSDArrayInlet alloc]initHot];
+                        inlet.delegate = self;
+                    }else{
+                        inlet = [[BSDArrayInlet alloc]initCold];
+                    }
+                }else if ([lower isEqualToString:@"d"]){
+                    if (idx == 0) {
+                        inlet = [[BSDDictionaryInlet alloc]initHot];
+                        inlet.delegate = self;
+                    }else{
+                        inlet = [[BSDDictionaryInlet alloc]initCold];
+                    }
+                }else{
+                    if (idx == 0) {
+                        inlet = [[BSDInlet alloc]initHot];
+                        inlet.delegate = self;
+                    }else{
+                        inlet = [[BSDInlet alloc]initCold];
+                    }
+                    
+                }
+                if (!temp) {
+                    temp = [NSMutableArray array];
+                }
+                
+                inlet.name = [NSString stringWithFormat:@"%@",@(idx)];
+                [temp addObject:inlet];
+                [self addPort:inlet];
+                idx ++;
+            }
+        }
+        
+        if (temp) {
+            self.orderedInlets = [NSArray arrayWithArray:temp];
+        }
+    }
+    //self.coldInlet.open = NO;
+    /*
     if ([arguments isKindOfClass:[NSNumber class]]) {
         NSNumber *numberOfInlets = arguments;
         for (NSUInteger idx = 0; idx < numberOfInlets.integerValue; idx ++) {
@@ -42,17 +111,58 @@
             [self addInletAndConnectToOutlet:anOutlet];
         }
     }
+     */
+}
+
+- (BSDInlet *)makeLeftInlet
+{
+    return nil;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
+
+- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
+{
+    BSDInlet *firstInlet = self.orderedInlets.firstObject;
+    if (inlet == firstInlet) {
+        [self calculateOutput];
+    }
 }
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
-    if (inlet == self.hotInlet) {
+    BSDInlet *firstInlet = self.orderedInlets.firstObject;
+    if (inlet == firstInlet) {
         [self calculateOutput];
     }
 }
 
 - (void)calculateOutput
 {
+    NSInteger sum = 0;
+    NSMutableArray *temp = nil;
+    
+    for (BSDInlet *inlet in self.orderedInlets) {
+        id value = inlet.value;
+        if (value != nil) {
+            if (!temp) {
+                temp = [NSMutableArray array];
+            }
+            
+            [temp addObject:value];
+        }else{
+            
+            break;
+        }
+    }
+    
+    if (temp.count == self.orderedInlets.count) {
+        [self.mainOutlet output:temp];
+    }
+    /*
     NSUInteger numberOfInlets = self.inlets.count - 2;
     NSMutableArray *outputArray = [[NSMutableArray alloc]initWithCapacity:numberOfInlets];
     for (NSUInteger idx = 0; idx < numberOfInlets; idx ++) {
@@ -65,6 +175,7 @@
     }
     
     [self.mainOutlet setValue:outputArray];
+     */
 }
 
 - (BSDInlet *)inletAtIndex:(NSNumber *)index

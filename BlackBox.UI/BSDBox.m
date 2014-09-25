@@ -36,6 +36,7 @@
         self.backgroundColor = _currentColor;
         self.layer.borderWidth = 1.0f;
         self.layer.borderColor = self.defaultColor.CGColor;
+        
     }
     
     return self;
@@ -64,10 +65,10 @@
     BSDBox *rb = (BSDBox *)description.receiverPortView.delegate;
     BSDInlet *inlet = (BSDInlet *)[[rb object]inletNamed:description.receiverPortName];
     BSDOutlet *myOutlet = (BSDOutlet *)[self.object outletNamed:description.senderPortName];
-    BSDObjectOutputBlock block = ^(BSDObject *object,BSDOutlet *outlet){
-        [rb senderValueChanged:outlet.value];
-    };
-    [myOutlet setOutputBlock:block];
+    //BSDObjectOutputBlock block = ^(BSDObject *object,BSDOutlet *outlet){
+      //  [rb senderValueChanged:outlet.value];
+    //};
+    //[myOutlet setOutputBlock:block];
     [myOutlet connectToInlet:inlet];
 }
 
@@ -114,6 +115,7 @@
     for (BSDInlet *inlet in inlets) {
         frame.origin.x = (CGFloat)idx * step;
         BSDPortView *portView = [[BSDPortView alloc]initWithName:inlet.name delegate:self];
+        [[NSNotificationCenter defaultCenter]addObserver:portView selector:@selector(handlePortConnectionStatusChangedNotification:) name:inlet.notificationName object:nil];
         portView.frame = frame;
         [result addObject:portView];
         [self addSubview:portView];
@@ -345,6 +347,8 @@
     
     [invocation invoke];
     self.object = instance;
+    NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",[self.object objectId]];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleObjectValueShouldChangeNotification:) name:notificationName object:nil];
 }
 
 - (NSString *)boxClassName
@@ -398,15 +402,25 @@
     return result;
 }
 
+- (void)handleObjectValueShouldChangeNotification:(NSNotification *)notification
+{
+
+}
+
+
 - (void)tearDown
 {
+    
+   
+    
     for (BSDPortView *inletView in self.inletViews) {
         [inletView removeFromSuperview];
+        [[NSNotificationCenter defaultCenter]removeObserver:inletView];
     }
     for (BSDPortView *outletView in self.outletViews) {
         [outletView removeFromSuperview];
     }
-    
+     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self.object tearDown];
     self.object = nil;
     self.inletViews = nil;

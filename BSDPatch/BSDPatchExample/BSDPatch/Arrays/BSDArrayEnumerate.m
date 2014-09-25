@@ -7,6 +7,7 @@
 //
 
 #import "BSDArrayEnumerate.h"
+#import "BSDArrayInlet.h"
 
 @implementation BSDArrayEnumerate
 
@@ -29,6 +30,13 @@
     
 }
 
+- (BSDInlet *)makeRightInlet
+{
+    BSDInlet *inlet = [[BSDArrayInlet alloc]initCold];
+    inlet.name = @"cold";
+    return inlet;
+}
+
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
     if (inlet == self.hotInlet) {
@@ -40,7 +48,7 @@
 
 - (void)calculateOutput
 {
-    NSMutableArray *array = self.coldInlet.value;
+    NSMutableArray *array = [self.coldInlet.value mutableCopy];
     if (array.count > 0) {
         id value = array.firstObject;
         NSRange newRange;

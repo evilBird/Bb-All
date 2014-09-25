@@ -29,12 +29,6 @@
         if (_hotInlet != nil) {
             [self addPort:_hotInlet];
         }
-        /*
-        _hotInlet.name = @"hot";
-        _hotInlet.objectId = [self objectId];
-        _hotInlet.delegate = self;
-        [self addPort:_hotInlet];
-         */
         _coldInlet = [self makeRightInlet];
         if (_coldInlet != nil) {
             [self addPort:_coldInlet];
@@ -157,12 +151,14 @@
     if (port && port.name) {
         if ([port isKindOfClass:[BSDInlet class]]) {
             BSDInlet *inlet = (BSDInlet *)port;
+            inlet.objectId = [self objectId];
             [self.inlets addObject:inlet];
             if (inlet.isHot) {
                 [self observePort:inlet];
             }
         } else if ([port isKindOfClass:[BSDOutlet class]]){
             BSDOutlet *outlet = (BSDOutlet *)port;
+            outlet.objectId = [self objectId];
             [self.outlets addObject:outlet];
             [self observePort:outlet];
         }

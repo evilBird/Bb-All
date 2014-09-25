@@ -19,5 +19,7 @@
 
 // pass value to inlet
 - (void)input:(id)value;
+- (void)handleInput:(id)input;
+- (BOOL)typeOk:(id)value;
 
 @end

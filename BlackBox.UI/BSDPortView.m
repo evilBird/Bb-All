@@ -27,6 +27,17 @@
     return self;
 }
 
+- (void)handlePortConnectionStatusChangedNotification:(NSNotification *)notification
+{
+    NSNumber *object = notification.object;
+    NSInteger state = object.integerValue;
+    if (state > 1) {
+        self.backgroundColor = [UIColor redColor];
+    }else{
+        self.backgroundColor = [UIColor whiteColor];
+    }
+}
+
 - (void)addConnectionToPortView:(BSDPortView *)portView
 {
     if (![self.connectedPortViews containsObject:portView]) {

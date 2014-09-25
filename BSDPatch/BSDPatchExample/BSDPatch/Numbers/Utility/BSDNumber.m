@@ -25,11 +25,22 @@
     return nil;
 }
 
+
+- (void)inletReceievedBang:(BSDInlet *)inlet
+{
+    if (inlet == self.hotInlet) {
+        [self calculateOutput];
+    }
+}
+
 - (void)calculateOutput
 {
     NSNumber *val = self.hotInlet.value;
     if ([val isKindOfClass:[NSNumber class]]) {
         [self.mainOutlet output:val];
+        NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",[self objectId]];
+        NSDictionary *changeInfo = @{@"value":@(val.doubleValue)};
+        [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:changeInfo];
     }
 }
 

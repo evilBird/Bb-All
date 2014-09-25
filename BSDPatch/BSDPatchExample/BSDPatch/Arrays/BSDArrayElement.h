@@ -10,7 +10,7 @@
 
 @interface BSDArrayElement : BSDObject
 
-//BSDArrayElement takes a (unsigned int) NSNumber in the hot inlet and a NSArray in the cold inlet. When the hot inlet receives a value, the main outlet outputs the array element at the index specified by the hot inlet value (if it is a valid index)
+//BSDArrayElement takes a (unsigned int) NSNumber in the hot inlet and a NSArray in the cold inlet. When the hot inlet receives a value, the main outlet outputs the array element at the index specified by the hot inlet value (if it is a valid index).
 
 - (instancetype)initWithArray:(NSArray *)array;
 

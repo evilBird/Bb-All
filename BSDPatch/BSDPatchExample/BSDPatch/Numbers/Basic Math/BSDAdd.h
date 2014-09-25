@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 birdSound LLC. All rights reserved.
 //
 
-#import "BSDObject.h"
+#import "BSDNumberObject.h"
 
-@interface BSDAdd : BSDObject
+@interface BSDAdd : BSDNumberObject
 
 - (instancetype)initWithPlusValue:(NSNumber *)plusValue;
 

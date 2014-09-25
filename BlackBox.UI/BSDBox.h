@@ -62,5 +62,7 @@
 - (void)makeObjectInstanceArgs:(id)args;
 - (void)updatePortFrames;
 - (void)tearDown;
+- (void)handleObjectValueShouldChangeNotification:(NSNotification *)notification;
+
 
 @end

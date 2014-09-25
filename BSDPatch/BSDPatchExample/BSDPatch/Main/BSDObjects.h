@@ -82,6 +82,10 @@
 #import "BSDSplitPoint.h"
 #import "BSDLabel.h"
 #import "BSDMapSuper.h"
+#import "BSDNumberInlet.h"
+#import "BSDStringInlet.h"
+#import "BSDArrayInlet.h"
+#import "BSDDictionaryInlet.h"
 
 #import "BSDAddKey.h"
 #import "BSDFormatString.h"

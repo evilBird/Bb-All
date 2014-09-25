@@ -33,14 +33,31 @@
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"color";
+    BSDNumberInlet *redInlet = [[BSDNumberInlet alloc]initHot];
+    redInlet.name = @"red";
+    redInlet.delegate = self;
+    [self addPort:redInlet];
+    
+    BSDNumberInlet *greenInlet = [[BSDNumberInlet alloc]initHot];
+    greenInlet.name = @"green";
+    [self addPort:greenInlet];
+    
+    BSDNumberInlet *blueInlet = [[BSDNumberInlet alloc]initHot];
+    blueInlet.name = @"blue";
+    [self addPort:blueInlet];
+    
+    BSDNumberInlet *alphaInlet = [[BSDNumberInlet alloc]initHot];
+    alphaInlet.name = @"alpha";
+    [self addPort:alphaInlet];
+    
     //[self.coldInlet setHot:YES];
     //self.coldInlet.delegate = self;
-    
+    /*
     self.redValue = [[BSDValue alloc]initWithValue:@(0)];
     self.blueValue = [[BSDValue alloc]initWithValue:@(0)];
     self.greenValue = [[BSDValue alloc]initWithValue:@(0)];
     self.alphaValue = [[BSDValue alloc]initWithValue:@(1)];
-    self.route = [[BSDRoute alloc]initWithRouteKeys:@[@"red",@"blue",@"green",@"alpha"]];
+    //self.route = [[BSDRoute alloc]initWithRouteKeys:@[@"red",@"blue",@"green",@"alpha"]];
     [[self.route outletForRouteKey:@"red"]connectToInlet:self.redValue.coldInlet];
     [[self.route outletForRouteKey:@"blue"]connectToInlet:self.blueValue.coldInlet];
     [[self.route outletForRouteKey:@"green"]connectToInlet:self.greenValue.coldInlet];
@@ -58,13 +75,30 @@
         [self.alphaValue.coldInlet input:args[3]];
         
     }
+     */
+}
+
+- (BSDInlet *)makeLeftInlet
+{
+    return nil;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
 }
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
-    if (inlet == self.hotInlet) {
+    BSDInlet *red = [self inletNamed:@"red"];
+    if (inlet == red) {
         [self calculateOutput];
     }
+}
+
+- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
+{
+    [self calculateOutput];
 }
 
 - (void)calculateOutput
@@ -72,37 +106,16 @@
     self.mainOutlet.value = [self currentColor];
 }
 
-- (void)updateColorWithDictionary:(NSDictionary *)dictionary
-{
-    
-    for (NSString *aKey in dictionary.allKeys) {
-        if ([aKey isEqualToString:@"red"]) {
-            self.red = [dictionary[@"red"]floatValue];
-        }else if ([aKey isEqualToString:@"blue"]){
-            self.blue = [dictionary[@"blue"]floatValue];
-        }else if ([aKey isEqualToString:@"green"]){
-            self.green = [dictionary[@"green"]floatValue];
-        }else if ([aKey isEqualToString:@"alpha"]){
-            self.alpha = [dictionary[@"alpha"]floatValue];
-        }
-    }
-}
-
 - (UIColor *)currentColor
 {
-    [self.redValue.hotInlet input:[BSDBang bang]];
-    [self.blueValue.hotInlet input:[BSDBang bang]];
-    [self.greenValue.hotInlet input:[BSDBang bang]];
-    [self.alphaValue.hotInlet input:[BSDBang bang]];
-    NSNumber *red = self.redValue.mainOutlet.value;
-    NSNumber *blue = self.blueValue.mainOutlet.value;
-    NSNumber *green = self.greenValue.mainOutlet.value;
-    NSNumber *alpha = self.alphaValue.mainOutlet.value;
-    UIColor *result = [UIColor colorWithRed:red.doubleValue
-                                      green:green.doubleValue
-                                       blue:blue.doubleValue
-                                      alpha:alpha.doubleValue];
-    return result;
+    double r = [[[self inletNamed:@"red"]value]doubleValue];
+    double g = [[[self inletNamed:@"green"]value]doubleValue];
+    double b = [[[self inletNamed:@"blue"]value]doubleValue];
+    double a = [[[self inletNamed:@"alpha"]value]doubleValue];
+    return [UIColor colorWithRed:r
+                           green:g
+                            blue:b
+                           alpha:a];
 }
 
 @end

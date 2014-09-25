@@ -40,6 +40,9 @@
 - (void)calculateOutput
 {
     self.mainOutlet.value = [BSDBang bang];
+    NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",[self objectId]];
+    NSDictionary *changeInfo = @{@"value":[BSDBang bang]};
+    [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:changeInfo];
 }
 
 @end

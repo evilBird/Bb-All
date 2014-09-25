@@ -25,8 +25,6 @@
 - (void)setTheMessage:(id)message
 {
     self.message = message;
-    self.name = message;
-    [[NSNotificationCenter defaultCenter]postNotificationName:[self notificationName] object:[self notificationObject]];
 }
 
 - (void)setupWithArguments:(id)arguments
@@ -43,31 +41,57 @@
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
-    if (inlet == self.hotInlet && self.message != nil) {
-        NSLog(@"bang in message box");
-        [self.mainOutlet setValue:self.message];
+    if (inlet == self.hotInlet) {
+        [self calculateOutput];
     }
 }
 
-- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
+
+- (void)calculateOutput
 {
-    if (inlet == self.hotInlet) {
-        NSArray *arr = value;
-        NSDictionary *dict = value;
-        if ([arr isKindOfClass:[NSArray class]] && arr.count == 2) {
-            NSString *key = [arr firstObject];
-            if ([key isEqualToString:@"set"]) {
-                [self setTheMessage:arr[1]];
-                self.name = self.message;
-            }
-        }else if ([dict isKindOfClass:[NSDictionary class]] && dict.allKeys.count == 1){
-            NSString *key = dict.allKeys.firstObject;
-            if ([key isEqualToString:@"set"]) {
-                [self setTheMessage:dict[key]];
-                self.name = self.message;
-            }
-        }
+    id theMessage = [self theMessage];
+    [self.mainOutlet output:[self theMessage]];
+    NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",[self objectId]];
+    NSDictionary *changeInfo = @{@"value":theMessage};
+    [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:changeInfo];
+}
+
+- (id)theMessage
+{
+    id hot = self.hotInlet.value;
+    id value = nil;
+    if (hot == nil) {
+        return nil;
     }
+    
+    if ([hot isKindOfClass:[NSArray class]]) {
+        NSMutableArray *arr = [hot mutableCopy];
+        if (arr.count < 2) {
+            return nil;
+        }
+        
+        NSString *key = [arr.firstObject lowercaseString];
+        [arr removeObject:arr.firstObject];
+        value = arr;
+        if (![key isEqualToString:@"set"]) {
+            return nil;
+        }
+        return value;
+    }
+    
+    if ([hot isKindOfClass:[NSDictionary class]]) {
+        NSMutableDictionary *dict = [hot mutableCopy];
+        if (dict.allKeys.count < 1) {
+            return nil;
+        }
+        NSString *key = dict.allKeys.firstObject;
+        if (![[key lowercaseString] isEqualToString:@"set"]) {
+            return nil;
+        }
+        return dict.allValues.firstObject;
+    }
+    
+    return nil;
 }
 
 - (NSString *)notificationName

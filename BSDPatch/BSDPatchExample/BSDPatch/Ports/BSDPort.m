@@ -15,10 +15,30 @@
     self = [super init];
     if (self) {
         _open = YES;
+        _connectionStatus = 0;
     }
     
     return self;
 }
+
+- (NSString *)notificationName
+{
+    NSString *objectId = self.objectId;
+    NSString *portId = self.portId;
+    
+    return [NSString stringWithFormat:@"BlackBox.UI.BSDPortConnectionStatusChangedNotification-%@-%@",objectId,portId];
+}
+
+- (void)setConnectionStatus:(BSDPortConnectionStatus)connectionStatus
+{
+    if (_connectionStatus != connectionStatus) {
+        
+        //[[NSNotificationCenter defaultCenter]postNotificationName:self.notificationName object:@(connectionStatus)];
+    }
+    
+    _connectionStatus = connectionStatus;
+}
+         
 
 - (NSString *)portId
 {
@@ -34,6 +54,7 @@
     if (![self.observedPorts containsObject:port]) {
         [port addObserver:self forKeyPath:@"value" options:NSKeyValueObservingOptionNew context:nil];
         [self.observedPorts addObject:port];
+        _connectionStatus = 1;
     }
 }
 
@@ -48,6 +69,7 @@
 - (void)forwardToPort:(BSDPort *)port
 {
     [port observePort:self];
+    _connectionStatus = 1;
 }
 
 - (void)removeForwardPort:(BSDPort *)port
@@ -62,7 +84,7 @@
             [port removeObserver:self forKeyPath:@"value"];
         }
     }
-    
+    self.connectionStatus = 0;
     self.observedPorts = nil;
     self.delegate = nil;
 }

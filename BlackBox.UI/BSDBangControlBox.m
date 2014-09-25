@@ -33,36 +33,29 @@
     }
     return self;
 }
-/*
 
-- (NSArray *)inlets
+- (void)dealloc
 {
-    if (self.object == NULL) {
-        return nil;
-    }
-    
-    NSArray *inlets = [self.object inlets];
-    CGRect bounds = self.bounds;
-    CGRect frame;
-    frame.size.width = bounds.size.width * 0.25;
-    frame.size.height = bounds.size.height * 0.35;
-    frame.origin.y = 0;
-    NSMutableArray *result = [NSMutableArray array];
-    BSDInlet *inlet = inlets.firstObject;
-    frame.origin.x = 0;
-    BSDPortView *portView = [[BSDPortView alloc]initWithName:inlet.name delegate:self];
-    portView.frame = frame;
-    [result addObject:portView];
-    [self addSubview:portView];
-    
-    return result;
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
-*/
+
+- (void)handleObjectValueShouldChangeNotification:(NSNotification *)notification
+{
+    NSDictionary *changeInfo = notification.object;
+    NSNumber *val = changeInfo[@"value"];
+    if (val) {
+        
+        [self doHighlight];
+        __weak BSDBangControlBox *weakself = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakself endHighlight];
+        });
+    }
+}
 
 - (void)senderValueChanged:(id)value
 {
-    [self doHighlight];
-    [self performSelector:@selector(endHighlight) withObject:nil afterDelay:0.05];
+
 }
 
 - (void)doHighlight
@@ -87,7 +80,7 @@
     if (![view isKindOfClass:[BSDPortView class]]) {
         
         [[self.object hotInlet]input:[BSDBang bang]];
-        [self doHighlight];
+        //[self doHighlight];
     }
 }
 
@@ -95,7 +88,7 @@
 {
     UIView *view = [self hitTest:[touches.allObjects.lastObject locationInView:self] withEvent:event];
     if (![view isKindOfClass:[BSDPortView class]]) {
-        [self endHighlight];
+        //[self endHighlight];
     }
 }
 
@@ -104,7 +97,7 @@
     UIView *view = [self hitTest:[touches.allObjects.lastObject locationInView:self] withEvent:event];
     if (![view isKindOfClass:[BSDPortView class]]) {
         
-        [self endHighlight];
+        //[self endHighlight];
     }
 }
 

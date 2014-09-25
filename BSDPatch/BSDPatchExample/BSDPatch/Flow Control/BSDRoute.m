@@ -7,9 +7,10 @@
 //
 
 #import "BSDRoute.h"
-
+#import "BSDDictionaryInlet.h"
 @implementation BSDRoute
 
+/*
 - (instancetype)initWithRouteKeys:(NSArray *)routeKeys
 {
     return [super initWithArguments:routeKeys];
@@ -18,6 +19,11 @@
 - (instancetype)initAndConnectWithRouteKeysAndInlets:(NSDictionary *)routeKeysAndInlets
 {
     return [super initWithArguments:routeKeysAndInlets];
+}
+*/
+- (instancetype)initWithArguments:(id)arguments
+{
+    return [super initWithArguments:arguments];
 }
 
 - (void)setupWithArguments:(id)arguments
@@ -30,7 +36,9 @@
             
             [self addOutletForRouteKey:aRouteKey];
         }
-    }else if ([arguments isKindOfClass:[NSDictionary class]]){
+    }
+    
+    else if ([arguments isKindOfClass:[NSDictionary class]]){
         NSDictionary *routeKeysAndInlets = arguments;
         for (NSString *aRouteKey in routeKeysAndInlets.allKeys) {
             BSDInlet *anInlet = routeKeysAndInlets[aRouteKey];
@@ -43,6 +51,13 @@
     self.passThroughOutlet = [[BSDOutlet alloc]init];
     self.passThroughOutlet.name = @"pass through outlet";
     [self addPort:self.passThroughOutlet];
+}
+
+- (BSDInlet *)makeLeftInlet
+{
+    BSDInlet *inlet = [[BSDDictionaryInlet alloc]initHot];
+    inlet.name = @"hot";
+    return inlet;
 }
 
 - (BSDInlet *)makeRightInlet

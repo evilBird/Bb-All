@@ -12,6 +12,7 @@
 #import "BSDPortConnection.h"
 #import <objc/runtime.h>
 #import "BSDCanvas.h"
+#import "BSDTextParser.h"
 
 
 @interface BSDGraphBox () {
@@ -147,6 +148,7 @@
 
 - (void)handleText:(NSString *)text
 {
+    
     NSMutableArray *components = [[text componentsSeparatedByString:@" "]mutableCopy];
     NSString *name = nil;
     if (components) {
@@ -173,6 +175,18 @@
             }
         }
     }
+    
+    /*
+    NSDictionary *parsedText = [BSDTextParser getClassNameAndArgsFromText:text];
+    NSString *class = nil;
+    NSArray *argsList = nil;
+    if (parsedText && [parsedText.allKeys containsObject:@"class"]) {
+        class = parsedText[@"class"];
+        if ([parsedText.allKeys containsObject:@"args"]) {
+            argsList = parsedText[@"args"];
+        }
+    }
+     */
     
     [self createObjectWithName:name arguments:argsList];
 }

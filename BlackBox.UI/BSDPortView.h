@@ -28,5 +28,5 @@
 @property (nonatomic,strong)NSString *portName;
 
 - (void)addConnectionToPortView:(BSDPortView *)portView;
-
+- (void)handlePortConnectionStatusChangedNotification:(NSNotification *)notification;
 @end

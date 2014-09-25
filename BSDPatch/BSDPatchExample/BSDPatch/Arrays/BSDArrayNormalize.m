@@ -7,6 +7,8 @@
 //
 
 #import "BSDArrayNormalize.h"
+#import "BSDArrayInlet.h"
+#import "BSDNumberInlet.h"
 
 @implementation BSDArrayNormalize
 
@@ -27,6 +29,20 @@
     
 }
 
+- (BSDInlet *)makeLeftInlet
+{
+    BSDInlet *inlet = [[BSDArrayInlet alloc]initHot];
+    inlet.name = @"hot";
+    return inlet;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    BSDInlet *inlet = [[BSDNumberInlet alloc]initCold];
+    inlet.name = @"cold";
+    return inlet;
+}
+
 - (NSArray *)normalizedArray:(NSArray *)array
 {
     if (array) {
@@ -45,7 +61,7 @@
 
 - (void)calculateOutput
 {
-    self.mainOutlet.value = [self normalizedArray:self.hotInlet.value];
+    self.mainOutlet.value = [self normalizedArray:[self.hotInlet.value mutableCopy]];
 }
 
 

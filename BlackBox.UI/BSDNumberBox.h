@@ -8,9 +8,9 @@
 
 #import "BSDBox.h"
 
-@interface BSDNumberBox : BSDBox
+@interface BSDNumberBox : BSDBox <UITextFieldDelegate>
 
-@property (nonatomic,strong)UILabel *label;
+@property (nonatomic,strong)UITextField *textField;
 @property (nonatomic,strong)UIStepper *stepper;
 
 @end

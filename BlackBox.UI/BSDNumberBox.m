@@ -32,68 +32,63 @@
         _stepper.frame = frame;
         [_stepper addTarget:self action:@selector(stepperValueDidChange:) forControlEvents:UIControlEventValueChanged];
         [self insertSubview:_stepper atIndex:0];
-        NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",[self uniqueId]];
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleObjectValueShouldChangeNotification:) name:notificationName object:nil];
         [_stepper setBackgroundImage:self.emptyImageForStepper forState:UIControlStateNormal];
         [_stepper setBackgroundImage:self.emptyImageForStepper forState:UIControlStateHighlighted];
 
-        _label = [[UILabel alloc]initWithFrame:frame];
-        _label.textAlignment = NSTextAlignmentCenter;
-        _label.text = [NSString stringWithFormat:@"%@",@(0)];
-        _label.textColor = self.backgroundColor;
-        frame = _label.frame;
+        _textField = [[UITextField alloc]initWithFrame:frame];
+        _textField.textAlignment = NSTextAlignmentCenter;
+        _textField.text = [NSString stringWithFormat:@"%@",@(0)];
+        _textField.textColor = self.backgroundColor;
+        _textField.delegate = self;
+        frame = _textField.frame;
         frame.origin.y -= frame.size.height + 10;
-        _label.frame = frame;
-        [self insertSubview:_label belowSubview:_stepper];
+        _textField.frame = frame;
+        [self addSubview:_textField];
         [self setSelected:NO];
 
     }
     
     return self;
 }
-/*
-- (NSArray *)inlets
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    CGRect bounds = self.bounds;
-    CGRect frame;
-    frame.origin = bounds.origin;
-    frame.size.width = bounds.size.width * 0.25;
-    frame.size.height = bounds.size.height * 0.35;
-    BSDPortView *hotInletView = [[BSDPortView alloc]initWithName:@"hot" delegate:self];
-    hotInletView.frame = frame;
-    [self addSubview:hotInletView];
-    return @[hotInletView];
+    return YES;
 }
 
-- (NSArray *)outlets
-{
-    CGRect bounds = self.bounds;
-    CGRect frame;
-    frame.origin = bounds.origin;
-    frame.size.width = bounds.size.width * 0.25;
-    frame.size.height = bounds.size.height * 0.35;
-    BSDPortView *mainOutletView = [[BSDPortView alloc]initWithName:@"main" delegate:self];
-    frame.origin.x = 0;
-    frame.origin.y = bounds.size.height - frame.size.height;
-    mainOutletView.frame = frame;
-    [self addSubview:mainOutletView];
-    return @[mainOutletView];
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    [textField becomeFirstResponder];
 }
-*/
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSString *text = nil;
+    if (textField.text) {
+        text = textField.text;
+    }else{
+        text = @"0";
+    }
+    
+    [textField endEditing:YES];
+    [self setValueWithText:text];
+}
+
+
+- (void)setValueWithText:(NSString *)text
+{
+    self.textField.text = [NSString stringWithFormat:@"%@",@([text floatValue])];
+    [[self.object hotInlet]input:@([text floatValue])];
+    self.stepper.value = [text floatValue];
+}
+
 - (void)senderValueChanged:(id)value
 {
-    self.label.text = [NSString stringWithFormat:@"%@",value];
-    //[[self.object hotInlet]input:value];
-    //[[self.object outletNamed:@"main"]setValue:value];
 }
 
 - (void)stepperValueDidChange:(id)sender
 {
     UIStepper *stepper = sender;
-    self.label.text = [NSString stringWithFormat:@"%@",@(stepper.value)];
     [[self.object hotInlet]input:@(stepper.value)];
-    //[[self.object inletNamed:@"cold"]input:@(stepper.value)];
-    //[[self.object inletNamed:@"hot"]input:[BSDBang bang]];
 }
 
 - (void)setSelected:(BOOL)selected
@@ -113,9 +108,8 @@
     NSDictionary *changeInfo = notification.object;
     NSNumber *val = changeInfo[@"value"];
     if (val) {
-        NSLog(@"stepper value should change to %@",val);
         self.stepper.value = val.doubleValue;
-        self.label.text = [NSString stringWithFormat:@"%@",val];
+        self.textField.text = [NSString stringWithFormat:@"%@",val];
     }
 }
 
