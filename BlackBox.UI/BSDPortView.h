@@ -29,4 +29,5 @@
 
 - (void)addConnectionToPortView:(BSDPortView *)portView;
 - (void)handlePortConnectionStatusChangedNotification:(NSNotification *)notification;
+
 @end

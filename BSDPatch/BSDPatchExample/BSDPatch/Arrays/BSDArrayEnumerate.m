@@ -18,7 +18,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"array enumerate";
+    self.name = @"array enum";
     NSArray *array = arguments;
     if (arguments) {
         self.coldInlet.value = array;

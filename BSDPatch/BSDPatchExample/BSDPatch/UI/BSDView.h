@@ -23,6 +23,8 @@
 - (NSDictionary *)mapView:(UIView *)view;
 
 @property (nonatomic,strong)BSDInlet *viewInlet;
+@property (nonatomic,strong)BSDInlet *animationInlet;
+@property (nonatomic,strong)BSDInlet *viewSelectorInlet;
 @property (nonatomic,strong)BSDInlet *setterInlet;
 @property (nonatomic,strong)BSDInlet *getterInlet;
 @property (nonatomic,strong)BSDOutlet *getterOutlet;

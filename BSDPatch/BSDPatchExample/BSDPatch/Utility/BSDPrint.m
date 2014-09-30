@@ -24,7 +24,8 @@
 {
     id value = self.hotInlet.value;
     if ([value isKindOfClass:[NSArray class]] || [value isKindOfClass:[NSDictionary class]]) {
-        NSLog(@"\n%@print: %@\n",self.text,[value mutableCopy]);
+        id toPrint = [value mutableCopy];
+        NSLog(@"\n%@print: %@\n",self.text,toPrint);
     }else{
         NSLog(@"\n%@print: %@\n",self.text,value);
     }

@@ -17,7 +17,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"add key";
+    self.name = @"key";
     
     NSString *key = (NSString *)arguments;
     if (key && key.length > 0) {

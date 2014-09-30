@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "BSDBox.h"
+#import "BSDCompiledPatch.h"
 
 @class BSDCanvas;
-@interface BSDGraphBox : BSDBox <UITextFieldDelegate>
+@interface BSDGraphBox : BSDBox <UITextFieldDelegate,BSDCompiledPatchDelegate>
 
 + (BSDGraphBox *)graphBoxWithFrame:(CGRect)frame className:(NSString *)className args:(id)args;
 - (instancetype)initWithDescription:(BSDObjectDescription *)desc;
 
-@property (nonatomic,strong)UITextField *textField;
+@property (nonatomic,strong)BSDTextField *textField;
+- (void)createObjectWithName:(NSString *)name arguments:(NSArray *)args;
 
 @end

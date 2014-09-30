@@ -52,6 +52,11 @@
     return nil;
 }
 
+- (BSDOutlet *)makeLeftOutlet
+{
+    return nil;
+}
+
 - (void)calculateOutput
 {
     NSValue *hot = self.hotInlet.value;

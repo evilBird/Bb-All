@@ -50,32 +50,18 @@
     alphaInlet.name = @"alpha";
     [self addPort:alphaInlet];
     
-    //[self.coldInlet setHot:YES];
-    //self.coldInlet.delegate = self;
-    /*
-    self.redValue = [[BSDValue alloc]initWithValue:@(0)];
-    self.blueValue = [[BSDValue alloc]initWithValue:@(0)];
-    self.greenValue = [[BSDValue alloc]initWithValue:@(0)];
-    self.alphaValue = [[BSDValue alloc]initWithValue:@(1)];
-    //self.route = [[BSDRoute alloc]initWithRouteKeys:@[@"red",@"blue",@"green",@"alpha"]];
-    [[self.route outletForRouteKey:@"red"]connectToInlet:self.redValue.coldInlet];
-    [[self.route outletForRouteKey:@"blue"]connectToInlet:self.blueValue.coldInlet];
-    [[self.route outletForRouteKey:@"green"]connectToInlet:self.greenValue.coldInlet];
-    [[self.route outletForRouteKey:@"alpha"]connectToInlet:self.alphaValue.coldInlet];
-    [self.coldInlet forwardToPort:self.route.hotInlet];
-    
-    
     NSArray *args = arguments;
-    
-    if ([args isKindOfClass:[NSArray class]] && args.count == 4) {
-     
-        [self.redValue.coldInlet input:args[0]];
-        [self.blueValue.coldInlet input:args[1]];
-        [self.greenValue.coldInlet input:args[2]];
-        [self.alphaValue.coldInlet input:args[3]];
-        
+    if (args && [args isKindOfClass:[NSArray class]] && args.count == 4) {
+        redInlet.value = args[0];
+        greenInlet.value = args[1];
+        blueInlet.value = args[2];
+        alphaInlet.value = args[3];
+    }else{
+        redInlet.value = @(1);
+        blueInlet.value = @(1);
+        greenInlet.value = @(1);
+        alphaInlet.value = @(1);
     }
-     */
 }
 
 - (BSDInlet *)makeLeftInlet

@@ -22,6 +22,7 @@ static NSString *kBoxClass = @"boxClassName";
 @property (nonatomic,strong)NSString *assignedId;
 @property (nonatomic,strong)id creationArguments;
 @property (nonatomic,strong)NSValue *displayRect;
+@property (nonatomic)CGFloat xorigin;
 @property (nonatomic,strong)NSString *boxClassName;
 
 - (NSDictionary *)dictionaryRespresentation;

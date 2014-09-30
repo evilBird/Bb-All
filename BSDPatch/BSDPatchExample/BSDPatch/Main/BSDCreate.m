@@ -385,7 +385,7 @@
 
 + (BSDRect *)rectWithCGRect:(CGRect)rect
 {
-    return [[BSDRect alloc]initWithCGRect:rect];
+    return [[BSDRect alloc]initWithArguments:@[@(rect.origin.x),@(rect.origin.y),@(rect.size.width),@(rect.size.height)]];
 }
 
 + (BSDView *)view
@@ -404,7 +404,7 @@
 
 + (BSDPoint2D *)pointWithCGPoint:(CGPoint)point
 {
-    return [[BSDPoint2D alloc]initWithCGPoint:point];
+    return [[BSDPoint2D alloc]initWithArguments:@[@(point.x),@(point.y)]];
 }
 
 + (BSDFormatString *)formatString

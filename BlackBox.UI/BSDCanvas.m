@@ -16,15 +16,18 @@
 #import "BSDInletBox.h"
 #import "BSDOutletBox.h"
 #import <ObjC/runtime.h>
+#import "NSUserDefaults+HBVUtils.h"
 
 @interface BSDCanvas ()<UIGestureRecognizerDelegate>
 {
     CGPoint kFocusPoint;
 }
 
+
 @property (nonatomic,strong)NSValue *connectionOriginPoint;
 @property (nonatomic,strong)NSValue *connectionDestinationPoint;
 @property (nonatomic,strong)NSMutableArray *connectionPaths;
+@property (nonatomic,strong)NSMutableDictionary *bezierPaths;
 @property (nonatomic,strong)NSArray *allowedObjects;
 @property (nonatomic,strong)BSDGraphBox *canvasBox;
 
@@ -131,6 +134,22 @@
     [self loadPatchWithDictionary:self.copiedBoxes appendId:appendId];
 }
 
+- (void)encapsulateSelectedContent
+{
+    NSMutableDictionary *patches = [NSUserDefaults valueForKey:@"patches"];
+    NSMutableDictionary *toEncapsulate = [self.copiedBoxes mutableCopy];
+    NSString *abstractionName = [NSString stringWithFormat:@"abs-%@",@(arc4random_uniform(1000))];
+    patches[abstractionName] = toEncapsulate;
+    [self addGraphBoxAtPoint:kFocusPoint];
+    BSDGraphBox *box = self.graphBoxes.lastObject;
+    [box createObjectWithName:@"BSDCompiledPatch" arguments:@[abstractionName]];
+}
+
+- (NSString *)canvasId
+{
+    return [NSString stringWithFormat:@"%@",self];
+}
+
 #pragma mark - handle notifications
 
 - (void)handleCompiledPatchNotification:(NSNotification *)notification
@@ -152,6 +171,59 @@
 
 #pragma mark - touch handling methods
 
+- (void)checkForAbstractionInView:(UIView *)view
+{
+    BSDGraphBox *box = nil;
+    if ([view isKindOfClass:[BSDGraphBox class]]) {
+        box = (BSDGraphBox *)view;
+    }else if ([view.superview isKindOfClass:[BSDGraphBox class]]){
+        box = (BSDGraphBox *)view.superview;
+    }
+    
+    if (box) {
+
+        NSLog(@"box: %@",box.textField.text);
+        NSString *title = box.textField.text;
+        NSRange r = [title rangeOfString:@"abs"];
+        if (r.length > 0) {
+            NSArray *components = [title componentsSeparatedByString:@" "];
+            [self openAbstraction:components[1]];
+        }
+    }
+}
+
+- (void)openAbstraction:(id)abs
+{
+    [self.delegate saveCurrentPatch];
+    [self.delegate loadAbstraction:abs];
+}
+
+- (void)handleLongPress:(id)sender
+{
+    CGPoint loc = [sender locationOfTouch:0 inView:self];
+    UIView *theView = [self hitTest:loc withEvent:UIEventTypeTouches];
+    [self checkForAbstractionInView:theView];
+
+    /*
+    if (self.bezierPaths) {
+        for (UIBezierPath *path in self.bezierPaths.allKeys) {
+            
+            UIBezierPath *copy = [path copy];
+            [copy closePath];
+            
+            if ([copy containsPoint:loc]) {
+                NSDictionary *dict = self.bezierPaths[path];
+                BSDPortView *sender = dict[@"sender"];
+                BSDPortView *receiver = dict[@"receiver"];
+                [sender.connectedPortViews removeObject:receiver];
+                [self boxDidMove:nil];
+                return;
+            }
+        }
+    }
+     */
+}
+
 - (void)handleDoubleTap:(id)sender
 {
     CGPoint loc = [sender locationOfTouch:0 inView:self];
@@ -159,16 +231,13 @@
     UIView *theView = [self hitTest:loc withEvent:UIEventTypeTouches];
     if (self.editState == BSDCanvasEditStateDefault) {
         
-        if ([theView isKindOfClass:[BSDBox class]] || [theView.superview isKindOfClass:[BSDBox class]]) {
+        if ([theView isKindOfClass:[BSDBox class]] || [theView.superview isKindOfClass:[BSDBox class]] || [theView isKindOfClass:[UITextField class]] || [theView isKindOfClass:[BSDTextField class]]) {
             return;
         }
         
         [self addGraphBoxAtPoint:loc];
         
     }else{
-        
-        NSInteger state = [(UIGestureRecognizer *)sender state];
-        NSString *s = [NSString stringWithFormat:@"%@",sender];
         
         BSDBox *toSelect = nil;
         id superview= theView.superview;
@@ -249,6 +318,7 @@
     self.connectionOriginPoint = nil;
     self.connectionDestinationPoint = nil;
     self.connectionPaths = nil;
+    self.bezierPaths = nil;
     self.connectionPaths = [NSMutableArray arrayWithArray:[self allConnections]];
     kFocusPoint = point;
     [self setNeedsDisplay];
@@ -279,7 +349,6 @@
     BSDObjectLookup *lookup = [[BSDObjectLookup alloc]init];
     return [lookup classNameForString:text];
 }
-
 
 - (UIView *)displayViewForBox:(id)sender
 {
@@ -383,6 +452,7 @@
 {
     for (UIView *subview in self.subviews) {
         [subview removeFromSuperview];
+        
     }
     
     for (NSString *uniqueId in self.boxes.allKeys) {
@@ -395,9 +465,12 @@
     self.connectionPaths = nil;
     self.connectionOriginPoint = nil;
     self.connectionDestinationPoint = nil;
+    self.canvasBox = nil;
+    self.bezierPaths = nil;
     self.boxes = [NSMutableDictionary dictionary];
     self.graphBoxes = [NSMutableArray array];
     self.connectionPaths = [NSMutableArray array];
+    [self addCanvasBox];
     [self setNeedsDisplay];
 }
 
@@ -415,10 +488,14 @@
         _doubleTap.numberOfTapsRequired = 2;
         _doubleTap.delegate = self;
         [self addGestureRecognizer:_doubleTap];
+        
+        UILongPressGestureRecognizer *longPress=  [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+        [self addGestureRecognizer:longPress];
         _connectionPaths = [NSMutableArray array];
         self.backgroundColor = [UIColor whiteColor];
-        kFocusPoint = self.center;
+        kFocusPoint = CGPointMake(200, 200);
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleCompiledPatchNotification:) name:@"com.birdSound.BlockBox-UI.compiledPatchNeedsSomethingNotification" object:nil];
+        //[self addCanvasBox];;
         
     }
     
@@ -446,18 +523,18 @@
 - (void)addCanvasBox
 {
     CGRect rect = CGRectMake(0, 0, 140, 50);
-    BSDGraphBox *graphBox = [BSDGraphBox graphBoxWithFrame:rect className:@"BSDView" args:NULL];
-    graphBox.center = self.center;
-    graphBox.delegate = self;
-    self.boxes[graphBox.uniqueId] = graphBox;
-    [self.graphBoxes addObject:graphBox];
-    [[graphBox.object coldInlet]setValue:[self.delegate viewForCanvas:self]];
-    [self addSubview:graphBox];
+    self.canvasBox = [[BSDGraphBox alloc]initWithFrame:rect];
+    self.canvasBox.center = kFocusPoint;
+    self.canvasBox.delegate = self;
+    self.canvasBox.className = @"BSDView";
+    [self.canvasBox createObjectWithName:self.canvasBox.className arguments:@[[self.delegate viewForCanvas:self]]];
+    self.canvasBox.textField.text = @"superview";
+    [self addSubview:self.canvasBox];
 }
 
 - (void)addGraphBoxAtPoint:(CGPoint)point
 {
-    CGRect rect = CGRectMake(0, 0, 140, 50);
+    CGRect rect = CGRectMake(0, 0, 140, 44);
     BSDGraphBox *graphBox = [[BSDGraphBox alloc]initWithFrame:rect];
     graphBox.delegate = self;
     graphBox.center = point;
@@ -468,7 +545,7 @@
 
 - (void)addNumberBoxAtPoint:(CGPoint)point
 {
-    CGRect rect = CGRectMake(100, 100, 120, 44);
+    CGRect rect = CGRectMake(100, 100, 72, 44);
     BSDNumberBox *numberBox = [[BSDNumberBox alloc]initWithFrame:rect];
     numberBox.delegate = self;
     numberBox.center = point;
@@ -544,19 +621,27 @@
         UIBezierPath *path = [UIBezierPath bezierPath];
         [path moveToPoint:[self.connectionOriginPoint CGPointValue]];
         [path addLineToPoint:[self.connectionDestinationPoint CGPointValue]];
-        [path setLineWidth:4];
+        [path setLineWidth:6];
         [[UIColor blackColor]setStroke];
         [path stroke];
     }
     
     if (self.connectionPaths != nil) {
-        for (NSArray *points in self.connectionPaths) {
+        self.bezierPaths = nil;
+        for (NSDictionary *vec in self.connectionPaths) {
+            NSArray *points = vec[@"points"];
+        //for (NSArray *points in self.connectionPaths) {
             UIBezierPath *path = [UIBezierPath bezierPath];
             [path moveToPoint:[points.firstObject CGPointValue]];
             [path addLineToPoint:[points.lastObject CGPointValue]];
-            [path setLineWidth:2];
+            [path setLineWidth:4];
             [[UIColor blackColor]setStroke];
             [path stroke];
+            if (!self.bezierPaths) {
+                self.bezierPaths = [NSMutableDictionary dictionary];
+            }
+            
+            self.bezierPaths[path] = vec[@"ports"];
         }
     }
 }

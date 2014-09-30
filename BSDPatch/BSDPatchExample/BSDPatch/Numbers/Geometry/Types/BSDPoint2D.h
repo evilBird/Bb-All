@@ -16,7 +16,7 @@
 //Y inlet (hot): Takes an NSNumber which is assigned to the y value of the point
 //Main outlet: Emits an NSValue which wraps a CGPoint struct
 
-- (instancetype)initWithCGPoint:(CGPoint)point;
+//- (instancetype)initWithCGPoint:(CGPoint)point;
 
 @property (nonatomic,strong)BSDInlet *xInlet;
 @property (nonatomic,strong)BSDInlet *yInlet;

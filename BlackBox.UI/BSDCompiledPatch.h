@@ -12,10 +12,17 @@
 #import "BSDPatchInlet.h"
 #import "BSDPatchOutlet.h"
 
+@protocol BSDCompiledPatchDelegate
+
+- (UIView *)superviewForCompiledPatch:(id)sender;
+- (CALayer *)superlayerForCompiledPatch:(id)sender;
+
+@end
+
 @interface BSDCompiledPatch : BSDObject
 
-@property (nonatomic,strong)BSDPatchInlet *patchInlet;
-@property (nonatomic,strong)BSDPatchOutlet *patchOutlet;
-
+//@property (nonatomic,strong)BSDPatchInlet *patchInlet;
+//@property (nonatomic,strong)BSDPatchOutlet *patchOutlet;
+//@property (nonatomic,weak)id<BSDCompiledPatchDelegate>delegate;
 
 @end

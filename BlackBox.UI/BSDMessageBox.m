@@ -11,7 +11,7 @@
 #import "BSDTextParser.h"
 
 @interface BSDMessageBox ()<UITextFieldDelegate,UIGestureRecognizerDelegate>{
-    BOOL kCanEdit;
+    BOOL kAllowEdit;
 }
 
 
@@ -28,6 +28,15 @@
         // Initialization code
         self.className = @"BSDMessage";
         [self makeObjectInstance];
+        _textField = [[UITextField alloc]initWithFrame:self.bounds];
+        _textField.textColor = [UIColor colorWithWhite:0.2 alpha:1];
+        _textField.textAlignment = NSTextAlignmentCenter;
+        _textField.placeholder = @"message";
+        _textField.delegate = self;
+        _textField.backgroundColor = [UIColor clearColor];
+        _textField.delegate = self;
+        _textField.tintColor = [UIColor darkGrayColor];
+        [self addSubview:_textField];
         NSArray *inletViews = [self inlets];
         self.inletViews = [NSMutableArray arrayWithArray:inletViews];
         NSArray *outletViews = [self outlets];
@@ -35,62 +44,20 @@
         self.defaultColor = [UIColor colorWithWhite:0.9 alpha:1];
         self.selectedColor = [UIColor colorWithWhite:0.99 alpha:1];
         self.currentColor = self.defaultColor;
-        _textField = [[UITextField alloc]initWithFrame:self.bounds];
-        _textField.textColor = [UIColor colorWithWhite:0.2 alpha:1];
-        _textField.textAlignment = NSTextAlignmentCenter;
-        _textField.placeholder = @"message";
-        _textField.delegate = self;
-        _textField.backgroundColor = [UIColor clearColor];
-        _textField.tintColor = [UIColor darkGrayColor];
-        [self addSubview:_textField];
-        kCanEdit = YES;
+        kAllowEdit = YES;
+        [self setSelected:NO];
     }
     return self;
 }
 
-- (void)handleMessageChangedNotification:(NSNotification *)notification
-{
-    NSDictionary *object = notification.object;
-    if ([object.allKeys containsObject:@"message"]) {
-        self.textField.text = [NSString stringWithFormat:@"%@",object[@"message"]];
-        [self.textField sizeToFit];
-        [self setNeedsDisplay];
-    }
-}
-/*
-- (NSArray *)inlets
-{
-    if (self.object == NULL) {
-        return nil;
-    }
-    
-    NSArray *inlets = [self.object inlets];
-    CGRect bounds = self.bounds;
-    CGRect frame;
-    frame.size.width = bounds.size.width * 0.25;
-    frame.size.height = bounds.size.height * 0.35;
-    frame.origin.y = 0;
-    NSMutableArray *result = [NSMutableArray array];
-    BSDInlet *inlet = inlets.firstObject;
-    frame.origin.x = 0;
-    BSDPortView *portView = [[BSDPortView alloc]initWithName:inlet.name delegate:self];
-    portView.frame = frame;
-    [result addObject:portView];
-    [self addSubview:portView];
-    
-    return result;
-}
- */
-
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    return kCanEdit;
-}
-
-- (void)handleTap:(UITapGestureRecognizer *)sender
-{
-    self.currentColor = self.defaultColor;
-    [[self.object hotInlet]input:[BSDBang bang]];
+    UIGestureRecognizerState pan = self.panGesture.state;
+    if (pan == UIGestureRecognizerStateBegan || pan == UIGestureRecognizerStateChanged) {
+        return NO;
+    }
+    textField.text = @"";
+    return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -105,12 +72,17 @@
     [textField resignFirstResponder];
     if (textField.text && textField.text.length) {
         [self handleText:textField.text];
-        kCanEdit = NO;
+    }else{
+        [[self.object hotInlet]input:[BSDBang bang]];
     }
 }
 
 - (void)handleText:(NSString *)text
 {
+    if (!text || text.length == 0) {
+        return;
+    }
+    
     id theMessage = nil;
     NSArray *components = [text componentsSeparatedByString:@" "];
     
@@ -147,7 +119,7 @@
             frame.size.width = minSize.width;
         }
         self.frame = frame;
-        self.textField.frame = CGRectInset(self.bounds, self.bounds.size.width * 0.15, 0);
+        self.textField.frame = CGRectInset(self.bounds, size.width * 0.15, 0);
     }
 }
 
@@ -157,8 +129,10 @@
     id val = changeInfo[@"value"];
     if (val) {
         NSString *displayText = [NSString stringWithFormat:@"%@",val];
-        NSString *nws = [displayText stringByReplacingOccurrencesOfString:@" " withString:@""];
-        self.textField.text = nws;
+        NSString *nnl = [displayText stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        NSString *nt = [nnl stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+        NSString *nq = [nt stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        self.textField.text = nq;
         [self resizeToFitText:self.textField.text];
     }
 }

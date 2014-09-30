@@ -114,12 +114,16 @@
 		F283A1FD19CA0709005CC98B /* BSDPatchOutlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1FC19CA0709005CC98B /* BSDPatchOutlet.m */; };
 		F283A20019CA11C8005CC98B /* BSDInletBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1FF19CA11C8005CC98B /* BSDInletBox.m */; };
 		F283A20319CA11DF005CC98B /* BSDOutletBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A20219CA11DF005CC98B /* BSDOutletBox.m */; };
+		F289D8CC19D63FC800CA1BC0 /* BSDFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = F289D8CB19D63FC800CA1BC0 /* BSDFactory.m */; };
 		F28C00E119D21F6000BFA206 /* BSDDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C00E019D21F6000BFA206 /* BSDDelay.m */; };
 		F28C00E419D2823E00BFA206 /* BSDMapSuper.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C00E319D2823E00BFA206 /* BSDMapSuper.m */; };
 		F2AAF7A019C7CB97004EFE87 /* BSDPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF79F19C7CB97004EFE87 /* BSDPrint.m */; };
 		F2AAF7A319C7DD16004EFE87 /* BSDRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A219C7DD16004EFE87 /* BSDRandom.m */; };
 		F2AAF7A619C7FB4B004EFE87 /* BSDCanvasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */; };
 		F2AAF7A919C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A819C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m */; };
+		F2CFDEB019DA1E7800A156DB /* BSDAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEAF19DA1E7800A156DB /* BSDAnimation.m */; };
+		F2CFDEB319DA29A800A156DB /* BSDTransform3d.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEB219DA29A800A156DB /* BSDTransform3d.m */; };
+		F2CFDEB619DA2B9600A156DB /* BSDTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEB519DA2B9600A156DB /* BSDTrigger.m */; };
 		F2EB85E419D34CA8007B8C3C /* BSDNumberInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85E319D34CA8007B8C3C /* BSDNumberInlet.m */; };
 		F2EB85E719D34EE8007B8C3C /* BSDStringInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85E619D34EE8007B8C3C /* BSDStringInlet.m */; };
 		F2EB85EA19D34F46007B8C3C /* BSDDictionaryInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85E919D34F46007B8C3C /* BSDDictionaryInlet.m */; };
@@ -130,6 +134,9 @@
 		F2EB85F919D351CE007B8C3C /* BSDStringObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85F819D351CE007B8C3C /* BSDStringObject.m */; };
 		F2EB85FC19D35227007B8C3C /* BSDDictionaryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85FB19D35227007B8C3C /* BSDDictionaryObject.m */; };
 		F2EB85FF19D35C79007B8C3C /* BSDTextParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85FE19D35C79007B8C3C /* BSDTextParser.m */; };
+		F2EB860219D4CCDD007B8C3C /* BSDTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB860119D4CCDD007B8C3C /* BSDTextField.m */; };
+		F2EB860519D5034B007B8C3C /* BSDCollectionInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB860419D5034B007B8C3C /* BSDCollectionInlet.m */; };
+		F2EB860819D54813007B8C3C /* BSDAffineTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB860719D54813007B8C3C /* BSDAffineTransform.m */; };
 		F2EE14B319C9EF9B008D83E2 /* BSDMessageBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EE14B219C9EF9B008D83E2 /* BSDMessageBox.m */; };
 		F2EE14B619C9F070008D83E2 /* BSDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EE14B519C9F070008D83E2 /* BSDMessage.m */; };
 		F2F5131D19B8D97C00323096 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5131C19B8D97C00323096 /* main.m */; };
@@ -375,6 +382,8 @@
 		F283A1FF19CA11C8005CC98B /* BSDInletBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDInletBox.m; sourceTree = "<group>"; };
 		F283A20119CA11DF005CC98B /* BSDOutletBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDOutletBox.h; sourceTree = "<group>"; };
 		F283A20219CA11DF005CC98B /* BSDOutletBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDOutletBox.m; sourceTree = "<group>"; };
+		F289D8CA19D63FC800CA1BC0 /* BSDFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDFactory.h; sourceTree = "<group>"; };
+		F289D8CB19D63FC800CA1BC0 /* BSDFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDFactory.m; sourceTree = "<group>"; };
 		F28C00DF19D21F6000BFA206 /* BSDDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDDelay.h; sourceTree = "<group>"; };
 		F28C00E019D21F6000BFA206 /* BSDDelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDDelay.m; sourceTree = "<group>"; };
 		F28C00E219D2823E00BFA206 /* BSDMapSuper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDMapSuper.h; sourceTree = "<group>"; };
@@ -387,6 +396,12 @@
 		F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCanvasViewController.m; sourceTree = "<group>"; };
 		F2AAF7A719C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+HBVUtils.h"; sourceTree = "<group>"; };
 		F2AAF7A819C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+HBVUtils.m"; sourceTree = "<group>"; };
+		F2CFDEAE19DA1E7800A156DB /* BSDAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnimation.h; sourceTree = "<group>"; };
+		F2CFDEAF19DA1E7800A156DB /* BSDAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnimation.m; sourceTree = "<group>"; };
+		F2CFDEB119DA29A800A156DB /* BSDTransform3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTransform3d.h; sourceTree = "<group>"; };
+		F2CFDEB219DA29A800A156DB /* BSDTransform3d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTransform3d.m; sourceTree = "<group>"; };
+		F2CFDEB419DA2B9600A156DB /* BSDTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTrigger.h; sourceTree = "<group>"; };
+		F2CFDEB519DA2B9600A156DB /* BSDTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTrigger.m; sourceTree = "<group>"; };
 		F2EB85E219D34CA8007B8C3C /* BSDNumberInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDNumberInlet.h; sourceTree = "<group>"; };
 		F2EB85E319D34CA8007B8C3C /* BSDNumberInlet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDNumberInlet.m; sourceTree = "<group>"; };
 		F2EB85E519D34EE8007B8C3C /* BSDStringInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDStringInlet.h; sourceTree = "<group>"; };
@@ -407,6 +422,12 @@
 		F2EB85FB19D35227007B8C3C /* BSDDictionaryObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDDictionaryObject.m; sourceTree = "<group>"; };
 		F2EB85FD19D35C79007B8C3C /* BSDTextParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTextParser.h; sourceTree = "<group>"; };
 		F2EB85FE19D35C79007B8C3C /* BSDTextParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTextParser.m; sourceTree = "<group>"; };
+		F2EB860019D4CCDD007B8C3C /* BSDTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTextField.h; sourceTree = "<group>"; };
+		F2EB860119D4CCDD007B8C3C /* BSDTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTextField.m; sourceTree = "<group>"; };
+		F2EB860319D5034B007B8C3C /* BSDCollectionInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDCollectionInlet.h; sourceTree = "<group>"; };
+		F2EB860419D5034B007B8C3C /* BSDCollectionInlet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCollectionInlet.m; sourceTree = "<group>"; };
+		F2EB860619D54813007B8C3C /* BSDAffineTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAffineTransform.h; sourceTree = "<group>"; };
+		F2EB860719D54813007B8C3C /* BSDAffineTransform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAffineTransform.m; sourceTree = "<group>"; };
 		F2EE14B119C9EF9B008D83E2 /* BSDMessageBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDMessageBox.h; sourceTree = "<group>"; };
 		F2EE14B219C9EF9B008D83E2 /* BSDMessageBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDMessageBox.m; sourceTree = "<group>"; };
 		F2EE14B419C9F070008D83E2 /* BSDMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDMessage.h; sourceTree = "<group>"; };
@@ -588,6 +609,8 @@
 				F21E526B19C51BC300E51383 /* BSDSwap.m */,
 				F21E526C19C51BC300E51383 /* BSDValue.h */,
 				F21E526D19C51BC300E51383 /* BSDValue.m */,
+				F2CFDEB419DA2B9600A156DB /* BSDTrigger.h */,
+				F2CFDEB519DA2B9600A156DB /* BSDTrigger.m */,
 			);
 			path = "Flow Control";
 			sourceTree = "<group>";
@@ -812,6 +835,8 @@
 			children = (
 				F21E52DB19C51BC300E51383 /* BSDBasicAnimation.h */,
 				F21E52DC19C51BC300E51383 /* BSDBasicAnimation.m */,
+				F2CFDEAE19DA1E7800A156DB /* BSDAnimation.h */,
+				F2CFDEAF19DA1E7800A156DB /* BSDAnimation.m */,
 				F21E52DD19C51BC300E51383 /* BSDColor.h */,
 				F21E52DE19C51BC300E51383 /* BSDColor.m */,
 				F21E52DF19C51BC300E51383 /* BSDFont.h */,
@@ -828,6 +853,10 @@
 				F21E52E619C51BC300E51383 /* BSDLabel.m */,
 				F21E52E719C51BC300E51383 /* BSDLayer.h */,
 				F21E52E819C51BC300E51383 /* BSDLayer.m */,
+				F2EB860619D54813007B8C3C /* BSDAffineTransform.h */,
+				F2EB860719D54813007B8C3C /* BSDAffineTransform.m */,
+				F2CFDEB119DA29A800A156DB /* BSDTransform3d.h */,
+				F2CFDEB219DA29A800A156DB /* BSDTransform3d.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -853,8 +882,17 @@
 				F24A3B1319D0EBD900FBA887 /* BSDAtomizer.m */,
 				F24A3B1519D0FCFA00FBA887 /* BSDMake.h */,
 				F24A3B1619D0FCFA00FBA887 /* BSDMake.m */,
+				F289D8CA19D63FC800CA1BC0 /* BSDFactory.h */,
+				F289D8CB19D63FC800CA1BC0 /* BSDFactory.m */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		F289D8C919D5884F00CA1BC0 /* runtime */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = runtime;
 			sourceTree = "<group>";
 		};
 		F2EB85E119D34C84007B8C3C /* Types */ = {
@@ -868,6 +906,8 @@
 				F2EB85E919D34F46007B8C3C /* BSDDictionaryInlet.m */,
 				F2EB85EB19D34F6C007B8C3C /* BSDArrayInlet.h */,
 				F2EB85EC19D34F6C007B8C3C /* BSDArrayInlet.m */,
+				F2EB860319D5034B007B8C3C /* BSDCollectionInlet.h */,
+				F2EB860419D5034B007B8C3C /* BSDCollectionInlet.m */,
 				F2EB85EE19D34FB5007B8C3C /* BSDNumberOutlet.h */,
 				F2EB85EF19D34FB5007B8C3C /* BSDNumberOutlet.m */,
 			);
@@ -877,6 +917,7 @@
 		F2F5130E19B8D97C00323096 = {
 			isa = PBXGroup;
 			children = (
+				F289D8C919D5884F00CA1BC0 /* runtime */,
 				F21E523219C51BC300E51383 /* BSDPatch */,
 				F2F5131919B8D97C00323096 /* BlackBox.UI */,
 				F2F5133019B8D97C00323096 /* BlackBox.UITests */,
@@ -938,6 +979,8 @@
 				F241578819CB85B0003E32CA /* BSDObjectLookup.m */,
 				F2F5139619B9342400323096 /* BSDCompiledPatch.h */,
 				F2F5139719B9342400323096 /* BSDCompiledPatch.m */,
+				F2EB860019D4CCDD007B8C3C /* BSDTextField.h */,
+				F2EB860119D4CCDD007B8C3C /* BSDTextField.m */,
 				F2EB85FD19D35C79007B8C3C /* BSDTextParser.h */,
 				F2EB85FE19D35C79007B8C3C /* BSDTextParser.m */,
 				F2F5132419B8D97C00323096 /* Main.storyboard */,
@@ -1151,6 +1194,7 @@
 				F21E531E19C51BC300E51383 /* BSDSubtract.m in Sources */,
 				F24A3B0B19D0CB0200FBA887 /* BSDSplitDictionary.m in Sources */,
 				F2F5139219B927A700323096 /* BSDObjectDescription.m in Sources */,
+				F2EB860519D5034B007B8C3C /* BSDCollectionInlet.m in Sources */,
 				F21E532819C51BC300E51383 /* BSDDistanceFrom2DPoint.m in Sources */,
 				F21E533119C51BC300E51383 /* BSDSplitPoint.m in Sources */,
 				F21E532419C51BC300E51383 /* BSDMax.m in Sources */,
@@ -1158,7 +1202,9 @@
 				F21E52FA19C51BC300E51383 /* BSDArrayEnumerate.m in Sources */,
 				F21E531619C51BC300E51383 /* BSDAbs.m in Sources */,
 				F21E52F919C51BC300E51383 /* BSDArrayElement.m in Sources */,
+				F2CFDEB319DA29A800A156DB /* BSDTransform3d.m in Sources */,
 				F21E52FB19C51BC300E51383 /* BSDArrayFilter.m in Sources */,
+				F2EB860219D4CCDD007B8C3C /* BSDTextField.m in Sources */,
 				F2F5138919B9031C00323096 /* BSDCanvas.m in Sources */,
 				F21E530919C51BC300E51383 /* BSDChange.m in Sources */,
 				F24A3B1119D0E5C900FBA887 /* BSDDictionaryEnumerate.m in Sources */,
@@ -1166,6 +1212,8 @@
 				F2EB85F619D35127007B8C3C /* BSDArrayObject.m in Sources */,
 				F2EB85E419D34CA8007B8C3C /* BSDNumberInlet.m in Sources */,
 				F21E532119C51BC300E51383 /* BSDEqualLess.m in Sources */,
+				F289D8CC19D63FC800CA1BC0 /* BSDFactory.m in Sources */,
+				F2CFDEB619DA2B9600A156DB /* BSDTrigger.m in Sources */,
 				F21E531919C51BC300E51383 /* BSDExponent.m in Sources */,
 				F21E533F19C51BC300E51383 /* BSDBasicAnimation.m in Sources */,
 				F21E532B19C51BC300E51383 /* BSDSin.m in Sources */,
@@ -1183,6 +1231,7 @@
 				F21E533319C51BC300E51383 /* BSDMedian.m in Sources */,
 				F21E533419C51BC300E51383 /* BSDPTest.m in Sources */,
 				F21E531D19C51BC300E51383 /* BSDReciprocal.m in Sources */,
+				F2CFDEB019DA1E7800A156DB /* BSDAnimation.m in Sources */,
 				F283A1FD19CA0709005CC98B /* BSDPatchOutlet.m in Sources */,
 				F21E532719C51BC300E51383 /* BSDDistance2D.m in Sources */,
 				F21E531519C51BC300E51383 /* BSDObject.m in Sources */,
@@ -1205,6 +1254,7 @@
 				F2EB85ED19D34F6C007B8C3C /* BSDArrayInlet.m in Sources */,
 				F2AAF7A019C7CB97004EFE87 /* BSDPrint.m in Sources */,
 				F21E532E19C51BC300E51383 /* BSDPoint3D.m in Sources */,
+				F2EB860819D54813007B8C3C /* BSDAffineTransform.m in Sources */,
 				F21E52FF19C51BC300E51383 /* BSDArrayPrepend.m in Sources */,
 				F2F5132019B8D97C00323096 /* AppDelegate.m in Sources */,
 				F241578C19CB8EEF003E32CA /* BSDNumber.m in Sources */,

@@ -39,6 +39,7 @@
     kDefaultBarButtonColor = [UIColor colorWithWhite:0.3 alpha:1];
     kSelectedBarButtonColor = [UIColor blueColor];
     kDisabledBarButtonColor = [UIColor colorWithWhite:0.7 alpha:1];
+    self.currentPatchName = @"untitled patch";
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -64,6 +65,7 @@
                 rect.size = self.scrollView.contentSize;
                 self.canvas = [[BSDCanvas alloc]initWithFrame:rect];
                 self.canvas.delegate = self;
+                [self.canvas addCanvasBox];
                 [self.scrollView addSubview:self.canvas];
                 [self.view insertSubview:self.scrollView belowSubview:self.toolbar];
                 [self updateBarButtonItemsForEditState:BSDCanvasEditStateDefault];
@@ -122,7 +124,9 @@
         case 8:
             [self toggleCanvasVisibility];
             break;
-            
+        case 9:
+            [self encapsulateSelected];
+            break;
         default:
             break;
     }
@@ -219,6 +223,13 @@
     }
 }
 
+- (void)encapsulateSelected
+{
+    if (self.canvas.editState == 3) {
+        [self.canvas encapsulateSelectedContent];
+    }
+}
+
 - (void)toggleCanvasVisibility
 {
     CGFloat newAlpha = 0;
@@ -289,6 +300,16 @@
     [self.canvas clearCurrentPatch];
     self.currentPatchName = patchName;
     [self.canvas loadPatchWithDictionary:saved[patchName]];
+}
+
+- (void)loadAbstraction:(NSString *)abstraction
+{
+    [self loadSavedPatchWithName:abstraction];
+}
+
+- (void)saveCurrentPatch
+{
+    [self savePatchWithName:self.currentPatchName];
 }
 
 #pragma mark - UIAlertView Delegate

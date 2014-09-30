@@ -22,7 +22,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"array prepend";
+    self.name = @"prepend";
     
     if (arguments != NULL) {
         self.coldInlet.value = arguments;
@@ -31,13 +31,25 @@
 
 - (void)calculateOutput
 {
-    NSArray *hot = self.hotInlet.value;
+    id hot = self.hotInlet.value;
     id cold = self.coldInlet.value;
-    if (hot && cold!=NULL) {
-        NSMutableArray *hotCopy = hot.mutableCopy;
-        [hotCopy insertObject:cold atIndex:0];
-        self.mainOutlet.value = hotCopy;
+
+    if (hot == nil || cold == nil) {
+        return;
     }
+    
+    NSMutableArray *output = [NSMutableArray array];
+    [output addObject:cold];
+    
+    if ([hot isKindOfClass:[NSArray class]]) {
+        id hotCopy = [hot mutableCopy];
+        [output addObjectsFromArray:hotCopy];
+    }else{
+        [output addObject:hot];
+    }
+    
+    [self.mainOutlet output:output];
+
 }
 
 - (void)test

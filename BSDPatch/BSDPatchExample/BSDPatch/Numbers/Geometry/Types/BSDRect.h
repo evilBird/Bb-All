@@ -20,7 +20,6 @@
 //Creation arguments:
 //1. rect: an instance of CGRect 
 
-- (instancetype)initWithCGRect:(CGRect)rect;
 
 @property (nonatomic,strong)BSDInlet *originXInlet;
 @property (nonatomic,strong)BSDInlet *originYInlet;

@@ -44,6 +44,11 @@
     }
 }
 
+- (void)setDelegate:(id<BSDCompiledPatchDelegate>)delegate
+{
+
+}
+
 - (NSDictionary *)patchWithName:(NSString *)patchName
 {
     NSDictionary *savedPatches = [NSUserDefaults valueForKey:@"patches"];
@@ -62,48 +67,86 @@
 {
     NSArray *objs = dictionary[@"objectDescriptions"];
     NSArray *connects = dictionary[@"connectionDescriptions"];
-    
+    NSMutableArray *inlets = nil;
+    NSMutableArray *outlets = nil;
     for (NSDictionary *dict in objs) {
         BSDObjectDescription *desc = [BSDObjectDescription objectDescriptionWithDictionary:dict];
         [self createObjectWithDescription:desc];
-        NSString *className = desc.className;
-        if ([className isEqualToString:@"BSDPatchInlet"]) {
-            self.patchInlet = self.objectGraph[desc.uniqueId];
-            [self.hotInlet forwardToPort:[self.patchInlet inletNamed:@"hot"]];
-        }else if ([className isEqualToString:@"BSDPatchOutlet"]){
-            self.patchOutlet = self.objectGraph[desc.uniqueId];
+        if ([desc.className isEqualToString:@"BSDPatchInlet"]) {
+            if (!inlets) {
+                inlets = [NSMutableArray array];
+            }
+            [inlets addObject:desc];
+            
+        }else if ([desc.className isEqualToString:@"BSDPatchOutlet"]){
+            if (!outlets) {
+                outlets = [NSMutableArray array];
+            }
+            [outlets addObject:desc];
+            
         }
         
-        if ([self.objectGraph[desc.uniqueId] respondsToSelector:@selector(superview)]) {
-            UIView *view = [self.objectGraph[desc.uniqueId] view];
-            if (!self.views) {
-                self.views = [NSMutableArray array];
-            }
-            [self.views addObject:view];
+        for(NSDictionary *dict in connects) {
+            BSDPortConnectionDescription *desc = [BSDPortConnectionDescription connectionDescriptionWithDictionary:dict];
+            id sender = self.objectGraph[desc.senderParentId];
+            id receiver = self.objectGraph[desc.receiverParentId];
+            [[sender outletNamed:desc.senderPortName]connectToInlet:[receiver inletNamed:desc.receiverPortName]];
         }
     }
     
-    [self.coldInlet setValue:self.views];
-    
-    NSString *key = @"superview";
-    NSString *base = @"com.birdSound.BlockBox-UI.compiledPatchNeedsSomethingNotification";
-    NSString *hollaBack = [NSString stringWithFormat:@"%@-reply-%@",base,self.objectId];
-    NSDictionary *noticationInfo = @{@"key":key,
-                                     @"hollaBack":hollaBack
-                                     };
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleCanvasResponseNotification:) name:hollaBack object:nil];
-    [[NSNotificationCenter defaultCenter]postNotificationName:base object:noticationInfo];
-    
-    for (NSDictionary *dict in connects) {
-        BSDPortConnectionDescription *desc = [BSDPortConnectionDescription connectionDescriptionWithDictionary:dict];
-        id sender = self.objectGraph[desc.senderParentId];
-        id receiver = self.objectGraph[desc.receiverParentId];
-        [[sender outletNamed:desc.senderPortName]connectToInlet:[receiver inletNamed:desc.receiverPortName]];
+    if (inlets) {
+        [self addPatchInletsWithDescriptions:inlets];
     }
     
-    [self.hotInlet forwardToPort:[self.patchInlet inletNamed:@"hot"]];
-    [self.patchOutlet forwardToPort:self.mainOutlet];
+    if (outlets) {
+        [self addPatchOutletsWithDescriptions:outlets];
+    }
 
+}
+
+- (void)addPatchInletsWithDescriptions:(NSArray *)patchInletDescriptions
+{
+    NSInteger idx = 0;
+    NSSortDescriptor *leftToRight = [NSSortDescriptor sortDescriptorWithKey:@"xorigin" ascending:YES];
+    NSArray *sortedDescriptions = [patchInletDescriptions sortedArrayUsingDescriptors:@[leftToRight]];
+    for (BSDObjectDescription *desc in sortedDescriptions) {
+        idx += 1;
+        BSDInlet *inlet = [[BSDInlet alloc]initHot];
+        BSDPatchInlet *patchInlet = self.objectGraph[desc.uniqueId];
+        inlet.name = [NSString stringWithFormat:@"patch inlet %@",@(idx)];
+        [self addPort:inlet];
+        [inlet forwardToPort:[patchInlet inletNamed:@"hot"]];
+    }
+}
+
+- (void)addPatchOutletsWithDescriptions:(NSArray *)patchOutletDescriptions
+{
+    NSInteger idx = 0;
+    NSSortDescriptor *leftToRight = [NSSortDescriptor sortDescriptorWithKey:@"xorigin" ascending:YES];
+    NSArray *sortedDescriptions = [patchOutletDescriptions sortedArrayUsingDescriptors:@[leftToRight]];
+    for (BSDObjectDescription *desc in sortedDescriptions) {
+        idx +=1;
+        BSDOutlet *outlet = [[BSDOutlet alloc]init];
+        BSDPatchOutlet *patchOutlet = self.objectGraph[desc.uniqueId];
+        outlet.name = [NSString stringWithFormat:@"patch outlet %@",@(idx)];
+        [self addPort:outlet];
+        [patchOutlet forwardToPort:outlet];
+    }
+}
+
+- (BSDInlet *)makeLeftInlet
+{
+    return nil;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
+
+- (BSDOutlet *)makeLeftOutlet
+{
+    return nil;
 }
 
 - (void) createObjectWithDescription:(BSDObjectDescription *)desc
@@ -154,7 +197,7 @@
     
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
-
+/*
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
     if (inlet == self.hotInlet) {
@@ -166,10 +209,9 @@
 {
     if (inlet == self.hotInlet) {
         NSLog(@"compiled patch got bang");
-        //[self.patchInlet input:value];
     }
 }
-
+*/
 - (void)calculateOutput
 {
     
@@ -184,6 +226,7 @@
     
     [self.objectGraph removeAllObjects];
     self.objectGraph = nil;
+    self.delegate = nil;
     [super tearDown];
 }
 

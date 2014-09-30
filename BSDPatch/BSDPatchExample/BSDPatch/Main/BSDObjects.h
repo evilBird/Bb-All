@@ -86,6 +86,12 @@
 #import "BSDStringInlet.h"
 #import "BSDArrayInlet.h"
 #import "BSDDictionaryInlet.h"
+#import "BSDCollectionInlet.h"
+#import "BSDAffineTransform.h"
+#import "BSDBasicAnimation.h"
+#import "BSDFactory.h"
+#import "BSDAnimation.h"
+#import "BSDTrigger.h"
 
 #import "BSDAddKey.h"
 #import "BSDFormatString.h"

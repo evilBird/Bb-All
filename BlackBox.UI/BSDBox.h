@@ -11,6 +11,8 @@
 #import "BSDObject.h"
 #import "BSDObjectDescription.h"
 #import "BSDPortConnectionDescription.h"
+#import "BSDTextField.h"
+#import "BSDCompiledPatch.h"
 
 @class BSDCanvas;
 @protocol BSDBoxDelegate
@@ -24,13 +26,15 @@
 
 @end
 
-@interface BSDBox : UIView <BSDPortViewDelegate> {
+@interface BSDBox : UIView <BSDPortViewDelegate,UIGestureRecognizerDelegate,BSDCompiledPatchDelegate> {
     
     BSDPortView *selectedPort;
     BOOL kAllowEdit;
 }
 
 @property (nonatomic,strong)UIPanGestureRecognizer *panGesture;
+@property (nonatomic,strong)UITapGestureRecognizer *doubleTap;
+@property (nonatomic,strong)UILongPressGestureRecognizer *longPress;
 @property (nonatomic,strong)NSMutableArray *outletViews;
 @property (nonatomic,strong)NSMutableArray *inletViews;
 @property (nonatomic,strong)NSString *className;

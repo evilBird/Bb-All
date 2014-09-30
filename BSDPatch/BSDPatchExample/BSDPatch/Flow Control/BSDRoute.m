@@ -7,7 +7,8 @@
 //
 
 #import "BSDRoute.h"
-#import "BSDDictionaryInlet.h"
+#import "BSDCollectionInlet.h"
+
 @implementation BSDRoute
 
 /*
@@ -55,7 +56,7 @@
 
 - (BSDInlet *)makeLeftInlet
 {
-    BSDInlet *inlet = [[BSDDictionaryInlet alloc]initHot];
+    BSDInlet *inlet = [[BSDCollectionInlet alloc]initHot];
     inlet.name = @"hot";
     return inlet;
 }
@@ -72,7 +73,48 @@
 
 - (void)calculateOutput
 {
-    NSDictionary *hot = self.hotInlet.value;
+    id val = self.hotInlet.value;
+    if (val == nil) {
+        return;
+    }
+    
+    if ([val isKindOfClass:[NSDictionary class]]) {
+        NSMutableDictionary *hot = [val mutableCopy];
+        for (NSString *aRouteKey in hot.allKeys) {
+            BSDOutlet *anOutlet = [self outletForRouteKey:aRouteKey];
+            id value = [hot valueForKeyPath:aRouteKey];
+            NSDictionary *output = @{aRouteKey:value};
+            if (anOutlet != nil) {
+                [anOutlet output:value];
+            }else{
+                [self.passThroughOutlet output:output];
+            }
+        }
+        return;
+    }
+    if ([val isKindOfClass:[NSArray class]]) {
+        NSMutableArray *arr = [val mutableCopy];
+        if (![arr.firstObject isKindOfClass:[NSString class]] || arr.count == 0) {
+            return;
+        }
+        
+        NSString *routeKey = arr.firstObject;
+        BSDOutlet *anOutlet = [self outletForRouteKey:routeKey];
+        if (anOutlet != nil) {
+            if (arr.count < 2) {
+                [anOutlet output:[BSDBang bang]];
+            }else if (arr.count == 2){
+                [anOutlet output:arr[1]];
+            }else {
+                [arr removeObject:arr.firstObject];
+                [anOutlet output:arr];
+            }
+        }else{
+            [self.passThroughOutlet output:arr];
+        }
+        
+    }
+    /*
     for (NSString *aRouteKey in hot.allKeys) {
         BSDOutlet *anOutlet = [self outletForRouteKey:aRouteKey];
         id value = [hot valueForKeyPath:aRouteKey];
@@ -83,6 +125,7 @@
             [self.passThroughOutlet output:output];
         }
     }
+     */
 }
 
 - (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey

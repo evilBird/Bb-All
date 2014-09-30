@@ -53,8 +53,6 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    //self.selected = 1 - self.isSelected;
-    //[self.delegate tapInPortView:self];
 }
 
 - (void)setSelected:(BOOL)selected

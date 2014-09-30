@@ -18,34 +18,19 @@
         // Initialization code
         self.className = @"BSDNumber";
         [self makeObjectInstance];
+        _textField = [[UITextField alloc]initWithFrame:self.bounds];
+        _textField.textAlignment = NSTextAlignmentCenter;
+        _textField.text = [NSString stringWithFormat:@"%@",@(0)];
+        _textField.textColor = [UIColor whiteColor];
+        _textField.delegate = self;
+        _textField.tintColor = [UIColor whiteColor];
+        _textField.text = @"0";
+        [self addSubview:_textField];
+        [self setSelected:NO];
         NSArray *inletViews = [self inlets];
         self.inletViews = [NSMutableArray arrayWithArray:inletViews];
         NSArray *outletViews = [self outlets];
         self.outletViews = [NSMutableArray arrayWithArray:outletViews];
-        _stepper = [[UIStepper alloc]init];
-        _stepper.tintColor = [UIColor whiteColor];
-        _stepper.minimumValue = -1e10;
-        _stepper.maximumValue = 1e10;
-        CGRect frame = _stepper.frame;
-        frame.origin.y = CGRectGetMaxY(self.bounds) - frame.size.height - 5;
-        frame.origin.x = (CGRectGetWidth(self.bounds) - frame.size.width)/2 + 9;
-        _stepper.frame = frame;
-        [_stepper addTarget:self action:@selector(stepperValueDidChange:) forControlEvents:UIControlEventValueChanged];
-        [self insertSubview:_stepper atIndex:0];
-        [_stepper setBackgroundImage:self.emptyImageForStepper forState:UIControlStateNormal];
-        [_stepper setBackgroundImage:self.emptyImageForStepper forState:UIControlStateHighlighted];
-
-        _textField = [[UITextField alloc]initWithFrame:frame];
-        _textField.textAlignment = NSTextAlignmentCenter;
-        _textField.text = [NSString stringWithFormat:@"%@",@(0)];
-        _textField.textColor = self.backgroundColor;
-        _textField.delegate = self;
-        frame = _textField.frame;
-        frame.origin.y -= frame.size.height + 10;
-        _textField.frame = frame;
-        [self addSubview:_textField];
-        [self setSelected:NO];
-
     }
     
     return self;
@@ -56,46 +41,65 @@
     return YES;
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField endEditing:YES];
+    return YES;
+}
+
+- (void)handleLongPress:(id)sender
+{
+    if (sender == self.longPress) {
+        [self.textField becomeFirstResponder];
+    }
+}
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    [textField becomeFirstResponder];
+    textField.text = @"";
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     NSString *text = nil;
-    if (textField.text) {
+    if (textField.text && textField.text.length > 0) {
         text = textField.text;
+        [self setValueWithText:text];
     }else{
-        text = @"0";
+        [[self.object hotInlet]input:[BSDBang bang]];
     }
     
     [textField endEditing:YES];
-    [self setValueWithText:text];
+    [textField resignFirstResponder];
 }
 
 
 - (void)setValueWithText:(NSString *)text
 {
-    self.textField.text = [NSString stringWithFormat:@"%@",@([text floatValue])];
-    [[self.object hotInlet]input:@([text floatValue])];
-    self.stepper.value = [text floatValue];
+    if (!text) {
+        return;
+    }
+    
+    NSRange r = [text rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
+    if (r.length > 0) {
+        [[self.object hotInlet]input:[BSDBang bang]];
+        return;
+    }
+    
+    double value = [text floatValue];
+    [[self.object hotInlet]input:@(value)];
 }
 
-- (void)senderValueChanged:(id)value
+- (void)resizeToFitText:(NSString *)messageText
 {
-}
-
-- (void)stepperValueDidChange:(id)sender
-{
-    UIStepper *stepper = sender;
-    [[self.object hotInlet]input:@(stepper.value)];
-}
-
-- (void)setSelected:(BOOL)selected
-{
-    [super setSelected:selected];
-    [_stepper setBackgroundImage:self.emptyImageForStepper forState:UIControlStateNormal];
-    [_stepper setBackgroundImage:self.emptyImageForStepper forState:UIControlStateHighlighted];
+    NSDictionary *attributes = @{NSFontAttributeName:self.textField.font};
+    CGSize size = [messageText sizeWithAttributes:attributes];
+    CGSize minSize = [self minimumSize];
+    CGRect frame = self.frame;
+    frame.size.width = size.width * 1.3;
+    if (frame.size.width < minSize.width) {
+        frame.size.width = minSize.width;
+    }
+    self.frame = frame;
+    self.textField.frame = CGRectInset(self.bounds, size.width * 0.15, 0);
 }
 
 - (void)dealloc
@@ -109,21 +113,16 @@
     NSNumber *val = changeInfo[@"value"];
     if (val) {
         self.stepper.value = val.doubleValue;
-        self.textField.text = [NSString stringWithFormat:@"%@",val];
+        double diff = val.doubleValue - val.integerValue;
+        if (diff == 0) {
+            self.textField.text = [NSString stringWithFormat:@"%@",val];
+        }else{
+            self.textField.text = [NSString stringWithFormat:@"%.3f",val.doubleValue];
+        }
+        [self resizeToFitText:self.textField.text];
     }
 }
 
-- (UIImage *)emptyImageForStepper
-{
-    UIGraphicsBeginImageContext(CGSizeMake(1, 1));
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    UIColor *color = [UIColor clearColor];
-    CGContextSetFillColorWithColor(context, color.CGColor);
-    CGContextFillRect(context, CGRectMake(0, 0, 1, 1));
-    UIImage * image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
 
 
 /*

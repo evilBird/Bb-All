@@ -11,9 +11,9 @@
 
 @implementation BSDPoint2D
 
-- (instancetype)initWithCGPoint:(CGPoint)point
+- (instancetype)initWithArguments:(id)arguments
 {
-    return [super initWithArguments:[NSValue wrapPoint:point]];
+    return [super initWithArguments:arguments];
 }
 
 - (void)setupWithArguments:(id)arguments
@@ -28,11 +28,10 @@
     [self addPort:self.xInlet];
     [self addPort:self.yInlet];
     
-    NSValue *initVal = (NSValue *)arguments;
-    if (initVal) {
-        CGPoint point = initVal.CGPointValue;
-        self.xInlet.value = @(point.x);
-        self.yInlet.value = @(point.y);
+    NSArray *initVal = (NSArray *)arguments;
+    if (initVal && [initVal isKindOfClass:[NSArray class]] && initVal.count == 2) {
+        self.xInlet.value = initVal[0];
+        self.yInlet.value = initVal[1];
     }
 }
 

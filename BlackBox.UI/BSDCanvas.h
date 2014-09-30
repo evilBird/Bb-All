@@ -21,6 +21,8 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 
 - (UIView *)viewForCanvas:(id)canvas;
 - (void)canvas:(id)canvas editingStateChanged:(BSDCanvasEditState)editState;
+- (void)saveCurrentPatch;
+- (void)loadAbstraction:(NSString *)abstraction;
 
 @end
 
@@ -36,12 +38,14 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 @property (nonatomic)BSDCanvasEditState editState;
 
 - (NSDictionary *)currentPatch;
+- (NSString *)canvasId;
 - (void)loadPatchWithDictionary:(NSDictionary *)dictionary;
 - (void)clearCurrentPatch;
 
 - (void)deleteSelectedContent;
 - (void)copySelectedContent;
 - (void)pasteSelectedContent;
+- (void)encapsulateSelectedContent;
 
 - (CGPoint)optimalFocusPoint;
 - (void)addBangBoxAtPoint:(CGPoint)point;
@@ -50,5 +54,6 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 - (void)addInletBoxAtPoint:(CGPoint)point;
 - (void)addOutletBoxAtPoint:(CGPoint)point;
 - (void)addGraphBoxAtPoint:(CGPoint)point;
+- (void)addCanvasBox;
 
 @end

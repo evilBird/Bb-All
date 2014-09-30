@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="idc-pa-MA2">
+            <objects>
+                <navigationController id="JQU-oA-B2U" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="N7q-jq-iOb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ghU-vh-5wh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1110" y="-348"/>
+        </scene>
         <!--BSDPatch-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -76,6 +89,12 @@
                                             <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="Jc9-KC-sy0"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem tag="9" title="Abstract" style="plain" id="Zf4-0B-jT6">
+                                        <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="s0x-H2-vge"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
@@ -104,11 +123,12 @@
                         <outletCollection property="barButtonItems" destination="asc-23-pjr" id="iUD-re-peH"/>
                         <outletCollection property="barButtonItems" destination="uNK-Q9-AK0" id="quR-TO-p8w"/>
                         <outletCollection property="barButtonItems" destination="F2U-3J-AGK" id="4lB-hu-joy"/>
+                        <outletCollection property="barButtonItems" destination="Zf4-0B-jT6" id="HHh-xa-FEP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="95" y="204"/>
+            <point key="canvasLocation" x="79" y="-613"/>
         </scene>
     </scenes>
 </document>

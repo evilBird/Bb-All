@@ -14,7 +14,7 @@
 - (instancetype)initWithSuperView:(UIView *)superview;
 
 - (CALayer *)layer;
-- (CALayer *)superLayer;
+- (CALayer *)superlayer;
 - (NSString *)displayName;
 
 @property (nonatomic,strong)BSDInlet *layerInlet;

@@ -106,7 +106,7 @@
     return self.layerInlet.value;
 }
 
-- (CALayer *)superLayer
+- (CALayer *)superlayer
 {
     CALayer *myLayer = [self layer];
     return myLayer.superlayer;

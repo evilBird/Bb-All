@@ -27,7 +27,14 @@
     if (self) {
         // Initialization code
         _panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
+        //_panGesture.delegate = self;
+        //_panGesture.delaysTouchesBegan = NO;
         [self addGestureRecognizer:_panGesture];
+        //_longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+        //_longPress.delegate = self;
+        //_doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
+        //_doubleTap.delegate = self;
+        //[self addGestureRecognizer:_doubleTap];
         kAllowEdit = YES;
         self.clipsToBounds = NO;
         self.defaultColor = [UIColor colorWithWhite:0.21 alpha:1];
@@ -36,7 +43,7 @@
         self.backgroundColor = _currentColor;
         self.layer.borderWidth = 1.0f;
         self.layer.borderColor = self.defaultColor.CGColor;
-        
+        [self setSelected:NO];
     }
     
     return self;
@@ -94,20 +101,9 @@
     NSArray *inlets = [self.object inlets];
     CGRect bounds = self.bounds;
     CGRect frame;
-    //frame.size.width = bounds.size.width * 0.25;
-    //frame.size.height = bounds.size.height * 0.35;
     frame.size.height = 14;
     frame.size.width = 24;
-    
-    /*
-    if (frame.size.width > 44) {
-        frame.size.width = 44;
-    }
-    
-    if (frame.size.width < 28) {
-        frame.size.width = 28;
-    }
-    */
+
     frame.origin.y = 0;
     CGFloat step = 0;
     if (inlets.count > 1) {
@@ -118,7 +114,6 @@
     for (BSDInlet *inlet in inlets) {
         frame.origin.x = (CGFloat)idx * step;
         BSDPortView *portView = [[BSDPortView alloc]initWithName:inlet.name delegate:self];
-        [[NSNotificationCenter defaultCenter]addObserver:portView selector:@selector(handlePortConnectionStatusChangedNotification:) name:inlet.notificationName object:nil];
         portView.frame = frame;
         [result addObject:portView];
         [self addSubview:portView];
@@ -137,19 +132,9 @@
     NSArray *outlets = [self.object outlets];
     CGRect bounds = self.bounds;
     CGRect frame;
-    //frame.size.width = bounds.size.width * 0.25;
     frame.size.width = 24;
     frame.size.height = 14;
-    /*
-    if (frame.size.width < 28) {
-        frame.size.width = 28;
-    }
-    
-    if (frame.size.width > 44) {
-        frame.size.width = 44;
-    }
-     */
-    
+
     //frame.size.height = bounds.size.height * 0.35;
     frame.origin.y = bounds.size.height - frame.size.height;
     CGFloat step = 0;
@@ -170,6 +155,30 @@
     return result;
 }
 
+
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+
+- (void)handleLongPress:(id)sender
+{
+    UIGestureRecognizer *gesture = sender;
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"long press");
+    }
+}
+
+- (void)handleDoubleTap:(id)sender
+{
+    
+}
 
 - (void)handlePan:(id)sender
 {
@@ -269,8 +278,15 @@
                     CGPoint ao = [self.superview convertPoint:o fromView:portView.superview];
                     CGPoint ad = [self.superview convertPoint:d fromView:connectedPortView.superview];
                     NSArray *points = @[[NSValue valueWithCGPoint:ao],[NSValue valueWithCGPoint:ad]];
-                    [temp addObject:points];
+                    NSDictionary *portviews = @{@"sender":portView,
+                                                @"receiver":connectedPortView
+                                                };
                     
+                    NSDictionary *vec = @{@"points":points,
+                                          @"ports":portviews
+                                          };
+                    //[temp addObject:points];
+                    [temp addObject:vec];
                 }else{
                     [portView.connectedPortViews removeObject:connectedPortView];
                     NSLog(@"connected portview has no superview");
@@ -340,11 +356,18 @@
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:aSelector]];
     invocation.target = instance;
     invocation.selector = aSelector;
-    SEL viewSelector = NSSelectorFromString(@"superview");
-    
-    if (args == NULL && self.delegate && [instance respondsToSelector:viewSelector]) {
-        args = @[[self.delegate displayViewForBox:self]];
+
+    /*
+    if (args == NULL && self.delegate){
+        SEL viewSel = NSSelectorFromString(@"superview");
+        SEL layerSel = NSSelectorFromString(@"superlayer");
+        if ([instance respondsToSelector:viewSel]) {
+            args = @[[self.delegate displayViewForBox:self]];
+        }else if ([instance respondsToSelector:layerSel]){
+            args = @[[self.delegate displayViewForBox:self].layer];
+        }
     }
+    */
     
     if (args != NULL) {
         NSArray *a = args;
@@ -359,6 +382,11 @@
     
     [invocation invoke];
     self.object = instance;
+    /*
+    if ([self.object isKindOfClass:[BSDCompiledPatch class]]) {
+        [(BSDCompiledPatch *)self.object setDelegate:self];
+    }
+     */
     NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",[self.object objectId]];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleObjectValueShouldChangeNotification:) name:notificationName object:nil];
 }
@@ -440,10 +468,18 @@
 
 }
 
+- (UIView *)superviewForCompiledPatch:(id)sender
+{
+    return [self.delegate displayViewForBox:self];
+}
+
+- (CALayer *)superlayerForCompiledPatch:(id)sender
+{
+    return [self.delegate displayViewForBox:self].layer;
+}
 
 - (void)tearDown
 {
-
     for (BSDPortView *inletView in self.inletViews) {
         [inletView removeFromSuperview];
         [[NSNotificationCenter defaultCenter]removeObserver:inletView];

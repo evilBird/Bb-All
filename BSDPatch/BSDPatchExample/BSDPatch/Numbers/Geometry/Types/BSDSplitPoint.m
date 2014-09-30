@@ -39,6 +39,11 @@
     return nil;
 }
 
+- (BSDOutlet *)makeLeftOutlet
+{
+    return nil;
+}
+
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
     if (inlet == self.hotInlet) {

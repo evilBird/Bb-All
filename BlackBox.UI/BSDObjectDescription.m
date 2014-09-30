@@ -43,6 +43,15 @@ static CGFloat kOffset = 20;
     return [NSDictionary dictionaryWithDictionary:result];
 }
 
+- (CGFloat)xorigin
+{
+    if (!self.displayRect) {
+        return 0;
+    }
+    CGRect rect = [self.displayRect CGRectValue];
+    return rect.origin.x;
+}
+
 + (BSDObjectDescription *)objectDescriptionWithDictionary:(NSDictionary *)dictionary
 {
     return [BSDObjectDescription objectDescriptionWithDictionary:dictionary appendId:nil];
