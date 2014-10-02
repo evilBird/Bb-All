@@ -15,12 +15,14 @@
 //Cold inlet: Stores a UIView instance
 //Main outlet: Emits the UIView whenever its properties are updated
 
-- (instancetype)initWithSuperView:(UIView *)superview;
+//- (instancetype)initWithSuperView:(UIView *)superview;
+
+
 - (UIView *)view;
-- (UIView *)superview;
-- (void)setSuperView:(UIView *)superview;
 - (NSString *)displayName;
 - (NSDictionary *)mapView:(UIView *)view;
+- (UIView *)makeMyView;
+- (UIView *)makeMyViewWithFrame:(CGRect)frame;
 
 @property (nonatomic,strong)BSDInlet *viewInlet;
 @property (nonatomic,strong)BSDInlet *animationInlet;

@@ -7,7 +7,12 @@
 //
 
 #import "BSDObject.h"
+#import "BSDNumberInlet.h"
+#import "BSDStringInlet.h"
 
 @interface BSDFont : BSDObject
+
+@property (nonatomic,strong)BSDNumberInlet *fontSizeInlet;
+@property (nonatomic,strong)BSDStringInlet *fontNameInlet;
 
 @end

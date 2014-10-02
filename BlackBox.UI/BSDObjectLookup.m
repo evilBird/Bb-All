@@ -95,7 +95,7 @@
         Class superClass = class_getSuperclass(theClass);
         NSString *className = NSStringFromClass(theClass);
         NSString *superClassName = NSStringFromClass(superClass);
-        if ([superClassName isEqualToString:@"BSDObject"]||[superClassName isEqualToString:@"BSDView"] || [superClassName isEqualToString:@"BSDNumberObject"]) {
+        if ([superClassName isEqualToString:@"BSDObject"]||[superClassName isEqualToString:@"BSDView"] || [superClassName isEqualToString:@"BSDNumberObject"]||[superClassName isEqualToString:@"BSDGenerator"]) {
             
             if (!result) {
                 result = [NSMutableSet set];
@@ -113,7 +113,8 @@
 {
     NSDictionary *patches = [NSUserDefaults valueForKey:@"patches"];
     if (patches) {
-        return patches.allKeys;
+        NSMutableDictionary *copy = patches.mutableCopy;
+        return copy.allKeys;
     }
     
     return nil;

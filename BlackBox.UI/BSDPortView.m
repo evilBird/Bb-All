@@ -40,8 +40,12 @@
 
 - (void)addConnectionToPortView:(BSDPortView *)portView
 {
-    if (![self.connectedPortViews containsObject:portView]) {
-        [self.connectedPortViews addObject:portView];
+    if (portView) {
+        if (![self.connectedPortViews containsObject:portView]) {
+            [self.connectedPortViews addObject:portView];
+        }
+    }else{
+        NSLog(@"port view with parent %@ could not connect to non-existent port view with parent %@",[self.delegate parentClass],[portView.delegate parentClass]);
     }
 }
 

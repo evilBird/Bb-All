@@ -20,18 +20,14 @@
     return @"label";
 }
 
-- (UIView *)view
+- (UIView *)makeMyView
 {
-    UILabel *myView = self.viewInlet.value;
-    if (!myView) {
-        myView = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 88, 44)];
-        myView.backgroundColor = [UIColor clearColor];
-        myView.textAlignment = NSTextAlignmentLeft;
-        myView.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-        self.viewInlet.value = myView;
-    }
-    
-    return myView;
+    return [self makeMyViewWithFrame:CGRectMake(0, 0, 88, 22)];
 }
 
+- (UIView *)makeMyViewWithFrame:(CGRect)frame
+{
+    UILabel *myView = [[UILabel alloc]initWithFrame:frame];
+    return myView;
+}
 @end

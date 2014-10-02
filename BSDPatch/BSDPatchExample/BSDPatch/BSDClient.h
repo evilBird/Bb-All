@@ -12,6 +12,4 @@
 
 - (instancetype)initWithBaseURL:(NSString *)baseURL;
 
-@property (nonatomic,strong)BSDInlet *parameterInlet;
-
 @end

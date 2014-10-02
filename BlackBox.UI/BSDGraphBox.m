@@ -36,10 +36,11 @@
         _textField.delegate = self;
         _textField.textColor = [UIColor whiteColor];
         _textField.textAlignment = NSTextAlignmentCenter;
-        _textField.font = [UIFont boldSystemFontOfSize:frame.size.height * 0.35];
+        _textField.font = [UIFont fontWithName:@"Courier-Bold" size:[UIFont systemFontSize]];
         _textField.tintColor = [UIColor colorWithWhite:0.7 alpha:1];
         _textField.autocorrectionType = UITextAutocorrectionTypeNo;
         _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        _textField.keyboardType = UIKeyboardTypeDefault;
         _textField.enabled = YES;
         [_textField addTarget:self action:@selector(textDidChange:) forControlEvents:UIControlEventEditingChanged];
         [self insertSubview:_textField atIndex:0];
@@ -135,8 +136,8 @@
     NSMutableArray *argsList = nil;
     if (components.count) {
         for (NSString *comp in components) {
-            NSRange r = [comp rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]];
-            if (r.length > 0) {
+            NSRange r = [comp rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
+            if (r.length == 0) {
                 NSNumber *arg = @(comp.floatValue);
                 if (!argsList) {
                     argsList = [NSMutableArray array];

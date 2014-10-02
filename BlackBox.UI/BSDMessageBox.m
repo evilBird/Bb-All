@@ -36,6 +36,10 @@
         _textField.backgroundColor = [UIColor clearColor];
         _textField.delegate = self;
         _textField.tintColor = [UIColor darkGrayColor];
+        _textField.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize]];
+        _textField.autocorrectionType = UITextAutocorrectionTypeNo;
+        _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        _textField.keyboardType = UIKeyboardTypeDefault;
         [self addSubview:_textField];
         NSArray *inletViews = [self inlets];
         self.inletViews = [NSMutableArray arrayWithArray:inletViews];
@@ -49,6 +53,7 @@
     }
     return self;
 }
+
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
@@ -68,13 +73,13 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    if (!textField.text || textField.text.length == 0) {
+        return;
+    }
+    
     [textField endEditing:YES];
     [textField resignFirstResponder];
-    if (textField.text && textField.text.length) {
-        [self handleText:textField.text];
-    }else{
-        [[self.object hotInlet]input:[BSDBang bang]];
-    }
+    [self handleText:textField.text];
 }
 
 - (void)handleText:(NSString *)text
@@ -84,33 +89,51 @@
     }
     
     id theMessage = nil;
-    NSArray *components = [text componentsSeparatedByString:@" "];
-    
-    if (components.count == 1) {
-        id component = components.firstObject;
-        theMessage = [self setTypeForString:component];
-    }else {
-        NSMutableArray *temp = nil;
-        for (id component in components) {
-            
-            if (!temp) {
-                temp = [NSMutableArray array];
+    NSString *quotesRemoved = [text stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    NSInteger diff = text.length - quotesRemoved.length;
+    if (diff == 2) {
+        theMessage = quotesRemoved;
+    }else{
+        
+        NSArray *components = [text componentsSeparatedByString:@" "];
+        if (components.count == 1) {
+            id component = components.firstObject;
+            theMessage = [self setTypeForString:component];
+        }else {
+            NSMutableArray *temp = nil;
+            for (id component in components) {
+                
+                if (!temp) {
+                    temp = [NSMutableArray array];
+                }
+                
+                [temp addObject:[self setTypeForString:component]];
             }
-            
-            [temp addObject:[self setTypeForString:component]];
+            theMessage = [temp mutableCopy];
         }
-        theMessage = [temp mutableCopy];
     }
-    
     if (theMessage!=nil) {
-        [[(BSDMessage *)self.object hotInlet]input:@{@"set":theMessage}];
+        
+        if ([theMessage respondsToSelector:@selector(count)]) {
+            self.creationArguments = theMessage;
+        }else{
+            self.creationArguments = @[theMessage];
+        }
+        
+        if (self.object != nil) {
+            [[(BSDMessage *)self.object hotInlet]input:@{@"set":theMessage}];
+        }
     }
 }
 
 - (void)resizeToFitText:(NSString *)messageText
 {
     if (self.object) {
-        NSDictionary *attributes = @{NSFontAttributeName:self.textField.font};
+        NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc]init];
+        style.lineBreakMode = NSLineBreakByWordWrapping;
+        
+        NSDictionary *attributes = @{NSFontAttributeName:self.textField.font,
+                                     NSParagraphStyleAttributeName:style};
         CGSize size = [messageText sizeWithAttributes:attributes];
         CGSize minSize = [self minimumSize];
         CGRect frame = self.frame;
@@ -118,6 +141,7 @@
         if (frame.size.width < minSize.width) {
             frame.size.width = minSize.width;
         }
+        
         self.frame = frame;
         self.textField.frame = CGRectInset(self.bounds, size.width * 0.15, 0);
     }

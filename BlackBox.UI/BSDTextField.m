@@ -25,6 +25,7 @@
         _suggestedCompletion = nil;
         _context = [[NSStringDrawingContext alloc]init];
         _context.minimumScaleFactor = 0.5;
+        self.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize]];
         self.enabled = YES;
     }
     

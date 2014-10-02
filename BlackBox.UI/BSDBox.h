@@ -47,7 +47,6 @@
 @property (nonatomic,strong)UIColor *selectedColor;
 @property (nonatomic,strong)UIColor *currentColor;
 
-
 - (instancetype)initWithDescription:(BSDObjectDescription *)desc;
 - (void)makeConnectionWithDescription:(BSDPortConnectionDescription *)description;
 

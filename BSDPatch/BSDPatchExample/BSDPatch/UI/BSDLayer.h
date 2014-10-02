@@ -11,14 +11,21 @@
 
 @interface BSDLayer : BSDObject
 
-- (instancetype)initWithSuperView:(UIView *)superview;
+- (instancetype)initWithArguments:(id)arguments;
 
 - (CALayer *)layer;
-- (CALayer *)superlayer;
+- (CALayer *)makeMyLayer;
+- (CALayer *)makeMyLayerWithFrame:(CGRect)frame;
 - (NSString *)displayName;
+- (NSDictionary *)mapLayer:(CALayer *)layer;
+
+- (void)doAnimation;
+- (void)doSelector;
+
 
 @property (nonatomic,strong)BSDInlet *layerInlet;
-@property (nonatomic,strong)BSDInlet *viewInlet;
+@property (nonatomic,strong)BSDInlet *animationInlet;
+@property (nonatomic,strong)BSDInlet *selectorInlet;
 @property (nonatomic,strong)BSDInlet *setterInlet;
 @property (nonatomic,strong)BSDInlet *getterInlet;
 @property (nonatomic,strong)BSDOutlet *getterOutlet;

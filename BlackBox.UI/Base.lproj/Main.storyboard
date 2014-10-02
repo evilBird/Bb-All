@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -28,83 +29,7 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xC1-cC-04B">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="Tr4-LG-I7V"/>
-                                </constraints>
-                                <items>
-                                    <barButtonItem title="Save" width="50" style="plain" id="ocB-sh-gPN">
-                                        <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="n4d-qO-sic"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem tag="1" title="Load" width="50" style="plain" id="mqb-Nn-odc">
-                                        <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="FeP-Zh-jx9"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem tag="2" title="Clear" width="50" style="plain" id="sEQ-YN-6IY">
-                                        <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="VZG-dY-n8h"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem tag="3" title="Add" width="50" style="plain" id="O8u-z4-uAZ">
-                                        <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="EGi-nA-qU7"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem tag="4" title="Edit" width="50" style="plain" id="Zc6-rc-4yh">
-                                        <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="Wrz-ox-GGk"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem tag="5" title="Delete" width="50" style="plain" id="7A6-ge-sCX" userLabel="Delete">
-                                        <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="rau-N1-6Nf"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem tag="6" title="Copy" width="50" style="plain" id="asc-23-pjr">
-                                        <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="Kh4-ZT-6H3"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem tag="7" title="Paste" width="50" style="plain" id="uNK-Q9-AK0" userLabel="Paste">
-                                        <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="Zbd-pf-vfm"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem tag="8" title="View" width="50" style="plain" id="F2U-3J-AGK">
-                                        <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="Jc9-KC-sy0"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem tag="9" title="Abstract" style="plain" id="Zf4-0B-jT6">
-                                        <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="s0x-H2-vge"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </toolbar>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="xC1-cC-04B" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Gl9-Is-qSn"/>
-                            <constraint firstAttribute="trailing" secondItem="xC1-cC-04B" secondAttribute="trailing" id="k0k-xE-45L"/>
-                            <constraint firstItem="xC1-cC-04B" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="uxL-pm-99k"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Zgk-EZ-LwP">
                         <barButtonItem key="leftBarButtonItem" style="plain" systemItem="save" id="00f-Dc-gcC"/>
@@ -114,19 +39,88 @@
                     </navigationItem>
                     <connections>
                         <outlet property="toolbar" destination="xC1-cC-04B" id="5Kd-9g-ycH"/>
-                        <outletCollection property="barButtonItems" destination="ocB-sh-gPN" id="LHe-MP-BVF"/>
-                        <outletCollection property="barButtonItems" destination="mqb-Nn-odc" id="k3h-W8-2aa"/>
-                        <outletCollection property="barButtonItems" destination="sEQ-YN-6IY" id="2Td-Kf-Kzb"/>
-                        <outletCollection property="barButtonItems" destination="O8u-z4-uAZ" id="4d2-Q0-7hh"/>
-                        <outletCollection property="barButtonItems" destination="Zc6-rc-4yh" id="ls2-NK-jMe"/>
-                        <outletCollection property="barButtonItems" destination="7A6-ge-sCX" id="35D-aw-2Mx"/>
-                        <outletCollection property="barButtonItems" destination="asc-23-pjr" id="iUD-re-peH"/>
-                        <outletCollection property="barButtonItems" destination="uNK-Q9-AK0" id="quR-TO-p8w"/>
                         <outletCollection property="barButtonItems" destination="F2U-3J-AGK" id="4lB-hu-joy"/>
+                        <outletCollection property="barButtonItems" destination="uNK-Q9-AK0" id="quR-TO-p8w"/>
+                        <outletCollection property="barButtonItems" destination="sEQ-YN-6IY" id="2Td-Kf-Kzb"/>
+                        <outletCollection property="barButtonItems" destination="asc-23-pjr" id="iUD-re-peH"/>
+                        <outletCollection property="barButtonItems" destination="O8u-z4-uAZ" id="4d2-Q0-7hh"/>
                         <outletCollection property="barButtonItems" destination="Zf4-0B-jT6" id="HHh-xa-FEP"/>
+                        <outletCollection property="barButtonItems" destination="7A6-ge-sCX" id="35D-aw-2Mx"/>
+                        <outletCollection property="barButtonItems" destination="mqb-Nn-odc" id="k3h-W8-2aa"/>
+                        <outletCollection property="barButtonItems" destination="ocB-sh-gPN" id="LHe-MP-BVF"/>
+                        <outletCollection property="barButtonItems" destination="Zc6-rc-4yh" id="ls2-NK-jMe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xC1-cC-04B">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="64" id="Tr4-LG-I7V"/>
+                    </constraints>
+                    <items>
+                        <barButtonItem title="Save" width="50" style="plain" id="ocB-sh-gPN">
+                            <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="n4d-qO-sic"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem tag="1" title="Load" width="50" style="plain" id="mqb-Nn-odc">
+                            <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="FeP-Zh-jx9"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem tag="2" title="Clear" width="50" style="plain" id="sEQ-YN-6IY">
+                            <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="VZG-dY-n8h"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem tag="3" title="Add" width="50" style="plain" id="O8u-z4-uAZ">
+                            <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="EGi-nA-qU7"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem tag="4" title="Edit" width="50" style="plain" id="Zc6-rc-4yh">
+                            <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="Wrz-ox-GGk"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem tag="5" title="Delete" width="50" style="plain" id="7A6-ge-sCX" userLabel="Delete">
+                            <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="rau-N1-6Nf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem tag="6" title="Copy" width="50" style="plain" id="asc-23-pjr">
+                            <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="Kh4-ZT-6H3"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem tag="7" title="Paste" width="50" style="plain" id="uNK-Q9-AK0" userLabel="Paste">
+                            <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="Zbd-pf-vfm"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem tag="8" title="View" width="50" style="plain" id="F2U-3J-AGK">
+                            <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="Jc9-KC-sy0"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem tag="9" title="Abstract" style="plain" id="Zf4-0B-jT6">
+                            <color key="tintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tapInBarButtonItem:" destination="BYZ-38-t0r" id="s0x-H2-vge"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                    <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </toolbar>
             </objects>
             <point key="canvasLocation" x="79" y="-613"/>
         </scene>

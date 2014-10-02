@@ -27,11 +27,18 @@
     }
 }
 
-- (BSDInlet *)makeRightInlet
+
+
+- (BSDInlet *)makeLeftInlet
 {
     BSDInlet *inlet = [[BSDArrayInlet alloc]initHot];
     inlet.name = @"hot";
     return inlet;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
 }
 
 @end

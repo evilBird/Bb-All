@@ -8,11 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "BSDCanvas.h"
+#import "BSDCanvasToolbarView.h"
+#import "PopoverContentTableViewController.h"
 
-@interface BSDCanvasViewController : UIViewController
+@protocol BSDCanvasViewControllerDelegate <NSObject>
 
+
+@end
+
+@interface BSDCanvasViewController : UIViewController <BSDCanvasToolbarViewDelegate,BSDCanvasDelegate,PopoverContentTableViewControllerDelegate,UIPopoverControllerDelegate>
+
+- (instancetype)initWithPatchName:(NSString *)patchName delegate:(id<BSDCanvasViewControllerDelegate>)delegate;
+
+@property (nonatomic,strong)NSString *currentPatchName;
 @property (nonatomic,strong)BSDCanvas *canvas;
-
-
+@property (nonatomic,strong)NSDictionary *patch;
+@property (nonatomic,weak)id<BSDCanvasViewControllerDelegate>delegate;
 
 @end

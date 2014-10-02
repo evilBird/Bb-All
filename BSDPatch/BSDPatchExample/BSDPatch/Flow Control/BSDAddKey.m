@@ -31,6 +31,10 @@
 {
     id hot = self.hotInlet.value;
     NSString *key = self.coldInlet.value;
+    if (hot == nil || key == nil) {
+        return;
+    }
+    
     NSDictionary *output = @{key:hot};
     
     self.mainOutlet.value = output;

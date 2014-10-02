@@ -25,7 +25,7 @@
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
-    if ([inlet isEqual:self.hotInlet]) {
+    if (inlet == self.hotInlet) {
         [self calculateOutput];
     }
 }

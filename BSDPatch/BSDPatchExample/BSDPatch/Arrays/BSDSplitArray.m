@@ -7,6 +7,8 @@
 //
 
 #import "BSDSplitArray.h"
+#import "BSDNumberInlet.h"
+#import "BSDArrayInlet.h"
 
 @implementation BSDSplitArray
 
@@ -35,11 +37,35 @@
     }
 }
 
+- (BSDInlet *)makeRightInlet
+{
+    BSDNumberInlet *numberInlet = [[BSDNumberInlet alloc]initCold];
+    numberInlet.name = @"cold";
+    return numberInlet;
+}
+
+- (BSDInlet *)makeLeftInlet
+{
+    BSDArrayInlet *inlet = [[BSDArrayInlet alloc]initHot];
+    inlet.name = @"hot";
+    inlet.delegate = self;
+    return inlet;
+}
+
 - (void)calculateOutput
 {
     NSNumber *cold = self.coldInlet.value;
+    if (!cold || ![cold isKindOfClass:[NSNumber class]]) {
+        return;
+    }
+    
     NSUInteger i = cold.integerValue;
-    NSArray *array = self.hotInlet.value;
+    NSArray *arr = self.hotInlet.value;
+    if (!arr || ![arr isKindOfClass:[NSArray class]]) {
+        return;
+    }
+    
+    NSMutableArray *array = [arr mutableCopy];
     
     if (array && i>0 && i<array.count + 1) {
         NSRange leftRange;
@@ -48,8 +74,27 @@
         NSRange rightRange;
         rightRange.location = i;
         rightRange.length = array.count - i;
-        self.remainderOutlet.value = [array objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:rightRange]];
-        self.mainOutlet.value = [array objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:leftRange]];
+        
+        NSArray *left = [array objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:leftRange]];
+        id leftOutput = nil;
+        if (left.count == 1) {
+            leftOutput = left.firstObject;
+        }else{
+            leftOutput = left.mutableCopy;
+        }
+        
+        [self.mainOutlet output:leftOutput];
+        
+        NSArray *right = [array objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:rightRange]];
+        id rightOutput = nil;
+        if (right.count == 1) {
+            rightOutput = right.firstObject;
+        }else{
+            rightOutput = right.mutableCopy;
+        }
+        [self.remainderOutlet output:rightOutput];
+        //[self.mainOutlet output:[array objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:leftRange]]];
+        //[self.remainderOutlet output:[array objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:rightRange]]];
     }
 }
 

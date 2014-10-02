@@ -20,14 +20,14 @@
     return @"image view";
 }
 
-- (UIView *)view
+- (UIView *)makeMyView
 {
-    UIImageView *myView = self.viewInlet.value;
-    if (!myView) {
-        myView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 88, 44)];
-        self.viewInlet.value = myView;
-    }
-    
+    return [self makeMyViewWithFrame:CGRectMake(0, 0, 44, 44)];
+}
+
+- (UIView *)makeMyViewWithFrame:(CGRect)frame
+{
+    UIImageView *myView = [[UIImageView alloc]initWithFrame:frame];
     return myView;
 }
 

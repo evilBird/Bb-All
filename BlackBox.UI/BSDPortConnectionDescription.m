@@ -23,7 +23,7 @@ static CGFloat kOffset = 20;
     
     
     if ([dictionary isKindOfClass:[NSDictionary class]]) {
-        NSLog(@"dictionary keys: %@, values: %@",dictionary.allKeys,dictionary.allValues);
+        //NSLog(@"dictionary keys: %@, values: %@",dictionary.allKeys,dictionary.allValues);
     }
     
     if ([dictionary isKindOfClass:[NSArray class]]) {

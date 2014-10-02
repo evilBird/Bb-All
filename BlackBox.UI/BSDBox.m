@@ -59,6 +59,35 @@
         self.className = desc.className;
         self.creationArguments = desc.creationArguments;
         [self makeObjectInstanceArgs:self.creationArguments];
+        
+        if ([desc.className isEqualToString:@"BSDMessage"]) {
+            
+            //NSArray *inletViews = [self inlets];
+            //self.inletViews = [NSMutableArray arrayWithArray:inletViews];
+            //NSArray *outletViews = [self outlets];
+            //self.outletViews = [NSMutableArray arrayWithArray:outletViews];
+            if (self.creationArguments != nil) {
+                if ([self.creationArguments respondsToSelector:@selector(count)]) {
+                    NSInteger count = [self.creationArguments count];
+                    if (count == 1) {
+                        [[self.object hotInlet]input:@{@"set":[self.creationArguments firstObject]}];
+                    }else{
+                        [[self.object hotInlet]input:@{@"set":self.creationArguments}];
+                    }
+                }
+            }
+            
+        }else if ([desc.boxClassName isEqualToString:@"BSDCommentBox"]){
+            
+            if (self.creationArguments != nil) {
+                NSLog(@"comment box has creations args: %@",self.creationArguments);
+                NSArray *arr = self.creationArguments;
+                if (arr && [arr isKindOfClass:[NSArray class]]) {
+                    NSString *comment = arr.firstObject;
+                    [self setValue:comment forKeyPath:@"textField.text"];
+                }
+            }
+        }
     }
     
     return self;
@@ -356,18 +385,6 @@
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:aSelector]];
     invocation.target = instance;
     invocation.selector = aSelector;
-
-    /*
-    if (args == NULL && self.delegate){
-        SEL viewSel = NSSelectorFromString(@"superview");
-        SEL layerSel = NSSelectorFromString(@"superlayer");
-        if ([instance respondsToSelector:viewSel]) {
-            args = @[[self.delegate displayViewForBox:self]];
-        }else if ([instance respondsToSelector:layerSel]){
-            args = @[[self.delegate displayViewForBox:self].layer];
-        }
-    }
-    */
     
     if (args != NULL) {
         NSArray *a = args;
@@ -382,11 +399,6 @@
     
     [invocation invoke];
     self.object = instance;
-    /*
-    if ([self.object isKindOfClass:[BSDCompiledPatch class]]) {
-        [(BSDCompiledPatch *)self.object setDelegate:self];
-    }
-     */
     NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",[self.object objectId]];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleObjectValueShouldChangeNotification:) name:notificationName object:nil];
 }

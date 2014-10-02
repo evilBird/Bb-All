@@ -17,8 +17,9 @@
 #import "BSDOutletBox.h"
 #import <ObjC/runtime.h>
 #import "NSUserDefaults+HBVUtils.h"
+#import "BSDCommentBox.h"
 
-@interface BSDCanvas ()<UIGestureRecognizerDelegate>
+@interface BSDCanvas ()<UIGestureRecognizerDelegate,BSDScreenDelegate>
 {
     CGPoint kFocusPoint;
 }
@@ -29,7 +30,7 @@
 @property (nonatomic,strong)NSMutableArray *connectionPaths;
 @property (nonatomic,strong)NSMutableDictionary *bezierPaths;
 @property (nonatomic,strong)NSArray *allowedObjects;
-@property (nonatomic,strong)BSDGraphBox *canvasBox;
+@property (nonatomic,strong)BSDGraphBox *screenBox;
 
 @end
 
@@ -66,6 +67,17 @@
 
 - (void)beginEditing
 {
+    self.singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleSingleTap:)];
+    self.singleTap.delegate = self;
+    [self addGestureRecognizer:self.singleTap];
+    self.doubleTap.enabled = NO;
+    for (NSString *boxId in self.boxes.allKeys) {
+        id box = self.boxes[boxId];
+        if ([box isKindOfClass:[BSDGraphBox class]] || [box isKindOfClass:[BSDMessageBox class]] || [box isKindOfClass:[BSDNumberBox class]]) {
+            UITextField *textField = [box valueForKey:@"textField"];
+            [textField setEnabled:NO];
+        }
+    }
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
@@ -75,6 +87,17 @@
 
 - (void)endEditing
 {
+    [self removeGestureRecognizer:self.singleTap];
+    self.singleTap.delegate = nil;
+    self.singleTap = nil;
+    for (NSString *boxId in self.boxes.allKeys) {
+        id box = self.boxes[boxId];
+        if ([box isKindOfClass:[BSDGraphBox class]] || [box isKindOfClass:[BSDMessageBox class]] || [box isKindOfClass:[BSDNumberBox class]]) {
+            UITextField *textField = [box valueForKey:@"textField"];
+            [textField setEnabled:YES];
+        }
+    }
+    self.doubleTap.enabled = YES;
     [self.selectedBoxes removeAllObjects];
     self.selectedBoxes = nil;
     [self.copiedBoxes removeAllObjects];
@@ -134,39 +157,20 @@
     [self loadPatchWithDictionary:self.copiedBoxes appendId:appendId];
 }
 
-- (void)encapsulateSelectedContent
+- (void)encapsulatedCopiedContentWithName:(NSString *)name
 {
-    NSMutableDictionary *patches = [NSUserDefaults valueForKey:@"patches"];
     NSMutableDictionary *toEncapsulate = [self.copiedBoxes mutableCopy];
-    NSString *abstractionName = [NSString stringWithFormat:@"abs-%@",@(arc4random_uniform(1000))];
-    patches[abstractionName] = toEncapsulate;
+    [self.delegate saveAbstraction:toEncapsulate withName:name];
     [self addGraphBoxAtPoint:kFocusPoint];
     BSDGraphBox *box = self.graphBoxes.lastObject;
-    [box createObjectWithName:@"BSDCompiledPatch" arguments:@[abstractionName]];
+    [box createObjectWithName:@"BSDCompiledPatch" arguments:@[name]];
+    [self deleteSelectedContent];
+    
 }
 
 - (NSString *)canvasId
 {
     return [NSString stringWithFormat:@"%@",self];
-}
-
-#pragma mark - handle notifications
-
-- (void)handleCompiledPatchNotification:(NSNotification *)notification
-{
-    NSDictionary *object = notification.object;
-    if (object && [object.allKeys containsObject:@"key"] && [object.allKeys containsObject:@"hollaBack"]) {
-        NSString *key = object[@"key"];
-        NSString *notificationName = object[@"hollaBack"];
-        if ([key isEqualToString:@"superview"]) {
-            UIView *superview = [self.delegate viewForCanvas:self];
-            UIView *canvas = self;
-            NSDictionary *response = @{@"superview":superview,
-                                       @"canvas":canvas
-                                       };
-            [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:response];
-        }
-    }
 }
 
 #pragma mark - touch handling methods
@@ -181,13 +185,17 @@
     }
     
     if (box) {
-
-        NSLog(@"box: %@",box.textField.text);
-        NSString *title = box.textField.text;
-        NSRange r = [title rangeOfString:@"abs"];
-        if (r.length > 0) {
-            NSArray *components = [title componentsSeparatedByString:@" "];
-            [self openAbstraction:components[1]];
+        NSString *className = box.className;
+        if ([className isEqualToString:@"BSDCompiledPatch"]) {
+            NSArray *components = [box.textField.text componentsSeparatedByString:@" "];
+            if (components.count > 1) {
+                NSString *patchName = components[1];
+                BSDObjectLookup *lookup = [[BSDObjectLookup alloc]init];
+                NSArray *patches = [lookup patchList];
+                if ([patches containsObject:patchName]) {
+                    [self openAbstraction:patchName];
+                }
+            }
         }
     }
 }
@@ -203,25 +211,54 @@
     CGPoint loc = [sender locationOfTouch:0 inView:self];
     UIView *theView = [self hitTest:loc withEvent:UIEventTypeTouches];
     [self checkForAbstractionInView:theView];
+}
 
-    /*
-    if (self.bezierPaths) {
-        for (UIBezierPath *path in self.bezierPaths.allKeys) {
+- (void)handleSingleTap:(id)sender
+{
+    if (self.editState == 0 || (sender != self.singleTap)) {
+        return;
+    }
+    
+    CGPoint loc = [sender locationOfTouch:0 inView:self];
+    kFocusPoint = loc;
+    UIView *theView = [self hitTest:loc withEvent:UIEventTypeTouches];
+    BSDBox *toSelect = nil;
+    id superview= theView.superview;
+    NSInteger isBox = [theView isKindOfClass:[BSDBox class]];
+    isBox += [superview isKindOfClass:[BSDBox class]];
+    isBox += [theView isKindOfClass:[BSDGraphBox class]];
+    isBox += [superview isKindOfClass:[BSDGraphBox class]];
+    
+    if (isBox == 0) {
+        return;
+    }
+    
+    if (![theView isKindOfClass:[BSDBox class]]) {
+        toSelect = (BSDBox *)theView.superview;
+    }else{
+        toSelect= (BSDBox *)theView;
+    }
+    BOOL selected = toSelect.selected;
+    if (selected) {
+        toSelect.selected = NO;
+    }else{
+        toSelect.selected = YES;
+    }
+    
+    if (!self.selectedBoxes) {
+        self.selectedBoxes = [NSMutableDictionary dictionary];
+    }
+    if (toSelect.selected) {
+        self.selectedBoxes[[toSelect uniqueId]] = toSelect;
+    }else{
+        if ([self.selectedBoxes.allKeys containsObject:[toSelect uniqueId]]) {
             
-            UIBezierPath *copy = [path copy];
-            [copy closePath];
-            
-            if ([copy containsPoint:loc]) {
-                NSDictionary *dict = self.bezierPaths[path];
-                BSDPortView *sender = dict[@"sender"];
-                BSDPortView *receiver = dict[@"receiver"];
-                [sender.connectedPortViews removeObject:receiver];
-                [self boxDidMove:nil];
-                return;
-            }
+            [self.selectedBoxes removeObjectForKey:[toSelect uniqueId]];
         }
     }
-     */
+    if (self.selectedBoxes.allKeys.count) {
+        self.editState = BSDCanvasEditStateContentSelected;
+    }
 }
 
 - (void)handleDoubleTap:(id)sender
@@ -229,56 +266,13 @@
     CGPoint loc = [sender locationOfTouch:0 inView:self];
     kFocusPoint = loc;
     UIView *theView = [self hitTest:loc withEvent:UIEventTypeTouches];
-    if (self.editState == BSDCanvasEditStateDefault) {
-        
-        if ([theView isKindOfClass:[BSDBox class]] || [theView.superview isKindOfClass:[BSDBox class]] || [theView isKindOfClass:[UITextField class]] || [theView isKindOfClass:[BSDTextField class]]) {
-            return;
-        }
-        
-        [self addGraphBoxAtPoint:loc];
-        
-    }else{
-        
-        BSDBox *toSelect = nil;
-        id superview= theView.superview;
-        NSInteger isBox = [theView isKindOfClass:[BSDBox class]];
-        isBox += [superview isKindOfClass:[BSDBox class]];
-        isBox += [theView isKindOfClass:[BSDGraphBox class]];
-        isBox += [superview isKindOfClass:[BSDGraphBox class]];
-        
-        if (isBox == 0) {
-            return;
-        }
-        
-        if (![theView isKindOfClass:[BSDBox class]]) {
-            toSelect = (BSDBox *)theView.superview;
-        }else{
-            toSelect= (BSDBox *)theView;
-        }
-        BOOL selected = toSelect.selected;
-        if (selected) {
-            toSelect.selected = NO;
-        }else{
-            toSelect.selected = YES;
-        }
-        
-        if (!self.selectedBoxes) {
-            self.selectedBoxes = [NSMutableDictionary dictionary];
-        }
-        if (toSelect.selected) {
-            self.selectedBoxes[[toSelect uniqueId]] = toSelect;
-        }else{
-            if ([self.selectedBoxes.allKeys containsObject:[toSelect uniqueId]]) {
-                
-                [self.selectedBoxes removeObjectForKey:[toSelect uniqueId]];
-            }
-        }
-        if (self.selectedBoxes.allKeys.count) {
-            self.editState = BSDCanvasEditStateContentSelected;
-        }
-
+    if ([theView isKindOfClass:[BSDBox class]] || [theView.superview isKindOfClass:[BSDBox class]] || [theView isKindOfClass:[UITextField class]] || [theView isKindOfClass:[BSDTextField class]]) {
+        [self checkForAbstractionInView:theView];
+        return;
     }
-
+    
+    [self addGraphBoxAtPoint:loc];
+    
 }
 
 #pragma mark - BSDBoxDelegate
@@ -420,12 +414,28 @@
 
 - (void)loadPatchWithDictionary:(NSDictionary *)dictionary appendId:(NSString *)appendId
 {
+    if (!dictionary) {
+        return;
+    }
+    
     NSArray *objs = dictionary[@"objectDescriptions"];
     NSArray *connects = dictionary[@"connectionDescriptions"];
-    
+    NSMutableArray *loadBangs = nil;
     for (NSDictionary *dict in objs) {
         BSDObjectDescription *desc = [BSDObjectDescription objectDescriptionWithDictionary:dict appendId:appendId];
         [self makeBoxWithDescription:desc];
+        if ([desc.className isEqualToString:@"BSDLoadBang"]) {
+            
+            BSDBox *box = self.boxes[desc.uniqueId];
+            BSDLoadBang *lb = box.object;
+            if (lb && [lb isKindOfClass:[BSDLoadBang class]]) {
+                if (!loadBangs) {
+                    loadBangs = [NSMutableArray array];
+                }
+                
+                [loadBangs addObject:lb];
+            }
+        }
     }
     
     for (NSDictionary *dict in connects) {
@@ -446,6 +456,13 @@
         }
         
     }
+    
+    if (loadBangs) {
+        for (BSDLoadBang *myLB in loadBangs) {
+            
+            [myLB parentPatchFinishedLoading];
+        }
+    }
 }
 
 - (void)clearCurrentPatch
@@ -465,12 +482,12 @@
     self.connectionPaths = nil;
     self.connectionOriginPoint = nil;
     self.connectionDestinationPoint = nil;
-    self.canvasBox = nil;
+    self.screenBox = nil;
     self.bezierPaths = nil;
     self.boxes = [NSMutableDictionary dictionary];
     self.graphBoxes = [NSMutableArray array];
     self.connectionPaths = [NSMutableArray array];
-    [self addCanvasBox];
+    //[self addCanvasBox];
     [self setNeedsDisplay];
 }
 
@@ -489,17 +506,38 @@
         _doubleTap.delegate = self;
         [self addGestureRecognizer:_doubleTap];
         
-        UILongPressGestureRecognizer *longPress=  [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
-        [self addGestureRecognizer:longPress];
+        //UILongPressGestureRecognizer *longPress=  [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+        //[self addGestureRecognizer:longPress];
         _connectionPaths = [NSMutableArray array];
         self.backgroundColor = [UIColor whiteColor];
         kFocusPoint = CGPointMake(200, 200);
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleCompiledPatchNotification:) name:@"com.birdSound.BlockBox-UI.compiledPatchNeedsSomethingNotification" object:nil];
+        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleScreenDelegateNotification:) name:kScreenDelegateChannel
+                                                  object:nil];
+        //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleCompiledPatchNotification:) name:@"com.birdSound.BlockBox-UI.compiledPatchNeedsSomethingNotification" object:nil];
         //[self addCanvasBox];;
         
     }
     
     return self;
+}
+
+- (void)handleScreenDelegateNotification:(NSNotification *)notification
+{
+    BSDScreen *screen = notification.object;
+    screen.delegate = self;
+    for (BSDBox *box in self.boxes.allValues) {
+        if ([[box.object objectId] hash] == [[screen objectId]hash]) {
+            self.screenBox = (BSDGraphBox *)box;
+            screen.delegate = self;
+            return;
+        }
+    }
+}
+
+- (UIView *)canvasScreen
+{
+    return [self.delegate viewForCanvas:self];
 }
 
 - (void) makeBoxWithDescription:(BSDObjectDescription *)desc
@@ -522,6 +560,7 @@
 
 - (void)addCanvasBox
 {
+    /*
     CGRect rect = CGRectMake(0, 0, 140, 50);
     self.canvasBox = [[BSDGraphBox alloc]initWithFrame:rect];
     self.canvasBox.center = kFocusPoint;
@@ -530,6 +569,7 @@
     [self.canvasBox createObjectWithName:self.canvasBox.className arguments:@[[self.delegate viewForCanvas:self]]];
     self.canvasBox.textField.text = @"superview";
     [self addSubview:self.canvasBox];
+     */
 }
 
 - (void)addGraphBoxAtPoint:(CGPoint)point
@@ -574,6 +614,17 @@
     [self addSubview:messageBox];
     [self.graphBoxes addObject:messageBox];
     [self.boxes setValue:messageBox forKey:[messageBox uniqueId]];
+}
+
+- (void)addCommentBoxAtPoint:(CGPoint)point
+{
+    CGRect rect = CGRectMake(100, 100, 200, 200);
+    BSDCommentBox *commentBox = [[BSDCommentBox alloc]initWithFrame:rect];
+    commentBox.delegate = self;
+    commentBox.center = point;
+    [self addSubview:commentBox];
+    [self.graphBoxes addObject:commentBox];
+    [self.boxes setValue:commentBox forKey:[commentBox uniqueId]];
 }
 
 - (void)addInletBoxAtPoint:(CGPoint)point

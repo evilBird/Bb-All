@@ -23,9 +23,10 @@
 - (instancetype)initWithMinValue:(NSNumber *)minValue
                         maxValue:(NSNumber *)maxValue;
 
+
+
 @property (nonatomic,strong) BSDInlet *minInlet;
 @property (nonatomic,strong) BSDInlet *maxInlet;
-
 @property (nonatomic,strong) BSDOutlet *outOfRangeOutlet;
 
 @end

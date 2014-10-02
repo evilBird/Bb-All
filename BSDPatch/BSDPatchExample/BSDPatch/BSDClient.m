@@ -30,34 +30,6 @@ static NSString *kFourSquareClientSecret = @"OXJXXOG3IZYHGGFETE2OHLQ0W05NQOEBA0W
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"client";
-    NSString *baseURL = arguments;
-    if (baseURL) {
-        self.client = [[AFHTTPSessionManager alloc]initWithBaseURL:[NSURL URLWithString:baseURL]];
-    }else{
-        self.client = [[AFHTTPSessionManager alloc]initWithBaseURL:[NSURL URLWithString:kDefaultBaseURL]];
-        self.parameters = [NSMutableDictionary dictionary];
-        //self.parameters[@"radius"] = @(1000);
-        self.parameters[@"lat"] = @(45);
-        self.parameters[@"lng"] = @(-90);
-        self.parameters[@"limit"] = @(5);
-        //self.parameters[@"format"] = @"json";
-        //self.parameters[@"key"] = kAPIKey;
-    }
-    
-    self.parameterInlet = [[BSDInlet alloc]initHot];
-    self.parameterInlet.name = @"parameters";
-    self.parameterInlet.delegate = self;
-    [self addPort:self.parameterInlet];
-}
-
-- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
-{
-    if (inlet == self.parameterInlet) {
-        NSDictionary *dictionary = value;
-        [self updateParametersWithDictionary:dictionary];
-    }else if (inlet == self.hotInlet && [value isKindOfClass:[BSDBang class]]){
-        
-    }
 }
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
@@ -66,12 +38,18 @@ static NSString *kFourSquareClientSecret = @"OXJXXOG3IZYHGGFETE2OHLQ0W05NQOEBA0W
         [self sendRequest];
     }
 }
+
 - (void)sendRequest
 {
-    NSDictionary *parms = self.coldInlet.value;
-    [self updateParametersWithDictionary:parms];
-    NSString *query = [self queryString];
-    NSLog(@"queryString: %@",query);
+    NSString *query = self.coldInlet.value;
+    if (query == nil || ![query isKindOfClass:[NSString class]]) {
+        return;
+    }
+    
+    if (!self.client) {
+        self.client = [[AFHTTPSessionManager alloc]init];
+    }
+    
     __weak BSDClient *weakself = self;
     [self.client GET:query
           parameters:nil
@@ -80,37 +58,8 @@ static NSString *kFourSquareClientSecret = @"OXJXXOG3IZYHGGFETE2OHLQ0W05NQOEBA0W
                      [weakself.mainOutlet output:responseObject];
                  });
              } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                 //[self.mainOutlet setValue:NULL];
+                 [weakself.mainOutlet output:@{@"error":error}];
              }];
-}
-
-- (void)updateParametersWithDictionary:(NSDictionary *)dictionary
-{
-    if (!self.parameters) {
-        self.parameters = [NSMutableDictionary dictionary];
-    }
-    
-    for (NSString *aKey in dictionary.allKeys) {
-        self.parameters[aKey] = dictionary[aKey];
-    }
-}
-
-- (NSString *)queryString
-{
-    NSMutableString *query = [[NSMutableString alloc]initWithString:@"?"];
-    NSString *locStr = [NSString stringWithFormat:@"ll=%@,%@",self.parameters[@"lat"],self.parameters[@"lng"]];
-    [query appendString:locStr];
-    NSString *ls = [NSString stringWithFormat:@"&limit=%@",self.parameters[@"limit"]];
-    [query appendString:ls];
-    [query appendFormat:@"&client_id=%@",kFourSquareClientID];
-    [query appendFormat:@"&client_secret=%@",kFourSquareClientSecret];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    dateFormatter.dateFormat = @"YYYYMMDD";
-    NSDate *now = [NSDate date];
-    NSString *dateString = [dateFormatter stringFromDate:now];
-    [query appendFormat:@"&v=%@",dateString];
-
-    return query;//[query stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
 }
 
 

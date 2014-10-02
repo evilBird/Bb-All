@@ -10,9 +10,10 @@
 #import "BSDCanvas.h"
 #import "NSUserDefaults+HBVUtils.h"
 #import "PopoverContentTableViewController.h"
+#import "BSDCanvasViewController.h"
 
 
-@interface ViewController ()<BSDCanvasDelegate,UIScrollViewDelegate,UIAlertViewDelegate,UIPopoverControllerDelegate,PopoverContentTableViewControllerDelegate>
+@interface ViewController ()<BSDCanvasDelegate,UIScrollViewDelegate,UIAlertViewDelegate,UIPopoverControllerDelegate,PopoverContentTableViewControllerDelegate,BSDCanvasViewControllerDelegate>
 {
     UIColor *kDefaultBarButtonColor;
     UIColor *kSelectedBarButtonColor;
@@ -40,39 +41,22 @@
     kSelectedBarButtonColor = [UIColor blueColor];
     kDisabledBarButtonColor = [UIColor colorWithWhite:0.7 alpha:1];
     self.currentPatchName = @"untitled patch";
+    //[NSUserDefaults setUserValue:[NSMutableDictionary dictionary] forKey:@"patches"];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-        
-        if (!self.scrollView) {
+    if (!self.presentedViewController) {
+        [self presentCanvasForPatchWithName:self.currentPatchName];
+    }
+}
 
-            self.scrollView = [[UIScrollView alloc]initWithFrame:self.view.bounds];
-            self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width * 2, self.view.bounds.size.height * 2);
-            self.scrollView.delegate = self;
-            self.scrollView.minimumZoomScale = 1;
-            self.scrollView.maximumZoomScale = 1;
-            self.scrollView.scrollEnabled = YES;
-            self.scrollView.alwaysBounceHorizontal = YES;
-            self.scrollView.alwaysBounceVertical = YES;
-            self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-            
-            if (!self.canvas) {
-                CGRect rect;
-                rect.origin = self.scrollView.bounds.origin;
-                rect.size = self.scrollView.contentSize;
-                self.canvas = [[BSDCanvas alloc]initWithFrame:rect];
-                self.canvas.delegate = self;
-                [self.canvas addCanvasBox];
-                [self.scrollView addSubview:self.canvas];
-                [self.view insertSubview:self.scrollView belowSubview:self.toolbar];
-                [self updateBarButtonItemsForEditState:BSDCanvasEditStateDefault];
-                //[NSUserDefaults setUserValue:[NSMutableDictionary dictionary] forKey:@"patches"];
-
-            }
-        }
+- (void)presentCanvasForPatchWithName:(NSString *)patchName
+{
+    BSDCanvasViewController *vc = [[BSDCanvasViewController alloc]initWithPatchName:patchName delegate:self ];
+    [self presentViewController:vc animated:YES completion:NULL];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -254,6 +238,7 @@
         [self.barButtonItems[5] setTintColor:kDisabledBarButtonColor];
         [self.barButtonItems[6] setTintColor:kDisabledBarButtonColor];
         [self.barButtonItems[7] setTintColor:kDisabledBarButtonColor];
+        [self.barButtonItems[8] setTintColor:kDisabledBarButtonColor];
     }else if (editState == BSDCanvasEditStateEditing){
         self.canvas.editState = BSDCanvasEditStateEditing;
         [self.barButtonItems[4] setTintColor:kSelectedBarButtonColor];
@@ -261,22 +246,37 @@
         [self.barButtonItems[5] setTintColor:kDisabledBarButtonColor];
         [self.barButtonItems[6] setTintColor:kDisabledBarButtonColor];
         [self.barButtonItems[7] setTintColor:kDisabledBarButtonColor];
+        [self.barButtonItems[8] setTintColor:kDisabledBarButtonColor];
     }else if (editState == BSDCanvasEditStateContentSelected){
         [self.barButtonItems[4] setTintColor:kSelectedBarButtonColor];
         [self.barButtonItems[4] setTitle:@"Editing"];
         [self.barButtonItems[5] setTintColor:kDefaultBarButtonColor];
         [self.barButtonItems[6] setTintColor:kDefaultBarButtonColor];
         [self.barButtonItems[7] setTintColor:kDisabledBarButtonColor];
+        [self.barButtonItems[8] setTintColor:kDefaultBarButtonColor];
+
     }else if (editState == BSDCanvasEditStateContentCopied){
         [self.barButtonItems[4] setTintColor:kSelectedBarButtonColor];
         [self.barButtonItems[4] setTitle:@"Editing"];
         [self.barButtonItems[5] setTintColor:kDefaultBarButtonColor];
         [self.barButtonItems[6] setTintColor:kDefaultBarButtonColor];
         [self.barButtonItems[7] setTintColor:kDefaultBarButtonColor];
+        [self.barButtonItems[8] setTintColor:kDefaultBarButtonColor];
     }
 }
 
 #pragma mark - patch management
+
+- (void)savePatch:(NSDictionary *)patch withName:(NSString *)patchName
+{
+    NSMutableDictionary *patches = [[NSUserDefaults valueForKey:@"patches"]mutableCopy];
+    if (!patches) {
+        patches = [NSMutableDictionary dictionary];
+    }
+    patches[patchName] = patch;
+    self.currentPatchName = patchName;
+    [NSUserDefaults setUserValue:patches forKey:@"patches"];
+}
 
 - (void)savePatchWithName:(NSString *)patchName
 {
@@ -285,13 +285,13 @@
     }
     
     NSDictionary *patch = [self.canvas currentPatch];
-    NSMutableDictionary *patches = [[NSUserDefaults valueForKey:@"patches"]mutableCopy];
-    if (!patches) {
-        patches = [NSMutableDictionary dictionary];
-    }
-    patches[patchName] = patch;
-    self.currentPatchName = patchName;
-    [NSUserDefaults setUserValue:patches forKey:@"patches"];
+    [self savePatch:patch withName:patchName];
+}
+
+- (NSDictionary *)savedPatchWithName:(NSString *)patchName
+{
+    NSDictionary *saved = [NSUserDefaults valueForKey:@"patches"];
+    return saved[patchName];
 }
 
 - (void)loadSavedPatchWithName:(NSString *)patchName

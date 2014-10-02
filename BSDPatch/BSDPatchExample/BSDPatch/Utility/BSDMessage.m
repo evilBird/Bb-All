@@ -23,10 +23,9 @@
 - (void)setupWithArguments:(id)arguments
 {
     self.hotInlet.delegate = self;
+    self.name = @"message";
     if (arguments != nil){
-        self.name = [NSString stringWithFormat:@"%@",arguments];
-    }else{
-        self.name = @"message";
+        [self.hotInlet input:@{@"set":arguments}];
     }
 }
 
@@ -45,7 +44,7 @@
 - (void)calculateOutput
 {
     id theMessage = [self theMessage];
-    [self.mainOutlet output:[self theMessage]];
+    [self.mainOutlet output:theMessage];
     NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",[self objectId]];
     NSDictionary *changeInfo = @{@"value":theMessage};
     [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:changeInfo];

@@ -21,6 +21,7 @@
 @interface BSDCompiledPatch ()
 
 @property (nonatomic,strong)NSMutableDictionary *objectGraph;
+@property (nonatomic,strong)NSMutableDictionary *patchInlets;
 @property (nonatomic,strong)NSMutableArray *views;
 
 @end
@@ -59,8 +60,9 @@
     if (!patchName || ![savedPatches.allKeys containsObject:patchName]) {
         return nil;
     }
+    NSMutableDictionary *copy = savedPatches.mutableCopy;
     
-    return savedPatches[patchName];
+    return copy[patchName];
 }
 
 - (void)loadPatchWithDictionary:(NSDictionary *)dictionary
@@ -69,6 +71,7 @@
     NSArray *connects = dictionary[@"connectionDescriptions"];
     NSMutableArray *inlets = nil;
     NSMutableArray *outlets = nil;
+    NSMutableArray *loadBangs = nil;
     for (NSDictionary *dict in objs) {
         BSDObjectDescription *desc = [BSDObjectDescription objectDescriptionWithDictionary:dict];
         [self createObjectWithDescription:desc];
@@ -84,6 +87,11 @@
             }
             [outlets addObject:desc];
             
+        }else if ([desc.className isEqualToString:@"BSDLoadBang"]){
+            if (!loadBangs) {
+                loadBangs = [NSMutableArray array];
+            }
+            [loadBangs addObject:desc.uniqueId];
         }
         
         for(NSDictionary *dict in connects) {
@@ -101,6 +109,17 @@
     if (outlets) {
         [self addPatchOutletsWithDescriptions:outlets];
     }
+    
+    if (loadBangs) {
+        for (NSString *objectId in loadBangs) {
+            BSDLoadBang *lb = self.objectGraph[objectId];
+            if (lb && [lb isKindOfClass:[BSDLoadBang class]]) {
+                [lb parentPatchFinishedLoading];
+            }else{
+                NSLog(@"load bang wasn't found");
+            }
+        }
+    }
 
 }
 
@@ -114,7 +133,12 @@
         BSDInlet *inlet = [[BSDInlet alloc]initHot];
         BSDPatchInlet *patchInlet = self.objectGraph[desc.uniqueId];
         inlet.name = [NSString stringWithFormat:@"patch inlet %@",@(idx)];
+        inlet.delegate = self;
         [self addPort:inlet];
+        if (!self.patchInlets) {
+            self.patchInlets = [NSMutableDictionary dictionary];
+        }
+        self.patchInlets[inlet.name] = patchInlet;
         [inlet forwardToPort:[patchInlet inletNamed:@"hot"]];
     }
 }
@@ -128,7 +152,7 @@
         idx +=1;
         BSDOutlet *outlet = [[BSDOutlet alloc]init];
         BSDPatchOutlet *patchOutlet = self.objectGraph[desc.uniqueId];
-        outlet.name = [NSString stringWithFormat:@"patch outlet %@",@(idx)];
+        outlet.name = [NSString stringWithFormat:@"patch outlet %@",[NSNumber numberWithInteger:idx].stringValue];
         [self addPort:outlet];
         [patchOutlet forwardToPort:outlet];
     }
@@ -197,14 +221,16 @@
     
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
-/*
+
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
-    if (inlet == self.hotInlet) {
-        [self.patchInlet input:[BSDBang bang]];
+    NSString *inletName = inlet.name;
+    if (self.patchInlets && [self.patchInlets.allKeys containsObject:inletName]) {
+        BSDPatchInlet *patchInlet = self.patchInlets[inletName];
+        [patchInlet input:[BSDBang bang]];
     }
 }
-
+/*
 - (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
 {
     if (inlet == self.hotInlet) {

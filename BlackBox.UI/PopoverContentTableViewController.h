@@ -11,12 +11,16 @@
 @protocol PopoverContentTableViewControllerDelegate
 
 - (void)itemWasSelected:(NSString *)itemName;
+- (void)contentTableViewControllerWasDismissed:(id)sender;
+- (void)itemWasDeleted:(NSString *)itemName;
 
 @end
 
 @interface PopoverContentTableViewController : UITableViewController
 
+@property (nonatomic,strong)NSString *title;
 @property (nonatomic,strong)NSArray *itemNames;
+@property (nonatomic)BOOL editEnabled;
 @property (nonatomic,weak)id<PopoverContentTableViewControllerDelegate>delegate;
 
 @end

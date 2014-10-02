@@ -394,7 +394,7 @@
 }
 + (BSDView *)viewWithUIView:(UIView *)view
 {
-    return [[BSDView alloc]initWithSuperView:view];
+    return [[BSDView alloc]initWithArguments:nil];
 }
 
 + (BSDPoint2D *)point
@@ -422,7 +422,7 @@
 }
 + (BSDLabel *)labelWithSuperview:(UIView *)superview
 {
-    return [[BSDLabel alloc]initWithSuperView:superview];
+    return [[BSDLabel alloc]initWithArguments:nil];
 }
 
 @end

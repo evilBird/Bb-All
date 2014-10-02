@@ -12,9 +12,9 @@
 
 @implementation BSDView
 
-- (instancetype)initWithSuperView:(UIView *)superview
+- (instancetype)initWithArguments:(id)arguments
 {
-    return [super initWithArguments:superview];
+    return [super initWithArguments:arguments];
 }
 
 - (void)setupWithArguments:(id)arguments
@@ -47,20 +47,26 @@
     self.getterOutlet.name = @"getter outlet";
     [self addPort:self.getterOutlet];
     
-    UIView *superview = (UIView *)arguments;
-    self.viewInlet.value = superview;
-    if (superview && [superview isKindOfClass:[UIView class]]) {
-        self.viewInlet.value = superview;
-    }else{
-        UIView *myView = [self view];
-        [self.viewInlet setValue:myView];
+    NSArray *frameArr = arguments;
+    CGRect frame = CGRectMake(0, 0, 44, 44);
+    if (frameArr && [frameArr isKindOfClass:[NSArray class]] && frameArr.count == 4) {
+        frame.origin.x = [arguments[0] doubleValue];
+        frame.origin.y = [arguments[1] doubleValue];
+        frame.size.width = [arguments[2] doubleValue];
+        frame.size.height = [arguments[3] doubleValue];
+        UIView *myView = [self makeMyViewWithFrame:frame];
+        self.viewInlet.value = myView;
     }
-
 }
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
     if (inlet == self.viewInlet) {
+        UIView *myView = [self view];
+        if (myView == nil) {
+            myView = [self makeMyView];
+            self.viewInlet.value = myView;
+        }
         [self.mainOutlet output:self.viewInlet.value];
     }else if (inlet == self.getterInlet){
         [self.getterOutlet output:[self mapView:self.viewInlet.value]];
@@ -82,33 +88,11 @@
     return nil;
 }
 
-- (void)setSuperView:(UIView *)superview
-{
-    if (superview) {
-        UIView *myView = self.viewInlet.value;
-        myView.center = [myView convertPoint:superview.center toView:myView];
-        if (myView.superview!=nil) {
-            [myView removeFromSuperview];
-        }
-        
-        [superview addSubview:myView];
-    }
-}
-
-- (UIView *)superview
-{
-    UIView *myView = self.viewInlet.value;
-    return myView.superview;
-}
-
 - (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
 {
     if (inlet == self.viewInlet) {
         [self updateView];
-    }else if (inlet == self.getterInlet){
-        UIView *view = [self view];
-        NSString *keyPath = inlet.value;
-        [self.getterOutlet output:[view valueForKeyPath:keyPath]];
+        [self.mainOutlet output:[self view]];
     }else if (inlet == self.setterInlet){
         [self updateView];
     }else if (inlet == self.viewSelectorInlet){
@@ -140,6 +124,53 @@
     }
 }
 
+- (void)doSelectorWithArray:(NSArray *)array
+{
+    if (!array || array.count == 0) {
+        return;
+    }
+    
+    NSMutableArray *copy = array.mutableCopy;
+    id first = copy.firstObject;
+    if (![first isKindOfClass:[NSString class]]) {
+        return;
+    }
+    
+    NSString *selectorName = [NSString stringWithString:first];
+    NSArray *args = nil;
+    if (copy.count > 1) {
+        [copy removeObject:first];
+        args = [NSArray arrayWithArray:copy];
+    }
+    
+    SEL selector = NSSelectorFromString(selectorName);
+    UIView *myView = [self view];
+    
+    if (!myView) {
+        return;
+    }
+    
+    Class c = [myView class];
+    
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:selector]];
+    invocation.target = myView;
+    invocation.selector = selector;
+    
+    if (args != nil) {
+        for (NSUInteger idx = 0; idx < args.count; idx ++) {
+            NSInteger argIdx = 2+idx;
+            id myArg = args[idx];
+            [invocation setArgument:&myArg atIndex:argIdx];
+        }
+    }
+    
+    if ([myView respondsToSelector:selector]) {
+        [invocation invoke];
+    }
+    
+    
+}
+
 - (void)doSelector
 {
     id val = self.viewSelectorInlet.value;
@@ -148,10 +179,24 @@
         return;
     }
     
-    if (!([val isKindOfClass:[NSDictionary class]]||[val isKindOfClass:[NSString class]])) {
+    if ([val isKindOfClass:[NSArray class]]) {
+        [self doSelectorWithArray:val];
         return;
     }
     
+    if ([val isKindOfClass:[NSString class]]) {
+        NSArray *arr = @[val];
+        [self doSelectorWithArray:arr];
+        return;
+    }
+    
+    if ([val isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *dict = val;
+        NSArray *arr = @[dict.allKeys.firstObject,dict.allValues.firstObject];
+        [self doSelectorWithArray:arr];
+        return;
+    }
+    /*
     NSString *selectorName = nil;
     id arg = nil;
     
@@ -180,41 +225,39 @@
     if ([myView respondsToSelector:selector]) {
         [invocation invoke];
     }
+     */
 }
 
 - (void)updateView
 {
     NSDictionary *setters = self.setterInlet.value;
-    UIView *myView = [self view];
+    UIView *myView = self.view;
     
     if (setters && [setters isKindOfClass:[NSDictionary class]] && myView && [myView isKindOfClass:[UIView class]]) {
         for (NSString *aKey in setters.allKeys) {
             [myView setValue:setters[aKey] forKey:aKey];
         }
         [myView setNeedsDisplay];
-        /*
-        NSMutableDictionary *output = [@{@"view":myView,
-                                         @"layer":myView.layer,
-                                         @"superview":myView.superview,
-                                         @"map":@{@"view":[self mapView:myView],
-                                                  @"superview":[self mapView:myView.superview]
-                                                  }
-                                         }mutableCopy];
-         */
-        
-        [self.mainOutlet output:self.viewInlet.value];
+        //[self.mainOutlet output:self.viewInlet.value];
     }
 }
 
 - (UIView *)view
 {
     UIView *myView = self.viewInlet.value;
-    if (!myView) {
-        myView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
-        myView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:1];
-        self.viewInlet.value = myView;
-    }
-    
+    return myView;
+     
+}
+
+- (UIView *)makeMyView
+{
+    return [self makeMyViewWithFrame:CGRectMake(0, 0, 44, 44)];
+}
+
+- (UIView *)makeMyViewWithFrame:(CGRect)frame
+{
+    UIView *myView = [[UILabel alloc]initWithFrame:frame];
+    myView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:1];
     return myView;
 }
 
