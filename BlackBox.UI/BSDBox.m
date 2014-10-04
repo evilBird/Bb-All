@@ -314,9 +314,13 @@
                     NSDictionary *vec = @{@"points":points,
                                           @"ports":portviews
                                           };
-                    //[temp addObject:points];
                     [temp addObject:vec];
                 }else{
+                    id obj1 = self.object;
+                    id obj2 = [(BSDBox *)connectedPortView.delegate object];
+                    BSDOutlet *outlet = [obj1 outletNamed:portView.portName];
+                    BSDInlet *inlet = [obj2 inletNamed:connectedPortView.portName];
+                    [outlet disconnectFromInlet:inlet];
                     [portView.connectedPortViews removeObject:connectedPortView];
                     NSLog(@"connected portview has no superview");
                 }

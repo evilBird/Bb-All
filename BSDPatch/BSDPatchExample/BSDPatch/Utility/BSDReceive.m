@@ -60,4 +60,10 @@
     [self.mainOutlet output:object];
 }
 
+- (void)tearDown
+{
+    NSString *notificationName = [NSString stringWithFormat:@"%@.%@",kSendNotificationBase,self.notificationExtension];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:notificationName object:nil];
+    [super tearDown];
+}
 @end

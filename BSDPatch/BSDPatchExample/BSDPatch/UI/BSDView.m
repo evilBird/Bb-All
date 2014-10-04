@@ -63,10 +63,12 @@
 {
     if (inlet == self.viewInlet) {
         UIView *myView = [self view];
+        
         if (myView == nil) {
             myView = [self makeMyView];
             self.viewInlet.value = myView;
         }
+        
         [self.mainOutlet output:self.viewInlet.value];
     }else if (inlet == self.getterInlet){
         [self.getterOutlet output:[self mapView:self.viewInlet.value]];
@@ -117,10 +119,10 @@
         [layer setValue:animation.toValue forKey:animation.keyPath];
     }else if ([a isKindOfClass:[CAKeyframeAnimation class]]){
         CAKeyframeAnimation *animation = self.animationInlet.value;
-        UIView *myView = [self view];
-        CALayer *layer = myView.layer;
-        [layer addAnimation:animation forKey:@"a"];
-        [layer setValue:animation.values.lastObject forKey:animation.keyPath];
+        UIView *myView = self.viewInlet.value;
+        //CALayer *layer = myView.layer;
+        [myView.layer addAnimation:animation forKey:@"a"];
+        [myView.layer setValue:animation.values.lastObject forKey:animation.keyPath];
     }
 }
 
@@ -196,36 +198,7 @@
         [self doSelectorWithArray:arr];
         return;
     }
-    /*
-    NSString *selectorName = nil;
-    id arg = nil;
-    
-    if ([val isKindOfClass:[NSDictionary class]]) {
-        selectorName = [val allKeys].firstObject;
-        arg = [val allValues].firstObject;
-    }else if ([val isKindOfClass:[NSString class]]){
-        selectorName = val;
-    }
-    
-    if (!selectorName || selectorName.length == 0) {
-        return;
-    }
-    
-    SEL selector = NSSelectorFromString(selectorName);
-    UIView *myView = [self view];
-    Class c = [myView class];
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:selector]];
-    invocation.target = myView;
-    invocation.selector = selector;
-    
-    if (arg != nil) {
-        [invocation setArgument:&arg atIndex:2];
-    }
-    
-    if ([myView respondsToSelector:selector]) {
-        [invocation invoke];
-    }
-     */
+
 }
 
 - (void)updateView
@@ -238,7 +211,7 @@
             [myView setValue:setters[aKey] forKey:aKey];
         }
         [myView setNeedsDisplay];
-        //[self.mainOutlet output:self.viewInlet.value];
+        [self.mainOutlet output:self.viewInlet.value];
     }
 }
 

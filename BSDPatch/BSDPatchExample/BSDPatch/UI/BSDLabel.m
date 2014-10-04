@@ -10,9 +10,9 @@
 
 @implementation BSDLabel
 
-- (instancetype)initWithSuperview:(UIView *)superview
+- (instancetype)initWithArguments:(id)arguments
 {
-    return [super initWithArguments:superview];
+    return [super initWithArguments:arguments];
 }
 
 - (NSString *)displayName

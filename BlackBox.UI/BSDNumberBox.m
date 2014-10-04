@@ -28,7 +28,7 @@
         _textField.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize]];
         _textField.autocorrectionType = UITextAutocorrectionTypeNo;
         _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        _textField.keyboardType = UIKeyboardTypeNumberPad;
+        _textField.keyboardType = UIKeyboardTypeDecimalPad;
         [self addSubview:_textField];
         [self setSelected:NO];
         NSArray *inletViews = [self inlets];

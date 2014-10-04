@@ -213,8 +213,7 @@
         return self.assignedId;
     }
     
-    NSString *myId = [NSString stringWithFormat:@"%p",(void *)self];
-    return myId;
+    return [NSString stringWithFormat:@"%p",self];
 }
 
 - (BOOL)isEqual:(id)object

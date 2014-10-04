@@ -383,7 +383,7 @@
     NSMutableDictionary *copy = patches.mutableCopy;
     copy[patchName] = patch.mutableCopy;
     self.currentPatchName = patchName;
-    [NSUserDefaults setUserValue:patches forKey:@"patches"];
+    [NSUserDefaults setUserValue:copy forKey:@"patches"];
 }
 
 - (void)saveAbstraction:(NSDictionary *)abstraction withName:(NSString *)name
@@ -394,7 +394,7 @@
     }
     NSMutableDictionary *copy = patches.mutableCopy;
     copy[name] = abstraction.mutableCopy;
-    [NSUserDefaults setUserValue:patches forKey:@"patches"];
+    [NSUserDefaults setUserValue:copy forKey:@"patches"];
 }
 
 - (void)savePatchWithName:(NSString *)patchName

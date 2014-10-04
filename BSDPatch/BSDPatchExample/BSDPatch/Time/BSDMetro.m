@@ -63,4 +63,10 @@
     self.mainOutlet.value = [BSDBang bang];
 }
 
+- (void)tearDown
+{
+    [self stopTimer];
+    [super tearDown];
+}
+
 @end
