@@ -16,6 +16,8 @@
     if (self) {
         // Initialization code
         self.className = @"BSDPatchInlet";
+        self.boxClassString = @"BSDInletBox";
+
         [self makeObjectInstance];
         self.inletViews = nil;
         NSArray *outletViews = [self outlets];

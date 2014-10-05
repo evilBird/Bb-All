@@ -17,6 +17,8 @@
         // Initialization code
         self.className = @"BSDPatchOutlet";
         [self makeObjectInstance];
+        self.boxClassString = @"BSDOutletBox";
+
         NSArray *inletViews = [self inlets];
         self.inletViews = [NSMutableArray arrayWithArray:inletViews];
         self.outletViews = nil;

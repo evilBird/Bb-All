@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5EC7E8FBB4FC43EB8F4060BE /* libPods-BlackBox.UI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */; };
 		F21A5B5E19DF86BA00E6F21B /* BSDPatchDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */; };
+		F21A5B6119E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */; };
 		F21E4C5519C8FDD600D20D60 /* BSDClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E4C5419C8FDD600D20D60 /* BSDClient.m */; };
 		F21E4C5819C8FF4900D20D60 /* BSDGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E4C5719C8FF4900D20D60 /* BSDGPS.m */; };
 		F21E50D419C3F63200E51383 /* BSDBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E50D319C3F63200E51383 /* BSDBox.m */; };
@@ -218,6 +219,8 @@
 		0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BlackBox.UI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F21A5B5C19DF86BA00E6F21B /* BSDPatchDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchDescription.h; sourceTree = "<group>"; };
 		F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchDescription.m; sourceTree = "<group>"; };
+		F21A5B5F19E0AF4F00E6F21B /* BSDPatchDescriptionUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchDescriptionUtility.h; sourceTree = "<group>"; };
+		F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchDescriptionUtility.m; sourceTree = "<group>"; };
 		F21E4C5319C8FDD600D20D60 /* BSDClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDClient.h; sourceTree = "<group>"; };
 		F21E4C5419C8FDD600D20D60 /* BSDClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDClient.m; sourceTree = "<group>"; };
 		F21E4C5619C8FF4900D20D60 /* BSDGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSDGPS.h; path = ../Utility/BSDGPS.h; sourceTree = "<group>"; };
@@ -1155,6 +1158,8 @@
 				F2F5133E19B8DAB800323096 /* BSDGraphBox.m */,
 				F21A5B5C19DF86BA00E6F21B /* BSDPatchDescription.h */,
 				F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */,
+				F21A5B5F19E0AF4F00E6F21B /* BSDPatchDescriptionUtility.h */,
+				F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */,
 				F2F5139019B927A700323096 /* BSDObjectDescription.h */,
 				F2F5139119B927A700323096 /* BSDObjectDescription.m */,
 				F2F5139319B92C9600323096 /* BSDPortConnectionDescription.h */,
@@ -1498,6 +1503,7 @@
 				F21E533C19C51BC300E51383 /* BSDPort.m in Sources */,
 				F2F5139519B92C9600323096 /* BSDPortConnectionDescription.m in Sources */,
 				F21E533519C51BC300E51383 /* BSDStdDev.m in Sources */,
+				F21A5B6119E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m in Sources */,
 				F21E531B19C51BC300E51383 /* BSDMultiply.m in Sources */,
 				F21E530119C51BC300E51383 /* BSDArraySort.m in Sources */,
 				F2789E4119C8D4C6006F6CA4 /* PopoverContentTableViewController.m in Sources */,

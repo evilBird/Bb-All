@@ -18,6 +18,7 @@
 #import <ObjC/runtime.h>
 #import "NSUserDefaults+HBVUtils.h"
 #import "BSDCommentBox.h"
+#import "BSDPatchDescription.h"
 
 @interface BSDCanvas ()<UIGestureRecognizerDelegate,BSDScreenDelegate>
 {
@@ -31,6 +32,7 @@
 @property (nonatomic,strong)NSMutableDictionary *bezierPaths;
 @property (nonatomic,strong)NSArray *allowedObjects;
 @property (nonatomic,strong)BSDGraphBox *screenBox;
+@property (nonatomic,strong)BSDPatchDescription *patchDescription;
 
 @end
 
@@ -136,6 +138,7 @@
         if ([self.boxes.allKeys containsObject:uniqueId]) {
             BSDBox *box = self.boxes[uniqueId];
             [self.boxes removeObjectForKey:uniqueId];
+            [self.graphBoxes removeObject:box];
             [box removeFromSuperview];
             [box tearDown];
         }
@@ -361,6 +364,7 @@
     cd.receiverPortView = receiver;
     BSDBox *sb = (BSDBox *)sender.delegate;
     [sb makeConnectionWithDescription:cd];
+    
 }
 
 - (NSArray *)allConnections
@@ -379,6 +383,7 @@
 
 - (NSDictionary *)currentPatch
 {
+    [self describeYourself];
     return [self descriptionsForBoxesInDictionary:self.boxes];
 }
 
@@ -463,6 +468,7 @@
             [myLB parentPatchFinishedLoading];
         }
     }
+    
 }
 
 - (void)clearCurrentPatch
@@ -505,18 +511,12 @@
         _doubleTap.numberOfTapsRequired = 2;
         _doubleTap.delegate = self;
         [self addGestureRecognizer:_doubleTap];
-        
-        //UILongPressGestureRecognizer *longPress=  [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
-        //[self addGestureRecognizer:longPress];
         _connectionPaths = [NSMutableArray array];
         self.backgroundColor = [UIColor whiteColor];
         kFocusPoint = CGPointMake(200, 200);
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleScreenDelegateNotification:) name:kScreenDelegateChannel
                                                   object:nil];
-        //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleCompiledPatchNotification:) name:@"com.birdSound.BlockBox-UI.compiledPatchNeedsSomethingNotification" object:nil];
-        //[self addCanvasBox];;
-        
     }
     
     return self;
@@ -560,16 +560,6 @@
 
 - (void)addCanvasBox
 {
-    /*
-    CGRect rect = CGRectMake(0, 0, 140, 50);
-    self.canvasBox = [[BSDGraphBox alloc]initWithFrame:rect];
-    self.canvasBox.center = kFocusPoint;
-    self.canvasBox.delegate = self;
-    self.canvasBox.className = @"BSDView";
-    [self.canvasBox createObjectWithName:self.canvasBox.className arguments:@[[self.delegate viewForCanvas:self]]];
-    self.canvasBox.textField.text = @"superview";
-    [self addSubview:self.canvasBox];
-     */
 }
 
 - (void)addGraphBoxAtPoint:(CGPoint)point
@@ -603,6 +593,7 @@
     [self addSubview:bangBox];
     [self.graphBoxes addObject:bangBox];
     [self.boxes setValue:bangBox forKey:[bangBox uniqueId]];
+
 }
 
 - (void)addMessageBoxAtPoint:(CGPoint)point
@@ -614,6 +605,7 @@
     [self addSubview:messageBox];
     [self.graphBoxes addObject:messageBox];
     [self.boxes setValue:messageBox forKey:[messageBox uniqueId]];
+
 }
 
 - (void)addCommentBoxAtPoint:(CGPoint)point
@@ -625,6 +617,7 @@
     [self addSubview:commentBox];
     [self.graphBoxes addObject:commentBox];
     [self.boxes setValue:commentBox forKey:[commentBox uniqueId]];
+
 }
 
 - (void)addInletBoxAtPoint:(CGPoint)point
@@ -636,6 +629,7 @@
     [self addSubview:inletBox];
     [self.graphBoxes addObject:inletBox];
     [self.boxes setValue:inletBox forKey:[inletBox uniqueId]];
+
 }
 
 - (void)addOutletBoxAtPoint:(CGPoint)point
@@ -649,6 +643,41 @@
     [self.boxes setValue:outletBox forKey:[outletBox uniqueId]];
 }
 
+- (void)addBox:(id)sender type:(NSString *)type className:(NSString *)className args:(NSString *)args
+{
+}
+
+- (CGPoint)positionFromFrame:(CGRect)frame
+{
+    return CGPointMake(frame.origin.x + frame.size.width * 0.5, frame.origin.y + frame.size.height * 0.5);
+}
+
+- (void)describeYourself
+{
+    NSUInteger idx = 0;
+    BSDPatchDescription *description = [[BSDPatchDescription alloc]initWithCanvasRect:self.bounds];
+    for (BSDBox *box in self.graphBoxes) {
+        CGPoint position = [self positionFromFrame:box.frame];
+        box.tag = idx;
+        [description addEntryType:box.boxClassString className:box.className args:box.argString position:position];
+        idx++;
+    }
+    
+    for (BSDBox *box in self.graphBoxes) {
+        for (BSDPortView *portView in box.outletViews) {
+            if (portView.connectedPortViews.count) {
+                for (BSDPortView *receivingPort in portView.connectedPortViews) {
+                    [description addConnectionSender:box.tag
+                                              outlet:portView.tag
+                                            receiver:receivingPort.superview.tag
+                                               inlet:receivingPort.tag];
+                }
+            }
+        }
+    }
+    
+    [description print];
+}
 
 #pragma mark - Utility methods
 

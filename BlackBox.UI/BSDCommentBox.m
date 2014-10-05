@@ -36,7 +36,7 @@
         [self addSubview:_textField];
         self.inletViews = nil;
         self.outletViews = nil;
-        
+        self.boxClassString = @"BSDCommentBox";
         NSLog(@"comment box has creation args: %@",self.creationArguments);
     }
     
@@ -84,6 +84,7 @@
     
     self.frame = CGRectInset(frame,-8,-8);
     self.textField.frame = CGRectInset(self.bounds, 8, 8);
+    self.argString = messageText;
 }
 
 /*

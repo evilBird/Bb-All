@@ -20,6 +20,7 @@
 - (void)box:(id)sender portView:(id)portView drawLineToPoint:(CGPoint)point;
 - (void)box:(id)sender portView:(id)portView endedAtPoint:(CGPoint)point;
 - (void)boxDidMove:(id)sender;
+- (void)addBox:(id)sender type:(NSString *)type className:(NSString *)className args:(NSString *)args;
 - (id)boxWithUniqueId:(NSString *)uniqueId;
 - (UIView *)displayViewForBox:(id)sender;
 - (NSString *)getClassNameForText:(NSString *)text;
@@ -42,6 +43,8 @@
 @property (nonatomic)BOOL selected;
 @property (nonatomic,strong)id object;
 @property (nonatomic,strong)id creationArguments;
+@property (nonatomic,strong)NSString *argString;
+@property (nonatomic,strong)NSString *boxClassString;
 @property (nonatomic,strong)NSString *assignedId;
 @property (nonatomic,strong)UIColor *defaultColor;
 @property (nonatomic,strong)UIColor *selectedColor;

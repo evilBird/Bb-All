@@ -21,6 +21,7 @@
 
 @implementation BSDBox
 
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -143,6 +144,7 @@
     for (BSDInlet *inlet in inlets) {
         frame.origin.x = (CGFloat)idx * step;
         BSDPortView *portView = [[BSDPortView alloc]initWithName:inlet.name delegate:self];
+        portView.tag = idx;
         portView.frame = frame;
         [result addObject:portView];
         [self addSubview:portView];
@@ -176,6 +178,7 @@
         frame.origin.x = (CGFloat)idx * step;
         BSDPortView *portView = [[BSDPortView alloc]initWithName:outlet.name delegate:self];
         portView.frame = frame;
+        portView.tag = idx;
         [result addObject:portView];
         [self addSubview:portView];
         idx ++;

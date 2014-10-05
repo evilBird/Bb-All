@@ -28,6 +28,7 @@
         // Initialization code
         self.className = @"BSDMessage";
         [self makeObjectInstance];
+        self.boxClassString = @"BSDMessageBox";
         _textField = [[UITextField alloc]initWithFrame:self.bounds];
         _textField.textColor = [UIColor colorWithWhite:0.2 alpha:1];
         _textField.textAlignment = NSTextAlignmentCenter;
@@ -89,19 +90,31 @@
     }
     
     id theMessage = nil;
+    NSMutableString *argText = nil;
     NSString *quotesRemoved = [text stringByReplacingOccurrencesOfString:@"\"" withString:@""];
     NSInteger diff = text.length - quotesRemoved.length;
     if (diff == 2) {
         theMessage = quotesRemoved;
+        argText = [[NSMutableString alloc]initWithString:theMessage];
     }else{
         
         NSArray *components = [text componentsSeparatedByString:@" "];
         if (components.count == 1) {
             id component = components.firstObject;
+            argText = [[NSMutableString alloc]initWithString:component];
             theMessage = [self setTypeForString:component];
         }else {
             NSMutableArray *temp = nil;
+            NSMutableString *argText = nil;
             for (id component in components) {
+                
+                if (!argText) {
+                    argText = [[NSMutableString alloc]init];
+                    [argText appendString:component];
+                }else{
+                    [argText appendFormat:@" %@",argText];
+                }
+                
                 
                 if (!temp) {
                     temp = [NSMutableArray array];
@@ -111,7 +124,13 @@
             }
             theMessage = [temp mutableCopy];
         }
+        
     }
+    
+    if (argText != nil) {
+        self.argString = [NSString stringWithString:argText];
+    }
+    
     if (theMessage!=nil) {
         
         if ([theMessage respondsToSelector:@selector(count)]) {

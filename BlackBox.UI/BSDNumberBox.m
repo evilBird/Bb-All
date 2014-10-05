@@ -18,6 +18,7 @@
         // Initialization code
         self.className = @"BSDNumber";
         [self makeObjectInstance];
+        self.boxClassString = @"BSDNumberBox";
         _textField = [[UITextField alloc]initWithFrame:self.bounds];
         _textField.textAlignment = NSTextAlignmentCenter;
         _textField.text = [NSString stringWithFormat:@"%@",@(0)];

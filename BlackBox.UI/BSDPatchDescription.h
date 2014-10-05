@@ -11,6 +11,15 @@
 
 @interface BSDPatchDescription : NSObject
 
-- (NSUInteger)addObjectClassName:(NSString *)className args:(NSString *)args position:(CGPoint)position;
+- (instancetype)initWithCanvasRect:(CGRect)rect;
+
+- (NSString *)getDescription;
+- (NSUInteger)addEntryType:(NSString *)type className:(NSString *)className args:(NSString *)args position:(CGPoint)position;
+- (void)addConnectionSender:(NSUInteger)sender outlet:(NSUInteger)outlet receiver:(NSUInteger)receiver inlet:(NSUInteger)inlet;
+
+- (void)removeObject:(NSUInteger)index;
+- (void)removeConnection:(NSUInteger)index;
+- (void)clear;
+- (void)print;
 
 @end

@@ -42,6 +42,7 @@
         _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _textField.keyboardType = UIKeyboardTypeDefault;
         _textField.enabled = YES;
+        self.boxClassString = @"BSDGraphBox";
         [_textField addTarget:self action:@selector(textDidChange:) forControlEvents:UIControlEventEditingChanged];
         [self insertSubview:_textField atIndex:0];
         kAllowEdit = YES;
@@ -127,6 +128,7 @@
 {
     
     NSMutableArray *components = [[text componentsSeparatedByString:@" "]mutableCopy];
+    NSMutableString *argsString = nil;
     NSString *name = nil;
     if (components) {
         name = components.firstObject;
@@ -137,6 +139,13 @@
     if (components.count) {
         for (NSString *comp in components) {
             NSRange r = [comp rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
+            if (!argsString) {
+                argsString = [[NSMutableString alloc]init];
+                [argsString appendFormat:@"%@",comp];
+            }else{
+                [argsString appendFormat:@" %@",comp];
+            }
+            
             if (r.length == 0) {
                 NSNumber *arg = @(comp.floatValue);
                 if (!argsList) {
@@ -152,6 +161,12 @@
             }
         }
     }
+    
+    if (argsString) {
+        self.argString = [NSString stringWithString:argsString];
+    }
+    
+    //self.argString = [NSString stringWithString:argsString];
     [self createObjectWithName:name arguments:argsList];
 }
 

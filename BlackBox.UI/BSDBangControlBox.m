@@ -23,6 +23,8 @@
         // Initialization code
         self.className = @"BSDBangBox";
         [self makeObjectInstance];
+        self.boxClassString = @"BSDBangControlBox";
+
         NSArray *inletViews = [self inlets];
         self.inletViews = [NSMutableArray arrayWithArray:inletViews];
         NSArray *outletViews = [self outlets];
