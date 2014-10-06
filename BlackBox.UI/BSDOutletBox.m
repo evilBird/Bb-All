@@ -16,12 +16,7 @@
     if (self) {
         // Initialization code
         self.className = @"BSDPatchOutlet";
-        [self makeObjectInstance];
         self.boxClassString = @"BSDOutletBox";
-
-        NSArray *inletViews = [self inlets];
-        self.inletViews = [NSMutableArray arrayWithArray:inletViews];
-        self.outletViews = nil;
     }
     
     return self;
@@ -44,6 +39,7 @@
     frame.origin.x = 0;
     BSDPortView *portView = [[BSDPortView alloc]initWithName:inlet.name delegate:self];
     portView.frame = frame;
+    portView.tag = 0;
     [result addObject:portView];
     [self addSubview:portView];
     

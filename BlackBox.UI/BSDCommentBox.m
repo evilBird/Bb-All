@@ -29,7 +29,7 @@
         _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _textField.keyboardType = UIKeyboardTypeDefault;
         self.defaultColor = [UIColor whiteColor];
-        self.selectedColor = [UIColor colorWithWhite:0.8 alpha:1];
+        self.selectedColor = [UIColor colorWithWhite:1 alpha:1];
         self.currentColor = self.defaultColor;
         self.backgroundColor = self.currentColor;
         self.layer.borderColor = self.selectedColor.CGColor;
@@ -37,7 +37,6 @@
         self.inletViews = nil;
         self.outletViews = nil;
         self.boxClassString = @"BSDCommentBox";
-        NSLog(@"comment box has creation args: %@",self.creationArguments);
     }
     
     return self;
@@ -85,6 +84,11 @@
     self.frame = CGRectInset(frame,-8,-8);
     self.textField.frame = CGRectInset(self.bounds, 8, 8);
     self.argString = messageText;
+}
+
+- (void)initializeWithText:(NSString *)text
+{
+    [self makeObjectInstanceArgs:text];
 }
 
 /*

@@ -28,14 +28,7 @@
     if (self) {
         // Initialization code
         _panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
-        //_panGesture.delegate = self;
-        //_panGesture.delaysTouchesBegan = NO;
         [self addGestureRecognizer:_panGesture];
-        //_longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
-        //_longPress.delegate = self;
-        //_doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
-        //_doubleTap.delegate = self;
-        //[self addGestureRecognizer:_doubleTap];
         kAllowEdit = YES;
         self.clipsToBounds = NO;
         self.defaultColor = [UIColor colorWithWhite:0.21 alpha:1];
@@ -62,11 +55,6 @@
         [self makeObjectInstanceArgs:self.creationArguments];
         
         if ([desc.className isEqualToString:@"BSDMessage"]) {
-            
-            //NSArray *inletViews = [self inlets];
-            //self.inletViews = [NSMutableArray arrayWithArray:inletViews];
-            //NSArray *outletViews = [self outlets];
-            //self.outletViews = [NSMutableArray arrayWithArray:outletViews];
             if (self.creationArguments != nil) {
                 if ([self.creationArguments respondsToSelector:@selector(count)]) {
                     NSInteger count = [self.creationArguments count];
@@ -165,8 +153,6 @@
     CGRect frame;
     frame.size.width = 24;
     frame.size.height = 14;
-
-    //frame.size.height = bounds.size.height * 0.35;
     frame.origin.y = bounds.size.height - frame.size.height;
     CGFloat step = 0;
     if (outlets.count > 1) {
@@ -199,18 +185,6 @@
     return YES;
 }
 
-- (void)handleLongPress:(id)sender
-{
-    UIGestureRecognizer *gesture = sender;
-    if (gesture.state == UIGestureRecognizerStateBegan) {
-        NSLog(@"long press");
-    }
-}
-
-- (void)handleDoubleTap:(id)sender
-{
-    
-}
 
 - (void)handlePan:(id)sender
 {
@@ -304,9 +278,11 @@
                 UIView *superview = connectedPortView.superview;
                 if (superview) {
                     
-                    BSDPortConnection *connection = [BSDPortConnection connectionWithOwner:portView target:connectedPortView];
-                    CGPoint o = [connection origin];
-                    CGPoint d = [connection destination];
+                    //BSDPortConnection *connection = [BSDPortConnection connectionWithOwner:portView target:connectedPortView];
+                    //CGPoint o = [connection origin];
+                    //CGPoint d = [connection destination];
+                    CGPoint o = portView.center;
+                    CGPoint d = connectedPortView.center;
                     CGPoint ao = [self.superview convertPoint:o fromView:portView.superview];
                     CGPoint ad = [self.superview convertPoint:d fromView:connectedPortView.superview];
                     NSArray *points = @[[NSValue valueWithCGPoint:ao],[NSValue valueWithCGPoint:ad]];
@@ -332,6 +308,18 @@
     }
     
     return temp;
+}
+
+- (void)connectOutlet:(NSInteger)outletIndex toInlet:(NSInteger)inletIndex inBox:(BSDBox *)box
+{
+    BSDObject *sender = self.object;
+    BSDOutlet *outlet = sender.outlets[outletIndex];
+    BSDObject *receiver = box.object;
+    BSDInlet *inlet = receiver.inlets[inletIndex];
+    BSDPortView *senderPortView = self.outletViews[outletIndex];
+    BSDPortView *receiverPortView = box.inletViews[inletIndex];
+    [outlet connectToInlet:inlet];
+    [senderPortView addConnectionToPortView:receiverPortView];
 }
 
 - (void)setSelectedPortView:(BSDPortView *)portview
@@ -501,18 +489,37 @@
 {
     for (BSDPortView *inletView in self.inletViews) {
         [inletView removeFromSuperview];
+        [inletView tearDown];
         [[NSNotificationCenter defaultCenter]removeObserver:inletView];
     }
     for (BSDPortView *outletView in self.outletViews) {
+        [outletView tearDown];
         [outletView removeFromSuperview];
     }
-     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self.object tearDown];
     self.object = nil;
     self.inletViews = nil;
     self.outletViews = nil;
     self.delegate = nil;
     self.creationArguments = nil;
+}
+
+- (void)initializeWithText:(NSString *)text
+{
+    if (text == nil) {
+        [self makeObjectInstance];
+        [self createPortViewsForObject:self.object];
+    }
+}
+
+- (void)createPortViewsForObject:(id)object
+{
+    NSArray *inletViews = [self inlets];
+    self.inletViews = [NSMutableArray arrayWithArray:inletViews];
+    NSArray *outletViews = [self outlets];
+    self.outletViews = [NSMutableArray arrayWithArray:outletViews];
 }
 
 - (void)dealloc

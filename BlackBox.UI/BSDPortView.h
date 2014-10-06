@@ -27,6 +27,7 @@
 @property (nonatomic,strong)NSMutableArray *connectedPortViews;
 @property (nonatomic,strong)NSString *portName;
 
+- (void)tearDown;
 - (void)addConnectionToPortView:(BSDPortView *)portView;
 - (void)handlePortConnectionStatusChangedNotification:(NSNotification *)notification;
 

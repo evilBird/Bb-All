@@ -42,10 +42,6 @@
         _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _textField.keyboardType = UIKeyboardTypeDefault;
         [self addSubview:_textField];
-        NSArray *inletViews = [self inlets];
-        self.inletViews = [NSMutableArray arrayWithArray:inletViews];
-        NSArray *outletViews = [self outlets];
-        self.outletViews = [NSMutableArray arrayWithArray:outletViews];
         self.defaultColor = [UIColor colorWithWhite:0.9 alpha:1];
         self.selectedColor = [UIColor colorWithWhite:0.99 alpha:1];
         self.currentColor = self.defaultColor;
@@ -188,6 +184,17 @@
         return string;
     }else{
         return @([string doubleValue]);
+    }
+}
+
+- (void)initializeWithText:(NSString *)text
+{
+    [self makeObjectInstance];
+    [self createPortViewsForObject:self.object];
+    
+    if (text) {
+        self.argString = text;
+        [self handleText:text];
     }
 }
 

@@ -21,17 +21,14 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 
 - (UIView *)viewForCanvas:(id)canvas;
 - (void)canvas:(id)canvas editingStateChanged:(BSDCanvasEditState)editState;
-- (void)saveCurrentPatch;
-- (void)savePatch:(NSDictionary *)patch withName:(NSString *)name;
-- (void)saveAbstraction:(NSDictionary *)abtraction withName:(NSString *)name;
-- (void)loadAbstraction:(NSString *)abstraction;
+- (void)saveDescription:(NSString *)description withName:(NSString *)name;
+
 
 @end
 
 @interface BSDCanvas : UIView<BSDBoxDelegate>
 
 @property (nonatomic,strong)NSMutableArray *graphBoxes;
-@property (nonatomic,strong)NSMutableDictionary *boxes;
 @property (nonatomic,strong)NSMutableDictionary *selectedBoxes;
 @property (nonatomic,strong)NSMutableDictionary *copiedBoxes;
 @property (nonatomic,strong)UITapGestureRecognizer *singleTap;
@@ -39,9 +36,11 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 @property (nonatomic,strong)id<BSDCanvasDelegate>delegate;
 @property (nonatomic)BSDCanvasEditState editState;
 
-- (NSDictionary *)currentPatch;
+- (instancetype)initWithDescription:(NSString *)desc;
+
+- (NSString *)stringDescription;
 - (NSString *)canvasId;
-- (void)loadPatchWithDictionary:(NSDictionary *)dictionary;
+- (void)loadPatchWithDescription:(NSString *)description;
 - (void)clearCurrentPatch;
 
 - (void)deleteSelectedContent;
@@ -58,6 +57,5 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 - (void)addOutletBoxAtPoint:(CGPoint)point;
 - (void)addGraphBoxAtPoint:(CGPoint)point;
 - (void)addCommentBoxAtPoint:(CGPoint)point;
-- (void)addCanvasBox;
 
 @end

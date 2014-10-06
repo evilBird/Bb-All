@@ -18,11 +18,10 @@
 
 @interface BSDCanvasViewController : UIViewController <BSDCanvasToolbarViewDelegate,BSDCanvasDelegate,PopoverContentTableViewControllerDelegate,UIPopoverControllerDelegate>
 
-- (instancetype)initWithPatchName:(NSString *)patchName delegate:(id<BSDCanvasViewControllerDelegate>)delegate;
+- (instancetype)initWithName:(NSString *)name description:(NSString *)description;
 
 @property (nonatomic,strong)NSString *currentPatchName;
 @property (nonatomic,strong)BSDCanvas *canvas;
-@property (nonatomic,strong)NSDictionary *patch;
 @property (nonatomic,weak)id<BSDCanvasViewControllerDelegate>delegate;
 
 @end

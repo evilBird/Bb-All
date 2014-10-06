@@ -10,6 +10,9 @@
 #import "NSUserDefaults+HBVUtils.h"
 
 @interface BSDCanvasViewController ()<UIScrollViewDelegate,UITableViewDelegate>
+{
+    NSString *desc;
+}
 
 @property (nonatomic,strong)UIScrollView *scrollView;
 @property (nonatomic,strong)UIViewController *displayViewController;
@@ -29,21 +32,15 @@
     }
     return self;
 }
-
-- (instancetype)initWithPatchName:(NSString *)patchName delegate:(id<BSDCanvasViewControllerDelegate>)delegate
+- (instancetype)initWithName:(NSString *)name description:(NSString *)description
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
-        
-        _currentPatchName = patchName;
+        _currentPatchName = name;
+        desc = description;
         if (!_currentPatchName) {
             _currentPatchName = @"untitled";
-            _patch = nil;
-        }else{
-            _patch = [self savedPatchWithName:_currentPatchName];
         }
-        
-        _delegate = delegate;
     }
     
     return self;
@@ -86,11 +83,12 @@
             CGRect rect;
             rect.origin = self.scrollView.bounds.origin;
             rect.size = self.scrollView.contentSize;
-            self.canvas = [[BSDCanvas alloc]initWithFrame:rect];
-            self.canvas.delegate = self;
-            if (self.patch) {
-                [self.canvas loadPatchWithDictionary:self.patch];
+            if (desc) {
+                self.canvas = [[BSDCanvas alloc]initWithDescription:desc];
+            }else{
+                self.canvas = [[BSDCanvas alloc]initWithFrame:frame];
             }
+            self.canvas.delegate = self;
             [self.scrollView addSubview:self.canvas];
             [self.view addSubview:self.scrollView];
             frame = self.view.bounds;
@@ -102,7 +100,6 @@
             self.toolbarView.titleLabel.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize]];
             [self.view addSubview:self.toolbarView];
             [self configureConstraints];
-            //[self.canvas addCanvasBox];
         }
     }
 }
@@ -111,7 +108,6 @@
 {
     self.toolbarView.translatesAutoresizingMaskIntoConstraints = NO;
     NSDictionary *views = NSDictionaryOfVariableBindings(_toolbarView);
-    NSLayoutConstraint *constraint = nil;
     NSArray *constraints = nil;
     NSDictionary *metrics = @{@"toolbarHt":@(104)
                               };
@@ -353,7 +349,8 @@
 
 - (void)presentCanvasForPatchWithName:(NSString *)patchName
 {
-    BSDCanvasViewController *vc = [[BSDCanvasViewController alloc]initWithPatchName:patchName delegate:nil];
+    NSString *description = [self savedDescriptionWithName:patchName];
+    BSDCanvasViewController *vc = [[BSDCanvasViewController alloc]initWithName:patchName description:description];
     [self presentViewController:vc animated:YES completion:NULL];
 }
 
@@ -374,78 +371,59 @@
     self.toolbarView.titleLabel.text = currentPatchName;
 }
 
-- (void)savePatch:(NSDictionary *)patch withName:(NSString *)patchName
+- (void)saveCurrentDescription
 {
-    NSDictionary *patches = [NSUserDefaults valueForKey:@"patches"];
-    if (!patches) {
-        patches = [NSMutableDictionary dictionary];
-    }
-    NSMutableDictionary *copy = patches.mutableCopy;
-    copy[patchName] = patch.mutableCopy;
-    self.currentPatchName = patchName;
-    [NSUserDefaults setUserValue:copy forKey:@"patches"];
+    NSString *description = [self.canvas stringDescription];
+    [self saveDescription:description withName:self.currentPatchName];
 }
 
-- (void)saveAbstraction:(NSDictionary *)abstraction withName:(NSString *)name
+- (void)saveDescription:(NSString *)description withName:(NSString *)name
 {
-    NSDictionary *patches = [NSUserDefaults valueForKey:@"patches"];
-    if (!patches) {
-        patches = [NSMutableDictionary dictionary];
-    }
-    NSMutableDictionary *copy = patches.mutableCopy;
-    copy[name] = abstraction.mutableCopy;
-    [NSUserDefaults setUserValue:copy forKey:@"patches"];
-}
-
-- (void)savePatchWithName:(NSString *)patchName
-{
-    if (!patchName) {
+    if (!name) {
         return;
     }
     
-    NSDictionary *patch = [self.canvas currentPatch];
-    [self savePatch:patch withName:patchName];
+    NSDictionary *descriptions = [NSUserDefaults valueForKey:@"descriptions"];
+    if (!descriptions) {
+        descriptions = [NSDictionary dictionary];
+    }
+    
+    NSMutableDictionary *copy = descriptions.mutableCopy;
+    copy[name] = description;
+    [NSUserDefaults setUserValue:[NSDictionary dictionaryWithDictionary:copy] forKey:@"descriptions"];
 }
 
-- (NSDictionary *)savedPatchWithName:(NSString *)patchName
+- (NSString *)savedDescriptionWithName:(NSString *)name
 {
-    if (!patchName) {
-        return nil;
-    }
-    NSDictionary *saved = [NSUserDefaults valueForKey:@"patches"];
-    if (!saved) {
-        saved = [NSMutableDictionary dictionary];
-    }
-    NSMutableDictionary *copy = saved.mutableCopy;
-    if (![copy.allKeys containsObject:patchName]) {
+    if (!name) {
         return nil;
     }
     
-    return copy[patchName];
+    NSDictionary *descriptions = [NSUserDefaults valueForKey:@"descriptions"];
+    if (!descriptions || ![descriptions.allKeys containsObject:name]) {
+        return nil;
+    }
+    
+    NSString *description = [descriptions valueForKey:name];
+    return [NSString stringWithString:description];
+    
 }
 
-- (void)loadSavedPatchWithName:(NSString *)patchName
+- (void)loadDescriptionWithName:(NSString *)name
 {
-    NSDictionary *saved = [NSUserDefaults valueForKey:@"patches"];
-    if (!patchName ||!saved||![saved.allKeys containsObject:patchName]) {
+    if (!name) {
         return;
     }
-    [self clearCanvas];
-    NSMutableDictionary *copy = saved.mutableCopy;
-    NSMutableDictionary *patch = copy[patchName];
-    [self.canvas loadPatchWithDictionary:patch];
-    self.currentPatchName = patchName;
-
-}
-
-- (void)loadAbstraction:(NSString *)abstraction
-{
-    [self presentCanvasForPatchWithName:abstraction];
-}
-
-- (void)saveCurrentPatch
-{
-    [self savePatchWithName:self.currentPatchName];
+    NSDictionary *descriptions = [NSUserDefaults valueForKey:@"descriptions"];
+    if (!descriptions) {
+        descriptions = [NSDictionary dictionary];
+    }
+    
+    NSString *description = [descriptions valueForKey:name];
+    if (description) {
+        NSString *toLoad = [NSString stringWithString:description];
+        [self.canvas loadPatchWithDescription:toLoad];
+    }
 }
 
 #pragma mark - UIAlertView Delegate
@@ -454,7 +432,11 @@
 {
     if (alertView.tag == 0 && buttonIndex == 1) {
         NSString *name = [alertView textFieldAtIndex:0].text;
-        [self savePatchWithName:name];
+        if (!name) {
+            return;
+        }
+        NSString *description = [self.canvas stringDescription];
+        [self saveDescription:description withName:name];
     }else if (alertView.tag == 1 && buttonIndex == 1){
         NSString *name = [alertView textFieldAtIndex:0].text;
         if (name.length > 0) {
@@ -498,7 +480,7 @@
         
     }else{
         [self contentTableViewControllerWasDismissed:nil];
-        [self loadSavedPatchWithName:patchName];
+        [self loadDescriptionWithName:patchName];
     }
     
 }
@@ -518,11 +500,12 @@
     if (!itemName) {
         return;
     }
-    NSDictionary *savedPatches = [NSUserDefaults valueForKey:@"patches"];
+    
+    NSDictionary *savedPatches = [NSUserDefaults valueForKey:@"descriptions"];
     if (savedPatches && [savedPatches.allKeys containsObject:itemName]) {
         NSMutableDictionary *copy = [savedPatches mutableCopy];
         [copy removeObjectForKey:itemName];
-        [NSUserDefaults setUserValue:copy forKey:@"patches"];
+        [NSUserDefaults setUserValue:[NSDictionary dictionaryWithDictionary:copy] forKey:@"descriptions"];
     }
 }
 
@@ -538,7 +521,7 @@
     PopoverContentTableViewController *sptvc = [[PopoverContentTableViewController alloc]initWithStyle:UITableViewStylePlain];
     sptvc.delegate = self;
     sptvc.title = @"Load Patch";
-    NSDictionary *savedPatches = [NSUserDefaults valueForKey:@"patches"];
+    NSDictionary *savedPatches = [NSUserDefaults valueForKey:@"descriptions"];
     if (savedPatches) {
         NSMutableArray *arr = [savedPatches.allKeys mutableCopy];
         sptvc.itemNames = [arr sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
@@ -573,6 +556,7 @@
         self.myPopoverController = nil;
     }
 }
+
 
 /*
 #pragma mark - Navigation

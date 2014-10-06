@@ -89,7 +89,16 @@
 }
 
 
-
+- (void)tearDown
+{
+    self.delegate = nil;
+    if (self.connectedPortViews) {
+        [self.connectedPortViews removeAllObjects];
+    }
+    
+    self.connectedPortViews = nil;
+    
+}
 
 
 @end

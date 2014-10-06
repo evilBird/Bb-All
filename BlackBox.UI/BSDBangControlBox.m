@@ -22,13 +22,7 @@
     if (self) {
         // Initialization code
         self.className = @"BSDBangBox";
-        [self makeObjectInstance];
         self.boxClassString = @"BSDBangControlBox";
-
-        NSArray *inletViews = [self inlets];
-        self.inletViews = [NSMutableArray arrayWithArray:inletViews];
-        NSArray *outletViews = [self outlets];
-        self.outletViews = [NSMutableArray arrayWithArray:outletViews];
         _defaultCenterColor = [UIColor colorWithWhite:0.8 alpha:1];
         _highlightCenterColor = [UIColor colorWithWhite:0.55 alpha:1];
         _currentCenterColor = _defaultCenterColor;

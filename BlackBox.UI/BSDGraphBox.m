@@ -21,8 +21,6 @@
     BOOL kAllowEdit;
 }
 
-//@property (nonatomic,strong)UILongPressGestureRecognizer *longpress;
-
 @end
 
 @implementation BSDGraphBox
@@ -120,7 +118,7 @@
                 [tf setNeedsDisplay];
             }
         }
-        [self handleText:text];
+        [self initializeWithText:text];
     }
 }
 
@@ -166,7 +164,6 @@
         self.argString = [NSString stringWithString:argsString];
     }
     
-    //self.argString = [NSString stringWithString:argsString];
     [self createObjectWithName:name arguments:argsList];
 }
 
@@ -196,13 +193,14 @@
     
     [self.textField setText:displayName];
     [self resizeForText:displayName];
+}
 
-    NSArray *inletViews = [self inlets];
-    self.inletViews = [NSMutableArray arrayWithArray:inletViews];
-    NSArray *outletViews = [self outlets];
-    self.outletViews = [NSMutableArray arrayWithArray:outletViews];
-    kAllowEdit = NO;
-    self.selected = NO;
+- (void)initializeWithText:(NSString *)text
+{
+    if (text) {
+        [self handleText:text];
+        [self createPortViewsForObject:self.object];
+    }
 }
 
 - (void)resizeForText:(NSString *)text

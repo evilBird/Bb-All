@@ -20,7 +20,6 @@
 - (void)box:(id)sender portView:(id)portView drawLineToPoint:(CGPoint)point;
 - (void)box:(id)sender portView:(id)portView endedAtPoint:(CGPoint)point;
 - (void)boxDidMove:(id)sender;
-- (void)addBox:(id)sender type:(NSString *)type className:(NSString *)className args:(NSString *)args;
 - (id)boxWithUniqueId:(NSString *)uniqueId;
 - (UIView *)displayViewForBox:(id)sender;
 - (NSString *)getClassNameForText:(NSString *)text;
@@ -34,8 +33,6 @@
 }
 
 @property (nonatomic,strong)UIPanGestureRecognizer *panGesture;
-@property (nonatomic,strong)UITapGestureRecognizer *doubleTap;
-@property (nonatomic,strong)UILongPressGestureRecognizer *longPress;
 @property (nonatomic,strong)NSMutableArray *outletViews;
 @property (nonatomic,strong)NSMutableArray *inletViews;
 @property (nonatomic,strong)NSString *className;
@@ -52,6 +49,10 @@
 
 - (instancetype)initWithDescription:(BSDObjectDescription *)desc;
 - (void)makeConnectionWithDescription:(BSDPortConnectionDescription *)description;
+- (void)connectOutlet:(NSInteger)outletIndex toInlet:(NSInteger)inletIndex inBox:(BSDBox *)box;
+
+- (void)initializeWithText:(NSString *)text;
+- (void)createPortViewsForObject:(id)object;
 
 - (NSArray *)inlets;
 - (NSArray *)outlets;
