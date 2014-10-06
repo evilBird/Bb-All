@@ -26,9 +26,12 @@
     if (!self.patchText) {
         return self.canvasText;
     }
-    
-    NSString *result = [self.canvasText stringByAppendingString:self.patchText];
-    
+    NSString *result = nil;
+    if (self.canvasText) {
+        result = [self.canvasText stringByAppendingString:self.patchText];
+    }else{
+        result  = self.patchText;
+    }
     return [NSString stringWithString:result];
     
 }
@@ -63,6 +66,14 @@
     return -1;
 }
 
+- (NSUInteger)addPatchDescription:(NSString *)desc name:(NSString *)name position:(CGPoint)position
+{
+    NSString *restore = [NSString stringWithFormat:@"#X restore %@ %@ %@;\n",@((NSInteger)position.x),@((NSInteger)position.y),name];
+    NSString *toAdd = [NSString stringWithFormat:@"%@%@",desc,restore];
+    [self addEntry:toAdd];
+    return [self addObject:toAdd];
+}
+
 - (NSUInteger)addPatchDescription:(NSString *)desc name:(NSString *)name frame:(CGRect)frame
 {
     if (!desc || !name) {
@@ -73,9 +84,12 @@
     NSString *w = [NSString stringWithFormat:@"%@",@((NSInteger)frame.size.width)];
     NSString *h = [NSString stringWithFormat:@"%@",@((NSInteger)frame.size.height)];
     NSString *toAdd = nil;
-    toAdd = [NSString stringWithFormat:@"#N canvas %@ %@ %@ %@ %@;\n%@",x,y,w,h,name,desc];
+    NSInteger centerx = x.floatValue + w.floatValue * 0.5;
+    NSInteger centery = y.floatValue + h.floatValue * 0.5;
+    NSString *restore = [NSString stringWithFormat:@"#X restore %@ %@ bb %@;\n",@(centerx),@(centery),name];
+    toAdd = [NSString stringWithFormat:@"#N canvas %@ %@ %@ %@ %@;\n%@%@",x,y,w,h,name,desc,restore];
     [self addEntry:toAdd];
-    NSLog(@"description:%@",toAdd);
+    NSLog(@"patch description:%@",toAdd);
     return [self addObject:toAdd];
     return -1;
 }
@@ -159,17 +173,27 @@
 
 - (instancetype)initWithCanvasRect:(CGRect)rect
 {
+    return [self initWithCanvasRect:rect name:nil];
+}
+
+- (instancetype)initWithCanvasRect:(CGRect)rect name:(NSString *)name
+{
     self = [super init];
     if (self) {
         NSString *x = [NSString stringWithFormat:@"%@",@((NSInteger)rect.origin.x)];
         NSString *y = [NSString stringWithFormat:@"%@",@((NSInteger)rect.origin.y)];
         NSString *w = [NSString stringWithFormat:@"%@",@((NSInteger)rect.size.width)];
         NSString *h = [NSString stringWithFormat:@"%@",@((NSInteger)rect.size.height)];
-        _canvasText = [NSString stringWithFormat:@"#N canvas %@ %@ %@ %@;\n",x,y,w,h];
+        if (!name) {
+            _canvasText = [NSString stringWithFormat:@"#N canvas %@ %@ %@ %@;\n",x,y,w,h];
+        }else{
+            _canvasText = [NSString stringWithFormat:@"#N canvas %@ %@ %@ %@ %@;\n",x,y,w,h,name];
+        }
         _patchDescriptionUtility = [[BSDPatchDescriptionUtility alloc]init];
     }
     
     return self;
 }
+
 
 @end

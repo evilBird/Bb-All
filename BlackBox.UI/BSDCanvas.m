@@ -20,7 +20,7 @@
 #import "BSDCommentBox.h"
 #import "BSDPatchDescription.h"
 #import "BSDAbstractionBox.h"
-@interface BSDCanvas ()<UIGestureRecognizerDelegate,BSDScreenDelegate>
+@interface BSDCanvas ()<UIGestureRecognizerDelegate,BSDScreenDelegate,BSDPortDelegate>
 {
     CGPoint kFocusPoint;
 }
@@ -164,28 +164,47 @@
 
 - (void)encapsulatedCopiedContentWithName:(NSString *)name
 {
-    NSString *desc = [self describeBoxes:self.copiedBoxes];
-    NSString *genericCanvas = [self genericCanvasDescriptionName:name];
-    NSString *description = [genericCanvas stringByAppendingString:desc];
-    BSDCanvas *canvas = [[BSDCanvas alloc]initWithDescription:description];
+    BSDPatchDescription *desc = [[BSDPatchDescription alloc]initWithCanvasRect:self.bounds name:name];
+    NSInteger idx = 0;
+    for (BSDBox *box in self.copiedBoxes) {
+        box.tag = idx;
+        idx ++;
+        if ([box.boxClassString isEqualToString:@"BSDAbstractionBox"]) {
+            BSDCanvas *canvas = box.object;
+            NSString *subDesc = [canvas stringDescription];
+            [desc addPatchDescription:subDesc name:canvas.name position:[self positionFromFrame:box.frame]];
+        }else{
+            [desc addEntryType:box.boxClassString className:box.className args:box.argString position:[self positionFromFrame:box.frame]];
+        }
+    }
+    
+    for (BSDBox *box in self.copiedBoxes) {
+        for (BSDPortView *portView in box.outletViews) {
+            if (portView.connectedPortViews.count) {
+                for (BSDPortView *receivingPort in portView.connectedPortViews) {
+                    [desc addConnectionSender:box.tag
+                                       outlet:portView.tag
+                                     receiver:receivingPort.superview.tag
+                                        inlet:receivingPort.tag];
+                }
+            }
+        }
+    }
+    
+    NSString *description = [desc getDescription];
+    BSDAbstractionBox *new = [self newAbstractionBox:name atPoint:kFocusPoint];
     if (!self.subcanvases) {
         self.subcanvases  = [NSMutableArray array];
     }
-    
-    [self.subcanvases addObject:canvas];
-    BSDAbstractionBox *new = [self newAbstractionBox:name atPoint:kFocusPoint];
-    new.canvas = canvas;
+    [new initializeWithText:description];
+    [self.subcanvases addObject:new.object];
     [self.graphBoxes addObject:new];
-    //[self addSubview:canvas];
-    
-    /*
-    NSMutableDictionary *toEncapsulate = [self.copiedBoxes mutableCopy];
-    [self.delegate saveAbstraction:toEncapsulate withName:name];
-    [self addGraphBoxAtPoint:kFocusPoint];
-    BSDGraphBox *box = self.graphBoxes.lastObject;
-    [box createObjectWithName:@"BSDCompiledPatch" arguments:@[name]];
-    [self deleteSelectedContent];
-    */
+    //[self addSubview:new.object];
+}
+
+- (void)tearDown
+{
+    [self clearCurrentPatch];
 }
 
 - (NSString *)canvasId
@@ -247,16 +266,49 @@
     CGPoint loc = [sender locationOfTouch:0 inView:self];
     kFocusPoint = loc;
     UIView *theView = [self hitTest:loc withEvent:UIEventTypeTouches];
+    
+    if ([theView isKindOfClass:[BSDAbstractionBox class]]) {
+        [self openAbstraction:(BSDAbstractionBox *)theView];
+        return;
+    }
+    
+    if ([theView.superview isKindOfClass:[BSDAbstractionBox class]]) {
+        [self openAbstraction:(BSDAbstractionBox *)theView.superview];
+        return;
+    }
+    
     if ([theView isKindOfClass:[BSDBox class]]
         || [theView.superview isKindOfClass:[BSDBox class]]
         || [theView isKindOfClass:[UITextField class]]
         || [theView isKindOfClass:[BSDTextField class]])
     {
+        
         return;
     }
     
     [self addGraphBoxAtPoint:loc];
     
+}
+
+- (void)openAbstraction:(BSDAbstractionBox *)abs
+{
+    BSDCanvas *canvas = [abs object];
+    UIButton *button = [UIButton new];
+    [button setTitle:@"X" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setFrame:CGRectMake(50, 150, 44, 44)];
+    [canvas addSubview:button];
+    [button addTarget:self action:@selector(closeCanvas:) forControlEvents:UIControlEventTouchUpInside];
+    [canvas addSubview:button];
+    [self addSubview:canvas];
+    [canvas boxDidMove:nil];
+}
+
+- (void)closeCanvas:(UIButton *)sender
+{
+    BSDCanvas *canvas = (BSDCanvas *)sender.superview;
+    [canvas removeFromSuperview];
+    [sender removeFromSuperview];
 }
 
 #pragma mark - BSDBoxDelegate
@@ -352,6 +404,12 @@
 }
 
 #pragma mark - constructors
+
+- (instancetype)initWithArguments:(id)arguments
+{
+    return [self initWithDescription:arguments];
+}
+
 - (instancetype)initWithDescription:(NSString *)desc
 {
     NSArray *entries = [desc componentsSeparatedByString:@";\n"];
@@ -427,7 +485,7 @@
     BSDAbstractionBox *box = [[BSDAbstractionBox alloc]initWithFrame:rect];
     box.delegate = self;
     box.center = point;
-    box.textField.text = [NSString stringWithFormat:@"Bb %@",name];
+    box.textField.text = [NSString stringWithFormat:@"bb %@",name];
     [self addSubview:box];
     return box;
 }
@@ -536,28 +594,56 @@
     }
     [self.graphBoxes addObject:box];
     [box initializeWithText:nil];
+    
+    if ([box.boxClassString isEqualToString:@"BSDInletBox"]) {
+        BSD2WayPort *port = box.object;
+        if (!self.inlets) {
+            self.inlets = [NSMutableArray array];
+        }
+        [self.inlets addObject:port.inlets.firstObject];
+    }else if ([box.boxClassString isEqualToString:@"BSDOutletBox"]){
+        BSD2WayPort *port = box.object;
+        if (!self.outlets) {
+            self.outlets = [NSMutableArray array];
+        }
+        [self.outlets addObject:port.outlets.firstObject];
+    }
 }
 
 - (NSString *)stringDescription
 {
     NSArray *boxes = [NSArray arrayWithArray:self.graphBoxes];
-    NSString *description = [self describeBoxes:boxes];
+    NSString *description = [self describeBoxes:boxes name:self.name];
     return [NSString stringWithString:description];
 }
 
 - (NSString *)describeBoxes:(NSArray *)boxes
 {
+    return [self describeBoxes:boxes name:nil];
+}
+
+- (NSString *)describeBoxes:(NSArray *)boxes name:(NSString *)string
+{
     NSUInteger idx = 0;
-    BSDPatchDescription *description = [[BSDPatchDescription alloc]initWithCanvasRect:self.bounds];
+    BSDPatchDescription *description = nil;
+    if (!string) {
+        description = [[BSDPatchDescription alloc]initWithCanvasRect:self.bounds];
+    }else{
+        description = [[BSDPatchDescription alloc]initWithCanvasRect:self.bounds name:string];
+    }
     for (BSDBox *box in boxes) {
         CGPoint position = [self positionFromFrame:box.frame];
         box.tag = idx;
         if ([box isKindOfClass:[BSDAbstractionBox class]]) {
+            
             BSDAbstractionBox *abstraction = (BSDAbstractionBox *)box;
-            BSDCanvas *canvas = abstraction.canvas;
+            BSDCanvas *canvas = abstraction.object;
+            /*
+            canvas.delegate = self.delegate;
             NSString *desc = [canvas stringDescription];
             NSString *name = nil;
-            [description addPatchDescription:desc name:name frame:box.frame];
+             */
+            [description addPatchDescription:box.argString name:canvas.name position:[self positionFromFrame:box.frame]];
         }else{
             [description addEntryType:box.boxClassString className:box.className args:box.argString position:position];
         }
@@ -585,53 +671,87 @@
 - (NSMutableArray *)parseDescription:(NSString *)desc
 {
     NSMutableArray *temp = nil;
+    NSMutableString *subDesc = nil;
     NSArray *entries = [self entriesInDescription:desc];
+    NSString *currentName = nil;
     NSInteger idx = 0;
     for (NSString *entry in entries) {
         NSArray *components = [self componentsOfEntry:entry];
         NSString *action = components[0];
-        if ([action isEqualToString:@"#X"]) {
+        if ([action isEqualToString:@"#N"]){
+            if (idx == 0) {
+                self.name = components[6];
+            }else if (idx > 0){
+                if (!subDesc) {
+                    subDesc = [[NSMutableString alloc]initWithFormat:@"%@;\n",entry];
+                    currentName = components[6];
+                }else{
+                    [subDesc appendFormat:@"%@;\n",entry];
+                }
+            }
+            
+        }else if ([action isEqualToString:@"#X"]){
             NSString *type = components[1];
             if ([type isEqualToString:@"connection"]) {
+                if (!subDesc) {
+                    NSString *sender = components[2];
+                    NSString *outlet = components[3];
+                    NSString *receiver = components[4];
+                    NSString *inlet = components[5];
+                    
+                    BSDBox *s = temp[sender.integerValue];
+                    BSDBox *r = temp[receiver.integerValue];
+                    NSInteger o = outlet.integerValue;
+                    NSInteger i = inlet.integerValue;
+                    [s connectOutlet:o toInlet:i inBox:r];
+                }else{
+                    [subDesc appendFormat:@"%@;\n",entry];
+                }
+            }else if ([type isEqualToString:@"restore"]){
                 
-                NSString *sender = components[2];
-                NSString *outlet = components[3];
-                NSString *receiver = components[4];
-                NSString *inlet = components[5];
-                
-                BSDBox *s = temp[sender.integerValue];
-                BSDBox *r = temp[receiver.integerValue];
-                NSInteger o = outlet.integerValue;
-                NSInteger i = inlet.integerValue;
-                [s connectOutlet:o toInlet:i inBox:r];
+                NSString *subname = components[4];
+                if ([subname isEqualToString:currentName]) {
+                    NSString *newBoxDesc = [NSString stringWithString:subDesc];
+                    CGPoint point;
+                    point.x = [components[2] floatValue];
+                    point.y = [components[3] floatValue];
+                    NSString *subname = components[4];
+                    BSDAbstractionBox *box = [self newAbstractionBox:subname atPoint:point];
+                    [box initializeWithText:newBoxDesc];
+                    box.tag = idx;
+                    idx += 1;
+                    if (!temp) {
+                        temp = [NSMutableArray array];
+                    }
+                    [temp addObject:box];
+                    subDesc = nil;
+                    currentName = nil;
+                }else{
+                    [subDesc appendFormat:@"%@;\n",entry];
+                }
                 
             }else{
-                
-                BSDBox *box = [self makeBoxWithEntry:entry components:components];
-                box.tag = idx;
-                idx++;
-                
-                if (!temp){
-                    temp = [NSMutableArray array];
+                if (!subDesc) {
+                    BSDBox *box = [self makeBoxWithEntry:entry components:components];
+                    box.tag = idx;
+                    idx++;
+                    
+                    if (!temp){
+                        temp = [NSMutableArray array];
+                    }
+                    [temp addObject:box];
+                }else{
+                    [subDesc appendFormat:@"%@;\n",entry];
                 }
-                [temp addObject:box];
             }
-        }else if ([action isEqualToString:@"#N"]){
-            NSString *type = components[1];
-            if ([type isEqualToString:@"canvas"]) {
-                BSDBox *box = [self makeBoxWithEntry:entry components:components];
-                box.tag = idx;
-                idx++;
-                if (!temp) {
-                    temp = [NSMutableArray array];
-                }
-                [temp addObject:box];
-            }
-
         }
     }
-    
     return temp;
+}
+
+- (NSString *)objectId
+{
+    return [self canvasId];
 }
 
 - (BSDBox *)makeBoxWithEntry:(NSString *)entry components:(NSArray *)components
@@ -667,22 +787,26 @@
         result = [self newBangBoxAtPoint:point];
     }else if (typeHash == [@"canvas" hash]){
         if (components.count > 6) {
-            NSRange range = [entry rangeOfString:components[6]];
+            NSRange range = [entry rangeOfString:components[2]];
             classAndArgs = [entry substringFromIndex:range.location];
         }
-        
         result = [self newAbstractionBox:components[6] atPoint:point];
-        BSDCanvas *canvas = [[BSDCanvas alloc]initWithDescription:classAndArgs];
-        if (!self.subcanvases) {
-            self.subcanvases  = [NSMutableArray array];
-        }
-        
-        [self.subcanvases addObject:canvas];
-        [(BSDAbstractionBox *)result setCanvas:canvas];
     }
     
     [result initializeWithText:classAndArgs];
-    
+    if ([type isEqualToString:@"BSDInletBox"]) {
+        BSD2WayPort *port = result.object;
+        if (!self.inlets) {
+            self.inlets = [NSMutableArray array];
+        }
+        [self.inlets addObject:port.inlets.firstObject];
+    }else if ([type isEqualToString:@"BSDOutletBox"]){
+        BSD2WayPort *port = result.object;
+        if (!self.outlets) {
+            self.outlets = [NSMutableArray array];
+        }
+        [self.outlets addObject:port.outlets.firstObject];
+    }
     NSLog(@"class and args: %@",classAndArgs);
     
     return result;
@@ -690,15 +814,6 @@
 
 - (NSArray *)entriesInDescription:(NSString *)desc
 {
-    NSArray *canvases = [desc componentsSeparatedByString:@";\n#N"];
-    if (canvases) {
-        NSString *c = canvases[1];
-        
-        //NSArray *cd = [c stringByReplacingCharactersInRange:<#(NSRange)#> withString:<#(NSString *)#>];
-        
-        //return [self entriesInDescription:];
-    }
-    
     return [desc componentsSeparatedByString:@";\n"];
 }
 

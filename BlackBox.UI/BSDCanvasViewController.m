@@ -460,22 +460,36 @@
     if ([objects containsObject:patchName]) {
         CGPoint point = [self.canvas optimalFocusPoint];
         [self contentTableViewControllerWasDismissed:nil];
+        
+        BSDCanvas *myCanvas = nil;
+        for (UIView *subview in self.canvas.subviews) {
+            if ([subview isKindOfClass:[BSDCanvas class]]) {
+                myCanvas = (BSDCanvas *)subview;
+            }
+        }
+        
+        if (myCanvas == nil) {
+            myCanvas = self.canvas;
+        }else{
+            
+        }
+        
         if ([patchName isEqualToString:@"bang box"]) {
-            [self.canvas addBangBoxAtPoint:point];
+            [myCanvas addBangBoxAtPoint:point];
         }else if ([patchName isEqualToString:@"number box"]){
-            [self.canvas addNumberBoxAtPoint:point];
+            [myCanvas addNumberBoxAtPoint:point];
         }else if ([patchName isEqualToString:@"message box"]){
-            [self.canvas addMessageBoxAtPoint:point];
+            [myCanvas addMessageBoxAtPoint:point];
         }else if ([patchName isEqualToString:@"inlet"]){
-            [self.canvas addInletBoxAtPoint:point];
+            [myCanvas addInletBoxAtPoint:point];
         }else if ([patchName isEqualToString:@"outlet"]){
-            [self.canvas addOutletBoxAtPoint:point];
+            [myCanvas addOutletBoxAtPoint:point];
         }else if ([patchName isEqualToString:@"object"]){
-            [self.canvas addGraphBoxAtPoint:point];
+            [myCanvas addGraphBoxAtPoint:point];
         }else if ([patchName isEqualToString:@"canvas"]){
             [self presentCanvasForPatchWithName:@"new patch"];
         }else if ([patchName isEqualToString:@"comment"]){
-            [self.canvas addCommentBoxAtPoint:point];
+            [myCanvas addCommentBoxAtPoint:point];
         }
         
     }else{

@@ -15,7 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.className = @"BSDPatchInlet";
+        self.className = @"BSD2WayPort";
         self.boxClassString = @"BSDInletBox";
     }
     
@@ -26,6 +26,7 @@
 {
     return nil;
 }
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

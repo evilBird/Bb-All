@@ -29,8 +29,9 @@
         _textField.autocorrectionType = UITextAutocorrectionTypeNo;
         _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _textField.keyboardType = UIKeyboardTypeDefault;
-        _textField.enabled = YES;
-        self.boxClassString = @"BSDCanvas";
+        _textField.enabled = NO;
+        self.boxClassString = @"BSDAbstractionBox";
+        self.className = @"BSDCanvas";
         [self insertSubview:_textField atIndex:0];
         kAllowEdit = NO;
     }
@@ -40,14 +41,14 @@
 
 - (void)initializeWithText:(NSString *)text
 {
-    
+    if (text != nil) {
+        self.argString = text;
+        [self makeObjectInstanceArgs:@[text]];
+        [self createPortViewsForObject:self.object];
+    }
 }
 
-- (void)setCanvas:(BSDCanvas *)canvas
-{
-    self.object = canvas;
-    [self createPortViewsForObject:self.object];
-}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

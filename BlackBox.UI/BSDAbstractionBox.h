@@ -12,6 +12,5 @@
 @interface BSDAbstractionBox : BSDBox
 
 @property (nonatomic,strong)UITextField *textField;
-@property (nonatomic,strong)BSDCanvas *canvas;
 
 @end

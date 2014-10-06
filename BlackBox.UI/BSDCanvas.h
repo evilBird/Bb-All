@@ -38,12 +38,16 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 @property (nonatomic,strong)UITapGestureRecognizer *doubleTap;
 @property (nonatomic,strong)id<BSDCanvasDelegate>delegate;
 @property (nonatomic)BSDCanvasEditState editState;
+@property (nonatomic,strong)NSString *name;
 
 - (instancetype)initWithDescription:(NSString *)desc;
-
+- (instancetype)initWithArguments:(id)arguments;
+- (void)loadPatchWithDescription:(NSString *)description;
 - (NSString *)stringDescription;
 - (NSString *)canvasId;
-- (void)loadPatchWithDescription:(NSString *)description;
+- (NSString *)objectId;
+- (void)tearDown;
+- (void)loadPatch2WithDescription:(NSString *)description;
 - (void)clearCurrentPatch;
 
 - (void)deleteSelectedContent;
