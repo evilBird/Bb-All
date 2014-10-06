@@ -19,7 +19,7 @@
 #import "NSUserDefaults+HBVUtils.h"
 #import "BSDCommentBox.h"
 #import "BSDPatchDescription.h"
-
+#import "BSDAbstractionBox.h"
 @interface BSDCanvas ()<UIGestureRecognizerDelegate,BSDScreenDelegate>
 {
     CGPoint kFocusPoint;
@@ -121,7 +121,7 @@
         self.copiedBoxes = nil;
     }
     
-    self.copiedBoxes = nil;
+    self.copiedBoxes = self.selectedBoxes.mutableCopy;
     if (self.copiedBoxes) {
         self.editState = BSDCanvasEditStateContentCopied;
     }
@@ -151,10 +151,33 @@
         return;
     }
     
+    NSString *desc = [self describeBoxes:self.copiedBoxes];
+    NSArray *copied = [self parseDescription:desc];
+    [self.graphBoxes addObjectsFromArray:copied];
+}
+
+- (NSString *)genericCanvasDescriptionName:(NSString *)string
+{
+    NSString *entry = [NSString stringWithFormat:@"#N canvas 0 0 %@ %@ %@;\n",@(self.bounds.size.width),@(self.bounds.size.height),string];
+    return entry;
 }
 
 - (void)encapsulatedCopiedContentWithName:(NSString *)name
 {
+    NSString *desc = [self describeBoxes:self.copiedBoxes];
+    NSString *genericCanvas = [self genericCanvasDescriptionName:name];
+    NSString *description = [genericCanvas stringByAppendingString:desc];
+    BSDCanvas *canvas = [[BSDCanvas alloc]initWithDescription:description];
+    if (!self.subcanvases) {
+        self.subcanvases  = [NSMutableArray array];
+    }
+    
+    [self.subcanvases addObject:canvas];
+    BSDAbstractionBox *new = [self newAbstractionBox:name atPoint:kFocusPoint];
+    new.canvas = canvas;
+    [self.graphBoxes addObject:new];
+    //[self addSubview:canvas];
+    
     /*
     NSMutableDictionary *toEncapsulate = [self.copiedBoxes mutableCopy];
     [self.delegate saveAbstraction:toEncapsulate withName:name];
@@ -204,17 +227,17 @@
     }
     
     if (!self.selectedBoxes) {
-        self.selectedBoxes = [NSMutableDictionary dictionary];
+        self.selectedBoxes = [NSMutableArray array];
     }
     if (toSelect.selected) {
-        self.selectedBoxes[[toSelect uniqueId]] = toSelect;
+        [self.selectedBoxes addObject:toSelect];
     }else{
-        if ([self.selectedBoxes.allKeys containsObject:[toSelect uniqueId]]) {
-            
-            [self.selectedBoxes removeObjectForKey:[toSelect uniqueId]];
+        if ([self.selectedBoxes containsObject:toSelect]) {
+            [self.selectedBoxes removeObject:toSelect];
         }
     }
-    if (self.selectedBoxes.allKeys.count) {
+    
+    if (self.selectedBoxes.count > 0) {
         self.editState = BSDCanvasEditStateContentSelected;
     }
 }
@@ -329,17 +352,6 @@
 }
 
 #pragma mark - constructors
-
-+ (CGRect)frameWithEntry:(NSString *)entry
-{
-    NSArray *components = [entry componentsSeparatedByString:@" "];
-    NSString *x = components[2];
-    NSString *y = components[3];
-    NSString *width = components[4];
-    NSString *height = components[5];
-    return CGRectMake(x.floatValue, y.floatValue, width.floatValue, height.floatValue);
-}
-
 - (instancetype)initWithDescription:(NSString *)desc
 {
     NSArray *entries = [desc componentsSeparatedByString:@";\n"];
@@ -355,7 +367,12 @@
 - (void)loadPatchWithDescription:(NSString *)description
 {
     [self clearCurrentPatch];
-    [self parseDesc:description];
+    NSArray *objs = [self parseDescription:description];
+    if (!self.graphBoxes) {
+        self.graphBoxes = [NSMutableArray array];
+    }
+    
+    [self.graphBoxes addObjectsFromArray:objs];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -402,6 +419,17 @@
     graphBox.center = point;
     [self addSubview:graphBox];
     return graphBox;
+}
+
+- (BSDAbstractionBox *)newAbstractionBox:(NSString *)name atPoint:(CGPoint)point
+{
+    CGRect rect = CGRectMake(0, 0, 140, 44);
+    BSDAbstractionBox *box = [[BSDAbstractionBox alloc]initWithFrame:rect];
+    box.delegate = self;
+    box.center = point;
+    box.textField.text = [NSString stringWithFormat:@"Bb %@",name];
+    [self addSubview:box];
+    return box;
 }
 
 - (void)addNumberBoxAtPoint:(CGPoint)point
@@ -510,11 +538,6 @@
     [box initializeWithText:nil];
 }
 
-- (CGPoint)positionFromFrame:(CGRect)frame
-{
-    return CGPointMake(frame.origin.x + frame.size.width * 0.5, frame.origin.y + frame.size.height * 0.5);
-}
-
 - (NSString *)stringDescription
 {
     NSArray *boxes = [NSArray arrayWithArray:self.graphBoxes];
@@ -529,7 +552,15 @@
     for (BSDBox *box in boxes) {
         CGPoint position = [self positionFromFrame:box.frame];
         box.tag = idx;
-        [description addEntryType:box.boxClassString className:box.className args:box.argString position:position];
+        if ([box isKindOfClass:[BSDAbstractionBox class]]) {
+            BSDAbstractionBox *abstraction = (BSDAbstractionBox *)box;
+            BSDCanvas *canvas = abstraction.canvas;
+            NSString *desc = [canvas stringDescription];
+            NSString *name = nil;
+            [description addPatchDescription:desc name:name frame:box.frame];
+        }else{
+            [description addEntryType:box.boxClassString className:box.className args:box.argString position:position];
+        }
         idx++;
     }
     
@@ -546,10 +577,12 @@
         }
     }
     
-    return [description getDescription];
+    NSString *result = [description getDescription];
+    NSLog(@"%@",result);
+    return result;
 }
 
-- (void)parseDesc:(NSString *)desc
+- (NSMutableArray *)parseDescription:(NSString *)desc
 {
     NSMutableArray *temp = nil;
     NSArray *entries = [self entriesInDescription:desc];
@@ -583,11 +616,22 @@
                 }
                 [temp addObject:box];
             }
+        }else if ([action isEqualToString:@"#N"]){
+            NSString *type = components[1];
+            if ([type isEqualToString:@"canvas"]) {
+                BSDBox *box = [self makeBoxWithEntry:entry components:components];
+                box.tag = idx;
+                idx++;
+                if (!temp) {
+                    temp = [NSMutableArray array];
+                }
+                [temp addObject:box];
+            }
+
         }
     }
     
-    self.graphBoxes = [NSMutableArray arrayWithArray:temp];
-    [self boxDidMove:nil];
+    return temp;
 }
 
 - (BSDBox *)makeBoxWithEntry:(NSString *)entry components:(NSArray *)components
@@ -603,10 +647,8 @@
     NSUInteger typeHash = [type hash];
     if (typeHash ==[@"BSDGraphBox" hash]) {
         result = [self newGraphBoxAtPoint:point];
-        if (components.count > 5) {
             NSRange range = [entry rangeOfString:className];
             classAndArgs = [entry substringFromIndex:range.location];
-        }
     }else if (typeHash == [@"BSDMessageBox" hash]){
         result = [self newMessageBoxAtPoint:point];
         if (components.count > 5) {
@@ -623,6 +665,20 @@
         result = [self newOutletBoxAtPoint:point];
     }else if (typeHash == [@"BSDBangControlBox" hash]){
         result = [self newBangBoxAtPoint:point];
+    }else if (typeHash == [@"canvas" hash]){
+        if (components.count > 6) {
+            NSRange range = [entry rangeOfString:components[6]];
+            classAndArgs = [entry substringFromIndex:range.location];
+        }
+        
+        result = [self newAbstractionBox:components[6] atPoint:point];
+        BSDCanvas *canvas = [[BSDCanvas alloc]initWithDescription:classAndArgs];
+        if (!self.subcanvases) {
+            self.subcanvases  = [NSMutableArray array];
+        }
+        
+        [self.subcanvases addObject:canvas];
+        [(BSDAbstractionBox *)result setCanvas:canvas];
     }
     
     [result initializeWithText:classAndArgs];
@@ -634,6 +690,15 @@
 
 - (NSArray *)entriesInDescription:(NSString *)desc
 {
+    NSArray *canvases = [desc componentsSeparatedByString:@";\n#N"];
+    if (canvases) {
+        NSString *c = canvases[1];
+        
+        //NSArray *cd = [c stringByReplacingCharactersInRange:<#(NSRange)#> withString:<#(NSString *)#>];
+        
+        //return [self entriesInDescription:];
+    }
+    
     return [desc componentsSeparatedByString:@";\n"];
 }
 
@@ -654,6 +719,21 @@
     }
     
     return kFocusPoint;
+}
+
+- (CGPoint)positionFromFrame:(CGRect)frame
+{
+    return CGPointMake(frame.origin.x + frame.size.width * 0.5, frame.origin.y + frame.size.height * 0.5);
+}
+
++ (CGRect)frameWithEntry:(NSString *)entry
+{
+    NSArray *components = [entry componentsSeparatedByString:@" "];
+    NSString *x = components[2];
+    NSString *y = components[3];
+    NSString *width = components[4];
+    NSString *height = components[5];
+    return CGRectMake(x.floatValue, y.floatValue, width.floatValue, height.floatValue);
 }
 
 #pragma mark UIView method overrides

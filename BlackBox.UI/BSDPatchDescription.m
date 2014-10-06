@@ -63,6 +63,23 @@
     return -1;
 }
 
+- (NSUInteger)addPatchDescription:(NSString *)desc name:(NSString *)name frame:(CGRect)frame
+{
+    if (!desc || !name) {
+        return -1;
+    }
+    NSString *x = [NSString stringWithFormat:@"%@",@((NSInteger)frame.origin.x)];
+    NSString *y = [NSString stringWithFormat:@"%@",@((NSInteger)frame.origin.y)];
+    NSString *w = [NSString stringWithFormat:@"%@",@((NSInteger)frame.size.width)];
+    NSString *h = [NSString stringWithFormat:@"%@",@((NSInteger)frame.size.height)];
+    NSString *toAdd = nil;
+    toAdd = [NSString stringWithFormat:@"#N canvas %@ %@ %@ %@ %@;\n%@",x,y,w,h,name,desc];
+    [self addEntry:toAdd];
+    NSLog(@"description:%@",toAdd);
+    return [self addObject:toAdd];
+    return -1;
+}
+
 - (NSUInteger)addAtomType:(NSString *)type args:(NSString *)args position:(CGPoint)position
 {
     NSString *x = [NSString stringWithFormat:@"%@",@((NSInteger)position.x)];

@@ -284,8 +284,8 @@
 
 - (void)showSaveAsPatchAlertView
 {
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Save Patch"
-                                                   message:@"Enter a name for this patch"
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Make abstraction"
+                                                   message:@"Enter a name for this abstraction"
                                                   delegate:self
                                          cancelButtonTitle:@"Cancel"
                                          otherButtonTitles:@"Save", nil];

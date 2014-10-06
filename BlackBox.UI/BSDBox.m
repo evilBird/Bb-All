@@ -278,9 +278,6 @@
                 UIView *superview = connectedPortView.superview;
                 if (superview) {
                     
-                    //BSDPortConnection *connection = [BSDPortConnection connectionWithOwner:portView target:connectedPortView];
-                    //CGPoint o = [connection origin];
-                    //CGPoint d = [connection destination];
                     CGPoint o = portView.center;
                     CGPoint d = connectedPortView.center;
                     CGPoint ao = [self.superview convertPoint:o fromView:portView.superview];

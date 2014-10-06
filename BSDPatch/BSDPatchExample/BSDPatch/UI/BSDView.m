@@ -115,13 +115,12 @@
         CABasicAnimation *animation = self.animationInlet.value;
         UIView *myView = [self view];
         CALayer *layer = myView.layer;
-        [layer addAnimation:animation forKey:@"a"];
+        [layer addAnimation:animation forKey:animation.keyPath];
         [layer setValue:animation.toValue forKey:animation.keyPath];
     }else if ([a isKindOfClass:[CAKeyframeAnimation class]]){
         CAKeyframeAnimation *animation = self.animationInlet.value;
         UIView *myView = self.viewInlet.value;
-        //CALayer *layer = myView.layer;
-        [myView.layer addAnimation:animation forKey:@"a"];
+        [myView.layer addAnimation:animation forKey:animation.keyPath];
         [myView.layer setValue:animation.values.lastObject forKey:animation.keyPath];
     }
 }

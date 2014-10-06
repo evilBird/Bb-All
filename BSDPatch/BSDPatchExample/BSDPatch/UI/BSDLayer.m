@@ -134,12 +134,12 @@
     if ([a isKindOfClass:[CABasicAnimation class]]) {
         CABasicAnimation *animation = self.animationInlet.value;
         CALayer *layer = [self layer];
-        [layer addAnimation:animation forKey:@"a"];
+        [layer addAnimation:animation forKey:animation.keyPath];
         [layer setValue:animation.toValue forKey:animation.keyPath];
     }else if ([a isKindOfClass:[CAKeyframeAnimation class]]){
         CAKeyframeAnimation *animation = self.animationInlet.value;
         CALayer *layer = [self layer];
-        [layer addAnimation:animation forKey:@"a"];
+        [layer addAnimation:animation forKey:animation.keyPath];
         [layer setValue:animation.values.lastObject forKey:animation.keyPath];
     }
 }

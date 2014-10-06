@@ -14,6 +14,7 @@
 - (instancetype)initWithCanvasRect:(CGRect)rect;
 
 - (NSString *)getDescription;
+- (NSUInteger)addPatchDescription:(NSString *)desc name:(NSString *)name frame:(CGRect)frame;
 - (NSUInteger)addEntryType:(NSString *)type className:(NSString *)className args:(NSString *)args position:(CGPoint)position;
 - (void)addConnectionSender:(NSUInteger)sender outlet:(NSUInteger)outlet receiver:(NSUInteger)receiver inlet:(NSUInteger)inlet;
 

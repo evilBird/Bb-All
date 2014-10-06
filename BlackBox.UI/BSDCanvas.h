@@ -29,8 +29,11 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 @interface BSDCanvas : UIView<BSDBoxDelegate>
 
 @property (nonatomic,strong)NSMutableArray *graphBoxes;
-@property (nonatomic,strong)NSMutableDictionary *selectedBoxes;
-@property (nonatomic,strong)NSMutableDictionary *copiedBoxes;
+@property (nonatomic,strong)NSMutableArray *subcanvases;
+@property (nonatomic,strong)NSMutableArray *inlets;
+@property (nonatomic,strong)NSMutableArray *outlets;
+@property (nonatomic,strong)NSMutableArray *selectedBoxes;
+@property (nonatomic,strong)NSMutableArray *copiedBoxes;
 @property (nonatomic,strong)UITapGestureRecognizer *singleTap;
 @property (nonatomic,strong)UITapGestureRecognizer *doubleTap;
 @property (nonatomic,strong)id<BSDCanvasDelegate>delegate;

@@ -76,7 +76,6 @@
     if (![view isKindOfClass:[BSDPortView class]]) {
         
         [[self.object hotInlet]input:[BSDBang bang]];
-        //[self doHighlight];
     }
 }
 
@@ -84,7 +83,6 @@
 {
     UIView *view = [self hitTest:[touches.allObjects.lastObject locationInView:self] withEvent:event];
     if (![view isKindOfClass:[BSDPortView class]]) {
-        //[self endHighlight];
     }
 }
 
@@ -93,7 +91,6 @@
     UIView *view = [self hitTest:[touches.allObjects.lastObject locationInView:self] withEvent:event];
     if (![view isKindOfClass:[BSDPortView class]]) {
         
-        //[self endHighlight];
     }
 }
 

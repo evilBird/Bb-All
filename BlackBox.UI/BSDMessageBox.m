@@ -82,6 +82,7 @@
 - (void)handleText:(NSString *)text
 {
     if (!text || text.length == 0) {
+        [self.textField becomeFirstResponder];
         return;
     }
     

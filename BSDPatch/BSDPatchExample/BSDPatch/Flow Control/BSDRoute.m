@@ -11,17 +11,6 @@
 
 @implementation BSDRoute
 
-/*
-- (instancetype)initWithRouteKeys:(NSArray *)routeKeys
-{
-    return [super initWithArguments:routeKeys];
-}
-
-- (instancetype)initAndConnectWithRouteKeysAndInlets:(NSDictionary *)routeKeysAndInlets
-{
-    return [super initWithArguments:routeKeysAndInlets];
-}
-*/
 - (instancetype)initWithArguments:(id)arguments
 {
     return [super initWithArguments:arguments];
@@ -114,18 +103,6 @@
         }
         
     }
-    /*
-    for (NSString *aRouteKey in hot.allKeys) {
-        BSDOutlet *anOutlet = [self outletForRouteKey:aRouteKey];
-        id value = [hot valueForKeyPath:aRouteKey];
-        NSDictionary *output = @{aRouteKey:value};
-        if (anOutlet != nil) {
-            [anOutlet output:value];
-        }else{
-            [self.passThroughOutlet output:output];
-        }
-    }
-     */
 }
 
 - (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey
