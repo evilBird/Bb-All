@@ -14,6 +14,7 @@
 - (instancetype)initWithCanvasRect:(CGRect)rect;
 - (instancetype)initWithCanvasRect:(CGRect)rect name:(NSString *)name;
 
++ (NSString *)newWithName:(NSString *)name frame:(CGRect)frame;
 - (NSString *)getDescription;
 - (NSUInteger)addPatchDescription:(NSString *)desc name:(NSString *)name frame:(CGRect)frame;
 - (NSUInteger)addPatchDescription:(NSString *)desc name:(NSString *)name position:(CGPoint)position;

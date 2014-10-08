@@ -8,6 +8,8 @@
 
 #import "BSDCanvasViewController.h"
 #import "NSUserDefaults+HBVUtils.h"
+#import "BSDPatchDescription.h"
+#import "BSDPatchCompiler.h"
 
 @interface BSDCanvasViewController ()<UIScrollViewDelegate,UITableViewDelegate>
 {
@@ -83,11 +85,18 @@
             CGRect rect;
             rect.origin = self.scrollView.bounds.origin;
             rect.size = self.scrollView.contentSize;
+            BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
+            NSString *test = [compiler testPatch1];
+            [compiler.stringInlet input:test];
+            self.canvas = compiler.canvasOutlet.value;
+            /*
             if (desc) {
                 self.canvas = [[BSDCanvas alloc]initWithDescription:desc];
             }else{
-                self.canvas = [[BSDCanvas alloc]initWithFrame:frame];
+                desc = [BSDPatchDescription newWithName:_currentPatchName frame:rect];
+                self.canvas = [[BSDCanvas alloc]initWithDescription:desc];
             }
+             */
             self.canvas.delegate = self;
             [self.scrollView addSubview:self.canvas];
             [self.view addSubview:self.scrollView];
@@ -373,13 +382,18 @@
 
 - (void)saveCurrentDescription
 {
-    NSString *description = [self.canvas stringDescription];
+    BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
+    self.canvas.name = self.currentPatchName;
+    [compiler.canvasInlet input:self.canvas];
+    NSString *description = compiler.stringOutlet.value;
     [self saveDescription:description withName:self.currentPatchName];
+    //NSString *description = [self.canvas stringDescription];
+    //[self saveDescription:description withName:self.currentPatchName];
 }
 
 - (void)saveDescription:(NSString *)description withName:(NSString *)name
 {
-    if (!name) {
+    if (!name || !description) {
         return;
     }
     
@@ -391,6 +405,8 @@
     NSMutableDictionary *copy = descriptions.mutableCopy;
     copy[name] = description;
     [NSUserDefaults setUserValue:[NSDictionary dictionaryWithDictionary:copy] forKey:@"descriptions"];
+    self.currentPatchName = name;
+    self.canvas.name = name;
 }
 
 - (NSString *)savedDescriptionWithName:(NSString *)name
@@ -422,7 +438,13 @@
     NSString *description = [descriptions valueForKey:name];
     if (description) {
         NSString *toLoad = [NSString stringWithString:description];
-        [self.canvas loadPatchWithDescription:toLoad];
+        [self.canvas removeFromSuperview];
+        BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
+        [compiler.stringInlet input:toLoad];
+        self.canvas = compiler.canvasOutlet.value;
+        [self.scrollView addSubview:self.canvas];
+        //[self.canvas loadPatchWithDescription:toLoad];
+        self.currentPatchName = name;
     }
 }
 
@@ -435,7 +457,11 @@
         if (!name) {
             return;
         }
-        NSString *description = [self.canvas stringDescription];
+        //NSString *description = [self.canvas stringDescription];
+        self.canvas.name = name;
+        BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
+        [compiler.canvasInlet input:self.canvas];
+        NSString *description = [compiler.stringOutlet value];
         [self saveDescription:description withName:name];
     }else if (alertView.tag == 1 && buttonIndex == 1){
         NSString *name = [alertView textFieldAtIndex:0].text;

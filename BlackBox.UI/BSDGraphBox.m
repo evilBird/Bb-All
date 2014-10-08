@@ -198,7 +198,10 @@
 - (void)initializeWithText:(NSString *)text
 {
     if (text) {
-        [self handleText:text];
+        [self handleText:[NSString stringWithFormat:@"%@ %@",self.className,text]];
+        [self createPortViewsForObject:self.object];
+    }else{
+        [self handleText:[NSString stringWithFormat:@"%@",self.className]];
         [self createPortViewsForObject:self.object];
     }
 }

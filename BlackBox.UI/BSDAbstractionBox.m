@@ -43,7 +43,10 @@
 {
     if (text != nil) {
         self.argString = text;
-        [self makeObjectInstanceArgs:@[text]];
+    }
+    
+    if (self.object) {
+        //[self makeObjectInstanceArgs:@[text]];
         [self createPortViewsForObject:self.object];
     }
 }

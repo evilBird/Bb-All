@@ -21,6 +21,16 @@
 
 @implementation BSDPatchDescription
 
++ (NSString *)newWithName:(NSString *)name frame:(CGRect)frame
+{
+    if (!name) {
+        name = @"";
+    }
+    return [NSString stringWithFormat:@"#N canvas %@ %@ %@ %@ %@;\n",@((NSInteger)frame.origin.x),
+            @((NSInteger)frame.origin.y),@((NSInteger)frame.size.width),@((NSInteger)frame.size.height),name];
+    
+}
+
 - (NSString *)getDescription
 {
     if (!self.patchText) {

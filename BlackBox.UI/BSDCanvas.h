@@ -39,7 +39,10 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 @property (nonatomic,strong)id<BSDCanvasDelegate>delegate;
 @property (nonatomic)BSDCanvasEditState editState;
 @property (nonatomic,strong)NSString *name;
+@property (nonatomic)BSDCanvas *parentCanvas;
 
++ (CGRect)frameWithEntry:(NSString *)entry;
++ (CGRect)rectForType:(NSString *)type;
 - (instancetype)initWithDescription:(NSString *)desc;
 - (instancetype)initWithArguments:(id)arguments;
 - (void)loadPatchWithDescription:(NSString *)description;

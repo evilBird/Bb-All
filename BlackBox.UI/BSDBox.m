@@ -21,7 +21,6 @@
 
 @implementation BSDBox
 
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -505,10 +504,10 @@
 
 - (void)initializeWithText:(NSString *)text
 {
-    if (text == nil) {
-        [self makeObjectInstance];
-        [self createPortViewsForObject:self.object];
-    }
+    //if (text == nil) {
+    [self makeObjectInstance];
+    [self createPortViewsForObject:self.object];
+    //}
 }
 
 - (void)createPortViewsForObject:(id)object

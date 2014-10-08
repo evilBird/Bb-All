@@ -20,6 +20,8 @@
 #import "BSDCommentBox.h"
 #import "BSDPatchDescription.h"
 #import "BSDAbstractionBox.h"
+#import "BSDPatchCompiler.h"
+
 @interface BSDCanvas ()<UIGestureRecognizerDelegate,BSDScreenDelegate,BSDPortDelegate>
 {
     CGPoint kFocusPoint;
@@ -164,6 +166,16 @@
 
 - (void)encapsulatedCopiedContentWithName:(NSString *)name
 {
+    BSDCanvas *canvas = [[BSDCanvas alloc]initWithFrame:self.bounds];
+    canvas.name = name;
+    canvas.graphBoxes = [NSMutableArray arrayWithArray:self.copiedBoxes];
+    BSDAbstractionBox *abs = [self newAbstractionBox:name atPoint:kFocusPoint];
+    abs.object = canvas;
+    abs.textField.text = name;
+    [abs initializeWithText:name];
+    [self addGraphBox:abs];
+    
+    /*
     BSDPatchDescription *desc = [[BSDPatchDescription alloc]initWithCanvasRect:self.bounds name:name];
     NSInteger idx = 0;
     for (BSDBox *box in self.copiedBoxes) {
@@ -193,13 +205,12 @@
     
     NSString *description = [desc getDescription];
     BSDAbstractionBox *new = [self newAbstractionBox:name atPoint:kFocusPoint];
-    if (!self.subcanvases) {
-        self.subcanvases  = [NSMutableArray array];
-    }
     [new initializeWithText:description];
-    [self.subcanvases addObject:new.object];
+    BSDCanvas *canvas = new.object;
+    canvas.delegate = self.delegate;
     [self.graphBoxes addObject:new];
-    //[self addSubview:new.object];
+    //[self deleteSelectedContent];
+     */
 }
 
 - (void)tearDown
@@ -431,6 +442,7 @@
     }
     
     [self.graphBoxes addObjectsFromArray:objs];
+    [self boxDidMove:nil];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -592,8 +604,12 @@
     if (!self.graphBoxes) {
         self.graphBoxes = [NSMutableArray array];
     }
+    NSInteger count = self.graphBoxes.count;
+    box.tag = count;
     [self.graphBoxes addObject:box];
-    [box initializeWithText:nil];
+    if (![box isKindOfClass:[BSDGraphBox class]]) {
+        [box initializeWithText:nil];
+    }
     
     if ([box.boxClassString isEqualToString:@"BSDInletBox"]) {
         BSD2WayPort *port = box.object;
@@ -638,11 +654,6 @@
             
             BSDAbstractionBox *abstraction = (BSDAbstractionBox *)box;
             BSDCanvas *canvas = abstraction.object;
-            /*
-            canvas.delegate = self.delegate;
-            NSString *desc = [canvas stringDescription];
-            NSString *name = nil;
-             */
             [description addPatchDescription:box.argString name:canvas.name position:[self positionFromFrame:box.frame]];
         }else{
             [description addEntryType:box.boxClassString className:box.className args:box.argString position:position];
@@ -680,11 +691,15 @@
         NSString *action = components[0];
         if ([action isEqualToString:@"#N"]){
             if (idx == 0) {
-                self.name = components[6];
+                if (components.count >= 7) {
+                    self.name = components[6];
+                }
             }else if (idx > 0){
                 if (!subDesc) {
                     subDesc = [[NSMutableString alloc]initWithFormat:@"%@;\n",entry];
-                    currentName = components[6];
+                    if (components.count >= 7) {
+                        currentName = components[6];
+                    }
                 }else{
                     [subDesc appendFormat:@"%@;\n",entry];
                 }
@@ -718,6 +733,8 @@
                     NSString *subname = components[4];
                     BSDAbstractionBox *box = [self newAbstractionBox:subname atPoint:point];
                     [box initializeWithText:newBoxDesc];
+                    BSDCanvas *canvas = box.object;
+                    canvas.delegate = self.delegate;
                     box.tag = idx;
                     idx += 1;
                     if (!temp) {
@@ -789,8 +806,8 @@
         if (components.count > 6) {
             NSRange range = [entry rangeOfString:components[2]];
             classAndArgs = [entry substringFromIndex:range.location];
+            result = [self newAbstractionBox:components[6] atPoint:point];
         }
-        result = [self newAbstractionBox:components[6] atPoint:point];
     }
     
     [result initializeWithText:classAndArgs];
@@ -849,6 +866,28 @@
     NSString *width = components[4];
     NSString *height = components[5];
     return CGRectMake(x.floatValue, y.floatValue, width.floatValue, height.floatValue);
+}
+
++ (CGRect)rectForType:(NSString *)type
+{
+    if ([type isEqualToString:@"BSDGraphBox"]) {
+        return CGRectMake(0, 0, 140, 44);
+    }else if ([type isEqualToString:@"BSDNumberBox"]){
+        return CGRectMake(100, 100, 72, 44);
+    }else if ([type isEqualToString:@"BSDMessageBox"]){
+        return CGRectMake(100, 100, 160, 44);
+    }else if ([type isEqualToString:@"BSDBangControlBox"]){
+        return CGRectMake(100, 100, 60, 60);
+    }else if ([type isEqualToString:@"BSDCommentBox"]){
+        return CGRectMake(100, 100, 200, 200);
+    }else if ([type isEqualToString:@"BSDInletBox"]){
+        return CGRectMake(100, 100, 80, 44);
+    }else if ([type isEqualToString:@"BSDOutletBox"]){
+        return CGRectMake(100, 100, 80, 44);
+    }else if ([type isEqualToString:@"BSDAbstractionBox"]){
+        return CGRectMake(0, 0, 140, 44);
+    }
+    return CGRectMake(0, 0, 44, 44);
 }
 
 #pragma mark UIView method overrides

@@ -8,8 +8,7 @@
 
 #import "ViewController.h"
 #import "BSDCanvasViewController.h"
-
-
+#import "BSDPatchCompiler.h"
 @interface ViewController ()
 
 
@@ -21,6 +20,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
+    //[compiler test];
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
