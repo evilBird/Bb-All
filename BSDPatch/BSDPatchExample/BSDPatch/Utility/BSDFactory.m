@@ -10,6 +10,7 @@
 #import "BSDStringInlet.h"
 #import "NSValue+BSD.h"
 
+
 @interface BSDFactory ()
 
 @property (nonatomic,strong)id myInstance;
@@ -92,7 +93,26 @@
     invocation.selector = aSelector;
 
     if (creationArgs != nil) {
-        [invocation setArgument:&creationArgs atIndex:2];
+        if ([creationArgs isKindOfClass:[NSArray class]]) {
+            NSArray *args = creationArgs;
+            for (NSInteger i = 0; i < args.count; i++) {
+                id arg = args[i];
+                NSInteger argIdx = i + 2;
+                if ([arg isKindOfClass:[NSValue class]]) {
+                    NSValue *val = arg;
+                    [invocation setArgument:&val atIndex:argIdx];
+                }else{
+                    [invocation setArgument:&arg atIndex:argIdx];
+                }
+            }
+        }else{
+            if ([creationArgs isKindOfClass:[NSValue class]]) {
+                NSValue *val = creationArgs;
+                [invocation setArgument:&val atIndex:2];
+            }else{
+                [invocation setArgument:&creationArgs atIndex:2];
+            }
+        }
     }
     
     [invocation invoke];

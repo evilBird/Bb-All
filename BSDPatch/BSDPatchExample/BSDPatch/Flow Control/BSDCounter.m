@@ -24,37 +24,43 @@
                                       @"initialValue":initialValue}];
 }
 
+- (instancetype)initWithArguments:(id)arguments
+{
+    return [super initWithArguments:arguments];
+}
+
 - (void)setupWithArguments:(NSDictionary *)arguments
 {
     self.name = @"counter";
-    NSDictionary *args = arguments;
-    if (args) {
-        self.stepSize = args[@"stepSize"];
-        self.initialValue = args[@"initialValue"];
-        self.coldInlet.value = self.initialValue;
-    }else{
-        self.stepSize = @1;
-        self.initialValue = @0;
-        self.coldInlet.value = self.initialValue;
-    }
+    self.coldInlet.value = @(0);
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    BSDInlet *inlet = [[BSDInlet alloc]initCold];
+    inlet.name = @"cold";
+    inlet.delegate = self;
+    return inlet;
 }
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
-    [self calculateOutput];
+    if (inlet == self.hotInlet) {
+        [self calculateOutput];
+    }else{
+        [self reset];
+    }
 }
 
 - (void)reset
 {
-    self.coldInlet.value = self.initialValue;
-    
+    self.coldInlet.value = @(0);
 }
 
 - (void)calculateOutput
 {
     double cold = [self.coldInlet.value doubleValue];
-    double step = self.stepSize.doubleValue;
-    double result = cold+step;
+    double result = cold+1;
     self.coldInlet.value = @(result);
     self.mainOutlet.value = @(result);
 }

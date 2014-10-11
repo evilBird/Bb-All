@@ -22,20 +22,10 @@
     self.coldInlet.open = NO;
     if ([arguments isKindOfClass:[NSArray class]]) {
         NSArray *routeKeys = arguments;
-        for (NSString *aRouteKey in routeKeys) {
+        for (id aRouteKey in routeKeys) {
             
             [self addOutletForRouteKey:aRouteKey];
         }
-    }
-    
-    else if ([arguments isKindOfClass:[NSDictionary class]]){
-        NSDictionary *routeKeysAndInlets = arguments;
-        for (NSString *aRouteKey in routeKeysAndInlets.allKeys) {
-            BSDInlet *anInlet = routeKeysAndInlets[aRouteKey];
-            [self addOutletForRouteKey:aRouteKey connectToInlet:anInlet];
-        }
-    }else if ([arguments isKindOfClass:[NSString class]]){
-        [self addOutletForRouteKey:arguments];
     }
     
     self.passThroughOutlet = [[BSDOutlet alloc]init];
@@ -83,19 +73,19 @@
     }
     if ([val isKindOfClass:[NSArray class]]) {
         NSMutableArray *arr = [val mutableCopy];
-        if (![arr.firstObject isKindOfClass:[NSString class]] || arr.count == 0) {
+        if (arr.count == 0) {
             return;
         }
         
-        NSString *routeKey = arr.firstObject;
+        id routeKey = arr.firstObject;
+        [arr removeObject:routeKey];
         BSDOutlet *anOutlet = [self outletForRouteKey:routeKey];
         if (anOutlet != nil) {
-            if (arr.count < 2) {
+            if (arr.count == 0) {
                 [anOutlet output:[BSDBang bang]];
-            }else if (arr.count == 2){
-                [anOutlet output:arr[1]];
+            }else if (arr.count == 1){
+                [anOutlet output:arr.firstObject];
             }else {
-                [arr removeObject:arr.firstObject];
                 [anOutlet output:arr];
             }
         }else{
@@ -105,24 +95,17 @@
     }
 }
 
-- (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey
+- (BSDOutlet *)addOutletForRouteKey:(id)routeKey
 {
     BSDOutlet *outlet = [[BSDOutlet alloc]init];
-    outlet.name = routeKey;
+    outlet.name = [NSString stringWithFormat:@"%@",routeKey];
     [self addPort:outlet];
     return outlet;
 }
 
-- (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey connectToInlet:(BSDInlet *)inlet
+- (BSDOutlet *)outletForRouteKey:(id)aRouteKey
 {
-    BSDOutlet *outlet = [self addOutletForRouteKey:routeKey];
-    [outlet connectToInlet:inlet];
-    return outlet;
-}
-
-- (BSDOutlet *)outletForRouteKey:(NSString *)aRouteKey
-{
-    return [self outletNamed:aRouteKey];
+    return [self outletNamed:[NSString stringWithFormat:@"%@",aRouteKey]];
 }
 
 @end
