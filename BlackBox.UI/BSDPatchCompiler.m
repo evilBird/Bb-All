@@ -13,6 +13,8 @@
 #import "BSDBangControlBox.h"
 #import <objc/runtime.h>
 #import "BSD2WayPort.h"
+#import "BSDInletBox.h"
+#import "BSDOutletBox.h"
 
 @implementation BSDPatchCompiler
 
@@ -63,6 +65,7 @@
     if (inlet == self.stringInlet) {
         NSString *string = inlet.value;
         if (string && [string isKindOfClass:[NSString class]]) {
+            [self parseText:string];
             BSDCanvas *canvas = [self makeCanvasWithString:string];
             [self.canvasOutlet output:canvas];
         }
@@ -70,6 +73,7 @@
         BSDCanvas *canvas = inlet.value;
         if (canvas && [canvas isKindOfClass:[BSDCanvas class]]){
             NSString *string = [self makeStringWithCanvas:canvas];
+            [self parseText:string];
             [self.stringOutlet output:string];
         }
     }
@@ -123,11 +127,17 @@
     for (BSDBox *b in canvas.graphBoxes) {
         for (BSDPortView *sendPort in b.outletViews) {
             for (BSDPortView *receivePort in sendPort.connectedPortViews) {
-                NSString *connection = [NSString stringWithFormat:@"#X connection %@ %@ %@ %@;\n",@(sendPort.superview.tag),@(sendPort.tag),@(receivePort.superview.tag),@(receivePort.tag)];
+                NSInteger senderIdx = [canvas.graphBoxes indexOfObject:b];
+                NSInteger senderPortIdx = [b.outletViews indexOfObject:sendPort];
+                NSInteger receiverIdx = [canvas.graphBoxes indexOfObject:receivePort.superview];
+                BSDBox *receiver = (BSDBox *)receivePort.superview;
+                NSInteger receiverPortIdx = [receiver.inletViews indexOfObject:receivePort];
+                NSString *connection = [NSString stringWithFormat:@"#X connection %@ %@ %@ %@;\n",@(senderIdx),@(senderPortIdx),@(receiverIdx),@(receiverPortIdx)];
                 [newMutable appendString:connection];
             }
         }
     }
+    
     return [string stringByAppendingString:newMutable];
 
 }
@@ -144,19 +154,19 @@
     id c = objc_getClass(class);
     id instance = [c alloc];
     SEL initializer = NSSelectorFromString(@"initWithFrame:");
-    CGRect rect = [BSDCanvas rectForType:boxClass];
+    CGRect rect = [self rectForType:boxClass];
     NSValue *arg = [NSValue valueWithCGRect:rect];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:initializer]];
     invocation.target = instance;
     invocation.selector = initializer;
-    [invocation setArgument:&arg atIndex:2];
+    [invocation setArgument:&rect atIndex:2];
     [invocation invoke];
     
     [instance setValue:components[1] forKey:@"boxClassString"];
     CGFloat x = [components[2]floatValue];
     CGFloat y = [components[3]floatValue];
     CGPoint center = CGPointMake(x, y);
-    [instance setValue:[NSValue valueWithCGPoint:center] forKey:@"position"];
+    [(UIView *)instance setCenter:center];
     NSString *className = components[4];
     [instance setValue:className forKey:@"className"];
     NSString *argString = nil;
@@ -168,6 +178,7 @@
         }
         
         argString = [NSString stringWithString:mas];
+        [instance setValue:arg forKey:@"argString"];
     }
     
     [instance initializeWithText:argString];
@@ -175,8 +186,11 @@
     return instance;
 }
 
+
 - (BSDCanvas *)addToCanvas:(BSDCanvas *)canvas withLines:(NSArray *)lines
 {
+    static NSString *currentCanvasName;
+    
     if (!lines) {
         return canvas;
     }
@@ -192,10 +206,11 @@
         return canvas;
     }
     [newLines removeObjectAtIndex:0];
-
+    
     NSArray *components = [newLine componentsSeparatedByString:@" "];
     if ([newLine hasPrefix:@"#N"]) {
         BSDCanvas *newCanvas = [[BSDCanvas alloc]initWithDescription:newLine];
+        currentCanvasName = canvas.name;
         newCanvas.graphBoxes = [NSMutableArray array];
         if (!canvas) {
             return [self addToCanvas:newCanvas withLines:newLines];
@@ -220,6 +235,7 @@
                 [self addToCanvas:canvas withLines:newLines];
             }
         }else if ([type isEqualToString:@"connection"]){
+            
             NSInteger sendertag = [components[2] integerValue];
             NSInteger senderport = [components[3] integerValue];
             NSInteger receivetag = [components[4] integerValue];
@@ -233,78 +249,50 @@
             [outlet connectToInlet:inlet];
             [senderPortView addConnectionToPortView:receiverPortView];
             [self addToCanvas:canvas withLines:newLines];
-            
-        }else {
-            BSDBox *box = (BSDBox *)[self viewWithText:newLine];
-            NSInteger count = canvas.graphBoxes.count;
-            box.tag = count;
-            box.delegate = canvas;
-            [canvas.graphBoxes addObject:box];
-            [canvas addSubview:box];
-            if ([box isKindOfClass:[BSDPatchInlet class]]) {
-                if (!canvas.inlets) {
-                    canvas.inlets = [NSMutableArray array];
-                }
-                BSD2WayPort *port = [box object];
-                [canvas.inlets addObject:port.inlets.firstObject];
-            }else if ([box isKindOfClass:[BSDPatchOutlet class]]){
-                if (!canvas.outlets) {
-                    canvas.outlets = [NSMutableArray array];
-                }
-                BSD2WayPort *port = [box object];
-                [canvas.outlets addObject:port.outlets.firstObject];
+        }
+    
+    }else {
+        BSDBox *box = (BSDBox *)[self viewWithText:newLine];
+        NSInteger count = canvas.graphBoxes.count;
+        box.tag = count;
+        box.delegate = canvas;
+        [canvas.graphBoxes addObject:box];
+        [canvas addSubview:box];
+        if ([box isKindOfClass:[BSDInletBox class]]) {
+            if (!canvas.inlets) {
+                canvas.inlets = [NSMutableArray array];
             }
-            
-            return [self addToCanvas:canvas withLines:newLines];
-        }
-        return canvas;
-    }
-    
-    return canvas;
-}
-
-/*
-- (BSDCanvas *)addToCanvas:(BSDCanvas *)canvas withLines:(NSArray *)lines
-{
-    if (!lines) {
-        return canvas;
-    }
-    
-    NSString *newLine = lines.firstObject;
-    NSMutableArray *newLines = lines.mutableCopy;
-    [newLines removeObjectAtIndex:0];
-    NSArray *components = [newLine componentsSeparatedByString:@" "];
-    if ([newLine hasPrefix:@"#N"]) {
-        BSDCanvas *newCanvas = [[BSDCanvas alloc]initWithDescription:newLine];
-        newCanvas.graphBoxes = [NSMutableArray array];
-        if (!canvas) {
-            return [self addToCanvas:newCanvas withLines:newLines];
-        }else{
-            [canvas.subcanvases addObject:[self addToCanvas:newCanvas withLines:newLines]];
-        }
-    }else if ([newLine hasPrefix:@"#X"] && [components[1] isEqualToString:@"restore"]){
-        
-        if (components.count < 5) {
-            return [self addToCanvas:canvas withLines:newLines];
-        }
-        if (![components[4] isEqualToString:canvas.name]) {
-            return [self addToCanvas:canvas withLines:newLines];
+            BSD2WayPort *port = [box object];
+            [canvas.inlets addObject:port.inlets.firstObject];
+        }else if ([box isKindOfClass:[BSDOutletBox class]]){
+            if (!canvas.outlets) {
+                canvas.outlets = [NSMutableArray array];
+            }
+            BSD2WayPort *port = [box object];
+            [canvas.outlets addObject:port.outlets.firstObject];
         }
         
-        return canvas;
-        
-    }else if ([newLine hasPrefix:@"#X"]){
-        [canvas.graphBoxes addObject:[self viewWithText:newLine]];
         return [self addToCanvas:canvas withLines:newLines];
     }
-    
     return canvas;
 }
 
-*/
+- (NSInteger)testWithString:(NSString *)string
+{
+    self.canvasOutlet.value = nil;
+    self.stringOutlet.value = nil;
+    self.canvasInlet.value = nil;
+    self.stringInlet.value = nil;
+    
+    [self.stringInlet input:string];
+    [self.canvasInlet input:self.canvasOutlet.value];
+    NSString *result = [NSString stringWithString:self.stringOutlet.value];
+    if ([result isEqualToString:string]) {
+        return 0;
+    }
 
-
-
+    return 1;
+}
 
 - (void)test
 {
@@ -326,6 +314,340 @@
 - (NSString *)testPatch1
 {
     return @"#N canvas 0 0 1536 2048 untitled;\n#X BSDGraphBox 291 209 BSDAdd 10;\n#X BSDGraphBox 236 124 BSDDivide 2;\n#X BSDGraphBox 256 281 BSDSubtract;\n#X connection 0 0 1 0;\n#X connection 1 0 2 0;\n";
+}
+
+- (NSString *)testPatch2
+{
+    NSString *result = @"#N canvas 0 0 1536 2048 testscreen;\n#N canvas 0 0 1536 2048 new;\n#X BSDGraphBox 263 261 BSDCompiledPatch testview;\n#X BSDGraphBox 391 415 BSDScreen;\n#X BSDBangControlBox 271 75 BSDBangBox;\n#X BSDGraphBox 567 264 BSDCompiledPatch testview;\n#X BSDBangControlBox 536 87 BSDBangBox;\n#X BSDInletBox 122 67 BSD2WayPort;\n#X BSDGraphBox 223 142 BSDTrigger b b;\n#X connection 0 0 1 2;\n#X connection 3 0 1 2;\n#X connection 5 0 6 0;\n#X connection 6 0 0 0;\n#X connection 6 1 3 0;\n#X BSDAbstractionBox 322 417 new;\n#X BSDInletBox 279 196 BSD2WayPort;\n#X connection 1 0 7 0;";
+    return result;
+}
+
+- (BSDCanvas *)restoreCanvasWithText:(NSString *)text
+{
+    return [self parseText:text];
+}
+
+- (id)parseText:(NSString *)text
+{
+    NSLog(@"\n\nBLACKBOX PARSE: \n\n%@\n\n",text);
+    NSArray *lines = [text componentsSeparatedByString:@";\n"];
+    NSInteger canvasCount = 0;
+    NSInteger currentCanvas = 0;
+    NSInteger lineNumber = 0;
+    NSMutableArray *canvases = nil;
+    for (NSString *currentLine in lines) {
+        lineNumber ++;
+        NSArray *components = [currentLine componentsSeparatedByString:@" "];
+        NSString *flag = components.firstObject;
+        if (components.count > 2) {
+            if ([flag isEqualToString:@"#N"]) {
+                BSDCanvas *canvas = [[BSDCanvas alloc]initWithDescription:currentLine];
+                canvas.graphBoxes = [NSMutableArray array];
+                canvas.inlets = [NSMutableArray array];
+                canvas.outlets = [NSMutableArray array];
+                if (!canvases) {
+                    canvases = [NSMutableArray array];
+                    canvas.parentCanvas = nil;
+                    [canvases addObject:canvas];
+                }else{
+                    [canvases addObject:canvas];
+                    canvas.delegate = canvas.parentCanvas.delegate;
+                }
+                canvasCount = canvases.count;
+                currentCanvas = [canvases indexOfObject:canvas];
+                if (currentCanvas > 0) {
+                    canvas.parentCanvas = canvases[currentCanvas - 1];
+                }
+                
+            }else {
+                BSDCanvas *current = canvases[currentCanvas];
+                NSString *type = components[1];
+                if ([type isEqualToString:@"BSDAbstractionBox"]) {
+                    id box = [self viewWithText:currentLine];
+                    [box setObject:current];
+                    if (components.count == 5) {
+                        [box initializeWithText:components[4]];
+                    }else if (components.count > 5){
+                        [box initializeWithText:components[5]];
+                    }
+                    BSDCanvas *next = current.parentCanvas;
+                    if (next) {
+                        currentCanvas = [canvases indexOfObject:next];
+                        [box setValue:next forKey:@"delegate"];
+                        [next.graphBoxes addObject:box];
+                        [next addSubview:box];
+                    }else{
+                        NSLog(@"error: canvas was dismissed too early!");
+                    }
+                    
+                }else if ([type isEqualToString:@"connection"]) {
+                    NSInteger senderIdx = [components[2] integerValue];
+                    NSInteger senderPortIdx = [components[3]integerValue];
+                    NSInteger receiverIdx = [components[4]integerValue];
+                    NSInteger receiverPortIdx = [components[5]integerValue];
+                    NSInteger boxCount = current.graphBoxes.count;
+                    
+                    if (senderIdx >= boxCount || receiverIdx >= boxCount) {
+                        //NSLog(@"\n\nline %@ ERROR: connection %@.%@->%@.%@ %@ canvas %@ only has %@ boxes\n\n",@(lineNumber),@(senderIdx),@(senderPortIdx),@(receiverIdx),@(receiverPortIdx),current.name,@(currentCanvas),@(boxCount));
+                    }else{
+                        BSDBox *sender = current.graphBoxes[senderIdx];
+                        BSDBox *receiver = current.graphBoxes[receiverIdx];
+                        if (senderPortIdx >= sender.outletViews.count) {
+                          //  NSLog(@"\n\nline %@ ERROR: connection %@.%@->%@.%@ sender box %@-%@-%@ only has %@ outlets\n\n",@(lineNumber),@(senderIdx),@(senderPortIdx),@(receiverIdx),@(receiverPortIdx),sender.boxClassString,sender.className,sender.argString,@(sender.outletViews.count));
+                        }else if (receiverPortIdx >= receiver.inletViews.count){
+                           // NSLog(@"\n\nline %@ ERROR: connection %@.%@->%@.%@ receiver box %@-%@-%@ only has %@ inlets\n\n",@(lineNumber),@(senderIdx),@(senderPortIdx),@(receiverIdx),@(receiverPortIdx),receiver.boxClassString,receiver.className,receiver.argString,@(receiver.inletViews.count));
+                        }else{
+                            [sender connectOutlet:senderPortIdx toInlet:receiverPortIdx inBox:receiver];
+                          //  NSLog(@"\n\nline %@ connection in %@ canvas %@ (%@ boxes): %@.%@->%@.%@\n\n",@(lineNumber),current.name,@(currentCanvas),@(boxCount),@(senderIdx),@(senderPortIdx),@(receiverIdx),@(receiverPortIdx));
+                        }
+                    }
+                }else{
+                    id box = [self viewWithText:currentLine];
+                    //BSDCanvas *current = canvases[currentCanvas - 1];
+                    [box setValue:current forKey:@"delegate"];
+                    [current.graphBoxes addObject:box];
+                    [current addSubview:box];
+                    if ([box isKindOfClass:[BSDInletBox class]]) {
+                        BSD2WayPort *port = [box object];
+                        if (!current.inlets) {
+                            current.inlets = [NSMutableArray array];
+                        }
+                        [current.inlets addObject:port.inlets.firstObject];
+                    }else if ([box isKindOfClass:[BSDOutletBox class]]){
+                        BSD2WayPort *port = [box object];
+                        if (!current.outlets) {
+                            current.outlets = [NSMutableArray array];
+                        }
+                        
+                        [current.outlets addObject:port.outlets.firstObject];
+                    }
+                }
+            }
+        }
+    }
+    BSDCanvas *mainCanvas = canvases.firstObject;
+    [mainCanvas boxDidMove:nil];
+    return mainCanvas;
+}
+
+
+- (NSArray *)restoreBoxesWithText:(NSString *)text
+{
+    if (!text) {
+        return nil;
+    }
+    
+    NSLog(@"\n\nBLACKBOX PARSE: \n\n%@\n\n",text);
+    NSArray *lines = [text componentsSeparatedByString:@";\n"];
+    if (!lines) {
+        return nil;
+    }
+    NSInteger canvasCount = 0;
+    NSInteger currentCanvas = 0;
+    NSInteger lineNumber = 0;
+    NSMutableArray *canvases = nil;
+    NSMutableArray *boxes = nil;
+    for (NSString *currentLine in lines) {
+        lineNumber ++;
+        NSArray *components = [currentLine componentsSeparatedByString:@" "];
+        NSString *flag = components.firstObject;
+        if (components.count > 2) {
+            if ([flag isEqualToString:@"#N"]) {
+                BSDCanvas *canvas = [[BSDCanvas alloc]initWithDescription:currentLine];
+                canvas.graphBoxes = [NSMutableArray array];
+                canvas.inlets = [NSMutableArray array];
+                canvas.outlets = [NSMutableArray array];
+                if (!canvases) {
+                    canvases = [NSMutableArray array];
+                    canvas.parentCanvas = nil;
+                    [canvases addObject:canvas];
+                }else{
+                    [canvases addObject:canvas];
+                    canvas.delegate = canvas.parentCanvas.delegate;
+                }
+                canvasCount = canvases.count;
+                currentCanvas = [canvases indexOfObject:canvas];
+                if (currentCanvas > 0) {
+                    canvas.parentCanvas = canvases[currentCanvas - 1];
+                }
+            }else {
+                NSString *type = components[1];
+                BSDCanvas *current = nil;
+                if (canvases.count > 0 && currentCanvas < canvases.count) {
+                    current = canvases[currentCanvas];
+                }
+                if ([type isEqualToString:@"BSDAbstractionBox"]) {
+                    id box = [self viewWithText:currentLine];
+                    [box setObject:current];
+                    if (components.count == 5) {
+                        [box initializeWithText:components[4]];
+                    }else if (components.count > 5){
+                        [box initializeWithText:components[5]];
+                    }
+                    BSDCanvas *next = current.parentCanvas;
+                    if (next && [canvases containsObject:current]) {
+                        currentCanvas = [canvases indexOfObject:next];
+                        [box setValue:next forKey:@"delegate"];
+                        [next.graphBoxes addObject:box];
+                        [next addSubview:box];
+                    }else{
+                        if (!boxes) {
+                            boxes = [NSMutableArray array];
+                        }
+                        
+                        [boxes addObject:box];
+                    }
+                }else if ([type isEqualToString:@"connection"]) {
+                    
+                    NSInteger senderIdx = [components[2] integerValue];
+                    NSInteger senderPortIdx = [components[3]integerValue];
+                    NSInteger receiverIdx = [components[4]integerValue];
+                    NSInteger receiverPortIdx = [components[5]integerValue];
+                    NSArray *referenceArray = nil;
+                    if (current) {
+                        referenceArray = [NSArray arrayWithArray:current.graphBoxes];
+                    }else{
+                        referenceArray = boxes;
+                    }
+                    
+                    NSInteger boxCount = referenceArray.count;
+                    
+                    if (senderIdx >= boxCount || receiverIdx >= boxCount) {
+
+                    }else{
+                        BSDBox *sender = referenceArray[senderIdx];
+                        BSDBox *receiver = referenceArray[receiverIdx];
+                        if (senderPortIdx >= sender.outletViews.count) {
+                        }else if (receiverPortIdx >= receiver.inletViews.count){
+                        }else{
+                            [sender connectOutlet:senderPortIdx toInlet:receiverPortIdx inBox:receiver];
+                        }
+                    }
+                }else{
+                    id box = [self viewWithText:currentLine];
+                    if (current) {
+                        [box setValue:current forKey:@"delegate"];
+                        [current.graphBoxes addObject:box];
+                        [current addSubview:box];
+                        if ([box isKindOfClass:[BSDInletBox class]]) {
+                            BSD2WayPort *port = [box object];
+                            [current.inlets addObject:port.inlets.firstObject];
+                        }else if ([box isKindOfClass:[BSDOutletBox class]]){
+                            BSD2WayPort *port = [box object];
+                            [current.outlets addObject:port.outlets.firstObject];
+                        }
+                    }else{
+                        if (!boxes) {
+                            boxes = [NSMutableArray array];
+                        }
+                        
+                        [boxes addObject:box];
+                    }
+                }
+            }
+        }
+    }
+    return boxes;
+}
+
+- (NSString *)saveCanvas:(BSDCanvas *)canvas
+{
+    if (!canvas) {
+        return nil;
+    }
+    
+    NSString *result = [NSString stringWithFormat:@"#N canvas %@ %@ %@ %@ %@;\n",@((NSInteger)canvas.frame.origin.x),@((NSInteger)canvas.frame.origin.y),@((NSInteger)canvas.frame.size.width),@((NSInteger)canvas.frame.size.height),canvas.name];
+    
+    if (!canvas && canvas.graphBoxes.count == 0)
+    {
+        return result;
+    }
+    
+    NSString *boxes = [self saveBoxes:canvas.graphBoxes];
+    NSString *conections = [self saveConnectionsBetweenBoxes:canvas.graphBoxes];
+    
+    return [NSString stringWithFormat:@"%@%@%@",result,boxes,conections];
+}
+
+- (NSString *)saveBoxes:(NSArray *)boxes
+{
+    if (!boxes) {
+        return @"";
+    }
+    
+    NSMutableString *result = [[NSMutableString alloc]init];
+    for (BSDBox *box in boxes) {
+        if ([box isKindOfClass:[BSDAbstractionBox class]]) {
+            BSDCanvas *canvas = (BSDCanvas *)box.object;
+            if (canvas) {
+                NSString *savedCanvas = [self saveCanvas:canvas];
+                [result appendString:savedCanvas];
+                if (canvas.graphBoxes.count > 0) {
+                    [result appendString:[self saveConnectionsBetweenBoxes:canvas.graphBoxes]];
+                }
+            }
+        }
+        
+        [result appendString:@"#X "];
+        [result appendFormat:@"%@ ",box.boxClassString];
+        [result appendFormat:@"%@ %@ ",@(box.center.x),@(box.center.y)];
+        if (box.argString) {
+            [result appendFormat:@"%@ %@;\n",box.className,box.argString];
+        }else{
+            [result appendFormat:@"%@;\n",box.className];
+        }
+    }
+    
+    return [NSString stringWithString:result];
+}
+
+- (NSString *)saveConnectionsBetweenBoxes:(NSArray *)boxes
+{
+    if (!boxes) {
+        return @"";
+    }
+    
+    NSMutableString *result = [[NSMutableString alloc]init];
+    for (BSDBox *aBox in boxes) {
+        NSInteger senderIndex = [boxes indexOfObject:aBox];
+        for (BSDPortView *senderPort in aBox.outletViews){
+            NSInteger senderPortIndex = [aBox.outletViews indexOfObject:senderPort];
+            for (BSDPortView *receiverPort in senderPort.connectedPortViews) {
+                BSDBox *receiver = (BSDBox *)receiverPort.superview;
+                NSInteger receiverIndex = [boxes indexOfObject:receiver];
+                NSInteger receiverPortIndex = [receiver.inletViews indexOfObject:receiverPort];
+                [result appendFormat:@"#X connection "];
+                [result appendFormat:@"%@ ",@(senderIndex)];
+                [result appendFormat:@"%@ ",@(senderPortIndex)];
+                [result appendFormat:@"%@ ",@(receiverIndex)];
+                [result appendFormat:@"%@;\n",@(receiverPortIndex)];
+            }
+        }
+    }
+    
+    return [NSString stringWithString:result];
+}
+
+- (CGRect)rectForType:(NSString *)type
+{
+    if ([type isEqualToString:@"BSDGraphBox"]) {
+        return CGRectMake(0, 0, 140, 44);
+    }else if ([type isEqualToString:@"BSDNumberBox"]){
+        return CGRectMake(100, 100, 72, 44);
+    }else if ([type isEqualToString:@"BSDMessageBox"]){
+        return CGRectMake(100, 100, 160, 44);
+    }else if ([type isEqualToString:@"BSDBangControlBox"]){
+        return CGRectMake(100, 100, 60, 60);
+    }else if ([type isEqualToString:@"BSDCommentBox"]){
+        return CGRectMake(100, 100, 200, 200);
+    }else if ([type isEqualToString:@"BSDInletBox"]){
+        return CGRectMake(100, 100, 80, 44);
+    }else if ([type isEqualToString:@"BSDOutletBox"]){
+        return CGRectMake(100, 100, 80, 44);
+    }else if ([type isEqualToString:@"BSDAbstractionBox"]){
+        return CGRectMake(0, 0, 140, 44);
+    }
+    return CGRectMake(0, 0, 44, 44);
 }
 
 @end

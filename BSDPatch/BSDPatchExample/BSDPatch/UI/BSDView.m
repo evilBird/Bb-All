@@ -228,7 +228,7 @@
 
 - (UIView *)makeMyViewWithFrame:(CGRect)frame
 {
-    UIView *myView = [[UILabel alloc]initWithFrame:frame];
+    UIView *myView = [[UIView alloc]initWithFrame:frame];
     myView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:1];
     return myView;
 }

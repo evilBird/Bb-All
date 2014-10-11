@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "BSDCanvasViewController.h"
 #import "BSDPatchCompiler.h"
+#import "NSUserDefaults+HBVUtils.h"
 @interface ViewController ()
 
 
@@ -22,7 +23,14 @@
     [super viewDidLoad];
     //BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
     //[compiler test];
-    
+  //  NSDictionary *patches = [NSUserDefaults valueForKey:@"descriptions"];
+    //if (patches) {
+      //  for (NSString *name in patches) {
+        //    NSString *patch = [patches valueForKey:name];
+          //  NSInteger result = [compiler testWithString:patch];
+            //NSLog(@"\n\nresult for patch %@: %@\n",name,@(result));
+        //}
+    //}
     // Do any additional setup after loading the view, typically from a nib.
 }
 

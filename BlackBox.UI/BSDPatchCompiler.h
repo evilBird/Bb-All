@@ -7,14 +7,22 @@
 //
 
 #import "BSDObject.h"
-
+@class BSDCanvas;
 @interface BSDPatchCompiler : BSDObject
-
 @property (nonatomic,strong)BSDInlet *stringInlet;
 @property (nonatomic,strong)BSDInlet *canvasInlet;
 @property (nonatomic,strong)BSDOutlet *canvasOutlet;
 @property (nonatomic,strong)BSDOutlet *stringOutlet;
 
+- (NSInteger)testWithString:(NSString *)string;
 - (NSString *)testPatch1;
+- (NSString *)testPatch2;
+- (UIView *)viewWithText:(NSString *)text;
+
+- (NSString *)saveCanvas:(BSDCanvas *)canvas;
+- (NSString *)saveBoxes:(NSArray *)boxes;
+- (NSString *)saveConnectionsBetweenBoxes:(NSArray *)boxes;
+- (BSDCanvas *)restoreCanvasWithText:(NSString *)text;
+- (NSArray *)restoreBoxesWithText:(NSString *)text;
 
 @end

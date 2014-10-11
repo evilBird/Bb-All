@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BSDCanvas.h"
 #import "BSDCanvasToolbarView.h"
+#import "BSDScreen.h"
 #import "PopoverContentTableViewController.h"
 
 @protocol BSDCanvasViewControllerDelegate <NSObject>
@@ -16,7 +17,7 @@
 
 @end
 
-@interface BSDCanvasViewController : UIViewController <BSDCanvasToolbarViewDelegate,BSDCanvasDelegate,PopoverContentTableViewControllerDelegate,UIPopoverControllerDelegate>
+@interface BSDCanvasViewController : UIViewController <BSDCanvasToolbarViewDelegate,BSDCanvasDelegate,PopoverContentTableViewControllerDelegate,UIPopoverControllerDelegate,BSDScreenDelegate>
 
 - (instancetype)initWithName:(NSString *)name description:(NSString *)description;
 

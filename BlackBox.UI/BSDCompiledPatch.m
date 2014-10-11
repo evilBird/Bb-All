@@ -17,12 +17,14 @@
 #import <objc/runtime.h>
 #import "BSDPatch.h"
 #import "NSUserDefaults+HBVUtils.h"
+#import "BSDPatchCompiler.h"
 
 @interface BSDCompiledPatch ()
 
 @property (nonatomic,strong)NSMutableDictionary *objectGraph;
 @property (nonatomic,strong)NSMutableDictionary *patchInlets;
 @property (nonatomic,strong)NSMutableArray *views;
+@property (nonatomic,strong)BSDCanvas *canvas;
 
 @end
 
@@ -38,16 +40,58 @@
     self.name = @"patch";
     NSString *patchName = arguments;
     if (patchName) {
-        NSDictionary *patch = [self patchWithName:patchName];
+        NSString *patch = [self patchDescriptionWithName:patchName];
         if (patch) {
-            [self loadPatchWithDictionary:patch];
+            [self loadPatchWithString:patch];
         }
+    }
+}
+
+- (void)loadPatchWithString:(NSString *)string
+{
+    BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
+    //[compiler.stringInlet input:string];
+    //self.canvas = [compiler.canvasOutlet value];
+    self.canvas = [compiler restoreCanvasWithText:string];
+    NSInteger idx = 0;
+    for (BSDInlet *inlet in self.canvas.inlets) {
+        BSDInlet *myInlet = [[BSDInlet alloc]initHot];
+        myInlet.name = [NSString stringWithFormat:@"%@-%@",inlet.name,@(idx)];
+        myInlet.delegate = self;
+        [self addPort:myInlet];
+        [myInlet forwardToPort:inlet];
+        idx++;
+    }
+    idx = 0;
+    for (BSDOutlet *outlet in self.canvas.outlets) {
+        BSDOutlet *myOutlet = [[BSDOutlet alloc]init];
+        myOutlet.name = [NSString stringWithFormat:@"%@-%@",outlet.name,@(idx)];
+        [self addPort:myOutlet];
+        [outlet forwardToPort:myOutlet];
+        idx++;
     }
 }
 
 - (void)setDelegate:(id<BSDCompiledPatchDelegate>)delegate
 {
 
+}
+
+- (NSString *)patchDescriptionWithName:(NSString *)name
+{
+    NSDictionary *savedPatches = [NSUserDefaults valueForKey:@"descriptions"];
+    
+    if (!savedPatches) {
+        return nil;
+    }
+    
+    if (!name || ![savedPatches.allKeys containsObject:name]) {
+        return nil;
+    }
+    
+    NSString *desc = savedPatches[name];
+    
+    return [NSString stringWithString:desc];
 }
 
 - (NSDictionary *)patchWithName:(NSString *)patchName
@@ -224,11 +268,14 @@
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
+    [(BSDInlet *)inlet.forwardPort input:[BSDBang bang]];
+    /*
     NSString *inletName = inlet.name;
     if (self.patchInlets && [self.patchInlets.allKeys containsObject:inletName]) {
         BSDPatchInlet *patchInlet = self.patchInlets[inletName];
         [patchInlet input:[BSDBang bang]];
     }
+     */
 }
 /*
 - (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value

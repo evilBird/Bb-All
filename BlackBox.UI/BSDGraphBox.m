@@ -106,9 +106,6 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if (textField.text && textField.text.length > 0) {
-        [textField endEditing:YES];
-        [textField resignFirstResponder];
-        [textField.nextResponder becomeFirstResponder];
         NSString *text = textField.text;
         if ([textField isKindOfClass:[BSDTextField class]]) {
             BSDTextField *tf = (BSDTextField *)textField;
@@ -116,15 +113,22 @@
                 text = tf.suggestedText;
                 tf.suggestedCompletion = nil;
                 [tf setNeedsDisplay];
+                [self handleText:text];
+                [self createPortViewsForObject:self.object];
+
             }
         }
-        [self initializeWithText:text];
     }
+    
+    [textField endEditing:YES];
+    [textField resignFirstResponder];
+    [textField.nextResponder becomeFirstResponder];
 }
 
 - (void)handleText:(NSString *)text
 {
-    
+ 
+    //self.textField.enabled = NO;
     NSMutableArray *components = [[text componentsSeparatedByString:@" "]mutableCopy];
     NSMutableString *argsString = nil;
     NSString *name = nil;
@@ -165,6 +169,7 @@
     }
     
     [self createObjectWithName:name arguments:argsList];
+    kAllowEdit = NO;
 }
 
 
@@ -193,6 +198,7 @@
     
     [self.textField setText:displayName];
     [self resizeForText:displayName];
+    kAllowEdit = NO;
 }
 
 - (void)initializeWithText:(NSString *)text
@@ -200,9 +206,11 @@
     if (text) {
         [self handleText:[NSString stringWithFormat:@"%@ %@",self.className,text]];
         [self createPortViewsForObject:self.object];
+        kAllowEdit = NO;
     }else{
         [self handleText:[NSString stringWithFormat:@"%@",self.className]];
         [self createPortViewsForObject:self.object];
+        kAllowEdit = NO;
     }
 }
 

@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, BSDPortConnectionStatus) {
 @property (nonatomic)BSDPortConnectionStatus connectionStatus;
 //Port delegate 
 @property (nonatomic,weak)id<BSDPortDelegate>delegate;
+@property (nonatomic,strong)BSDPort *forwardPort;
 
 - (instancetype)init;
 - (void)observePort:(BSDPort *)port;

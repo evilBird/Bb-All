@@ -40,13 +40,17 @@
 
 - (void)addConnectionToPortView:(BSDPortView *)portView
 {
-    if (portView) {
-        if (![self.connectedPortViews containsObject:portView]) {
-            [self.connectedPortViews addObject:portView];
-        }
-    }else{
+    if (!portView) {
         NSLog(@"port view with parent %@ could not connect to non-existent port view with parent %@",[self.delegate parentClass],[portView.delegate parentClass]);
+        return;
     }
+    
+    if (!self.connectedPortViews) {
+        self.connectedPortViews = [NSMutableArray array];
+    }
+    
+    [self.connectedPortViews addObject:portView];
+    
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

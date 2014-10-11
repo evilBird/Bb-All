@@ -44,6 +44,9 @@
 - (void)calculateOutput
 {
     id theMessage = [self theMessage];
+    if (theMessage == NULL) {
+        return;
+    }
     [self.mainOutlet output:theMessage];
     NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",[self objectId]];
     NSDictionary *changeInfo = @{@"value":theMessage};

@@ -51,6 +51,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleScreenDelegateNotification:) name:kScreenDelegateChannel
+                                            object:nil];
     
     // Do any additional setup after loading the view.
 }
@@ -86,19 +88,11 @@
             rect.origin = self.scrollView.bounds.origin;
             rect.size = self.scrollView.contentSize;
             BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
-            NSString *test = [compiler testPatch1];
-            [compiler.stringInlet input:test];
-            self.canvas = compiler.canvasOutlet.value;
-            /*
-            if (desc) {
-                self.canvas = [[BSDCanvas alloc]initWithDescription:desc];
-            }else{
-                desc = [BSDPatchDescription newWithName:_currentPatchName frame:rect];
-                self.canvas = [[BSDCanvas alloc]initWithDescription:desc];
-            }
-             */
+            NSString *test = [compiler testPatch2];
+            self.canvas = [compiler restoreCanvasWithText:test];
             self.canvas.delegate = self;
             [self.scrollView addSubview:self.canvas];
+            [self.canvas boxDidMove:nil];
             [self.view addSubview:self.scrollView];
             frame = self.view.bounds;
             frame.size.height = 104;
@@ -214,6 +208,7 @@
 - (void)clearCanvas
 {
     [self.canvas clearCurrentPatch];
+    self.canvas.delegate = self;
     for (UIView *sub in self.displayViewController.view.subviews) {
         if (sub != self.closeDisplayViewButton) {
             [sub removeFromSuperview];
@@ -346,9 +341,21 @@
 
 #pragma mark - editing state management
 
+- (UIView *)canvasScreen
+{
+    UIView *view = self.displayViewController.view;
+    return view;
+}
+
 - (UIView *)viewForCanvas:(id)canvas
 {
     return self.displayViewController.view;
+}
+
+- (void)handleScreenDelegateNotification:(NSNotification *)notification
+{
+    BSDScreen *screen = notification.object;
+    screen.delegate = self;
 }
 
 - (void)canvas:(id)canvas editingStateChanged:(BSDCanvasEditState)editState
@@ -384,11 +391,8 @@
 {
     BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
     self.canvas.name = self.currentPatchName;
-    [compiler.canvasInlet input:self.canvas];
-    NSString *description = compiler.stringOutlet.value;
-    [self saveDescription:description withName:self.currentPatchName];
-    //NSString *description = [self.canvas stringDescription];
-    //[self saveDescription:description withName:self.currentPatchName];
+    NSString *description = [compiler saveCanvas:self.canvas];//compiler.stringOutlet.value;
+    [self saveDescription:[NSString stringWithString:description] withName:self.currentPatchName];
 }
 
 - (void)saveDescription:(NSString *)description withName:(NSString *)name
@@ -438,12 +442,14 @@
     NSString *description = [descriptions valueForKey:name];
     if (description) {
         NSString *toLoad = [NSString stringWithString:description];
+        [self.canvas tearDown];
         [self.canvas removeFromSuperview];
+        self.canvas = nil;
         BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
-        [compiler.stringInlet input:toLoad];
-        self.canvas = compiler.canvasOutlet.value;
+        self.canvas = [compiler restoreCanvasWithText:toLoad];
+        self.canvas.delegate = self;
+        self.canvas.name = name;
         [self.scrollView addSubview:self.canvas];
-        //[self.canvas loadPatchWithDescription:toLoad];
         self.currentPatchName = name;
     }
 }
@@ -457,11 +463,13 @@
         if (!name) {
             return;
         }
-        //NSString *description = [self.canvas stringDescription];
         self.canvas.name = name;
         BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
-        [compiler.canvasInlet input:self.canvas];
-        NSString *description = [compiler.stringOutlet value];
+        NSString *description = [compiler saveCanvas:self.canvas];//[compiler.stringOutlet value];
+        if (self.canvas.parentCanvas) {
+            self.canvas.parentCanvas.isDirty = @(YES);
+        }
+        
         [self saveDescription:description withName:name];
     }else if (alertView.tag == 1 && buttonIndex == 1){
         NSString *name = [alertView textFieldAtIndex:0].text;
@@ -496,6 +504,7 @@
         
         if (myCanvas == nil) {
             myCanvas = self.canvas;
+            myCanvas.delegate = self;
         }else{
             
         }
@@ -517,6 +526,7 @@
         }else if ([patchName isEqualToString:@"comment"]){
             [myCanvas addCommentBoxAtPoint:point];
         }
+        
         
     }else{
         [self contentTableViewControllerWasDismissed:nil];

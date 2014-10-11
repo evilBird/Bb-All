@@ -50,8 +50,10 @@ static NSString *kFourSquareClientSecret = @"OXJXXOG3IZYHGGFETE2OHLQ0W05NQOEBA0W
         self.client = [[AFHTTPSessionManager alloc]init];
     }
     
+    NSString *q = [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
     __weak BSDClient *weakself = self;
-    [self.client GET:query
+    [self.client GET:q
           parameters:nil
              success:^(NSURLSessionDataTask *task, id responseObject) {
                  dispatch_async(dispatch_get_main_queue(), ^{

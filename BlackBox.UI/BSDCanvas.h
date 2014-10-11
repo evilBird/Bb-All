@@ -26,38 +26,33 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 
 @end
 
-@interface BSDCanvas : UIView<BSDBoxDelegate>
+@interface BSDCanvas : UIView<BSDBoxDelegate,BSDPortDelegate>
 
 @property (nonatomic,strong)NSMutableArray *graphBoxes;
 @property (nonatomic,strong)NSMutableArray *subcanvases;
 @property (nonatomic,strong)NSMutableArray *inlets;
 @property (nonatomic,strong)NSMutableArray *outlets;
-@property (nonatomic,strong)NSMutableArray *selectedBoxes;
-@property (nonatomic,strong)NSMutableArray *copiedBoxes;
 @property (nonatomic,strong)UITapGestureRecognizer *singleTap;
 @property (nonatomic,strong)UITapGestureRecognizer *doubleTap;
 @property (nonatomic,strong)id<BSDCanvasDelegate>delegate;
 @property (nonatomic)BSDCanvasEditState editState;
 @property (nonatomic,strong)NSString *name;
 @property (nonatomic)BSDCanvas *parentCanvas;
+@property (nonatomic,strong)NSNumber *isDirty;
 
 + (CGRect)frameWithEntry:(NSString *)entry;
 + (CGRect)rectForType:(NSString *)type;
 - (instancetype)initWithDescription:(NSString *)desc;
 - (instancetype)initWithArguments:(id)arguments;
-- (void)loadPatchWithDescription:(NSString *)description;
-- (NSString *)stringDescription;
 - (NSString *)canvasId;
 - (NSString *)objectId;
 - (void)tearDown;
-- (void)loadPatch2WithDescription:(NSString *)description;
 - (void)clearCurrentPatch;
 
 - (void)deleteSelectedContent;
 - (void)copySelectedContent;
 - (void)pasteSelectedContent;
 - (void)encapsulatedCopiedContentWithName:(NSString *)name;
-- (void)encapsulateSelectedContent;
 
 - (CGPoint)optimalFocusPoint;
 - (void)addBangBoxAtPoint:(CGPoint)point;

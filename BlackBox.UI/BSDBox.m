@@ -518,6 +518,12 @@
     self.outletViews = [NSMutableArray arrayWithArray:outletViews];
 }
 
+- (NSString *)getDescription
+{
+
+    return nil;
+}
+
 - (void)dealloc
 {
     [self tearDown];

@@ -18,6 +18,7 @@
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"two way port";
+    self.hotInlet.delegate = self;
 }
 
 - (BSDInlet *)makeRightInlet

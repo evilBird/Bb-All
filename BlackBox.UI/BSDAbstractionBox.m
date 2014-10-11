@@ -46,7 +46,9 @@
     }
     
     if (self.object) {
-        //[self makeObjectInstanceArgs:@[text]];
+        self.argString = text;
+        NSArray *args = [text componentsSeparatedByString:@" "];
+        self.textField.text = args.lastObject;
         [self createPortViewsForObject:self.object];
     }
 }
