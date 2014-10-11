@@ -322,6 +322,13 @@
 - (void)openAbstraction:(BSDAbstractionBox *)abs
 {
     BSDCanvas *canvas = [abs object];
+    if (canvas.delegate == nil) {
+        canvas.delegate = self.delegate;
+    }
+    if (canvas.parentCanvas == nil) {
+        canvas.parentCanvas = self;
+    }
+    
     UIButton *button = [UIButton new];
     [button setTitle:@"X" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
