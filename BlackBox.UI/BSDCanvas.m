@@ -33,6 +33,8 @@
 @property (nonatomic,strong)NSValue *connectionDestinationPoint;
 @property (nonatomic,strong)NSMutableArray *connectionPaths;
 @property (nonatomic,strong)NSMutableDictionary *bezierPaths;
+@property (nonatomic,strong)NSMutableArray *connectionBezierPaths;
+@property (nonatomic,strong)NSMutableArray *connectedPorts;
 @property (nonatomic,strong)NSString *pasteBoard;
 
 @end
@@ -257,6 +259,7 @@
     }
     
     CGPoint loc = [sender locationOfTouch:0 inView:self];
+    
     kFocusPoint = loc;
     UIView *theView = [self hitTest:loc withEvent:UIEventTypeTouches];
     BSDBox *toSelect = nil;
@@ -267,6 +270,7 @@
     isBox += [superview isKindOfClass:[BSDGraphBox class]];
     
     if (isBox == 0) {
+        [self deleteConnectionsAtPoint:loc];
         return;
     }
     
@@ -420,6 +424,51 @@
         }
     }
     return temp;
+}
+
+- (void)deleteConnectionsAtPoint:(CGPoint)point
+{
+    if (self.connectionBezierPaths) {
+        for (UIBezierPath *path in self.connectionBezierPaths) {
+            BOOL hit = [self bezierPath:path containsPoint:point];
+            if (hit) {
+                NSInteger idx = [self.connectionBezierPaths indexOfObject:path];
+                NSDictionary *ports = self.connectedPorts[idx];
+                BSDPortView *sender = ports[@"sender"];
+                BSDPortView *receiver = ports[@"receiver"];
+                [self removeConnectionFromSender:sender toReciever:receiver];
+            }
+        }
+    }
+}
+
+- (void)removeConnectionFromSender:(BSDPortView *)sender toReciever:(BSDPortView *)receiver
+{
+    BSDBox *senderBox = (BSDBox *)sender.superview;
+    BSDBox *receiverBox = (BSDBox *)receiver.superview;
+    BSDObject *senderObj = senderBox.object;
+    BSDObject *receiverObj = receiverBox.object;
+    NSInteger senderPortIdx = [senderBox.outletViews indexOfObject:sender];
+    NSInteger receiverPortIdx = [receiverBox.inletViews indexOfObject:receiver];
+    BSDOutlet *outlet = senderObj.outlets[senderPortIdx];
+    BSDInlet *inlet = receiverObj.inlets[receiverPortIdx];
+    [outlet disconnectFromInlet:inlet];
+    [sender.connectedPortViews removeObject:receiver];
+    
+    [self boxDidMove:nil];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    CGPoint loc = [touches.allObjects.lastObject locationInView:self];
+    kFocusPoint = loc;
+}
+
+- (BOOL)bezierPath:(UIBezierPath *)path containsPoint:(CGPoint)point
+{
+    CGPathRef pathRef = path.CGPath;
+    CGRect boundingRect = CGPathGetBoundingBox(pathRef);
+    return CGRectContainsPoint(boundingRect, point);
 }
 
 #pragma mark - Patch management
@@ -684,10 +733,18 @@
         UIBezierPath *path = [UIBezierPath bezierPath];
         [path moveToPoint:[self.connectionOriginPoint CGPointValue]];
         [path addLineToPoint:[self.connectionDestinationPoint CGPointValue]];
+        [path addLineToPoint:[self.connectionOriginPoint CGPointValue]];
+        [path closePath];
         [path setLineWidth:6];
         [[UIColor blackColor]setStroke];
+        [[UIColor blackColor]setFill];
         [path stroke];
+        [path closePath];
+        [path fill];
     }
+    
+    self.connectionBezierPaths = nil;
+    self.connectedPorts = nil;
     
     if (self.connectionPaths != nil) {
         self.bezierPaths = nil;
@@ -696,14 +753,27 @@
             UIBezierPath *path = [UIBezierPath bezierPath];
             [path moveToPoint:[points.firstObject CGPointValue]];
             [path addLineToPoint:[points.lastObject CGPointValue]];
+            [path addLineToPoint:[points.firstObject CGPointValue]];
+            [path closePath];
             [path setLineWidth:4];
             [[UIColor blackColor]setStroke];
+            [[UIColor blackColor]setFill];
             [path stroke];
+            [path fill];
+            
+            if (!self.connectionBezierPaths) {
+                self.connectionBezierPaths = [NSMutableArray array];
+                self.connectedPorts = [NSMutableArray array];
+            }
+            [self.connectionBezierPaths addObject:path];
+            [self.connectedPorts addObject:vec[@"ports"]];
+            
             if (!self.bezierPaths) {
                 self.bezierPaths = [NSMutableDictionary dictionary];
             }
             
             self.bezierPaths[path] = vec[@"ports"];
+
         }
     }
 }
