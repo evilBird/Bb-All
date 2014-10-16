@@ -14,6 +14,9 @@
 
 @protocol BSDCanvasViewControllerDelegate <NSObject>
 
+- (NSArray *)patchList;
+- (void)syncPatch:(NSString *)patch withName:(NSString *)name;
+- (void)deleteSyncedPatchWithName:(NSString *)name;
 
 @end
 

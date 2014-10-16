@@ -50,6 +50,11 @@
     }
 }
 
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
+
 - (void)calculateOutput{
     
     CLLocation *loc = self.locationManager.location;

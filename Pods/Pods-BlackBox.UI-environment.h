@@ -48,3 +48,9 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 2
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
+// iCloudDocumentSync
+#define COCOAPODS_POD_AVAILABLE_iCloudDocumentSync
+#define COCOAPODS_VERSION_MAJOR_iCloudDocumentSync 7
+#define COCOAPODS_VERSION_MINOR_iCloudDocumentSync 3
+#define COCOAPODS_VERSION_PATCH_iCloudDocumentSync 0
+

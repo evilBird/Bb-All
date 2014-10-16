@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <iCloud/iCloud.h>
+#import "BSDCanvasViewController.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<iCloudDelegate,iCloudDocumentDelegate,BSDCanvasViewControllerDelegate>
 
 
 @end

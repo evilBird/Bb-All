@@ -10,6 +10,7 @@
 #import "NSUserDefaults+HBVUtils.h"
 #import "BSDPatchDescription.h"
 #import "BSDPatchCompiler.h"
+#import "BSDLogView.h"
 
 @interface BSDCanvasViewController ()<UIScrollViewDelegate,UITableViewDelegate>
 {
@@ -21,6 +22,7 @@
 @property (nonatomic,strong)BSDCanvasToolbarView *toolbarView;
 @property (strong, nonatomic) UIPopoverController *myPopoverController;
 @property (nonatomic,strong)UIButton *closeDisplayViewButton;
+@property (nonatomic,strong)BSDLogView *logView;
 
 @end
 
@@ -103,6 +105,11 @@
             self.toolbarView.titleLabel.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize]];
             [self.view addSubview:self.toolbarView];
             [self configureConstraints];
+            frame = self.view.bounds;
+            frame.size.height *= 0.15;
+            frame.origin.y = CGRectGetMaxY(self.view.bounds) - frame.size.height;
+            self.logView = [[BSDLogView alloc]initWithFrame:frame];
+            [self.view addSubview:self.logView];
         }
     }
 }
@@ -411,6 +418,8 @@
     [NSUserDefaults setUserValue:[NSDictionary dictionaryWithDictionary:copy] forKey:@"descriptions"];
     self.currentPatchName = name;
     self.canvas.name = name;
+    
+    [self.delegate syncPatch:description withName:name];
 }
 
 - (NSString *)savedDescriptionWithName:(NSString *)name
@@ -556,6 +565,7 @@
         NSMutableDictionary *copy = [savedPatches mutableCopy];
         [copy removeObjectForKey:itemName];
         [NSUserDefaults setUserValue:[NSDictionary dictionaryWithDictionary:copy] forKey:@"descriptions"];
+        //[self.delegate deleteSyncedPatchWithName:itemName];
     }
 }
 
@@ -572,6 +582,7 @@
     sptvc.delegate = self;
     sptvc.title = @"Load Patch";
     NSDictionary *savedPatches = [NSUserDefaults valueForKey:@"descriptions"];
+    //NSArray *savedPatches = [self.delegate patchList];
     if (savedPatches) {
         NSMutableArray *arr = [savedPatches.allKeys mutableCopy];
         sptvc.itemNames = [arr sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];

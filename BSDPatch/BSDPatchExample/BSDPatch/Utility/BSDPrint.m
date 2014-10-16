@@ -33,9 +33,13 @@
     id value = self.hotInlet.value;
     if ([value isKindOfClass:[NSArray class]] || [value isKindOfClass:[NSDictionary class]]) {
         id toPrint = [value mutableCopy];
-        NSLog(@"\n%@: %@\n",self.text,toPrint);
+        NSString *text = [NSString stringWithFormat:@"bB %@: %@",self.text,toPrint];
+        [[NSNotificationCenter defaultCenter]postNotificationName:kPrintNotificationChannel object:text];
+        NSLog(@"%@",text);
     }else{
-        NSLog(@"\n%@: %@\n",self.text, value);
+        NSString *text = [NSString stringWithFormat:@"bB %@: %@",self.text,value];
+        [[NSNotificationCenter defaultCenter]postNotificationName:kPrintNotificationChannel object:text];
+        NSLog(@"%@",text);
     }
 }
 

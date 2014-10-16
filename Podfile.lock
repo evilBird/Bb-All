@@ -18,11 +18,14 @@ PODS:
   - AFNetworking/UIKit (2.2.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - iCloudDocumentSync (7.3)
 
 DEPENDENCIES:
   - AFNetworking (= 2.2.1)
+  - iCloudDocumentSync
 
 SPEC CHECKSUMS:
   AFNetworking: 8dde8c8a6597ad95dac332a593c27e541bc87371
+  iCloudDocumentSync: 76ebc7391e6a3d2246248263b35cb202b66fb05e
 
 COCOAPODS: 0.33.1

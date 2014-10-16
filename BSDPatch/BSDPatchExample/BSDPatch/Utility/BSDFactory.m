@@ -9,7 +9,10 @@
 #import "BSDFactory.h"
 #import "BSDStringInlet.h"
 #import "NSValue+BSD.h"
-
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import <UIKit/UIKit.h>
+#import <objc/runtime.h>
 
 @interface BSDFactory ()
 
@@ -35,18 +38,19 @@
     if (className && [className isKindOfClass:[NSString class]]) {
         self.classNameInlet.value = className;
     }else{
-        self.classNameInlet.value = @"UIView";
+        self.classNameInlet.value = nil;
     }
+    
     [self addPort:self.classNameInlet];
     
     self.selectorInlet = [[BSDStringInlet alloc]initCold];
     self.selectorInlet.name = @"selector";
-    self.selectorInlet.value = @"initWithFrame:";
+    self.selectorInlet.value = nil;
     [self addPort:self.selectorInlet];
     
     self.creationArgsInlet = [[BSDInlet alloc]initCold];
     self.creationArgsInlet.name = @"creation args";
-    self.creationArgsInlet.value = [NSValue wrapRect:CGRectMake(0, 0, 44, 44)];
+    self.creationArgsInlet.value = nil;
     [self addPort:self.creationArgsInlet];
     
 }

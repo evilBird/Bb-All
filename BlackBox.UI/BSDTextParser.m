@@ -11,6 +11,75 @@
 
 @implementation BSDTextParser
 
+
++ (id)parseArgsString:(NSString *)argsString
+{
+    if (!argsString || argsString.length == 0) {
+        return nil;
+    }
+    
+    id theMessage = nil;
+    NSMutableString *argText = nil;
+    NSString *quotesRemoved = [argsString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    NSInteger diff = argsString.length - quotesRemoved.length;
+    NSInteger stringCount = diff;
+    NSString *commasRemoved = [quotesRemoved stringByReplacingOccurrencesOfString:@"," withString:@""];
+    diff = quotesRemoved.length - commasRemoved.length;
+    NSInteger arraycount = diff;
+    NSArray *arrays = [argsString componentsSeparatedByString:@","];
+    for (NSString *anArray in arrays) {
+        
+    }
+
+    
+    /*
+    if (diff == 2) {
+        theMessage = quotesRemoved;
+        argText = [[NSMutableString alloc]initWithString:theMessage];
+    }else{
+        NSArray *components = [argsString componentsSeparatedByString:@" "];
+        if (components.count == 1) {
+            id component = components.firstObject;
+            argText = [[NSMutableString alloc]initWithString:component];
+            theMessage = [self setTypeForString:component];
+        }else {
+            NSMutableArray *temp = nil;
+            NSMutableString *argText = nil;
+            for (id component in components) {
+                
+                if (!argText) {
+                    argText = [[NSMutableString alloc]init];
+                    [argText appendString:component];
+                }else{
+                    [argText appendFormat:@" %@",argText];
+                }
+                
+                
+                if (!temp) {
+                    temp = [NSMutableArray array];
+                }
+                
+                [temp addObject:[self setTypeForString:component]];
+            }
+            theMessage = [temp mutableCopy];
+        }
+        
+    }
+    */
+    return nil;
+}
+
++ (id)setTypeForString:(NSString *)string
+{
+    NSRange n = [string rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
+    
+    if (n.length > 0) {
+        return string;
+    }else{
+        return @([string doubleValue]);
+    }
+}
+
 + (NSDictionary *)getClassNameAndArgsFromText:(NSString *)text
 {
     NSString *classComponent = [BSDTextParser classNameComponentInText:text];

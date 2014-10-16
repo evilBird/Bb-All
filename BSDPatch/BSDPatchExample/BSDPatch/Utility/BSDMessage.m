@@ -88,6 +88,15 @@
         return dict.allValues.firstObject;
     }
     
+    if ([hot isKindOfClass:[NSString class]]) {
+        return [NSString stringWithFormat:@"%@",hot];
+    }
+    
+    if ([hot isKindOfClass:[NSNumber class]]) {
+        double num = [hot doubleValue];
+        return @(num);
+    }
+    
     return nil;
 }
 

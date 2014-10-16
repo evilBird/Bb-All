@@ -3,6 +3,7 @@
 
 target "BlackBox.UI" do
 pod 'AFNetworking', '2.2.1'
+pod 'iCloudDocumentSync'
 end
 
 target "BlackBox.UITests" do

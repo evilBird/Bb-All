@@ -20,12 +20,15 @@
 {
     self.name = @"route";
     self.coldInlet.open = NO;
-    if ([arguments isKindOfClass:[NSArray class]]) {
+    if (arguments && [arguments isKindOfClass:[NSArray class]]) {
         NSArray *routeKeys = arguments;
         for (id aRouteKey in routeKeys) {
             
             [self addOutletForRouteKey:aRouteKey];
         }
+    }else if (arguments && ([arguments isKindOfClass:[NSString class]]||[arguments isKindOfClass:[NSNumber class]])){
+        
+        [self addOutletForRouteKey:arguments];
     }
     
     self.passThroughOutlet = [[BSDOutlet alloc]init];
@@ -33,12 +36,6 @@
     [self addPort:self.passThroughOutlet];
 }
 
-- (BSDInlet *)makeLeftInlet
-{
-    BSDInlet *inlet = [[BSDCollectionInlet alloc]initHot];
-    inlet.name = @"hot";
-    return inlet;
-}
 
 - (BSDInlet *)makeRightInlet
 {
@@ -91,7 +88,14 @@
         }else{
             [self.passThroughOutlet output:arr];
         }
-        
+        return;
+    }
+    if ([val isKindOfClass:[NSNumber class]]||[val isKindOfClass:[NSString class]]) {
+        NSString *routeKey = [NSString stringWithFormat:@"%@",val];
+        BSDOutlet *outlet = [self outletNamed:routeKey];
+        if (outlet) {
+            [outlet output:[BSDBang bang]];
+        }
     }
 }
 
