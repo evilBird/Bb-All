@@ -12,5 +12,4 @@
 @interface BSDAbstractionBox : BSDBox
 
 @property (nonatomic,strong)UITextField *textField;
-
 @end

@@ -189,6 +189,7 @@
         [self makeObjectInstance];
     }
     
+    
     NSMutableString *displayName = [[NSMutableString alloc]initWithString:[self.object name]];
     for (id arg in args) {
         if ([arg isKindOfClass:[NSNumber class]]|| [arg isKindOfClass:[NSString class]]) {

@@ -130,11 +130,15 @@
     NSMutableArray *result = [NSMutableArray array];
     for (BSDInlet *inlet in inlets) {
         frame.origin.x = (CGFloat)idx * step;
-        BSDPortView *portView = [[BSDPortView alloc]initWithName:inlet.name delegate:self];
+        BSDPortView *portView = [self inletViewWithName:inlet.name];
+        if (!portView) {
+            portView = [[BSDPortView alloc]initWithName:inlet.name delegate:self];
+            portView.portName = inlet.name;
+            [self addSubview:portView];
+        }
         portView.tag = idx;
         portView.frame = frame;
         [result addObject:portView];
-        [self addSubview:portView];
         idx ++;
     }
     
@@ -161,18 +165,59 @@
     NSMutableArray *result = [NSMutableArray array];
     for (BSDOutlet *outlet in outlets) {
         frame.origin.x = (CGFloat)idx * step;
-        BSDPortView *portView = [[BSDPortView alloc]initWithName:outlet.name delegate:self];
+        BSDPortView *portView = [self outletViewWithName:outlet.name];
+        if (!portView) {
+            portView = [[BSDPortView alloc]initWithName:outlet.name delegate:self];
+            portView.portName = outlet.name;
+            [self addSubview:portView];
+        }
         portView.frame = frame;
         portView.tag = idx;
         [result addObject:portView];
-        [self addSubview:portView];
         idx ++;
     }
     
     return result;
 }
 
+- (BSDPortView *)inletViewWithName:(NSString *)name
+{
+    if (!name || !self.inletViews) {
+        return nil;
+    }
+    
+    for (BSDPortView *inletView in self.inletViews) {
+        if ([inletView.portName isEqualToString:name]) {
+            return inletView;
+        }
+    }
+    return nil;
+}
 
+- (BSDPortView *)outletViewWithName:(NSString *)name
+{
+    if (!name || !self.outletViews) {
+        return nil;
+    }
+    
+    for (BSDPortView *outletView in self.outletViews) {
+        if ([outletView.portName isEqualToString:name]) {
+            return outletView;
+        }
+    }
+    
+    return nil;
+}
+
+- (void)updateInletViews
+{
+    self.inletViews = [self inlets].mutableCopy;
+}
+
+- (void)updateOutletViews
+{
+    self.outletViews = [self outlets].mutableCopy;
+}
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
@@ -183,7 +228,6 @@
 {
     return YES;
 }
-
 
 - (void)handlePan:(id)sender
 {
@@ -520,7 +564,6 @@
 
 - (NSString *)getDescription
 {
-
     return nil;
 }
 

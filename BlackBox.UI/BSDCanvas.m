@@ -149,9 +149,19 @@
         [box removeFromSuperview];
         if ([box isKindOfClass:[BSDInletBox class]]) {
             BSD2WayPort *port = box.object;
+            NSInteger index = [self.inlets indexOfObject:port.inlets.firstObject];
+            if (self.parentCanvas) {
+                [self.parentCanvas removeInletViewAtIndex:index
+                                            fromSubcanvas:self];
+            }
             [self.inlets removeObject:port.inlets.firstObject];
         }else if ([box isKindOfClass:[BSDOutletBox class]]){
             BSD2WayPort *port = box.object;
+            NSInteger index = [self.outlets indexOfObject:port.outlets.firstObject];
+            if (self.parentCanvas) {
+                [self.parentCanvas removeOutletViewAtIndex:index fromSubcanvas:self];
+            }
+            
             [self.outlets removeObject:port.outlets.firstObject];
         }
         
@@ -160,6 +170,43 @@
     
     [self boxDidMove:nil];
     self.editState = BSDCanvasEditStateEditing;
+}
+
+- (void)removeInletViewAtIndex:(NSInteger)index fromSubcanvas:(BSDCanvas *)canvas
+{
+    BSDBox *box = [self boxForCanvas:canvas];
+    if (!box || index >= box.inletViews.count) {
+        return;
+    }
+    
+    BSDPortView *toremove = box.inletViews[index];
+    [toremove removeFromSuperview];
+    [toremove tearDown];
+    [self boxDidMove:box];
+}
+
+- (void)removeOutletViewAtIndex:(NSInteger)index fromSubcanvas:(BSDCanvas *)canvas
+{
+    BSDBox *box = [self boxForCanvas:canvas];
+    if (!box || index >= box.outletViews.count) {
+        return;
+    }
+    
+    BSDPortView *toremove = box.outletViews[index];
+    [toremove removeFromSuperview];
+    [toremove tearDown];
+    [self boxDidMove:box];
+}
+
+- (BSDBox *)boxForCanvas:(BSDCanvas *)canvas
+{
+    for (BSDBox *box in self.graphBoxes) {
+        if ([box isKindOfClass:[BSDAbstractionBox class]] && box.object == canvas) {
+            return box;
+        }
+    }
+    
+    return nil;
 }
 
 - (void)pasteSelectedContent
@@ -246,6 +293,20 @@
     [self clearCurrentPatch];
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[BSDCanvas class]]) {
+        return NO;
+    }
+    
+    return [self hash] == [object hash];
+}
+
+- (NSUInteger)hash
+{
+    return [self.canvasId hash];
+}
+
 - (NSString *)canvasId
 {
     return [NSString stringWithFormat:@"%@",self];
@@ -326,17 +387,13 @@
 - (void)openAbstraction:(BSDAbstractionBox *)abs
 {
     BSDCanvas *canvas = [abs object];
-    if (canvas.delegate == nil) {
-        canvas.delegate = self.delegate;
-    }
-    if (canvas.parentCanvas == nil) {
-        canvas.parentCanvas = self;
-    }
-    
+    canvas.delegate = self.delegate;
+    canvas.parentCanvas = self;
+    [self.delegate setCurrentCanvas:canvas];
     UIButton *button = [UIButton new];
     [button setTitle:@"X" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button setFrame:CGRectMake(50, 150, 44, 44)];
+    [button setFrame:CGRectMake(20, 20, 44, 44)];
     [canvas addSubview:button];
     [button addTarget:self action:@selector(closeCanvas:) forControlEvents:UIControlEventTouchUpInside];
     [canvas addSubview:button];
@@ -349,7 +406,21 @@
     BSDCanvas *canvas = (BSDCanvas *)sender.superview;
     [canvas removeFromSuperview];
     [sender removeFromSuperview];
+    [self.delegate setCurrentCanvas:self];
+    BSDBox *box = [self boxForCanvas:canvas];
+    if (!box) {
+        return;
+    }
+    
+    if (box.inletViews.count < canvas.inlets.count) {
+        [box updateInletViews];
+    }
+    
+    if (box.outletViews.count < canvas.outlets.count) {
+        [box updateOutletViews];
+    }
 }
+
 
 #pragma mark - BSDBoxDelegate
 
@@ -682,6 +753,7 @@
             self.inlets = [NSMutableArray array];
         }
         [self.inlets addObject:port.inlets.firstObject];
+
     }else if ([box isKindOfClass:[BSDOutletBox class]]){
         BSD2WayPort *port = box.object;
         if (!self.outlets) {
@@ -689,6 +761,43 @@
         }
         [self.outlets addObject:port.outlets.firstObject];
     }
+}
+
+- (void)updateInletViewsForCanvas:(BSDCanvas *)canvas
+{
+    BSDBox *box = [self boxForCanvas:canvas];
+    if (!box) {
+        return;
+    }
+    
+    [box updateInletViews];
+    [self boxDidMove:box];
+}
+
+- (void)updateOutletViewsForCanvas:(BSDCanvas *)canvas
+{
+    BSDBox *box = [self boxForCanvas:canvas];
+    if (!box) {
+        return;
+    }
+    
+    [box updateOutletViews];
+    [self boxDidMove:box];
+}
+
+- (void)updatePortViewsForCanvas:(BSDCanvas *)canvas
+{
+    if (!canvas) {
+        return;
+    }
+    
+    BSDBox *box = [self boxForCanvas:canvas];
+    if (!box) {
+        return;
+    }
+    [box updateInletViews];
+    [box updateOutletViews];
+    [self boxDidMove:box];
 }
 
 - (NSString *)objectId

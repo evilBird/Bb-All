@@ -19,6 +19,8 @@
 {
     self.name = @"two way port";
     self.hotInlet.delegate = self;
+    self.hotInlet.name = [NSString stringWithFormat:@"%p-in",self];
+    self.mainOutlet.name = [NSString stringWithFormat:@"%p-out",self];
 }
 
 - (BSDInlet *)makeRightInlet

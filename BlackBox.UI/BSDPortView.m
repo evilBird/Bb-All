@@ -27,6 +27,25 @@
     return self;
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[BSDPortView class]]) {
+        return NO;
+    }
+    
+    return [self hash] == [object hash];
+}
+
+- (NSUInteger)hash
+{
+    return [self.portViewId hash];
+}
+
+- (NSString *)portViewId
+{
+    return [NSString stringWithFormat:@"%p",self];
+}
+
 - (void)handlePortConnectionStatusChangedNotification:(NSNotification *)notification
 {
     NSNumber *object = notification.object;

@@ -102,6 +102,7 @@
 		F21E534A19C51BC300E51383 /* BSDTestVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52F319C51BC300E51383 /* BSDTestVariable.m */; };
 		F21E534B19C51BC300E51383 /* BSDVelocity.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52F519C51BC300E51383 /* BSDVelocity.m */; };
 		F21E535119C5249100E51383 /* BSDBangControlBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E534F19C5249100E51383 /* BSDBangControlBox.m */; };
+		F22AA33219F01E80003E256A /* BSDStringReplace.m in Sources */ = {isa = PBXBuildFile; fileRef = F22AA33119F01E80003E256A /* BSDStringReplace.m */; };
 		F2389B0519EF5766008B51DB /* BSDLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2389B0419EF5766008B51DB /* BSDLogView.m */; };
 		F2389B0819EF8FCB008B51DB /* BSDAny2Array.m in Sources */ = {isa = PBXBuildFile; fileRef = F2389B0719EF8FCB008B51DB /* BSDAny2Array.m */; };
 		F241578919CB85B0003E32CA /* BSDObjectLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = F241578819CB85B0003E32CA /* BSDObjectLookup.m */; };
@@ -417,6 +418,8 @@
 		F21E52F519C51BC300E51383 /* BSDVelocity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDVelocity.m; sourceTree = "<group>"; };
 		F21E534F19C5249100E51383 /* BSDBangControlBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDBangControlBox.m; sourceTree = "<group>"; };
 		F21E535019C5249100E51383 /* BSDBangControlBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDBangControlBox.h; sourceTree = "<group>"; };
+		F22AA33019F01E80003E256A /* BSDStringReplace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDStringReplace.h; sourceTree = "<group>"; };
+		F22AA33119F01E80003E256A /* BSDStringReplace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDStringReplace.m; sourceTree = "<group>"; };
 		F2389B0319EF5766008B51DB /* BSDLogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDLogView.h; sourceTree = "<group>"; };
 		F2389B0419EF5766008B51DB /* BSDLogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDLogView.m; sourceTree = "<group>"; };
 		F2389B0619EF8FCB008B51DB /* BSDAny2Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAny2Array.h; sourceTree = "<group>"; };
@@ -966,6 +969,8 @@
 				F21E52D619C51BC300E51383 /* BSDFormatString.m */,
 				F24A3B0619D0C11900FBA887 /* BSDAny2String.h */,
 				F24A3B0719D0C11900FBA887 /* BSDAny2String.m */,
+				F22AA33019F01E80003E256A /* BSDStringReplace.h */,
+				F22AA33119F01E80003E256A /* BSDStringReplace.m */,
 			);
 			path = Strings;
 			sourceTree = "<group>";
@@ -1468,6 +1473,7 @@
 				F21E530B19C51BC300E51383 /* BSDRoute.m in Sources */,
 				F21E533A19C51BC300E51383 /* BSDInlet.m in Sources */,
 				F24A3B0519D0B9CF00FBA887 /* BSDType.m in Sources */,
+				F22AA33219F01E80003E256A /* BSDStringReplace.m in Sources */,
 				F21E532219C51BC300E51383 /* BSDGreater.m in Sources */,
 				F28C806E19E314DF001A578C /* BSD2WayPort.m in Sources */,
 				F21E530319C51BC300E51383 /* BSDBang.m in Sources */,

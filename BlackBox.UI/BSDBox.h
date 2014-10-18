@@ -57,6 +57,9 @@
 - (void)initializeWithText:(NSString *)text;
 - (void)createPortViewsForObject:(id)object;
 
+- (void)updateInletViews;
+- (void)updateOutletViews;
+
 - (NSArray *)inlets;
 - (NSArray *)outlets;
 - (NSArray *)connections;

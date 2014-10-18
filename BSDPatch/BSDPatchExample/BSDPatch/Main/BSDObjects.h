@@ -113,3 +113,4 @@
 #import "BSD2WayPort.h"
 #import "BSDPointer.h"
 #import "BSDAny2Array.h"
+#import "BSDStringReplace.h"

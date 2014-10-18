@@ -85,16 +85,16 @@
         [self.closeDisplayViewButton addTarget:self action:@selector(toggleCanvasVisibility) forControlEvents:UIControlEventTouchUpInside];
         [self.displayViewController.view addSubview:self.closeDisplayViewButton];
         
-        if (!self.canvas) {
+        if (!self.curentCanvas) {
             CGRect rect;
             rect.origin = self.scrollView.bounds.origin;
             rect.size = self.scrollView.contentSize;
             BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
             NSString *test = [compiler testPatch2];
-            self.canvas = [compiler restoreCanvasWithText:test];
-            self.canvas.delegate = self;
-            [self.scrollView addSubview:self.canvas];
-            [self.canvas boxDidMove:nil];
+            self.curentCanvas = [compiler restoreCanvasWithText:test];
+            self.curentCanvas.delegate = self;
+            [self.scrollView addSubview:self.curentCanvas];
+            [self.curentCanvas boxDidMove:nil];
             [self.view addSubview:self.scrollView];
             frame = self.view.bounds;
             frame.size.height = 104;
@@ -110,6 +110,8 @@
             frame.origin.y = CGRectGetMaxY(self.view.bounds) - frame.size.height;
             self.logView = [[BSDLogView alloc]initWithFrame:frame];
             [self.view addSubview:self.logView];
+            self.canvases = [NSMutableArray array];
+            [self.canvases addObject:self.curentCanvas];
         }
     }
 }
@@ -214,8 +216,8 @@
 
 - (void)clearCanvas
 {
-    [self.canvas clearCurrentPatch];
-    self.canvas.delegate = self;
+    [self.curentCanvas clearCurrentPatch];
+    self.curentCanvas.delegate = self;
     for (UIView *sub in self.displayViewController.view.subviews) {
         if (sub != self.closeDisplayViewButton) {
             [sub removeFromSuperview];
@@ -225,41 +227,41 @@
 
 - (void)tapInEditBarButtonItem:(UIBarButtonItem *)sender
 {
-    if (self.canvas.editState == BSDCanvasEditStateDefault) {
-        self.canvas.editState = BSDCanvasEditStateEditing;
+    if (self.curentCanvas.editState == BSDCanvasEditStateDefault) {
+        self.curentCanvas.editState = BSDCanvasEditStateEditing;
         self.toolbarView.editState = BSDCanvasEditStateEditing;
     }else{
-        self.canvas.editState = BSDCanvasEditStateDefault;
+        self.curentCanvas.editState = BSDCanvasEditStateDefault;
         self.toolbarView.editState = BSDCanvasEditStateDefault;
     }
 }
 
 - (void)tapInDeleteBarButtonItem:(UIBarButtonItem *)sender
 {
-    if (self.canvas.editState > 1) {
-        [self.canvas deleteSelectedContent];
-        self.canvas.editState = 1;
+    if (self.curentCanvas.editState > 1) {
+        [self.curentCanvas deleteSelectedContent];
+        self.curentCanvas.editState = 1;
         self.toolbarView.editState = 1;
     }
 }
 
 - (void)tapInCopyBarButtonItem:(UIBarButtonItem *)sender
 {
-    if (self.canvas.editState > 1) {
-        [self.canvas copySelectedContent];
+    if (self.curentCanvas.editState > 1) {
+        [self.curentCanvas copySelectedContent];
     }
 }
 
 - (void)tapInPasteBarButtonItem:(UIBarButtonItem *)sender
 {
-    if (self.canvas.editState == 3) {
-        [self.canvas pasteSelectedContent];
+    if (self.curentCanvas.editState == 3) {
+        [self.curentCanvas pasteSelectedContent];
     }
 }
 
 - (void)encapsulateSelected
 {
-    if (self.canvas.editState == 3) {
+    if (self.curentCanvas.editState == 3) {
         [self showSaveAsPatchAlertView];
     }
 }
@@ -397,8 +399,8 @@
 - (void)saveCurrentDescription
 {
     BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
-    self.canvas.name = self.currentPatchName;
-    NSString *description = [compiler saveCanvas:self.canvas];//compiler.stringOutlet.value;
+    self.curentCanvas.name = self.currentPatchName;
+    NSString *description = [compiler saveCanvas:self.curentCanvas];//compiler.stringOutlet.value;
     [self saveDescription:[NSString stringWithString:description] withName:self.currentPatchName];
 }
 
@@ -417,7 +419,7 @@
     copy[name] = description;
     [NSUserDefaults setUserValue:[NSDictionary dictionaryWithDictionary:copy] forKey:@"descriptions"];
     self.currentPatchName = name;
-    self.canvas.name = name;
+    self.curentCanvas.name = name;
     
     [self.delegate syncPatch:description withName:name];
 }
@@ -438,6 +440,20 @@
     
 }
 
+- (void)saveCanvas:(id)canvas description:(NSString *)description name:(NSString *)name
+{
+    
+}
+
+- (void)setCurrentCanvas:(id)canvas
+{
+    if (![self.canvases containsObject:canvas]) {
+        [self.canvases addObject:canvas];
+    }
+    
+    self.curentCanvas = canvas;
+}
+
 - (void)loadDescriptionWithName:(NSString *)name
 {
     if (!name) {
@@ -451,14 +467,14 @@
     NSString *description = [descriptions valueForKey:name];
     if (description) {
         NSString *toLoad = [NSString stringWithString:description];
-        [self.canvas tearDown];
-        [self.canvas removeFromSuperview];
-        self.canvas = nil;
+        [self.curentCanvas tearDown];
+        [self.curentCanvas removeFromSuperview];
+        self.curentCanvas = nil;
         BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
-        self.canvas = [compiler restoreCanvasWithText:toLoad];
-        self.canvas.delegate = self;
-        self.canvas.name = name;
-        [self.scrollView addSubview:self.canvas];
+        self.curentCanvas = [compiler restoreCanvasWithText:toLoad];
+        self.curentCanvas.delegate = self;
+        self.curentCanvas.name = name;
+        [self.scrollView addSubview:self.curentCanvas];
         self.currentPatchName = name;
     }
 }
@@ -472,18 +488,18 @@
         if (!name) {
             return;
         }
-        self.canvas.name = name;
+        self.curentCanvas.name = name;
         BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
-        NSString *description = [compiler saveCanvas:self.canvas];//[compiler.stringOutlet value];
-        if (self.canvas.parentCanvas) {
-            self.canvas.parentCanvas.isDirty = @(YES);
+        NSString *description = [compiler saveCanvas:self.curentCanvas];//[compiler.stringOutlet value];
+        if (self.curentCanvas.parentCanvas) {
+            self.curentCanvas.parentCanvas.isDirty = @(YES);
         }
         
         [self saveDescription:description withName:name];
     }else if (alertView.tag == 1 && buttonIndex == 1){
         NSString *name = [alertView textFieldAtIndex:0].text;
         if (name.length > 0) {
-            [self.canvas encapsulatedCopiedContentWithName:name];
+            [self.curentCanvas encapsulatedCopiedContentWithName:name];
         }
     }
 }
@@ -492,7 +508,7 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    return self.canvas;
+    return self.curentCanvas;
 }
 
 #pragma mark - PopoverContentViewController Delegate
@@ -501,18 +517,18 @@
 {
     NSArray *objects = @[@"bang box",@"number box",@"message box",@"object",@"inlet",@"outlet",@"canvas",@"comment"];
     if ([objects containsObject:patchName]) {
-        CGPoint point = [self.canvas optimalFocusPoint];
+        CGPoint point = [self.curentCanvas optimalFocusPoint];
         [self contentTableViewControllerWasDismissed:nil];
         
         BSDCanvas *myCanvas = nil;
-        for (UIView *subview in self.canvas.subviews) {
+        for (UIView *subview in self.curentCanvas.subviews) {
             if ([subview isKindOfClass:[BSDCanvas class]]) {
                 myCanvas = (BSDCanvas *)subview;
             }
         }
         
         if (myCanvas == nil) {
-            myCanvas = self.canvas;
+            myCanvas = self.curentCanvas;
             myCanvas.delegate = self;
         }else{
             

@@ -22,7 +22,8 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 - (UIView *)viewForCanvas:(id)canvas;
 - (void)canvas:(id)canvas editingStateChanged:(BSDCanvasEditState)editState;
 - (void)saveDescription:(NSString *)description withName:(NSString *)name;
-
+- (void)saveCanvas:(id)canvas description:(NSString *)description name:(NSString *)name;
+- (void)setCurrentCanvas:(id)canvas;
 
 @end
 
@@ -34,6 +35,8 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 @property (nonatomic,strong)NSMutableArray *outlets;
 @property (nonatomic,strong)UITapGestureRecognizer *singleTap;
 @property (nonatomic,strong)UITapGestureRecognizer *doubleTap;
+@property (nonatomic,strong)NSSet *absInletViewsCache;
+@property (nonatomic,strong)NSSet *absOutletViewsCache;
 @property (nonatomic,strong)id<BSDCanvasDelegate>delegate;
 @property (nonatomic)BSDCanvasEditState editState;
 @property (nonatomic,strong)NSString *name;

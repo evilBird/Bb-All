@@ -25,7 +25,8 @@
 - (instancetype)initWithName:(NSString *)name description:(NSString *)description;
 
 @property (nonatomic,strong)NSString *currentPatchName;
-@property (nonatomic,strong)BSDCanvas *canvas;
+@property (nonatomic,strong)BSDCanvas *curentCanvas;
+@property (nonatomic,strong)NSMutableArray *canvases;
 @property (nonatomic,weak)id<BSDCanvasViewControllerDelegate>delegate;
 
 @end
