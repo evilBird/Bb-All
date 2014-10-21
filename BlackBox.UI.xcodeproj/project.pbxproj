@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5EC7E8FBB4FC43EB8F4060BE /* libPods-BlackBox.UI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */; };
+		F204D60419F71E7200175B24 /* BSDHSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = F204D60319F71E7200175B24 /* BSDHSlider.m */; };
 		F21A5B5E19DF86BA00E6F21B /* BSDPatchDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */; };
 		F21A5B6119E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */; };
 		F21E4C5519C8FDD600D20D60 /* BSDClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E4C5419C8FDD600D20D60 /* BSDClient.m */; };
@@ -227,6 +228,8 @@
 
 /* Begin PBXFileReference section */
 		0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BlackBox.UI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F204D60219F71E7200175B24 /* BSDHSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDHSlider.h; sourceTree = "<group>"; };
+		F204D60319F71E7200175B24 /* BSDHSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDHSlider.m; sourceTree = "<group>"; };
 		F21A5B5C19DF86BA00E6F21B /* BSDPatchDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchDescription.h; sourceTree = "<group>"; };
 		F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchDescription.m; sourceTree = "<group>"; };
 		F21A5B5F19E0AF4F00E6F21B /* BSDPatchDescriptionUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchDescriptionUtility.h; sourceTree = "<group>"; };
@@ -1199,6 +1202,8 @@
 				F2EE14B219C9EF9B008D83E2 /* BSDMessageBox.m */,
 				F21E50D519C3FE1A00E51383 /* BSDNumberBox.h */,
 				F21E50D619C3FE1A00E51383 /* BSDNumberBox.m */,
+				F204D60219F71E7200175B24 /* BSDHSlider.h */,
+				F204D60319F71E7200175B24 /* BSDHSlider.m */,
 				F2F5133D19B8DAB800323096 /* BSDGraphBox.h */,
 				F2F5133E19B8DAB800323096 /* BSDGraphBox.m */,
 				F28C806019E25788001A578C /* BSDAbstractionBox.h */,
@@ -1441,6 +1446,7 @@
 				F21E50D419C3F63200E51383 /* BSDBox.m in Sources */,
 				F21E531719C51BC300E51383 /* BSDAdd.m in Sources */,
 				F2CFDEB919DA521800A156DB /* BSDDictionaryAccum.m in Sources */,
+				F204D60419F71E7200175B24 /* BSDHSlider.m in Sources */,
 				F28C807119E3B1C7001A578C /* BSDPatchCompiler.m in Sources */,
 				F21E531019C51BC300E51383 /* BSDValue.m in Sources */,
 				F21E4C5519C8FDD600D20D60 /* BSDClient.m in Sources */,

@@ -65,5 +65,6 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 - (void)addOutletBoxAtPoint:(CGPoint)point;
 - (void)addGraphBoxAtPoint:(CGPoint)point;
 - (void)addCommentBoxAtPoint:(CGPoint)point;
+- (void)addHSliderBoxAtPoint:(CGPoint)point;
 
 @end

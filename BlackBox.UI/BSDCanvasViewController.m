@@ -515,7 +515,7 @@
 
 - (void)itemWasSelected:(NSString *)patchName
 {
-    NSArray *objects = @[@"bang box",@"number box",@"message box",@"object",@"inlet",@"outlet",@"canvas",@"comment"];
+    NSArray *objects = @[@"bang box",@"number box",@"message box",@"object",@"inlet",@"outlet",@"canvas",@"comment",@"hslider"];
     if ([objects containsObject:patchName]) {
         CGPoint point = [self.curentCanvas optimalFocusPoint];
         [self contentTableViewControllerWasDismissed:nil];
@@ -550,6 +550,8 @@
             [self presentCanvasForPatchWithName:@"new patch"];
         }else if ([patchName isEqualToString:@"comment"]){
             [myCanvas addCommentBoxAtPoint:point];
+        }else if ([patchName isEqualToString:@"hslider"]){
+            [myCanvas addHSliderBoxAtPoint:point];
         }
         
         
@@ -616,7 +618,7 @@
     tvc.delegate = self;
     tvc.title = @"Insert Box";
     tvc.editEnabled = NO;
-    tvc.itemNames = @[@"bang box",@"number box",@"message box",@"inlet",@"outlet",@"object",@"canvas",@"comment"];
+    tvc.itemNames = @[@"bang box",@"number box",@"message box",@"inlet",@"outlet",@"object",@"canvas",@"comment",@"hslider"];
     return tvc;
 }
 

@@ -22,6 +22,7 @@
 #import "BSDAbstractionBox.h"
 #import "BSDPatchCompiler.h"
 #import "BSDPort.h"
+#import "BSDHSlider.h"
 
 @interface BSDCanvas ()<UIGestureRecognizerDelegate,BSDScreenDelegate,BSDPortDelegate>
 {
@@ -650,6 +651,22 @@
     numberBox.center = point;
     [self addSubview:numberBox];
     return numberBox;
+}
+
+- (void)addHSliderBoxAtPoint:(CGPoint)point
+{
+    BSDHSlider *slider = [self newHSliderBoxAtPoint:point];
+    [self addGraphBox:slider initialize:YES arg:nil];
+}
+
+- (BSDHSlider *)newHSliderBoxAtPoint:(CGPoint)point
+{
+    CGRect rect = CGRectMake(100, 100, 200, 32);
+    BSDHSlider *slider = [[BSDHSlider alloc]initWithFrame:rect];
+    slider.delegate = self;
+    slider.center = point;
+    [self addSubview:slider];
+    return slider;
 }
 
 - (void)addBangBoxAtPoint:(CGPoint)point

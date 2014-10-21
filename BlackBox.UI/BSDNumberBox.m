@@ -106,7 +106,6 @@
     NSDictionary *changeInfo = notification.object;
     NSNumber *val = changeInfo[@"value"];
     if (val) {
-        self.stepper.value = val.doubleValue;
         double diff = val.doubleValue - val.integerValue;
         if (diff == 0) {
             self.textField.text = [NSString stringWithFormat:@"%@",val];
