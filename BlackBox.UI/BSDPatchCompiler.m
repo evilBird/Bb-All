@@ -646,7 +646,10 @@
         return CGRectMake(100, 100, 80, 44);
     }else if ([type isEqualToString:@"BSDAbstractionBox"]){
         return CGRectMake(0, 0, 140, 44);
+    }else if ([type isEqualToString:@"BSDHSlider"]){
+        return CGRectMake(0, 0, 200, 36);
     }
+    
     return CGRectMake(0, 0, 44, 44);
 }
 

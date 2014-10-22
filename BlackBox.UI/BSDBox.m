@@ -231,10 +231,22 @@
 
 - (void)handlePan:(id)sender
 {
+    static CGPoint initLoc;
+    static CGPoint initCenter;
     UIPanGestureRecognizer *recognizer = sender;
     CGPoint loc = [recognizer locationInView:self.superview];
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        initLoc = loc;
+        initCenter = self.center;
+    }
+    
     if (selectedPort == nil) {
-        self.center = loc;
+        CGFloat dx = loc.x - initLoc.x;
+        CGFloat dy = loc.y - initLoc.y;
+        CGPoint newCenter;
+        newCenter.x = initCenter.x + dx;
+        newCenter.y = initCenter.y + dy;
+        self.center = newCenter;
         [self.delegate boxDidMove:self];
     }else{
         

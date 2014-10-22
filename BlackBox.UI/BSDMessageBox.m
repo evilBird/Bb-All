@@ -58,7 +58,7 @@
     if (pan == UIGestureRecognizerStateBegan || pan == UIGestureRecognizerStateChanged) {
         return NO;
     }
-    textField.text = @"";
+    //textField.text = @"";
     return YES;
 }
 
@@ -83,6 +83,7 @@
 {
     if (!text || text.length == 0) {
         [self.textField becomeFirstResponder];
+        [self resizeToFitText:text];
         return;
     }
     
@@ -158,8 +159,16 @@
             frame.size.width = minSize.width;
         }
         
+        CGFloat maxWidth = self.superview.bounds.size.width;
+        if (frame.size.width > maxWidth) {
+            frame.size.width = maxWidth;
+        }
         self.frame = frame;
-        self.textField.frame = CGRectInset(self.bounds, size.width * 0.15, 0);
+        CGFloat XinsetAmount = size.width * 0.15;
+        if (XinsetAmount > 30) {
+            XinsetAmount = 30;
+        }
+        self.textField.frame = CGRectInset(self.bounds, XinsetAmount, 0);
     }
 }
 

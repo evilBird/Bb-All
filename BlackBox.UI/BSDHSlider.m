@@ -28,14 +28,14 @@
         self.className = @"BSDNumber";
         self.boxClassString = @"BSDHSlider";
         _displayedValue = 0.5;
-        self.defaultColor = [UIColor whiteColor];
+        self.defaultColor = [UIColor colorWithWhite:0.93 alpha:1];
         self.selectedColor = [UIColor colorWithWhite:0.8 alpha:1];
         self.backgroundColor = self.defaultColor;
         self.layer.borderColor = [UIColor colorWithWhite:0.2 alpha:1].CGColor;
         self.layer.borderWidth = 1;
         CGRect handleFrame = self.bounds;
-        handleFrame.size.width *= 0.1;
-        handleFrame.origin.x = CGRectGetMidX(self.bounds) - CGRectGetWidth(handleFrame) * 0.5;
+        handleFrame.size.width *= 0.05;
+        handleFrame.origin.x = [self xOriginForFrame:handleFrame value:0.5];
         _handle = [[UIView alloc]initWithFrame:handleFrame];
         _handle.backgroundColor = [UIColor blackColor];
         [self addSubview:_handle];
@@ -45,41 +45,85 @@
     return self;
 }
 
+- (CGFloat)xOriginForFrame:(CGRect)frame value:(CGFloat)value
+{
+    if (!self.inletViews) {
+        return CGRectGetMidX(self.bounds) - CGRectGetWidth(frame);
+    }
+    
+    CGRect portFrame = [(UIView *)self.inletViews.firstObject frame];
+    CGFloat minOriginX = CGRectGetMaxX(portFrame);
+    CGFloat minX = minOriginX + CGRectGetWidth(frame)/2;
+    CGFloat maxX = CGRectGetMaxX(self.bounds) - CGRectGetWidth(frame)/2;
+    CGFloat range =  maxX - minX;
+    return range * value + minOriginX;
+}
+
+- (CGFloat)valueForX:(CGFloat)x
+{
+    CGRect portFrame = [(UIView *)self.inletViews.firstObject frame];
+    CGFloat minOriginX = CGRectGetMaxX(portFrame);
+    CGFloat maxX = CGRectGetMaxX(self.bounds) - CGRectGetWidth(self.handle.frame);
+    CGFloat range =  maxX - minOriginX;
+    CGFloat value = (x - minOriginX)/range;
+    
+    if (value > 1) {
+        return 1.0;
+    }
+    if (value < 0) {
+        return 0.0;
+    }
+    
+    return (x - minOriginX)/range;
+}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    initPoint = nil;
     CGPoint loc = [touches.allObjects.lastObject locationInView:self];
     UIView *theView = [self hitTest:loc withEvent:event];
     if (theView == self.handle) {
         initPoint = [NSValue valueWithCGPoint:loc];
-        //self.panGesture.enabled = NO;
     }else{
         initPoint = nil;
     }
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    if (initPoint) {
-        CGPoint loc = [touches.allObjects.lastObject locationInView:self];
-        self.displayedValue = loc.x/self.bounds.size.width;
-        CGRect frame = self.handle.frame;
-        frame.origin.x = self.bounds.size.width * _displayedValue - frame.size.width * 0.5;
-        self.handle.frame = frame;
-    }
-}
-
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    self.panGesture.enabled = YES;
+    
+}
 
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    initPoint = nil;
 }
 
 - (void)handlePan:(id)sender
 {
     UIPanGestureRecognizer *recognizer = sender;
     CGPoint loc = [recognizer locationInView:self.superview];
-    if (selectedPort == nil && initPoint == nil) {
+
+    if (initPoint && !selectedPort) {
+        
+        switch (recognizer.state) {
+            case UIGestureRecognizerStateChanged:
+            {
+                CGPoint loc = [recognizer locationInView:self];
+                self.displayedValue = [self valueForX:loc.x];
+                CGRect frame = self.handle.frame;
+                frame.origin.x = [self xOriginForFrame:frame value:self.displayedValue];
+                self.handle.frame = frame;
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+        return;
+    }
+    if (selectedPort == nil) {
         self.center = loc;
         [self.delegate boxDidMove:self];
     }else{
@@ -108,11 +152,6 @@
     }
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    initPoint = nil;
-    self.panGesture.enabled = YES;
-}
 
 - (void)dealloc
 {
@@ -123,8 +162,7 @@
 {
     NSDictionary *changeInfo = notification.object;
     NSNumber *val = changeInfo[@"value"];
-    if (val && !initPoint) {
-        
+    if (val) {
         self.displayedValue = val.doubleValue;
     }
 }
@@ -139,11 +177,14 @@
         _displayedValue = displayedValue;
     }
     
-    NSLog(@"displayed val: %f",displayedValue);
-    //CGRect frame = self.handle.frame;
-    //frame.origin.x = self.bounds.size.width * _displayedValue - frame.size.width * 0.5;
-    //self.handle.frame = frame;
-    [[self.object hotInlet]input:@(displayedValue)];
+    if (self.panGesture.state > 0){
+        [[self.object hotInlet]input:@(displayedValue)];
+        return;
+    }
+    
+    CGRect handleFrame = self.handle.frame;
+    handleFrame.origin.x = [self xOriginForFrame:handleFrame value:_displayedValue];
+    self.handle.frame = handleFrame;
 }
 
 /*

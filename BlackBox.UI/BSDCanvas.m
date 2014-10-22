@@ -661,7 +661,7 @@
 
 - (BSDHSlider *)newHSliderBoxAtPoint:(CGPoint)point
 {
-    CGRect rect = CGRectMake(100, 100, 200, 32);
+    CGRect rect = CGRectMake(100, 100, 200, 36);
     BSDHSlider *slider = [[BSDHSlider alloc]initWithFrame:rect];
     slider.delegate = self;
     slider.center = point;
