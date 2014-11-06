@@ -25,7 +25,6 @@
     }else{
         self.coldInlet.value = [NSPredicate predicateWithValue:YES];
     }
-
 }
 
 - (void)calculateOutput

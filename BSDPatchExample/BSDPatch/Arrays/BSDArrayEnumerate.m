@@ -7,6 +7,7 @@
 //
 
 #import "BSDArrayEnumerate.h"
+#import "BSDArrayInlet.h"
 
 @implementation BSDArrayEnumerate
 
@@ -17,7 +18,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"array enumerate";
+    self.name = @"array enum";
     NSArray *array = arguments;
     if (arguments) {
         self.coldInlet.value = array;
@@ -29,23 +30,38 @@
     
 }
 
+- (BSDInlet *)makeRightInlet
+{
+    BSDInlet *inlet = [[BSDArrayInlet alloc]initCold];
+    inlet.name = @"cold";
+    return inlet;
+}
+
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
     if (inlet == self.hotInlet) {
         
-        NSMutableArray *arrayCopy = self.coldInlet.value;
-        if (arrayCopy.count > 0) {
-            id value = arrayCopy.firstObject;
-            [arrayCopy removeObjectAtIndex:0];
-            self.coldInlet.value = arrayCopy;
-            self.mainOutlet.value = value;
-        }
-        NSArray *cold = self.coldInlet.value;
-        if (cold.count == 0) {
-            self.doneOutlet.value = [BSDBang bang];
-        }
+        [self calculateOutput];
     }
 
+}
+
+- (void)calculateOutput
+{
+    NSMutableArray *array = [self.coldInlet.value mutableCopy];
+    if (array.count > 0) {
+        id value = array.firstObject;
+        NSRange newRange;
+        newRange.location = 1;
+        newRange.length = array.count - 1;
+        [self.mainOutlet setValue:value];
+        [self.coldInlet setValue:[array subarrayWithRange:newRange]];
+        if (newRange.length == 0) {
+            [self.doneOutlet setValue:[BSDBang bang]];
+        }
+    }else{
+        [self.doneOutlet setValue:[BSDBang bang]];
+    }
 }
 
 @end

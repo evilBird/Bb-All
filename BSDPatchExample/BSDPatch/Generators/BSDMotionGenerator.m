@@ -8,6 +8,8 @@
 
 #import "BSDMotionGenerator.h"
 #import "BSDPoint2D.h"
+
+
 @implementation BSDMotionGenerator
 
 - (void)setupWithArguments:(id)arguments

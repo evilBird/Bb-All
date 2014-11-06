@@ -10,8 +10,10 @@
 
 @interface BSDBasicAnimation : BSDObject
 
-- (instancetype)initWithLayer:(CALayer *)layer animation:(CABasicAnimation *)animation;
+@property (nonatomic,strong)BSDInlet *keyPathInlet;
+@property (nonatomic,strong)BSDInlet *fromValueInlet;
+@property (nonatomic,strong)BSDInlet *toValueInlet;
+@property (nonatomic,strong)BSDInlet *durationInlet;
 
-@property(nonatomic,readonly)CALayer *layer;
 
 @end

@@ -12,7 +12,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"absolute value";
+    self.name = @"|x|";
     self.coldInlet.open = NO;
 }
 

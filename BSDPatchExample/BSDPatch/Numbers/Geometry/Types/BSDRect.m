@@ -11,9 +11,9 @@
 
 @implementation BSDRect
 
-- (instancetype)initWithCGRect:(CGRect)rect
+- (instancetype)initWithArguments:(id)arguments
 {
-    return [super initWithArguments:[NSValue wrapRect:rect]];
+    return [super initWithArguments:arguments];
 }
 
 - (void)setupWithArguments:(id)arguments
@@ -22,6 +22,7 @@
     
     self.originXInlet = [[BSDInlet alloc]initHot];
     self.originXInlet.name = @"originX";
+    self.originXInlet.delegate = self;
     self.originYInlet = [[BSDInlet alloc]initHot];
     self.originYInlet.name = @"originY";
     self.widthInlet = [[BSDInlet alloc]initHot];
@@ -37,28 +38,37 @@
     [self addPort:self.widthInlet];
     [self addPort:self.heightInlet];
     
-    NSValue *initialRect = (NSValue *)arguments;
+    NSArray *initialRect = (NSArray *)arguments;
     
-    if (initialRect) {
-        CGRect rect = [initialRect CGRectValue];
-        self.originXInlet.value = @(rect.origin.x);
-        self.originYInlet.value = @(rect.origin.y);
-        self.widthInlet.value = @(rect.size.width);
-        self.heightInlet.value = @(rect.size.height);
+    if (initialRect && [initialRect isKindOfClass:[NSArray class]] && initialRect.count == 4) {
+        self.originXInlet.value = initialRect[0];
+        self.originYInlet.value = initialRect[1];
+        self.widthInlet.value = initialRect[2];
+        self.heightInlet.value = initialRect[3];
     }else{
         self.originXInlet.value = @(0);
         self.originYInlet.value = @(0);
-        self.widthInlet.value = @(0);
-        self.heightInlet.value = @(0);
+        self.widthInlet.value = @(44);
+        self.heightInlet.value = @(44);
     }
 
 }
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
-    if (inlet == self.hotInlet) {
+    if (inlet == self.originXInlet) {
         [self calculateOutput];
     }
+}
+
+- (BSDInlet *)makeLeftInlet
+{
+    return nil;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
 }
 
 - (void)calculateOutput

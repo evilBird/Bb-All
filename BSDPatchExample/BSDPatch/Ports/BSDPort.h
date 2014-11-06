@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, BSDPortConnectionStatus) {
+    BSDPortConnectionStatusNotConnected = 0,
+    BSDPortConnectionStatusConnected = 1,
+    BSDPortConnectionStatusTypeMismatch = 2
+};
+
 @protocol BSDPortDelegate
 
 - (void)portReceivedBang:(id)sender;
@@ -28,13 +34,17 @@
 @property (nonatomic,getter = isOpen) BOOL open;
 //Keep references to observed ports
 @property (nonatomic,strong) NSMutableSet *observedPorts;
+//Connection status
+@property (nonatomic)BSDPortConnectionStatus connectionStatus;
 //Port delegate 
 @property (nonatomic,weak)id<BSDPortDelegate>delegate;
+@property (nonatomic,strong)BSDPort *forwardPort;
 
 - (instancetype)init;
 - (void)observePort:(BSDPort *)port;
 - (void)stopObservingPort:(BSDPort *)port;
 - (void)forwardToPort:(BSDPort *)port;
 - (void)removeForwardPort:(BSDPort *)port;
+- (NSString *)notificationName;
 
 @end

@@ -23,14 +23,19 @@
     
     self.leftOutlet = [[BSDOutlet alloc]init];
     self.leftOutlet.name = @"left outlet";
-
-    [self addPort:self.rightOutlet];
+    
     [self addPort:self.leftOutlet];
+    [self addPort:self.rightOutlet];
     
     if (arguments != NULL) {
         self.coldInlet.value = arguments;
     }
     
+}
+
+- (BSDOutlet *)makeLeftOutlet
+{
+    return nil;
 }
 
 - (void)calculateOutput

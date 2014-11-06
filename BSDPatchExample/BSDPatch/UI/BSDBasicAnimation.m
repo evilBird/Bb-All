@@ -8,71 +8,76 @@
 
 #import "BSDBasicAnimation.h"
 #import "BSDCreate.h"
+#import "BSDStringInlet.h"
+#import "BSDNumberInlet.h"
+#import "BSDDictionaryInlet.h"
+#import "NSValue+BSD.h"
 
 @interface BSDBasicAnimation ()
-
-@property (nonatomic,strong)BSDRoute *route;
-@property (nonatomic,strong)BSDArrayAccum *arrayAccum;
-@property (nonatomic,strong)NSMutableDictionary *animationDictionary;
 
 @end
 
 @implementation BSDBasicAnimation
 
-- (instancetype)initWithLayer:(CALayer *)layer animation:(CABasicAnimation *)animation
+- (instancetype)initWithArguments:(id)arguments
 {
-    return [super initWithArguments:@{@"layer":layer,
-                                      @"animation":animation,
-                                      }];
+    return [super initWithArguments:arguments];
 }
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"layer animation";
-    self.animationDictionary = [[NSMutableDictionary alloc]init];
+    self.name = @"basic animation";
     
-    NSDictionary *args = arguments;
+    self.keyPathInlet = [[BSDStringInlet alloc]initCold];
+    self.keyPathInlet.name = @"keyPath";
+    self.keyPathInlet.value = @"position";
+    [self addPort:self.keyPathInlet];
     
-    if (args) {
-        
-        self.coldInlet.value = args[@"layer"];
-        CABasicAnimation *animation = args[@"animation"];
-        self.animationDictionary[@"fromValue"] = animation.fromValue;
-        self.animationDictionary[@"toValue"] = animation.toValue;
-        self.animationDictionary[@"duration"] = @(animation.duration);
-        self.animationDictionary[@"keyPath"] = animation.keyPath;
+    self.fromValueInlet =[[BSDInlet alloc]initCold];
+    self.fromValueInlet.name = @"fromValue";
+    self.fromValueInlet.value = [NSValue wrapPoint:CGPointMake(0, 0)];
+    [self addPort:self.fromValueInlet];
+    
+    self.toValueInlet = [[BSDInlet alloc]initCold];
+    self.toValueInlet.name = @"toValue";
+    self.toValueInlet.value = [NSValue wrapPoint:CGPointMake(0, 0)];
+    [self addPort:self.toValueInlet];
+    
+    self.durationInlet = [[BSDNumberInlet alloc]initCold];
+    self.durationInlet.name = @"duration";
+    self.durationInlet.value = @(1);
+    [self addPort:self.durationInlet];
+
+}
+
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
+
+- (void)inletReceievedBang:(BSDInlet *)inlet
+{
+    if (inlet == self.hotInlet) {
+        [self calculateOutput];
     }
-    
 }
 
 - (void)calculateOutput
 {
-    NSDictionary *dictionary = self.hotInlet.value;
-    if (dictionary) {
-        CALayer *layer = [self layer];
-        CABasicAnimation *a = [self updateAnimation:dictionary];
-        [layer addAnimation:a forKey:@"a"];
-        [layer setValue:a.toValue forKey:a.keyPath];
-        [self.animationDictionary setValue:a.toValue forKey:@"fromValue"];
+    CABasicAnimation *animation = [self getAnimation];
+    if (animation) {
+        [self.mainOutlet output:animation];
     }
 }
 
-- (CALayer *)layer
+- (CABasicAnimation *)getAnimation
 {
-    return self.coldInlet.value;
-}
-
-- (CABasicAnimation *)updateAnimation:(NSDictionary *)dictionary
-{
-    for (id aKey in dictionary.allKeys) {
-        self.animationDictionary[aKey] = dictionary[aKey];
-    }
-    
     CABasicAnimation *animation = [[CABasicAnimation alloc]init];
-    
-    for (id aKey in self.animationDictionary) {
-        [animation setValue:self.animationDictionary[aKey] forKey:aKey];
-    }
+    animation.keyPath = self.keyPathInlet.value;
+    animation.fromValue = self.fromValueInlet.value;
+    animation.toValue = self.toValueInlet.value;
+    animation.duration = [self.durationInlet.value doubleValue];
     
     return animation;
 }

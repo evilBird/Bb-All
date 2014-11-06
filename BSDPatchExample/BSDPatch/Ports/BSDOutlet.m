@@ -23,7 +23,17 @@
 
 - (void)output:(id)value;
 {
-    [self setValue:value];
+    [self handleOutput:value];
+}
+
+- (void)handleOutput:(id)output
+{
+    self.value = output;
+}
+
+- (BOOL)typeOK:(id)value
+{
+    return YES;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

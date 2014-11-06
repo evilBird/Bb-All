@@ -29,7 +29,9 @@
     if ([arguments isKindOfClass:[NSArray class]]) {
         NSArray *selectors = arguments;
         for (id aSelector in selectors) {
-            [self addOutletForSelector:aSelector];
+            BSDOutlet *newOutlet = [[BSDOutlet alloc]init];
+            newOutlet.name = [NSString stringWithFormat:@"%@",aSelector];
+            [self addPort:newOutlet];
         }
         
     }else if ([arguments isKindOfClass:[NSDictionary class]]){
@@ -38,6 +40,14 @@
             BSDInlet *inlet = selectorsAndInlets[aSelector];
             [self addOutletForSelector:aSelector connectToInlet:inlet];
         }
+    }else if ([arguments isKindOfClass:[NSNumber class]]){
+        BSDOutlet *newOutlet = [[BSDOutlet alloc]init];
+        newOutlet.name = [NSString stringWithFormat:@"%@",arguments];
+        [self addPort:newOutlet];
+    }else if ([arguments isKindOfClass:[NSString class]]){
+        BSDOutlet *newOutlet = [[BSDOutlet alloc]init];
+        newOutlet.name = arguments;
+        [self addPort:newOutlet];
     }
 }
 
@@ -47,10 +57,18 @@
     NSString *key = [NSString stringWithFormat:@"%@",hot];
     BSDOutlet *outlet = [self outletNamed:key];
     if (outlet != nil) {
-        outlet.value = [BSDBang bang];
+        [outlet output:[BSDBang bang]];
     }
-    
-    self.mainOutlet.value = hot;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
+
+- (BSDOutlet *)makeLeftOutlet
+{
+    return nil;
 }
 
 //create an additional outlet for the specified selector
@@ -76,15 +94,15 @@
 
 - (void)test
 {
-    BSDValueBox *box1 = [BSDCreate valueBoxCold:@(10)];
+    BSDValue *box1 = [BSDCreate valueBoxCold:@(10)];
     box1.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
         NSLog(@"box 1 emitted value %@",outlet.value);
     };
-    BSDValueBox *box2 = [BSDCreate valueBoxCold:@(100)];
+    BSDValue *box2 = [BSDCreate valueBoxCold:@(100)];
     box2.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
         NSLog(@"box 2 emitted value %@",outlet.value);
     };
-    BSDValueBox *box3 = [BSDCreate valueBoxCold:@(1000)];
+    BSDValue *box3 = [BSDCreate valueBoxCold:@(1000)];
     box3.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
         NSLog(@"box 3 emitted value %@",outlet.value);
     };

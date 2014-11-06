@@ -32,9 +32,22 @@
         if (self.delegate) {
             [self.delegate portReceivedBang:self];
         }
-    }else if (self.isOpen) {
-        self.value = value;
+    }else{
+        
+        [self handleInput:value];
     }
+}
+
+- (void)handleInput:(id)input
+{
+    if (self.isOpen) {
+        self.value = input;
+    }
+}
+
+- (BOOL)typeOk:(id)value
+{
+    return YES;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

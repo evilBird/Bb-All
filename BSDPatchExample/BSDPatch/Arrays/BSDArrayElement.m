@@ -27,10 +27,24 @@
     }
 }
 
+- (BSDInlet *)makeLeftInlet
+{
+    BSDInlet *inlet = [[BSDNumberInlet alloc]initHot];
+    inlet.name = @"hot";
+    return inlet;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    BSDInlet *inlet = [[BSDArrayInlet alloc]initCold];
+    inlet.name = @"cold";
+    return inlet;
+}
+
 - (void)calculateOutput
 {
     NSNumber *hot = self.hotInlet.value;
-    NSArray *cold = self.coldInlet.value;
+    NSMutableArray *cold = [self.coldInlet.value mutableCopy];
     
     if (cold && hot.integerValue >= 0 && hot.integerValue < cold.count) {
         self.mainOutlet.value = cold[hot.integerValue];

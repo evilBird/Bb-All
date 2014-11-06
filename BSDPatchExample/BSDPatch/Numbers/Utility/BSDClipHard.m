@@ -18,6 +18,11 @@
                                       @"maxValue":maxValue}];
 }
 
+- (instancetype)initWithArguments:(id)arguments
+{
+    return [super initWithArguments:arguments];
+}
+
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"clip hard";

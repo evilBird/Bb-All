@@ -17,15 +17,17 @@
 //Outlets
 //Main outlet: passes through the input
 //Additional outlets: Has as many outlets as there are keys specified by the creation arguments
-
+/*
 - (instancetype)initWithRouteKeys:(NSArray *)routeKeys;
 //convenience intitializer which creates outlets for each specified inlet/outlet pair
 - (instancetype)initAndConnectWithRouteKeysAndInlets:(NSDictionary *)routeKeysAndInlets;
 //Get a specific outlet by route key
-- (BSDOutlet *)outletForRouteKey:(NSString *)aRouteKey;
+ */
+- (BSDOutlet *)outletForRouteKey:(id)aRouteKey;
 
 //Add an outlet for a route key
-- (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey;
-- (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey connectToInlet:(BSDInlet *)inlet;
+- (BSDOutlet *)addOutletForRouteKey:(id)routeKey;
+
+@property (nonatomic,strong)BSDOutlet *passThroughOutlet;
 
 @end

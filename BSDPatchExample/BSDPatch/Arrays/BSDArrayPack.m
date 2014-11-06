@@ -12,84 +12,89 @@
 @interface BSDArrayPack ()
 
 @property (nonatomic,strong)NSArray *pairedInletNames;
+@property (nonatomic,strong)NSArray *orderedInlets;
 
 @end
 
 @implementation BSDArrayPack
 
-- (instancetype)initWithNumberOfInlets:(NSNumber *)numberOfInlets
+- (instancetype)initWithArguments:(id)arguments
 {
-    return [super initWithArguments:numberOfInlets];
-}
-- (instancetype)initAndConnectToOutlets:(NSArray *)outlets
-{
-    return [super initWithArguments:outlets];
+    return [super initWithArguments:arguments];
 }
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"array pack";
-    self.coldInlet.open = NO;
-    
-    if ([arguments isKindOfClass:[NSNumber class]]) {
-        NSNumber *numberOfInlets = arguments;
-        for (NSUInteger idx = 0; idx < numberOfInlets.integerValue; idx ++) {
-            [self addInlet];
+    self.name = @"pack";
+    NSNumber *packCount = arguments;
+    if (packCount && [packCount isKindOfClass:[NSNumber class]]) {
+        for (NSUInteger idx = 0; idx < packCount.integerValue; idx ++) {
+            BSDInlet *inlet = nil;
+            if (idx == 0) {
+                inlet = [[BSDInlet alloc]initHot];
+                inlet.delegate = self;
+            }
+            
+            inlet.name = [NSString stringWithFormat:@"%@-Inlet-%@",self.objectId,@(idx)];
+            [self addPort:inlet];
         }
-    }else if ([arguments isKindOfClass:[NSArray class]]){
-        NSArray *outlets = arguments;
-        for (BSDOutlet *anOutlet in outlets) {
-            [self addInletAndConnectToOutlet:anOutlet];
-        }
+    }
+}
+
+- (BSDInlet *)makeLeftInlet
+{
+    return nil;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
+
+- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
+{
+    if (inlet == self.inlets.firstObject) {
+        [self calculateOutput];
     }
 }
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
-    if (inlet == self.hotInlet) {
-        NSUInteger numberOfInlets = self.inlets.count - 2;
-        NSMutableArray *outputArray = [[NSMutableArray alloc]initWithCapacity:numberOfInlets];
-        for (NSUInteger idx = 0; idx < numberOfInlets; idx ++) {
-            id value = [self inletAtIndex:@(idx)];
-            if (value != NULL) {
-                [outputArray addObject:[NSNull null]];
-            }else{
-                [outputArray addObject:value];
-            }
-        }
-        
-        self.mainOutlet.value = outputArray;
+    if (inlet == self.inlets.firstObject) {
+        [self calculateOutput];
     }
 }
 
-- (BSDInlet *)inletAtIndex:(NSNumber *)index
+- (void)calculateOutput
 {
-    //offset index by 2 since we already have the hot and cold inlets
-    NSUInteger i = index.integerValue + 2;
-    NSString *inletName = [NSString stringWithFormat:@"%lu",(unsigned long)i];
-    return [self inletNamed:inletName];
-}
-
-- (BSDInlet *)addInlet
-{
-    BSDInlet *inlet = [[BSDInlet alloc]init];
-    inlet.name = [NSString stringWithFormat:@"%lu",(unsigned long)self.inlets.count];
-    [self addPort:inlet];
-    return inlet;
-}
-
-- (BSDInlet *)addInletAndConnectToOutlet:(BSDOutlet *)outlet
-{
-    BSDInlet *inlet = [self addInlet];
-    [outlet connectToInlet:inlet];
-    return inlet;
+    if (!self.inlets) {
+        return;
+    }
+    
+    NSMutableArray *output = nil;
+    for (BSDInlet *inlet in self.inlets) {
+        id value = inlet.value;
+        if (value == nil) {
+            return;
+        }
+        
+        if (!output) {
+            output = [NSMutableArray array];
+        }
+        
+        [output addObject:value];
+    }
+    
+    if (output) {
+        [self.mainOutlet output:output.mutableCopy];
+    }
 }
 
 - (void)test
 {
-    BSDValueBox *box1 = [BSDCreate valueBoxCold:@(1)];
-    BSDValueBox *box2 = [BSDCreate valueBoxCold:@(100)];
-    BSDValueBox *box3 = [BSDCreate valueBoxCold:@(1000)];
+    BSDValue *box1 = [BSDCreate valueBoxCold:@(1)];
+    BSDValue *box2 = [BSDCreate valueBoxCold:@(100)];
+    BSDValue *box3 = [BSDCreate valueBoxCold:@(1000)];
     [self setupWithArguments:@[@"not an outlet",box1.mainOutlet,box2.mainOutlet,box3.mainOutlet]];
     self.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
         NSLog(@"composed array: %@",outlet.value);

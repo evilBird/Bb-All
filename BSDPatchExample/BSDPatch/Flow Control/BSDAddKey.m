@@ -17,7 +17,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"add key";
+    self.name = @"key";
     
     NSString *key = (NSString *)arguments;
     if (key && key.length > 0) {
@@ -31,7 +31,13 @@
 {
     id hot = self.hotInlet.value;
     NSString *key = self.coldInlet.value;
-    self.mainOutlet.value = @{key: hot};
+    if (hot == nil || key == nil) {
+        return;
+    }
+    
+    NSDictionary *output = @{key:hot};
+    
+    self.mainOutlet.value = output;
 }
 
 @end

@@ -18,12 +18,10 @@
     }
 }
 
-- (void)calculateOutput
+- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
 {
-    id hot = self.hotInlet.value;
-    NSArray *array = self.coldInlet.value;
-    if ([self isBang:hot] && array) {
-        self.mainOutlet.value = array;
+    if ([value isKindOfClass:[BSDBang class]]) {
+        self.mainOutlet.value = self.coldInlet.value;
     }
 }
 

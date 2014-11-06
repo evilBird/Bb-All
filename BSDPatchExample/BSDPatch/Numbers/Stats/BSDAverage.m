@@ -21,7 +21,12 @@
 
 - (instancetype)initWithBufferSize:(NSNumber *)bufferSize;
 {
-    return [super initWithArguments:bufferSize];
+    return [self initWithArguments:bufferSize];
+}
+
+- (instancetype)initWithArguments:(id)arguments
+{
+    return [super initWithArguments:arguments];
 }
 
 - (void)setupWithArguments:(id)arguments

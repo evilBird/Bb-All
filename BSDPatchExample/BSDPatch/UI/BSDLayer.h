@@ -7,12 +7,26 @@
 //
 
 #import "BSDObject.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface BSDLayer : BSDObject
 
-- (instancetype)initWithCALayer:(CALayer *)layer;
+- (instancetype)initWithArguments:(id)arguments;
 
-@property (nonatomic,strong)CALayer *layer;
+- (CALayer *)layer;
+- (CALayer *)makeMyLayer;
+- (CALayer *)makeMyLayerWithFrame:(CGRect)frame;
+- (NSString *)displayName;
+- (NSDictionary *)mapLayer:(CALayer *)layer;
+
+- (void)doAnimation;
+- (void)doSelector;
+
+
+@property (nonatomic,strong)BSDInlet *layerInlet;
+@property (nonatomic,strong)BSDInlet *animationInlet;
+@property (nonatomic,strong)BSDInlet *selectorInlet;
+@property (nonatomic,strong)BSDInlet *setterInlet;
 @property (nonatomic,strong)BSDInlet *getterInlet;
 @property (nonatomic,strong)BSDOutlet *getterOutlet;
 

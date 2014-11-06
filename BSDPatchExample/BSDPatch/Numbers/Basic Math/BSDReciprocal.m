@@ -19,7 +19,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"reciprocal";
+    self.name = @"1/x";
     NSNumber *numerator = arguments;
     if (numerator) {
         self.coldInlet.value = numerator;

@@ -12,7 +12,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"cosine";
+    self.name = @"cos";
 }
 
 - (void)calculateOutput

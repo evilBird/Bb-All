@@ -12,7 +12,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"natural log";
+    self.name = @"log";
     self.coldInlet.open = NO;
 }
 

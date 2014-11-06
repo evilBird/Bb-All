@@ -17,7 +17,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"modulus";
+    self.name = @"%";
     
     NSNumber *initVal = (NSNumber *)arguments;
     if (initVal) {

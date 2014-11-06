@@ -6,15 +6,9 @@
 //  Copyright (c) 2014 birdSound LLC. All rights reserved.
 //
 
-#import "BSDObject.h"
+#import "BSDView.h"
 
-@interface BSDImageView : BSDObject
+@interface BSDImageView : BSDView
 
-- (instancetype)initWithUIImageView:(UIImageView *)imageView;
-
-- (UIImageView *)imageView;
-
-@property (nonatomic,strong)BSDInlet *getterInlet;
-@property (nonatomic,strong)BSDOutlet *getterOutlet;
 
 @end

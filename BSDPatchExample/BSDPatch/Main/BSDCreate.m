@@ -125,14 +125,14 @@
     return [[BSDSwap alloc]initWithArguments:coldInletValue];
 }
 
-+ (BSDValueBox *)valueBox
++ (BSDValue *)valueBox
 {
-    return [[BSDValueBox alloc]initWithArguments:nil];
+    return [[BSDValue alloc]initWithArguments:nil];
 }
 
-+ (BSDValueBox *)valueBoxCold:(NSNumber *)coldInletValue
++ (BSDValue *)valueBoxCold:(NSNumber *)coldInletValue
 {
-    return [[BSDValueBox alloc]initWithArguments:coldInletValue];
+    return [[BSDValue alloc]initWithArguments:coldInletValue];
 }
 
 + (BSDExponent *)exponent
@@ -385,7 +385,7 @@
 
 + (BSDRect *)rectWithCGRect:(CGRect)rect
 {
-    return [[BSDRect alloc]initWithCGRect:rect];
+    return [[BSDRect alloc]initWithArguments:@[@(rect.origin.x),@(rect.origin.y),@(rect.size.width),@(rect.size.height)]];
 }
 
 + (BSDView *)view
@@ -394,7 +394,7 @@
 }
 + (BSDView *)viewWithUIView:(UIView *)view
 {
-    return [[BSDView alloc]initWithUIView:view];
+    return [[BSDView alloc]initWithArguments:nil];
 }
 
 + (BSDPoint2D *)point
@@ -404,7 +404,7 @@
 
 + (BSDPoint2D *)pointWithCGPoint:(CGPoint)point
 {
-    return [[BSDPoint2D alloc]initWithCGPoint:point];
+    return [[BSDPoint2D alloc]initWithArguments:@[@(point.x),@(point.y)]];
 }
 
 + (BSDFormatString *)formatString
@@ -420,9 +420,9 @@
 {
     return [[BSDLabel alloc]initWithArguments:nil];
 }
-+ (BSDLabel *)labelWithUILabel:(UILabel*)label
++ (BSDLabel *)labelWithSuperview:(UIView *)superview
 {
-    return [[BSDLabel alloc]initWithUILabel:label];
+    return [[BSDLabel alloc]initWithArguments:nil];
 }
 
 @end

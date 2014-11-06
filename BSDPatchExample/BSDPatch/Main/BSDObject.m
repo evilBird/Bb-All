@@ -25,24 +25,22 @@
         _subobjects = [NSMutableArray array];
         
         _name = @"BSDObject";
-        _hotInlet = [[BSDInlet alloc]initHot];
-        _hotInlet.name = @"hot";
-        _hotInlet.objectId = [self objectId];
-        _hotInlet.delegate = self;
-        [self addPort:_hotInlet];
-
-        _coldInlet = [[BSDInlet alloc]initCold];
-        _coldInlet.name = @"cold";
-        _coldInlet.objectId = [self objectId];
-        [self addPort:_coldInlet];
+        _hotInlet = [self makeLeftInlet];
+        if (_hotInlet != nil) {
+            [self addPort:_hotInlet];
+        }
+        _coldInlet = [self makeRightInlet];
+        if (_coldInlet != nil) {
+            [self addPort:_coldInlet];
+        }
         
-        _mainOutlet = [[BSDOutlet alloc]init];
-        _mainOutlet.name = @"main";
-        _mainOutlet.objectId = [self objectId];
-        [self addPort:_mainOutlet];
+        _mainOutlet = [self makeLeftOutlet];
+        if (_mainOutlet != nil) {
+            [self addPort:_mainOutlet];
+        }
 
         [self setupWithArguments:arguments];
-        
+                
     }
     
     return self;
@@ -59,6 +57,32 @@
 }
 
 #pragma mark - overrides
+
+// Override methods for default port config
+- (BSDInlet *)makeLeftInlet
+{
+    BSDInlet *hotInlet = [[BSDInlet alloc]initHot];
+    hotInlet.name = @"hot";
+    hotInlet.objectId = [self objectId];
+    hotInlet.delegate = self;
+    return hotInlet;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    BSDInlet *coldInlet = [[BSDInlet alloc]initCold];
+    coldInlet.name = @"cold";
+    coldInlet.objectId = [self objectId];
+    return coldInlet;
+}
+
+- (BSDOutlet *)makeLeftOutlet
+{
+    BSDOutlet *mainOutlet = [[BSDOutlet alloc]init];
+    mainOutlet.name = @"main";
+    mainOutlet.objectId = [self objectId];
+    return mainOutlet;
+}
 
 - (void)setupWithArguments:(id)arguments
 {
@@ -80,10 +104,17 @@
     //override
 }
 
+- (void)loadBang
+{
+    
+}
+
 - (void)test
 {
     
 }
+
+
 
 #pragma mark - BSDPortDelegate methods
 
@@ -125,12 +156,14 @@
     if (port && port.name) {
         if ([port isKindOfClass:[BSDInlet class]]) {
             BSDInlet *inlet = (BSDInlet *)port;
+            inlet.objectId = [self objectId];
             [self.inlets addObject:inlet];
             if (inlet.isHot) {
                 [self observePort:inlet];
             }
         } else if ([port isKindOfClass:[BSDOutlet class]]){
             BSDOutlet *outlet = (BSDOutlet *)port;
+            outlet.objectId = [self objectId];
             [self.outlets addObject:outlet];
             [self observePort:outlet];
         }
@@ -181,6 +214,10 @@
 
 - (NSString *)objectId
 {
+    if (self.assignedId != nil) {
+        return self.assignedId;
+    }
+    
     return [NSString stringWithFormat:@"%p",self];
 }
 
@@ -245,6 +282,24 @@
     }
     [description appendFormat:@"\n\n"];
     return description;
+}
+
+- (void)tearDown
+{
+    if (self.observedPorts.count) {
+        
+        for (BSDPort *port in self.observedPorts) {
+            [port removeObserver:self forKeyPath:@"value" context:nil];
+            port.delegate = nil;
+        }
+    }
+    
+    self.observedPorts = nil;
+    self.hotInlet = nil;
+    self.coldInlet = nil;
+    self.inlets = nil;
+    self.outlets = nil;
+    
 }
 
 - (void)dealloc

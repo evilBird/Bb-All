@@ -12,7 +12,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"tangent";
+    self.name = @"tan";
 }
 
 - (void)calculateOutput

@@ -10,44 +10,24 @@
 
 @implementation BSDLabel
 
-- (instancetype)initWithUILabel:(UILabel *)label
+- (instancetype)initWithArguments:(id)arguments
 {
-    return [super initWithArguments:label];
+    return [super initWithArguments:arguments];
 }
 
-- (void)setupWithArguments:(id)arguments
+- (NSString *)displayName
 {
-    self.name = @"label";
-    UILabel *label = (UILabel *)arguments;
-    if (label) {
-        self.coldInlet.value = label;
-    }
+    return @"label";
 }
 
-- (void)inletReceievedBang:(BSDInlet *)inlet
+- (UIView *)makeMyView
 {
-    if (inlet == self.hotInlet) {
-        [self calculateOutput];
-    }
+    return [self makeMyViewWithFrame:CGRectMake(0, 0, 88, 22)];
 }
 
-- (void)calculateOutput
+- (UIView *)makeMyViewWithFrame:(CGRect)frame
 {
-    NSDictionary *hot = self.hotInlet.value;
-    UIView *cold = self.coldInlet.value;
-    
-    if (hot && cold) {
-        for (NSString *aKey in hot.allKeys) {
-            [cold setValue:hot[aKey] forKey:aKey];
-        }
-        
-        self.mainOutlet.value = self.coldInlet.value;
-    }
+    UILabel *myView = [[UILabel alloc]initWithFrame:frame];
+    return myView;
 }
-
-- (UILabel *)label
-{
-    return self.coldInlet.value;
-}
-
 @end

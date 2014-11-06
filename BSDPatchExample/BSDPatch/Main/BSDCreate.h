@@ -49,8 +49,8 @@
 + (BSDDivide *)divide;
 + (BSDDivide *)divideCold:(NSNumber *)coldInletValue;
 
-+ (BSDValueBox *)valueBox;
-+ (BSDValueBox *)valueBoxCold:(NSNumber *)coldInletValue;
++ (BSDValue *)valueBox;
++ (BSDValue *)valueBoxCold:(NSNumber *)coldInletValue;
 
 + (BSDExponent *)power;
 + (BSDExponent *)powerCold:(NSNumber *)coldInletValue;
@@ -143,6 +143,7 @@
 + (BSDFormatString *)formatString:(NSString *)coldInletValue;
 
 + (BSDLabel *)label;
-+ (BSDLabel *)labelWithUILabel:(UILabel*)label;
+//+ (BSDLabel *)labelWithUILabel:(UILabel*)label;
++ (BSDLabel *)labelWithSuperview:(UIView *)superview;
 
 @end
