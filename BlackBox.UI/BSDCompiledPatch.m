@@ -53,6 +53,7 @@
     //[compiler.stringInlet input:string];
     //self.canvas = [compiler.canvasOutlet value];
     self.canvas = [compiler restoreCanvasWithText:string];
+
     NSInteger idx = 0;
     for (BSDInlet *inlet in self.canvas.inlets) {
         BSDInlet *myInlet = [[BSDInlet alloc]initHot];
@@ -69,6 +70,11 @@
         [self addPort:myOutlet];
         [outlet forwardToPort:myOutlet];
         idx++;
+    }
+    
+    for (BSDBox *box in self.canvas.graphBoxes) {
+        BSDObject *obj = box.object;
+        [obj loadBang];
     }
 }
 

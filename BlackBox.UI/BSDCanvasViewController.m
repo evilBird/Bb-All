@@ -110,10 +110,31 @@
             frame.origin.y = CGRectGetMaxY(self.view.bounds) - frame.size.height;
             self.logView = [[BSDLogView alloc]initWithFrame:frame];
             [self.view addSubview:self.logView];
+            [self configureConstraintsForLogView:self.logView];
             self.canvases = [NSMutableArray array];
             [self.canvases addObject:self.curentCanvas];
         }
     }
+}
+
+- (void)configureConstraintsForLogView:(BSDLogView *)logview
+{
+    logview.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *metrics = @{@"height":@(logview.bounds.size.height)};
+    NSDictionary *views = NSDictionaryOfVariableBindings(logview);
+    NSArray *constraints = nil;
+    constraints  = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[logview(150)]|"
+                                                           options:0
+                                                           metrics:metrics
+                                                             views:views];
+    [self.view addConstraints:constraints];
+    
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[logview]|"
+                                                          options:0
+                                                          metrics:nil
+                                                            views:views];
+    [self.view addConstraints:constraints];
+    
 }
 
 - (void)configureConstraints

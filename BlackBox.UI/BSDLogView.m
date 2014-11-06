@@ -27,7 +27,7 @@
         insets.bottom = 10;
         insets.top = 10;
         _textView.textContainerInset = insets;
-        _textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        _textView.autoresizingMask = UIViewAutoresizingFlexibleHeight&UIViewAutoresizingFlexibleWidth;
         _textView.layer.borderWidth = 1;
         _textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _textView.editable = NO;
@@ -35,6 +35,7 @@
     
     return self;
 }
+
 
 - (void)handlePrintNotification:(NSNotification *)notification
 {
