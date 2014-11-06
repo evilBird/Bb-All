@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5EC7E8FBB4FC43EB8F4060BE /* libPods-BlackBox.UI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */; };
 		F204D60419F71E7200175B24 /* BSDHSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = F204D60319F71E7200175B24 /* BSDHSlider.m */; };
+		F20D1A121A0B424500710F3A /* BSDSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = F20D1A111A0B424500710F3A /* BSDSortDescriptor.m */; };
+		F20D1A151A0B4D2200710F3A /* BSDPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = F20D1A141A0B4D2200710F3A /* BSDPredicate.m */; };
 		F21A5B5E19DF86BA00E6F21B /* BSDPatchDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */; };
 		F21A5B6119E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */; };
 		F21E4C5519C8FDD600D20D60 /* BSDClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E4C5419C8FDD600D20D60 /* BSDClient.m */; };
@@ -230,6 +232,10 @@
 		0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BlackBox.UI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F204D60219F71E7200175B24 /* BSDHSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDHSlider.h; sourceTree = "<group>"; };
 		F204D60319F71E7200175B24 /* BSDHSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDHSlider.m; sourceTree = "<group>"; };
+		F20D1A101A0B424500710F3A /* BSDSortDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDSortDescriptor.h; sourceTree = "<group>"; };
+		F20D1A111A0B424500710F3A /* BSDSortDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDSortDescriptor.m; sourceTree = "<group>"; };
+		F20D1A131A0B4D2200710F3A /* BSDPredicate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPredicate.h; sourceTree = "<group>"; };
+		F20D1A141A0B4D2200710F3A /* BSDPredicate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPredicate.m; sourceTree = "<group>"; };
 		F21A5B5C19DF86BA00E6F21B /* BSDPatchDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchDescription.h; sourceTree = "<group>"; };
 		F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchDescription.m; sourceTree = "<group>"; };
 		F21A5B5F19E0AF4F00E6F21B /* BSDPatchDescriptionUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchDescriptionUtility.h; sourceTree = "<group>"; };
@@ -694,6 +700,10 @@
 				F21E524D19C51BC300E51383 /* BSDSplitArray.m */,
 				F2389B0619EF8FCB008B51DB /* BSDAny2Array.h */,
 				F2389B0719EF8FCB008B51DB /* BSDAny2Array.m */,
+				F20D1A101A0B424500710F3A /* BSDSortDescriptor.h */,
+				F20D1A111A0B424500710F3A /* BSDSortDescriptor.m */,
+				F20D1A131A0B4D2200710F3A /* BSDPredicate.h */,
+				F20D1A141A0B4D2200710F3A /* BSDPredicate.m */,
 			);
 			path = Arrays;
 			sourceTree = "<group>";
@@ -1561,6 +1571,7 @@
 				F21E52FF19C51BC300E51383 /* BSDArrayPrepend.m in Sources */,
 				F2CFDEE319DB46DC00A156DB /* UIImage+Resize.m in Sources */,
 				F2F5132019B8D97C00323096 /* AppDelegate.m in Sources */,
+				F20D1A121A0B424500710F3A /* BSDSortDescriptor.m in Sources */,
 				F241578C19CB8EEF003E32CA /* BSDNumber.m in Sources */,
 				F21E531219C51BC300E51383 /* BSDMotionGenerator.m in Sources */,
 				F21E534119C51BC300E51383 /* BSDFont.m in Sources */,
@@ -1577,6 +1588,7 @@
 				F21E530E19C51BC300E51383 /* BSDSpigot.m in Sources */,
 				F21E533B19C51BC300E51383 /* BSDOutlet.m in Sources */,
 				F21E530219C51BC300E51383 /* BSDSplitArray.m in Sources */,
+				F20D1A151A0B4D2200710F3A /* BSDPredicate.m in Sources */,
 				F21E530D19C51BC300E51383 /* BSDSequence.m in Sources */,
 				F2FF09E619D149540095C3E4 /* BSDWebImage.m in Sources */,
 				F2CFDEF119DCACA000A156DB /* BSDReceive.m in Sources */,
