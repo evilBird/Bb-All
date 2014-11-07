@@ -110,7 +110,7 @@
             frame.origin.y = CGRectGetMaxY(self.view.bounds) - frame.size.height;
             self.logView = [[BSDLogView alloc]initWithFrame:frame];
             [self.view addSubview:self.logView];
-            [self configureConstraintsForLogView:self.logView];
+            //[self configureConstraintsForLogView:self.logView];
             self.canvases = [NSMutableArray array];
             [self.canvases addObject:self.curentCanvas];
         }
@@ -497,6 +497,7 @@
         self.curentCanvas.name = name;
         [self.scrollView addSubview:self.curentCanvas];
         self.currentPatchName = name;
+        [self.curentCanvas loadBang];
     }
 }
 

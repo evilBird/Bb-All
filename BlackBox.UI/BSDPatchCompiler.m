@@ -437,7 +437,7 @@
         return nil;
     }
     
-    NSLog(@"\n\nBLACKBOX PARSE: \n\n%@\n\n",text);
+    //NSLog(@"\n\nBLACKBOX PARSE: \n\n%@\n\n",text);
     NSArray *lines = [text componentsSeparatedByString:@";\n"];
     if (!lines) {
         return nil;

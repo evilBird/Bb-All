@@ -44,6 +44,28 @@
 
 #pragma mark - edit state management
 
+- (void)loadBang
+{
+    if (!self.graphBoxes) {
+        return;
+    }
+    //depth first
+    for (BSDBox *box in self.graphBoxes) {
+        id object = box.object;
+        if ([object isKindOfClass:[BSDCanvas class]]) {
+            [object loadBang];
+        }
+    }
+    
+    //then everything else
+    for (BSDBox *box in self.graphBoxes) {
+        id object = box.object;
+        if (![object isKindOfClass:[BSDCanvas class]]) {
+            [object loadBang];
+        }
+    }
+}
+
 - (void)setEditState:(BSDCanvasEditState)editState
 {
     if (editState != _editState) {

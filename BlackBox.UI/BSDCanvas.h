@@ -51,6 +51,7 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 - (NSString *)objectId;
 - (void)tearDown;
 - (void)clearCurrentPatch;
+- (void)loadBang;
 
 - (void)deleteSelectedContent;
 - (void)copySelectedContent;
