@@ -18,7 +18,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"classify";
+    self.name = @"array classify";
     NSArray *predicates = arguments;
     if (predicates) {
         self.coldInlet.value = predicates;

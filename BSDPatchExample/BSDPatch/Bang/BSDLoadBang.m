@@ -36,10 +36,7 @@
 
 - (void)handleLoadBangNotification:(NSNotification *)notification
 {
-    NSString *objectId = notification.object;
-    if ([objectId hash] == [[self objectId]hash]) {
-        [self parentPatchFinishedLoading];
-    }
+    [self loadBang];
 }
 
 - (BSDInlet *)makeLeftInlet
