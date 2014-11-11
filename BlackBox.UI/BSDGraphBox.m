@@ -127,7 +127,6 @@
 
 - (void)handleText:(NSString *)text
 {
-    NSString *theText = [text stringByReplacingOccurrencesOfString:@"$0" withString:self.canvasId];
     NSMutableArray *components = [[text componentsSeparatedByString:@" "]mutableCopy];
     NSMutableString *argsString = nil;
     NSString *name = nil;
@@ -140,6 +139,7 @@
     if (components.count) {
         for (NSString *comp in components) {
             NSRange r = [comp rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
+            NSRange s = [comp rangeOfString:@"$"];
             if (!argsString) {
                 argsString = [[NSMutableString alloc]init];
                 [argsString appendFormat:@"%@",comp];
@@ -147,7 +147,7 @@
                 [argsString appendFormat:@" %@",comp];
             }
             
-            if (r.length == 0) {
+            if (r.length == 0 && s.length == 0) {
                 NSNumber *arg = @(comp.floatValue);
                 if (!argsList) {
                     argsList = [NSMutableArray array];
@@ -182,7 +182,7 @@
     
     if (args) {
         self.creationArguments = args;
-        [self makeObjectInstanceArgs:[self makeSubstitutionsInArgs:args]];
+        [self makeObjectInstanceArgs:[self makeSubstitutionsInArgs:args canvasArgs:self.canvasCreationArgs]];
     }else{
         self.creationArguments = nil;
         [self makeObjectInstance];
@@ -208,6 +208,42 @@
         id subbedArg = nil;
         if ([anArg isKindOfClass:[NSString class]]) {
             subbedArg = [anArg stringByReplacingOccurrencesOfString:@"$0" withString:self.canvasId];
+        }else{
+            subbedArg = anArg;
+        }
+        
+        if (!result) {
+            result = [NSMutableArray array];
+        }
+        [result addObject:subbedArg];
+    }
+    return result;
+}
+
+- (NSArray *)makeSubstitutionsInArgs:(NSArray *)args canvasArgs:(NSArray *)canvasArgs
+{
+    NSMutableArray *result = nil;
+    for (id anArg in args) {
+        id subbedArg = nil;
+        if ([anArg isKindOfClass:[NSString class]]) {
+            NSRange range = [anArg rangeOfString:@"$0"];
+            if (range.length > 0) {
+                subbedArg = [anArg stringByReplacingOccurrencesOfString:@"$0" withString:self.canvasId];
+            }else if (canvasArgs != nil){
+                for (NSInteger idx = 0; idx < canvasArgs.count; idx ++) {
+                    NSString *toReplace = [NSString stringWithFormat:@"$%@",@(idx+1)];
+                    range = [anArg rangeOfString:toReplace];
+                    if (range.length > 0) {
+                        NSString *replacementString = [NSString stringWithFormat:@"%@",canvasArgs[idx]];
+                        subbedArg = [anArg stringByReplacingOccurrencesOfString:toReplace withString:replacementString];
+                    }
+                }
+            }
+            
+            if (subbedArg == nil) {
+                subbedArg = [NSString stringWithString:anArg];
+            }
+            
         }else{
             subbedArg = anArg;
         }

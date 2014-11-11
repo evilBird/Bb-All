@@ -23,6 +23,7 @@
 - (NSString *)saveBoxes:(NSArray *)boxes;
 - (NSString *)saveConnectionsBetweenBoxes:(NSArray *)boxes;
 - (BSDCanvas *)restoreCanvasWithText:(NSString *)text;
+- (BSDCanvas *)restoreCanvasWithText:(NSString *)text creationArgs:(NSArray *)args;
 - (NSArray *)restoreBoxesWithText:(NSString *)text;
 
 @end

@@ -20,6 +20,7 @@
 @end
 
 @interface BSDCompiledPatch : BSDObject
+@property (nonatomic,strong)NSArray *creationArgs;
 
 //@property (nonatomic,strong)BSDPatchInlet *patchInlet;
 //@property (nonatomic,strong)BSDPatchOutlet *patchOutlet;

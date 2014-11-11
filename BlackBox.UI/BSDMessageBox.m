@@ -139,6 +139,7 @@
         
         if (self.object != nil) {
             [[(BSDMessage *)self.object hotInlet]input:@{@"set":theMessage}];
+            [[self.object hotInlet]input:[BSDBang bang]];
         }
     }
 }
@@ -183,6 +184,7 @@
         NSString *nq = [nt stringByReplacingOccurrencesOfString:@"\"" withString:@""];
         self.textField.text = nq;
         [self resizeToFitText:self.textField.text];
+        [self setNeedsDisplay];
     }
 }
 

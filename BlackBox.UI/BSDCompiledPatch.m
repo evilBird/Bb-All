@@ -38,7 +38,25 @@
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"";
-    NSString *patchName = arguments;
+    NSString *patchName = nil;
+    if (arguments) {
+        if ([arguments isKindOfClass:[NSString class]]) {
+            patchName = arguments;
+        }else if ([arguments isKindOfClass:[NSArray class]]){
+            NSArray *args = (NSArray *)arguments;
+            patchName = args.firstObject;
+            if (args.count > 1) {
+                NSRange creationArgsRange;
+                creationArgsRange.location = 1;
+                creationArgsRange.length = args.count - 1;
+                NSIndexSet *argsIndexSet = [NSIndexSet indexSetWithIndexesInRange:creationArgsRange];
+                NSArray *ca = [args objectsAtIndexes:argsIndexSet];
+                self.creationArgs = ca.mutableCopy;
+                NSLog(@"patch %@ has creation args: %@",patchName,self.creationArgs);
+            }
+        }
+    }
+    
     if (patchName) {
         NSString *patch = [self patchDescriptionWithName:patchName];
         if (patch) {
@@ -50,7 +68,7 @@
 - (void)loadPatchWithString:(NSString *)string
 {
     BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
-    self.canvas = [compiler restoreCanvasWithText:string];
+    self.canvas = [compiler restoreCanvasWithText:string creationArgs:self.creationArgs];
 
     NSInteger idx = 0;
     for (BSDInlet *inlet in self.canvas.inlets) {
@@ -70,10 +88,14 @@
         idx++;
     }
     
+    [self.canvas loadBang];
+    
+    /*
     for (BSDBox *box in self.canvas.graphBoxes) {
         BSDObject *obj = box.object;
         [obj loadBang];
     }
+     */
 }
 
 - (void)setDelegate:(id<BSDCompiledPatchDelegate>)delegate

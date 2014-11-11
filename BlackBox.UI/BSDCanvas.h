@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 @property (nonatomic)BSDCanvas *parentCanvas;
 @property (nonatomic,strong)NSNumber *isDirty;
 @property (nonatomic,strong)NSNumber *instanceId;
+@property (nonatomic,strong)NSArray *creationArgArray;
 
 + (CGRect)frameWithEntry:(NSString *)entry;
 + (CGRect)rectForType:(NSString *)type;

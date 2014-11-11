@@ -649,6 +649,10 @@
     if (self) {
         NSArray *components = [entries.firstObject componentsSeparatedByString:@" "];
         self.name = components[6];
+        if (components.count > 7) {
+            NSLog(@"there are %@ creation args in canvas %@",@(components.count - 7),self.name);
+        }
+        self.creationArgArray = @[@(768),@(1024)];
     }
     return self;
 }
@@ -818,6 +822,7 @@
     NSInteger count = self.graphBoxes.count;
     box.tag = count;
     box.canvasId = self.canvasId;
+    box.canvasCreationArgs = self.creationArgArray.mutableCopy;
     
     [self.graphBoxes addObject:box];
     

@@ -142,7 +142,7 @@
 
 }
 
-- (UIView *)viewWithText:(NSString *)text canvasId:(NSNumber *)canvasId
+- (UIView *)viewWithText:(NSString *)text canvasId:(NSNumber *)canvasId canvasArgs:(NSArray *)canvasArgs
 {
     NSArray *components = [text componentsSeparatedByString:@" "];
     if (!components || components.count < 5) {
@@ -182,6 +182,8 @@
     }
     NSString *canvasIdString = [NSString stringWithFormat:@"%@",canvasId];
     [instance setValue:canvasIdString forKey:@"canvasId"];
+    NSMutableArray *canvasArgArray = canvasArgs.mutableCopy;
+    [instance setValue:canvasArgArray forKey:@"canvasCreationArgs"];
     [instance initializeWithText:argString];
 
     return instance;
@@ -328,7 +330,17 @@
     return [self parseText:text];
 }
 
+- (BSDCanvas *)restoreCanvasWithText:(NSString *)text creationArgs:(NSArray *)args
+{
+    return [self parseText:text creationArgs:args];
+}
+
 - (id)parseText:(NSString *)text
+{
+    return [self parseText:text creationArgs:nil];
+}
+
+- (id)parseText:(NSString *)text creationArgs:(NSArray *)args
 {
     NSArray *lines = [text componentsSeparatedByString:@";\n"];
     NSInteger canvasCount = 0;
@@ -349,6 +361,7 @@
                 if (!canvases) {
                     canvases = [NSMutableArray array];
                     canvas.parentCanvas = nil;
+                    canvas.creationArgArray = args.mutableCopy;
                     [canvases addObject:canvas];
                 }else{
                     [canvases addObject:canvas];
@@ -364,7 +377,7 @@
                 BSDCanvas *current = canvases[currentCanvas];
                 NSString *type = components[1];
                 if ([type isEqualToString:@"BSDAbstractionBox"]) {
-                    id box = [self viewWithText:currentLine canvasId:current.instanceId];
+                    id box = [self viewWithText:currentLine canvasId:current.instanceId canvasArgs:current.creationArgArray];
                     [box setObject:current];
                     if (components.count == 5) {
                         [box initializeWithText:components[4]];
@@ -402,7 +415,7 @@
                         }
                     }
                 }else{
-                    id box = [self viewWithText:currentLine canvasId:current.instanceId];
+                    id box = [self viewWithText:currentLine canvasId:current.instanceId canvasArgs:current.creationArgArray];
                     [box setValue:current forKey:@"delegate"];
                     [current.graphBoxes addObject:box];
                     [current addSubview:box];
@@ -455,6 +468,7 @@
                 canvas.graphBoxes = [NSMutableArray array];
                 canvas.inlets = [NSMutableArray array];
                 canvas.outlets = [NSMutableArray array];
+                
                 if (!canvases) {
                     canvases = [NSMutableArray array];
                     canvas.parentCanvas = nil;
