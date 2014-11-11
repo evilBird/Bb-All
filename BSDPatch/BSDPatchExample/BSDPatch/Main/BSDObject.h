@@ -76,6 +76,8 @@
 - (void) disconnect:(BSDInlet *)inlet;
 - (void) connectOutlet:(BSDOutlet *)outlet toInlet:(BSDInlet *)inlet;
 
+- (void)loadBang;
+
 // Optionally implement to reset an object to a specified state
 - (void) reset;
 - (void) tearDown;

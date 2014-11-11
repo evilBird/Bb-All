@@ -114,3 +114,5 @@
 #import "BSDPointer.h"
 #import "BSDAny2Array.h"
 #import "BSDStringReplace.h"
+#import "BSDSortDescriptor.h"
+#import "BSDPredicate.h"

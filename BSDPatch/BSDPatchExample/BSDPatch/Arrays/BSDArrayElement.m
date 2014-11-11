@@ -11,44 +11,58 @@
 
 @implementation BSDArrayElement
 
-- (instancetype)initWithArray:(NSArray *)array
+- (instancetype)initWithArguments:(id)arguments
 {
-    return [super initWithArguments:array];
+    return [super initWithArguments:arguments];
 }
 
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"array element";
-    NSArray *array = arguments;
-    if (array) {
-        self.coldInlet.value = array;
-    }else{
-        self.coldInlet.value = nil;
+    NSNumber *index = arguments;
+    if (index && [index isKindOfClass:[NSNumber class]]) {
+        self.coldInlet.value = index;
     }
 }
 
 - (BSDInlet *)makeLeftInlet
 {
-    BSDInlet *inlet = [[BSDNumberInlet alloc]initHot];
+    BSDInlet *inlet = [[BSDArrayInlet alloc]initHot];
     inlet.name = @"hot";
+    inlet.objectId = self.objectId;
+    inlet.delegate = self;
     return inlet;
 }
 
 - (BSDInlet *)makeRightInlet
 {
-    BSDInlet *inlet = [[BSDArrayInlet alloc]initCold];
+    BSDInlet *inlet = [[BSDNumberInlet alloc]initCold];
     inlet.name = @"cold";
+    inlet.objectId = self.objectId;
+    inlet.delegate = self;
     return inlet;
 }
 
 - (void)calculateOutput
 {
-    NSNumber *hot = self.hotInlet.value;
-    NSMutableArray *cold = [self.coldInlet.value mutableCopy];
-    
-    if (cold && hot.integerValue >= 0 && hot.integerValue < cold.count) {
-        self.mainOutlet.value = cold[hot.integerValue];
+    NSArray *hot = self.hotInlet.value;
+    if (!hot || ![hot isKindOfClass:[NSArray class]]) {
+        return;
     }
+    NSNumber *cold = self.coldInlet.value;
+    if (!cold || ![cold isKindOfClass:[NSNumber class]]) {
+        return;
+    }
+    
+    if (cold.integerValue > hot.count || cold.integerValue < 0) {
+        return;
+    }
+    NSMutableArray *array = hot.mutableCopy;
+    NSUInteger index = cold.integerValue;
+    id output = [array objectAtIndex:index];
+    
+    [self.mainOutlet output:output];
+
 }
 
 @end

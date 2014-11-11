@@ -28,14 +28,17 @@
     
     self.animationInlet = [[BSDInlet alloc]initHot];
     self.animationInlet.name = @"animation inlet";
+    self.animationInlet.delegate = self;
     [self addPort:self.animationInlet];
     
     self.viewSelectorInlet = [[BSDInlet alloc]initHot];
     self.viewSelectorInlet.name = @"view selector inlet";
+    self.viewSelectorInlet.delegate = self;
     [self addPort:self.viewSelectorInlet];
     
     self.setterInlet = [[BSDInlet alloc]initHot];
     self.setterInlet.name = @"setter inlet";
+    self.setterInlet.delegate = self;
     [self addPort:self.setterInlet];
     
     self.getterInlet = [[BSDInlet alloc]initHot];
@@ -71,7 +74,7 @@
         
         [self.mainOutlet output:self.viewInlet.value];
     }else if (inlet == self.getterInlet){
-        [self.getterOutlet output:[self mapView:self.viewInlet.value]];
+        //[self.getterOutlet output:[self mapView:self.viewInlet.value]];
     }
 }
 
@@ -101,7 +104,26 @@
         [self doSelector];
     }else if (inlet == self.animationInlet){
         [self doAnimation];
+    }else if (inlet == self.getterInlet){
+        [self getValue];
     }
+}
+
+- (void)getValue
+{
+    NSString *getter = self.getterInlet.value;
+    if (!getter || ![getter isKindOfClass:[NSString class]]) {
+        return;
+    }
+    UIView *view = self.viewInlet.value;
+    if (!view) {
+        return;
+    }
+    
+    NSString *keyPath = [NSString stringWithString:getter];
+    id value = [view valueForKeyPath:keyPath];
+    NSDictionary *output = @{keyPath:value};
+    [self.getterOutlet output:output];
 }
 
 - (void)doAnimation
