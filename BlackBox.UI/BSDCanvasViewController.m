@@ -24,6 +24,7 @@
 @property (strong, nonatomic) UIPopoverController *myPopoverController;
 @property (nonatomic,strong)UIButton *closeDisplayViewButton;
 @property (nonatomic,strong)BSDLogView *logView;
+@property (nonatomic,strong)NSMutableDictionary *boxDictionary;
 
 @end
 
@@ -278,7 +279,6 @@
     }
     BOOL result = [currentDescription isEqualToString:savedDescription];
     return 1 - result;
-    //return [currentDescription isEqualToString:savedDescription];
 }
 
 - (void)clearCanvas
@@ -417,7 +417,7 @@
 
 #pragma mark - editing state management
 
-- (void)newCanvasForPatch:(NSString *)patchName
+- (void)newCanvasForPatch:(NSString *)patchName withBox:(BSDGraphBox *)graphBox
 {
     NSDictionary *dictionary = [NSUserDefaults valueForKey:@"descriptions"];
     NSString *description = dictionary[patchName];
@@ -573,10 +573,12 @@
         
         [self saveDescription:description withName:name];
         if (kCanvasWillClose) {
-            [self.presentingViewController dismissViewControllerAnimated:YES
-                                                              completion:^{
-                                                                  kCanvasWillClose = NO;
-                                                              }];
+            BSDCanvasViewController *parent = (BSDCanvasViewController *)self.presentingViewController;
+            [parent dismissViewControllerAnimated:YES
+                                       completion:^{
+                                           kCanvasWillClose = NO;
+                                           [parent loadDescriptionWithName:parent.currentPatchName];
+                                       }];
         }
     }else if (alertView.tag == 1 && buttonIndex == 1){
         NSString *name = [alertView textFieldAtIndex:0].text;
@@ -590,8 +592,11 @@
             BSDCanvas *canvas = self.canvases.lastObject;
             NSString *description = [compiler saveCanvas:canvas];
             [self saveDescription:description withName:canvas.name];
-            [self.presentingViewController dismissViewControllerAnimated:YES
-                                     completion:NULL];
+            BSDCanvasViewController *parent = (BSDCanvasViewController *)self.presentingViewController;
+            [parent dismissViewControllerAnimated:YES
+                                     completion:^{
+                                         [parent loadDescriptionWithName:parent.currentPatchName];
+                                     }];
         }else if (buttonIndex == 2){
             kCanvasWillClose = YES;
             [self showSavePatchAlertView];

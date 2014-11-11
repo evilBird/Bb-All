@@ -45,6 +45,11 @@
 
 #pragma mark - edit state management
 
+- (void)updateCompiledInstancesWithName:(NSString *)name
+{
+    
+}
+
 - (void)loadBang
 {
     if (!self.graphBoxes) {
@@ -459,27 +464,39 @@
 {
     NSArray *args = graphBox.creationArguments;
     NSString *patchName = args.firstObject;
-    [self.delegate newCanvasForPatch:patchName];
+    [self.delegate newCanvasForPatch:patchName withBox:graphBox];
 }
 
 - (void)closeCanvas:(UIButton *)sender
 {
     BSDCanvas *canvas = (BSDCanvas *)sender.superview;
-    [canvas removeFromSuperview];
-    [sender removeFromSuperview];
-    [self.delegate setCurrentCanvas:self];
-    BSDBox *box = [self boxForCanvas:canvas];
-    if (!box) {
-        return;
-    }
+    __weak BSDCanvas *weakself = self;
+    [UIView animateWithDuration:0.5
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         canvas.alpha = 0.0;
+                     } completion:^(BOOL finished) {
+                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                             
+                             [canvas removeFromSuperview];
+                             [sender removeFromSuperview];
+                             [weakself.delegate setCurrentCanvas:weakself];
+                             BSDBox *box = [weakself boxForCanvas:canvas];
+                             if (!box) {
+                                 return;
+                             }
+                             
+                             if (box.inletViews.count < canvas.inlets.count) {
+                                 [box updateInletViews];
+                             }
+                             
+                             if (box.outletViews.count < canvas.outlets.count) {
+                                 [box updateOutletViews];
+                             }
+                         });
+                     }];
     
-    if (box.inletViews.count < canvas.inlets.count) {
-        [box updateInletViews];
-    }
-    
-    if (box.outletViews.count < canvas.outlets.count) {
-        [box updateOutletViews];
-    }
 }
 
 
