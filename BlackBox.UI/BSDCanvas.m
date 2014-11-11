@@ -152,7 +152,6 @@
     NSString *boxes = [compiler saveBoxes:selectedBoxes];
     NSString *connections = [compiler saveConnectionsBetweenBoxes:selectedBoxes];
     NSString *boxesAndConnections = [NSString stringWithFormat:@"%@%@",boxes,connections];
-    NSLog(@"\n\npasteboard:\n\n%@\n\n",boxesAndConnections);
     self.pasteBoard = boxesAndConnections;
     if (self.pasteBoard) {
         self.editState = BSDCanvasEditStateContentCopied;
@@ -333,7 +332,7 @@
 
 - (NSString *)canvasId
 {
-    return [NSString stringWithFormat:@"%@",self];
+    return [NSString stringWithFormat:@"%@",self.instanceId];
 }
 
 #pragma mark - touch handling methods
@@ -448,7 +447,7 @@
     UIButton *button = [UIButton new];
     [button setTitle:@"X" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button setFrame:CGRectMake(20, 20, 44, 44)];
+    [button setFrame:CGRectMake(8, 8, 44, 44)];
     [canvas addSubview:button];
     [button addTarget:self action:@selector(closeCanvas:) forControlEvents:UIControlEventTouchUpInside];
     [canvas addSubview:button];
@@ -461,7 +460,6 @@
     NSArray *args = graphBox.creationArguments;
     NSString *patchName = args.firstObject;
     [self.delegate newCanvasForPatch:patchName];
-    NSLog(@"open patch name: %@",graphBox.creationArguments);
 }
 
 - (void)closeCanvas:(UIButton *)sender
@@ -819,6 +817,7 @@
     }
     NSInteger count = self.graphBoxes.count;
     box.tag = count;
+    box.canvasId = self.canvasId;
     
     [self.graphBoxes addObject:box];
     

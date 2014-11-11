@@ -127,8 +127,7 @@
 
 - (void)handleText:(NSString *)text
 {
- 
-    //self.textField.enabled = NO;
+    NSString *theText = [text stringByReplacingOccurrencesOfString:@"$0" withString:self.canvasId];
     NSMutableArray *components = [[text componentsSeparatedByString:@" "]mutableCopy];
     NSMutableString *argsString = nil;
     NSString *name = nil;
@@ -183,7 +182,7 @@
     
     if (args) {
         self.creationArguments = args;
-        [self makeObjectInstanceArgs:args];
+        [self makeObjectInstanceArgs:[self makeSubstitutionsInArgs:args]];
     }else{
         self.creationArguments = nil;
         [self makeObjectInstance];
@@ -200,6 +199,26 @@
     [self.textField setText:displayName];
     [self resizeForText:displayName];
     kAllowEdit = NO;
+}
+
+- (NSArray *)makeSubstitutionsInArgs:(NSArray *)args
+{
+    NSMutableArray *result = nil;
+    for (id anArg in args) {
+        id subbedArg = nil;
+        if ([anArg isKindOfClass:[NSString class]]) {
+            subbedArg = [anArg stringByReplacingOccurrencesOfString:@"$0" withString:self.canvasId];
+        }else{
+            subbedArg = anArg;
+        }
+        
+        if (!result) {
+            result = [NSMutableArray array];
+        }
+        [result addObject:subbedArg];
+    }
+    
+    return result;
 }
 
 - (void)initializeWithText:(NSString *)text

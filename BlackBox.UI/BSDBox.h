@@ -20,6 +20,7 @@
 - (void)box:(id)sender portView:(id)portView drawLineToPoint:(CGPoint)point;
 - (void)box:(id)sender portView:(id)portView endedAtPoint:(CGPoint)point;
 - (void)boxDidMove:(id)sender;
+- (NSString *)canvasId;
 - (id)boxWithUniqueId:(NSString *)uniqueId;
 - (UIView *)displayViewForBox:(id)sender;
 - (NSString *)getClassNameForText:(NSString *)text;
@@ -46,6 +47,7 @@
 @property (nonatomic,strong)UIColor *defaultColor;
 @property (nonatomic,strong)UIColor *selectedColor;
 @property (nonatomic,strong)UIColor *currentColor;
+@property (nonatomic,strong)NSString *canvasId;
 
 - (NSString *)getDescription;
 

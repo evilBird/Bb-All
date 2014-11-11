@@ -560,10 +560,8 @@
 
 - (void)initializeWithText:(NSString *)text
 {
-    //if (text == nil) {
     [self makeObjectInstance];
     [self createPortViewsForObject:self.object];
-    //}
 }
 
 - (void)createPortViewsForObject:(id)object

@@ -142,7 +142,7 @@
 
 }
 
-- (UIView *)viewWithText:(NSString *)text
+- (UIView *)viewWithText:(NSString *)text canvasId:(NSNumber *)canvasId
 {
     NSArray *components = [text componentsSeparatedByString:@" "];
     if (!components || components.count < 5) {
@@ -180,7 +180,8 @@
         argString = [NSString stringWithString:mas];
         [instance setValue:arg forKey:@"argString"];
     }
-    
+    NSString *canvasIdString = [NSString stringWithFormat:@"%@",canvasId];
+    [instance setValue:canvasIdString forKey:@"canvasId"];
     [instance initializeWithText:argString];
 
     return instance;
@@ -329,7 +330,6 @@
 
 - (id)parseText:(NSString *)text
 {
-    //NSLog(@"\n\nBLACKBOX PARSE: \n\n%@\n\n",text);
     NSArray *lines = [text componentsSeparatedByString:@";\n"];
     NSInteger canvasCount = 0;
     NSInteger currentCanvas = 0;
@@ -345,6 +345,7 @@
                 canvas.graphBoxes = [NSMutableArray array];
                 canvas.inlets = [NSMutableArray array];
                 canvas.outlets = [NSMutableArray array];
+                canvas.instanceId = @(arc4random_uniform(10000));
                 if (!canvases) {
                     canvases = [NSMutableArray array];
                     canvas.parentCanvas = nil;
@@ -363,7 +364,7 @@
                 BSDCanvas *current = canvases[currentCanvas];
                 NSString *type = components[1];
                 if ([type isEqualToString:@"BSDAbstractionBox"]) {
-                    id box = [self viewWithText:currentLine];
+                    id box = [self viewWithText:currentLine canvasId:current.instanceId];
                     [box setObject:current];
                     if (components.count == 5) {
                         [box initializeWithText:components[4]];
@@ -388,22 +389,20 @@
                     NSInteger boxCount = current.graphBoxes.count;
                     
                     if (senderIdx >= boxCount || receiverIdx >= boxCount) {
-                        //NSLog(@"\n\nline %@ ERROR: connection %@.%@->%@.%@ %@ canvas %@ only has %@ boxes\n\n",@(lineNumber),@(senderIdx),@(senderPortIdx),@(receiverIdx),@(receiverPortIdx),current.name,@(currentCanvas),@(boxCount));
+
                     }else{
                         BSDBox *sender = current.graphBoxes[senderIdx];
                         BSDBox *receiver = current.graphBoxes[receiverIdx];
                         if (senderPortIdx >= sender.outletViews.count) {
-                          //  NSLog(@"\n\nline %@ ERROR: connection %@.%@->%@.%@ sender box %@-%@-%@ only has %@ outlets\n\n",@(lineNumber),@(senderIdx),@(senderPortIdx),@(receiverIdx),@(receiverPortIdx),sender.boxClassString,sender.className,sender.argString,@(sender.outletViews.count));
+
                         }else if (receiverPortIdx >= receiver.inletViews.count){
-                           // NSLog(@"\n\nline %@ ERROR: connection %@.%@->%@.%@ receiver box %@-%@-%@ only has %@ inlets\n\n",@(lineNumber),@(senderIdx),@(senderPortIdx),@(receiverIdx),@(receiverPortIdx),receiver.boxClassString,receiver.className,receiver.argString,@(receiver.inletViews.count));
+
                         }else{
                             [sender connectOutlet:senderPortIdx toInlet:receiverPortIdx inBox:receiver];
-                          //  NSLog(@"\n\nline %@ connection in %@ canvas %@ (%@ boxes): %@.%@->%@.%@\n\n",@(lineNumber),current.name,@(currentCanvas),@(boxCount),@(senderIdx),@(senderPortIdx),@(receiverIdx),@(receiverPortIdx));
                         }
                     }
                 }else{
-                    id box = [self viewWithText:currentLine];
-                    //BSDCanvas *current = canvases[currentCanvas - 1];
+                    id box = [self viewWithText:currentLine canvasId:current.instanceId];
                     [box setValue:current forKey:@"delegate"];
                     [current.graphBoxes addObject:box];
                     [current addSubview:box];
@@ -437,7 +436,6 @@
         return nil;
     }
     
-    //NSLog(@"\n\nBLACKBOX PARSE: \n\n%@\n\n",text);
     NSArray *lines = [text componentsSeparatedByString:@";\n"];
     if (!lines) {
         return nil;

@@ -37,7 +37,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"patch";
+    self.name = @"";
     NSString *patchName = arguments;
     if (patchName) {
         NSString *patch = [self patchDescriptionWithName:patchName];
@@ -50,8 +50,6 @@
 - (void)loadPatchWithString:(NSString *)string
 {
     BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
-    //[compiler.stringInlet input:string];
-    //self.canvas = [compiler.canvasOutlet value];
     self.canvas = [compiler restoreCanvasWithText:string];
 
     NSInteger idx = 0;
