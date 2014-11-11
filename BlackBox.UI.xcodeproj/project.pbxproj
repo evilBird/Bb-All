@@ -137,6 +137,7 @@
 		F2AAF7A319C7DD16004EFE87 /* BSDRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A219C7DD16004EFE87 /* BSDRandom.m */; };
 		F2AAF7A619C7FB4B004EFE87 /* BSDCanvasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */; };
 		F2AAF7A919C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A819C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m */; };
+		F2C8A2F81A129AED00CAF039 /* BSDActionPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */; };
 		F2CFDEB019DA1E7800A156DB /* BSDAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEAF19DA1E7800A156DB /* BSDAnimation.m */; };
 		F2CFDEB319DA29A800A156DB /* BSDTransform3d.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEB219DA29A800A156DB /* BSDTransform3d.m */; };
 		F2CFDEB619DA2B9600A156DB /* BSDTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEB519DA2B9600A156DB /* BSDTrigger.m */; };
@@ -489,6 +490,8 @@
 		F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCanvasViewController.m; sourceTree = "<group>"; };
 		F2AAF7A719C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+HBVUtils.h"; sourceTree = "<group>"; };
 		F2AAF7A819C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+HBVUtils.m"; sourceTree = "<group>"; };
+		F2C8A2F61A129AED00CAF039 /* BSDActionPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDActionPopup.h; sourceTree = "<group>"; };
+		F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDActionPopup.m; sourceTree = "<group>"; };
 		F2CFDEAE19DA1E7800A156DB /* BSDAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnimation.h; sourceTree = "<group>"; };
 		F2CFDEAF19DA1E7800A156DB /* BSDAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnimation.m; sourceTree = "<group>"; };
 		F2CFDEB119DA29A800A156DB /* BSDTransform3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTransform3d.h; sourceTree = "<group>"; };
@@ -1240,6 +1243,8 @@
 				F2EB860119D4CCDD007B8C3C /* BSDTextField.m */,
 				F2EB85FD19D35C79007B8C3C /* BSDTextParser.h */,
 				F2EB85FE19D35C79007B8C3C /* BSDTextParser.m */,
+				F2C8A2F61A129AED00CAF039 /* BSDActionPopup.h */,
+				F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */,
 				F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */,
 				F2CFDECA19DB3D2C00A156DB /* Assets */,
 				F2F5132419B8D97C00323096 /* Main.storyboard */,
@@ -1455,6 +1460,7 @@
 			files = (
 				F21E531A19C51BC300E51383 /* BSDMod.m in Sources */,
 				F21E530A19C51BC300E51383 /* BSDCounter.m in Sources */,
+				F2C8A2F81A129AED00CAF039 /* BSDActionPopup.m in Sources */,
 				F283A20019CA11C8005CC98B /* BSDInletBox.m in Sources */,
 				F2F5133F19B8DAB800323096 /* BSDGraphBox.m in Sources */,
 				F21E50D419C3F63200E51383 /* BSDBox.m in Sources */,

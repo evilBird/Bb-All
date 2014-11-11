@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 - (void)saveDescription:(NSString *)description withName:(NSString *)name;
 - (void)saveCanvas:(id)canvas description:(NSString *)description name:(NSString *)name;
 - (void)setCurrentCanvas:(id)canvas;
+- (void)newCanvasForPatch:(NSString *)patchName;
 
 @end
 

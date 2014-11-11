@@ -23,6 +23,7 @@
 #import "BSDPatchCompiler.h"
 #import "BSDPort.h"
 #import "BSDHSlider.h"
+#import "BSDActionPopup.h"
 
 @interface BSDCanvas ()<UIGestureRecognizerDelegate,BSDScreenDelegate,BSDPortDelegate>
 {
@@ -385,12 +386,12 @@
     UIView *theView = [self hitTest:loc withEvent:UIEventTypeTouches];
     
     if ([theView isKindOfClass:[BSDAbstractionBox class]]) {
-        [self openAbstraction:(BSDAbstractionBox *)theView];
+        [self showActionPopupForBox:(BSDBox *)theView];
         return;
     }
     
     if ([theView.superview isKindOfClass:[BSDAbstractionBox class]]) {
-        [self openAbstraction:(BSDAbstractionBox *)theView.superview];
+        [self showActionPopupForBox:(BSDBox *)theView.superview];
         return;
     }
     
@@ -399,12 +400,43 @@
         || [theView isKindOfClass:[UITextField class]]
         || [theView isKindOfClass:[BSDTextField class]])
     {
+        BSDBox *box = nil;
+        if ([theView isKindOfClass:[BSDBox class]]) {
+            box = (BSDBox *)theView;
+        }else if ([theView.superview isKindOfClass:[BSDBox class]]){
+            box = (BSDBox *)theView.superview;
+        }
+        
+        if ([box.object isKindOfClass:[BSDCompiledPatch class]]) {
+            [self showActionPopupForBox:box];
+        }
         
         return;
     }
     
     [self addGraphBoxAtPoint:loc];
     
+}
+
+- (void)showActionPopupForBox:(BSDBox *)box
+{
+    CGPoint anchor;
+    anchor.y = CGRectGetMinY(box.frame);
+    anchor.x = CGRectGetMidX(box.frame);
+    NSArray *actions = @[@"open",@"cancel"];
+    __weak BSDCanvas *weakself = self;
+    [BSDActionPopup showPopupWithActions:actions
+                                  inView:self
+                             anchorPoint:anchor
+                              completion:^(NSInteger selectedIndex) {
+                                  if (selectedIndex == 0) {
+                                      if ([box isKindOfClass:[BSDAbstractionBox class]]) {
+                                          [weakself openAbstraction:(BSDAbstractionBox *)box];
+                                      }else if ([box.object isKindOfClass:[BSDCompiledPatch class]]){
+                                          [weakself openGraphBox:(BSDGraphBox *)box];
+                                      }
+                                  }
+                              }];
 }
 
 - (void)openAbstraction:(BSDAbstractionBox *)abs
@@ -422,6 +454,14 @@
     [canvas addSubview:button];
     [self addSubview:canvas];
     [canvas boxDidMove:nil];
+}
+
+- (void)openGraphBox:(BSDGraphBox *)graphBox
+{
+    NSArray *args = graphBox.creationArguments;
+    NSString *patchName = args.firstObject;
+    [self.delegate newCanvasForPatch:patchName];
+    NSLog(@"open patch name: %@",graphBox.creationArguments);
 }
 
 - (void)closeCanvas:(UIButton *)sender

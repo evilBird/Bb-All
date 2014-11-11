@@ -15,6 +15,7 @@
 @interface BSDCanvasViewController ()<UIScrollViewDelegate,UITableViewDelegate>
 {
     NSString *desc;
+    BOOL kCanvasWillClose;
 }
 
 @property (nonatomic,strong)UIScrollView *scrollView;
@@ -36,12 +37,28 @@
     }
     return self;
 }
+
+- (instancetype)initWithName:(NSString *)name
+{
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        _currentPatchName = name;
+        NSDictionary *patches = [NSUserDefaults valueForKey:@"descriptions"];
+        desc = patches[name];
+        if (!_currentPatchName) {
+            _currentPatchName = @"untitled";
+        }
+    }
+    
+    return self;
+}
 - (instancetype)initWithName:(NSString *)name description:(NSString *)description
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _currentPatchName = name;
         desc = description;
+        kCanvasWillClose = NO;
         if (!_currentPatchName) {
             _currentPatchName = @"untitled";
         }
@@ -91,7 +108,12 @@
             rect.size = self.scrollView.contentSize;
             BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
             NSString *test = [compiler testPatch2];
-            self.curentCanvas = [compiler restoreCanvasWithText:test];
+            if (desc) {
+                self.curentCanvas = [compiler restoreCanvasWithText:desc];
+            }else{
+                self.curentCanvas = [compiler restoreCanvasWithText:test];
+            }
+            //self.curentCanvas = [compiler restoreCanvasWithText:test];
             self.curentCanvas.delegate = self;
             [self.scrollView addSubview:self.curentCanvas];
             [self.curentCanvas boxDidMove:nil];
@@ -231,8 +253,32 @@
 - (void)tapInHomeButton
 {
     if ([self enableHomeButtonInToolbarView:nil]) {
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+        BSDCanvas *canvas = self.canvases.lastObject;
+        if ([self canvasHasUnsavedChanges:canvas]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Close Canvas" message:[NSString stringWithFormat:@"Save changes to %@?",canvas.name] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save",@"Save as",@"Don't Save", nil];
+            alert.tag = 2;
+            [alert show];
+        }else{
+            [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+        }
     }
+}
+
+- (BOOL)canvasHasUnsavedChanges:(BSDCanvas *)canvas
+{
+    BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
+    NSString *currentDescription = [compiler saveCanvas:canvas];
+    NSDictionary *patches = [NSUserDefaults valueForKey:@"descriptions"];
+    if (!canvas.name) {
+        return YES;
+    }
+    NSString *savedDescription = patches[canvas.name];
+    if (!savedDescription) {
+        return YES;
+    }
+    BOOL result = [currentDescription isEqualToString:savedDescription];
+    return 1 - result;
+    //return [currentDescription isEqualToString:savedDescription];
 }
 
 - (void)clearCanvas
@@ -370,6 +416,14 @@
 }
 
 #pragma mark - editing state management
+
+- (void)newCanvasForPatch:(NSString *)patchName
+{
+    NSDictionary *dictionary = [NSUserDefaults valueForKey:@"descriptions"];
+    NSString *description = dictionary[patchName];
+    BSDCanvasViewController *cvc = [[BSDCanvasViewController alloc]initWithName:patchName description:description];
+    [self presentViewController:cvc animated:YES completion:NULL];
+}
 
 - (UIView *)canvasScreen
 {
@@ -518,10 +572,31 @@
         }
         
         [self saveDescription:description withName:name];
+        if (kCanvasWillClose) {
+            [self.presentingViewController dismissViewControllerAnimated:YES
+                                                              completion:^{
+                                                                  kCanvasWillClose = NO;
+                                                              }];
+        }
     }else if (alertView.tag == 1 && buttonIndex == 1){
         NSString *name = [alertView textFieldAtIndex:0].text;
         if (name.length > 0) {
             [self.curentCanvas encapsulatedCopiedContentWithName:name];
+        }
+    }else if (alertView.tag == 2){
+        
+        if (buttonIndex == 1) {
+            BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
+            BSDCanvas *canvas = self.canvases.lastObject;
+            NSString *description = [compiler saveCanvas:canvas];
+            [self saveDescription:description withName:canvas.name];
+            [self.presentingViewController dismissViewControllerAnimated:YES
+                                     completion:NULL];
+        }else if (buttonIndex == 2){
+            kCanvasWillClose = YES;
+            [self showSavePatchAlertView];
+        }else if (buttonIndex == 3){
+            [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
         }
     }
 }
@@ -657,6 +732,7 @@
         self.myPopoverController = nil;
     }
 }
+
 
 
 /*

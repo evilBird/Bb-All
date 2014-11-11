@@ -22,11 +22,13 @@
 
 @interface BSDCanvasViewController : UIViewController <BSDCanvasToolbarViewDelegate,BSDCanvasDelegate,PopoverContentTableViewControllerDelegate,UIPopoverControllerDelegate,BSDScreenDelegate>
 
+- (instancetype)initWithName:(NSString *)name;
 - (instancetype)initWithName:(NSString *)name description:(NSString *)description;
 
 @property (nonatomic,strong)NSString *currentPatchName;
 @property (nonatomic,strong)BSDCanvas *curentCanvas;
 @property (nonatomic,strong)NSMutableArray *canvases;
+@property (nonatomic,strong)NSMutableDictionary *displayViews;
 @property (nonatomic,weak)id<BSDCanvasViewControllerDelegate>delegate;
 
 @end

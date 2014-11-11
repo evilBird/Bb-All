@@ -329,7 +329,7 @@
 
 - (id)parseText:(NSString *)text
 {
-    NSLog(@"\n\nBLACKBOX PARSE: \n\n%@\n\n",text);
+    //NSLog(@"\n\nBLACKBOX PARSE: \n\n%@\n\n",text);
     NSArray *lines = [text componentsSeparatedByString:@";\n"];
     NSInteger canvasCount = 0;
     NSInteger currentCanvas = 0;
