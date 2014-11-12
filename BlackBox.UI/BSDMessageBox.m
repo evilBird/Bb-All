@@ -144,6 +144,23 @@
     }
 }
 
+- (void)resizeForText:(NSString *)text
+{
+    NSDictionary *attributes = @{NSFontAttributeName:self.textField.font};
+    
+    CGSize size = [text sizeWithAttributes:attributes];
+    CGSize minSize = [self minimumSize];
+    CGRect frame = self.frame;
+    frame.size.width = size.width * 1.3;
+    if (frame.size.width < minSize.width) {
+        frame.size.width = minSize.width;
+    }
+    CGPoint oldCenter = self.center;
+    self.frame = frame;
+    self.textField.frame = CGRectInset(self.bounds, size.width * 0.15, 0);
+    self.center = oldCenter;
+}
+
 - (void)resizeToFitText:(NSString *)messageText
 {
     if (self.object) {
@@ -183,7 +200,8 @@
         NSString *nt = [nnl stringByReplacingOccurrencesOfString:@"\t" withString:@""];
         NSString *nq = [nt stringByReplacingOccurrencesOfString:@"\"" withString:@""];
         self.textField.text = nq;
-        [self resizeToFitText:self.textField.text];
+        //[self resizeToFitText:self.textField.text];
+        [self resizeForText:self.textField.text];
         [self setNeedsDisplay];
     }
 }

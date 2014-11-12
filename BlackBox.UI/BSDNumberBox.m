@@ -82,6 +82,7 @@
     [[self.object hotInlet]input:@(value)];
 }
 
+
 - (void)resizeToFitText:(NSString *)messageText
 {
     NSDictionary *attributes = @{NSFontAttributeName:self.textField.font};

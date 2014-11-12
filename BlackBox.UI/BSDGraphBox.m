@@ -281,8 +281,10 @@
     if (frame.size.width < minSize.width) {
         frame.size.width = minSize.width;
     }
+    CGPoint oldCenter = self.center;
     self.frame = frame;
     self.textField.frame = CGRectInset(self.bounds, size.width * 0.15, 0);
+    self.center = oldCenter;
 }
 
 - (id)makeCreationArgs

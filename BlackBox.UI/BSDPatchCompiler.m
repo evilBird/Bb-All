@@ -536,7 +536,7 @@
                         }
                     }
                 }else{
-                    id box = [self viewWithText:currentLine];
+                    id box = [self viewWithText:currentLine canvasId:current.instanceId canvasArgs:current.creationArgArray];
                     if (current) {
                         [box setValue:current forKey:@"delegate"];
                         [current.graphBoxes addObject:box];
@@ -643,7 +643,7 @@
 - (CGRect)rectForType:(NSString *)type
 {
     if ([type isEqualToString:@"BSDGraphBox"]) {
-        return CGRectMake(0, 0, 140, 44);
+        return CGRectMake(100, 100, 140, 44);
     }else if ([type isEqualToString:@"BSDNumberBox"]){
         return CGRectMake(100, 100, 72, 44);
     }else if ([type isEqualToString:@"BSDMessageBox"]){
@@ -657,12 +657,12 @@
     }else if ([type isEqualToString:@"BSDOutletBox"]){
         return CGRectMake(100, 100, 80, 44);
     }else if ([type isEqualToString:@"BSDAbstractionBox"]){
-        return CGRectMake(0, 0, 140, 44);
+        return CGRectMake(100, 100, 140, 44);
     }else if ([type isEqualToString:@"BSDHSlider"]){
-        return CGRectMake(0, 0, 200, 36);
+        return CGRectMake(100, 100, 200, 36);
     }
     
-    return CGRectMake(0, 0, 44, 44);
+    return CGRectMake(100, 100, 44, 44);
 }
 
 @end

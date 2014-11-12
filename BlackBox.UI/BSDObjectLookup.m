@@ -82,6 +82,8 @@
     
     result[@"patch"] = @"BSDCompiledPatch";
     
+    result[@"+"] = @"BSDAdd";
+    
     return result;
 }
 

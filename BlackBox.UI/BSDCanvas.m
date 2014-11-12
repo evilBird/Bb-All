@@ -284,6 +284,13 @@
 
 }
 
++ (NSString *)blankCanvasDescription
+{
+    CGRect bounds = [UIScreen mainScreen].bounds;
+    NSString *entry = [NSString stringWithFormat:@"#N canvas 0 0 %@ %@ %@;\n",@(bounds.size.width * 3),@(bounds.size.height * 3),@"untitled"];
+    return entry;
+}
+
 - (NSString *)genericCanvasDescriptionName:(NSString *)string
 {
     NSString *entry = [NSString stringWithFormat:@"#N canvas 0 0 %@ %@ %@;\n",@(self.bounds.size.width),@(self.bounds.size.height),string];
@@ -669,7 +676,6 @@
         if (components.count > 7) {
             NSLog(@"there are %@ creation args in canvas %@",@(components.count - 7),self.name);
         }
-        self.creationArgArray = @[@(768),@(1024)];
     }
     return self;
 }

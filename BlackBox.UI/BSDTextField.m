@@ -145,9 +145,13 @@
 
 - (NSString *)completionForText:(NSString *)text withDatasource:(NSArray *)datasource
 {
- 
     if (!datasource) {
         return nil;
+    }
+    
+    NSString *abbr = [self abbreviatedClassWithText:text];
+    if (abbr) {
+        return abbr;
     }
     
     NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@",text];
@@ -167,6 +171,30 @@
     
     return nil;
 
+}
+
+- (NSString *)abbreviatedClassWithText:(NSString *)text
+{
+    if ([text isEqualToString:@"+"]) {
+        return @"Add";
+    }
+    if ([text isEqualToString:@"-"]) {
+        return @"Subtract";
+    }
+    
+    if ([text isEqualToString:@"*"]) {
+        return @"Multiply";
+    }
+    
+    if ([text isEqualToString:@"/"]) {
+        return @"Divide";
+    }
+    
+    if ([text isEqualToString:@"%"]) {
+        return @"Mod";
+    }
+    
+    return nil;
 }
 
 - (NSArray *)allNSObjectClasses
@@ -194,6 +222,8 @@
             [result addObject:shortname];
         }
     }
+    
+    
     
     [result addObject:@"CompiledPatch"];
     

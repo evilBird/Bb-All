@@ -108,11 +108,11 @@
             rect.origin = self.scrollView.bounds.origin;
             rect.size = self.scrollView.contentSize;
             BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
-            NSString *test = [compiler testPatch2];
+            NSString *blank = [BSDCanvas blankCanvasDescription];
             if (desc) {
                 self.curentCanvas = [compiler restoreCanvasWithText:desc];
             }else{
-                self.curentCanvas = [compiler restoreCanvasWithText:test];
+                self.curentCanvas = [compiler restoreCanvasWithText:blank];
             }
             //self.curentCanvas = [compiler restoreCanvasWithText:test];
             self.curentCanvas.delegate = self;
@@ -577,6 +577,7 @@
             [parent dismissViewControllerAnimated:YES
                                        completion:^{
                                            kCanvasWillClose = NO;
+                                           [parent saveCurrentDescription];
                                            [parent loadDescriptionWithName:parent.currentPatchName];
                                        }];
         }
@@ -595,6 +596,7 @@
             BSDCanvasViewController *parent = (BSDCanvasViewController *)self.presentingViewController;
             [parent dismissViewControllerAnimated:YES
                                      completion:^{
+                                         [parent saveCurrentDescription];
                                          [parent loadDescriptionWithName:parent.currentPatchName];
                                      }];
         }else if (buttonIndex == 2){
