@@ -17,7 +17,7 @@
 - (NSInteger)testWithString:(NSString *)string;
 - (NSString *)testPatch1;
 - (NSString *)testPatch2;
-- (UIView *)viewWithText:(NSString *)text;
+- (UIView *)viewWithText:(NSString *)text canvasId:(NSNumber *)canvasId canvasArgs:(NSArray *)canvasArgs;
 
 - (NSString *)saveCanvas:(BSDCanvas *)canvas;
 - (NSString *)saveBoxes:(NSArray *)boxes;

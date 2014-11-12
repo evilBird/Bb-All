@@ -544,6 +544,7 @@
         NSString *toLoad = [NSString stringWithString:description];
         [self.curentCanvas tearDown];
         [self.curentCanvas removeFromSuperview];
+        [self clearCanvas];
         self.curentCanvas = nil;
         BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
         self.curentCanvas = [compiler restoreCanvasWithText:toLoad];

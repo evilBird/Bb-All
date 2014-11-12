@@ -287,7 +287,7 @@
 + (NSString *)blankCanvasDescription
 {
     CGRect bounds = [UIScreen mainScreen].bounds;
-    NSString *entry = [NSString stringWithFormat:@"#N canvas 0 0 %@ %@ %@;\n",@(bounds.size.width * 3),@(bounds.size.height * 3),@"untitled"];
+    NSString *entry = [NSString stringWithFormat:@"#N canvas 0 0 %@ %@ %@;\n",@(bounds.size.width * 2),@(bounds.size.height * 2),@"untitled"];
     return entry;
 }
 

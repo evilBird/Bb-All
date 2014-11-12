@@ -226,7 +226,7 @@
         if ([type isEqualToString:@"BSDAbstractionBox"]) {
             NSString *name = components[4];
             if ([name isEqualToString:canvas.name]) {
-                BSDBox *abs = (BSDBox *)[self viewWithText:newLine];
+                BSDBox *abs = (BSDBox *)[self viewWithText:newLine canvasId:canvas.instanceId canvasArgs:canvas.creationArgArray];
                 abs.object = canvas;
                 abs.delegate = canvas.parentCanvas;
                 NSInteger count = canvas.parentCanvas.graphBoxes.count;
@@ -255,7 +255,7 @@
         }
     
     }else {
-        BSDBox *box = (BSDBox *)[self viewWithText:newLine];
+        BSDBox *box = (BSDBox *)[self viewWithText:newLine canvasId:canvas.instanceId canvasArgs:canvas.creationArgArray];
         NSInteger count = canvas.graphBoxes.count;
         box.tag = count;
         box.delegate = canvas;
@@ -489,7 +489,7 @@
                     current = canvases[currentCanvas];
                 }
                 if ([type isEqualToString:@"BSDAbstractionBox"]) {
-                    id box = [self viewWithText:currentLine];
+                    id box = [self viewWithText:currentLine canvasId:current.instanceId canvasArgs:current.creationArgArray];
                     [box setObject:current];
                     if (components.count == 5) {
                         [box initializeWithText:components[4]];
