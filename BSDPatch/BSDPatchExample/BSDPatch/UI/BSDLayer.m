@@ -58,10 +58,11 @@
         frame.origin.y = [arguments[1] doubleValue];
         frame.size.width = [arguments[2] doubleValue];
         frame.size.height = [arguments[3] doubleValue];
-        CALayer *myLayer = [self makeMyLayerWithFrame:frame];
+        id myLayer = [self makeMyLayerWithFrame:frame];
         self.layerInlet.value = myLayer;
     }
 }
+
 
 - (BSDInlet *)makeLeftInlet
 {
@@ -75,19 +76,13 @@
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
-    if (inlet == self.hotInlet) {
+    if (inlet == self.layerInlet) {
         CALayer *myLayer = [self layer];
         if (myLayer == nil) {
             myLayer = [self makeMyLayer];
             self.layerInlet.value = myLayer;
         }
         [self.mainOutlet output:myLayer];
-    }else if (inlet == self.getterInlet){
-        if ([self layer]==nil) {
-            return;
-        }
-        
-        [self.getterOutlet output:[self mapLayer:self.layerInlet.value]];
     }
 }
 
@@ -102,26 +97,38 @@
         [self doAnimation];
     }else if (inlet == self.selectorInlet){
         [self doSelector];
+    }else if (inlet == self.getterInlet){
+        
     }
 }
 
 - (void)updateLayer
 {
-    NSDictionary *setters = self.setterInlet.value;
-    CALayer *myLayer = [self layer];
-    
-    if (setters && [setters isKindOfClass:[NSDictionary class]] && myLayer && [myLayer isKindOfClass:[CALayer class]]) {
-        for (NSString *aKey in setters.allKeys) {
-            id value = setters[aKey];
-            if ([value isKindOfClass:[UIColor class]]) {
-                UIColor *color = value;
-                myLayer.backgroundColor = color.CGColor;
-            }else{
-                [myLayer setValue:setters[aKey] forKey:aKey];
-            }
-        }
-        [myLayer setNeedsDisplay];
+    id hot = self.setterInlet.value;
+    id layer = self.layerInlet.value;
+    if (!hot || !layer || ![hot isKindOfClass:[NSDictionary class]]) {
+        return;
     }
+    
+    NSMutableDictionary *setters = [(NSDictionary *)hot mutableCopy];
+    NSDictionary *properties = [self propertiesForObject:layer];
+    
+    for (id aKey in setters.allKeys) {
+        id aVal = setters[aKey];
+        if ([properties.allKeys containsObject:aKey]) {
+            if ([aVal isKindOfClass:[UIColor class]]) {
+                [layer setValue:(id)[aVal CGColor] forKey:aKey];
+            }else if ([aVal isKindOfClass:[UIBezierPath class]]){
+                [layer setValue:(id)[aVal CGPath] forKey:aKey];
+            }else{
+                [layer setValue:aVal forKey:aKey];
+            }
+        }else{
+            NSLog(@"layer does not have property %@",aKey);
+        }
+    }
+    
+    [layer setNeedsDisplay];
 }
 
 - (void)doAnimation
@@ -254,6 +261,42 @@
     }
     
     return result;
+}
+
+- (NSDictionary*) propertiesForObject:(id)obj
+{
+    NSMutableDictionary *results = [NSMutableDictionary dictionary];
+    @autoreleasepool {
+        
+        unsigned int outCount, i;
+        objc_property_t *properties = class_copyPropertyList([obj class], &outCount);
+        for (i = 0; i < outCount; i++) {
+            objc_property_t property = properties[i];
+            const char * aname=property_getName(property);
+            NSString *propertyName = [NSString stringWithUTF8String:aname];
+            NSString *propertyType = [self propertyType:propertyName onObject:obj];
+            results[propertyName] = propertyType;
+        }
+        if (properties) {
+            free(properties);
+        }
+        
+    } // end of autorelease pool.
+    return results;
+}
+
+- (NSString*) propertyType: (NSString*)propname onObject:(id)obj
+{
+    objc_property_t aproperty = class_getProperty([obj class],  [propname cStringUsingEncoding:NSASCIIStringEncoding] ); // how to get a specific one by name.
+    if (aproperty)
+    {
+        char * property_type_attribute = property_copyAttributeValue(aproperty, "T");
+        NSString *result = [NSString stringWithUTF8String:property_type_attribute];
+        free(property_type_attribute);
+        return result;
+    }
+    else
+        return @"";
 }
 
 - (NSDictionary *)mapLayer:(CALayer *)layer

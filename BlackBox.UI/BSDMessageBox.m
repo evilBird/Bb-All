@@ -86,7 +86,7 @@
         [self resizeToFitText:text];
         return;
     }
-    
+    self.argString = text;
     id theMessage = nil;
     NSMutableString *argText = nil;
     NSString *quotesRemoved = [text stringByReplacingOccurrencesOfString:@"\"" withString:@""];

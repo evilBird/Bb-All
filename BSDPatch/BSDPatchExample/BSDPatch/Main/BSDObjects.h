@@ -116,3 +116,6 @@
 #import "BSDStringReplace.h"
 #import "BSDSortDescriptor.h"
 #import "BSDPredicate.h"
+#import "BSDBezierPath.h"
+#import "BSDShapeLayer.h"
+

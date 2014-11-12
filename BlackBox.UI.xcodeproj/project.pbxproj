@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5EC7E8FBB4FC43EB8F4060BE /* libPods-BlackBox.UI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */; };
+		F20426D71A13E50400A455E7 /* BSDBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = F20426D61A13E50400A455E7 /* BSDBezierPath.m */; };
+		F20426DA1A13EC9400A455E7 /* BSDShapeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F20426D91A13EC9400A455E7 /* BSDShapeLayer.m */; };
 		F204D60419F71E7200175B24 /* BSDHSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = F204D60319F71E7200175B24 /* BSDHSlider.m */; };
 		F20D1A121A0B424500710F3A /* BSDSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = F20D1A111A0B424500710F3A /* BSDSortDescriptor.m */; };
 		F20D1A151A0B4D2200710F3A /* BSDPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = F20D1A141A0B4D2200710F3A /* BSDPredicate.m */; };
@@ -232,6 +234,10 @@
 
 /* Begin PBXFileReference section */
 		0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BlackBox.UI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F20426D51A13E50400A455E7 /* BSDBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDBezierPath.h; sourceTree = "<group>"; };
+		F20426D61A13E50400A455E7 /* BSDBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDBezierPath.m; sourceTree = "<group>"; };
+		F20426D81A13EC9400A455E7 /* BSDShapeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDShapeLayer.h; sourceTree = "<group>"; };
+		F20426D91A13EC9400A455E7 /* BSDShapeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDShapeLayer.m; sourceTree = "<group>"; };
 		F204D60219F71E7200175B24 /* BSDHSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDHSlider.h; sourceTree = "<group>"; };
 		F204D60319F71E7200175B24 /* BSDHSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDHSlider.m; sourceTree = "<group>"; };
 		F20D1A101A0B424500710F3A /* BSDSortDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDSortDescriptor.h; sourceTree = "<group>"; };
@@ -1035,6 +1041,10 @@
 				F2EB860719D54813007B8C3C /* BSDAffineTransform.m */,
 				F2CFDEB119DA29A800A156DB /* BSDTransform3d.h */,
 				F2CFDEB219DA29A800A156DB /* BSDTransform3d.m */,
+				F20426D51A13E50400A455E7 /* BSDBezierPath.h */,
+				F20426D61A13E50400A455E7 /* BSDBezierPath.m */,
+				F20426D81A13EC9400A455E7 /* BSDShapeLayer.h */,
+				F20426D91A13EC9400A455E7 /* BSDShapeLayer.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1574,6 +1584,7 @@
 				F21E534B19C51BC300E51383 /* BSDVelocity.m in Sources */,
 				F28C00E119D21F6000BFA206 /* BSDDelay.m in Sources */,
 				F2EB85ED19D34F6C007B8C3C /* BSDArrayInlet.m in Sources */,
+				F20426D71A13E50400A455E7 /* BSDBezierPath.m in Sources */,
 				F2AAF7A019C7CB97004EFE87 /* BSDPrint.m in Sources */,
 				F21E532E19C51BC300E51383 /* BSDPoint3D.m in Sources */,
 				F2CFDEBC19DA56B200A156DB /* BSDFormatRequest.m in Sources */,
@@ -1594,6 +1605,7 @@
 				F21E531B19C51BC300E51383 /* BSDMultiply.m in Sources */,
 				F21E530119C51BC300E51383 /* BSDArraySort.m in Sources */,
 				F2789E4119C8D4C6006F6CA4 /* PopoverContentTableViewController.m in Sources */,
+				F20426DA1A13EC9400A455E7 /* BSDShapeLayer.m in Sources */,
 				F21E532D19C51BC300E51383 /* BSDPoint2D.m in Sources */,
 				F21E530E19C51BC300E51383 /* BSDSpigot.m in Sources */,
 				F21E533B19C51BC300E51383 /* BSDOutlet.m in Sources */,
