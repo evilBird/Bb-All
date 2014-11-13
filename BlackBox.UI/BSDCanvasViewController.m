@@ -455,7 +455,7 @@
 
 - (void)handleScreenDelegateNotification:(NSNotification *)notification
 {
-    if (!self.presentedViewController) {
+    if (!self.presentedViewController || ![self.presentedViewController isKindOfClass:[BSDCanvasViewController class]]) {
         BSDScreen *screen = notification.object;
         screen.delegate = self;
     }
@@ -468,7 +468,14 @@
 
 - (void)presentCanvasForPatchWithName:(NSString *)patchName
 {
-    NSString *description = [self savedDescriptionWithName:patchName];
+    NSString *description = nil;
+    
+    if ([patchName isEqualToString:@"untitled"]) {
+        description = [self emptyCanvasDescription];
+    }else{
+        description = [self savedDescriptionWithName:patchName];
+    }
+    
     BSDCanvasViewController *vc = [[BSDCanvasViewController alloc]initWithName:patchName description:description];
     [self presentViewController:vc animated:YES completion:NULL];
 }
