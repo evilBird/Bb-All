@@ -30,9 +30,11 @@
 
 - (void)setDelegate:(id<BSDScreenDelegate>)delegate
 {
-    _delegate = delegate;
-    NSLog(@"window %@ got its delegate",[self objectId]);
-    [self.viewInlet input:[self.delegate canvasScreen]];
+    if (_delegate == nil) {
+        _delegate = delegate;
+        NSLog(@"screen %@ got delegate %@",[self objectId],[NSString stringWithFormat:@"%p",delegate]);
+        [self.viewInlet input:[self.delegate canvasScreen]];
+    }
 }
 
 - (instancetype)initWithArguments:(id)arguments
@@ -74,10 +76,10 @@
 
 - (void)tearDown
 {
+    [super tearDown];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     self.delegate = nil;
-    [super tearDown];
 }
 
 @end
