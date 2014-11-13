@@ -269,14 +269,27 @@
         [result addObject:key];
     }
     
+    if (properties) {
+        free(properties);
+    }
+    
     return result;
 }
 
 - (NSDictionary *)mapView:(UIView *)view
 {
-    NSArray *properties = [self properties:view];
-    return [view dictionaryWithValuesForKeys:properties];
+    return [self mapObject:view];
 }
 
+- (NSDictionary *)mapObject:(id)obj
+{
+    NSMutableArray *properties = [self properties:obj].mutableCopy;
+    NSString *badKey = @"unsatisfiableConstraintsLoggingSuspended";
+    if ([properties containsObject:badKey]) {
+        [properties removeObject:badKey];
+    }
+    
+    return [obj dictionaryWithValuesForKeys:properties];
+}
 
 @end

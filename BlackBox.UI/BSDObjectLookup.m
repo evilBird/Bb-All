@@ -97,7 +97,7 @@
         Class superClass = class_getSuperclass(theClass);
         NSString *className = NSStringFromClass(theClass);
         NSString *superClassName = NSStringFromClass(superClass);
-        if ([superClassName isEqualToString:@"BSDObject"]||[superClassName isEqualToString:@"BSDView"] || [superClassName isEqualToString:@"BSDNumberObject"]||[superClassName isEqualToString:@"BSDGenerator"] || [superClassName isEqualToString:@"BSDLayer"]) {
+        if ([superClassName isEqualToString:@"BSDObject"]||[superClassName isEqualToString:@"BSDView"] || [superClassName isEqualToString:@"BSDNumberObject"]||[superClassName isEqualToString:@"BSDGenerator"] || [superClassName isEqualToString:@"BSDLayer"] || [superClassName isEqualToString:@"BSDControl"]) {
             
             if (!result) {
                 result = [NSMutableSet set];

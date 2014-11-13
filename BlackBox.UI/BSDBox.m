@@ -241,13 +241,17 @@
     }
     
     if (selectedPort == nil) {
-        CGFloat dx = loc.x - initLoc.x;
-        CGFloat dy = loc.y - initLoc.y;
-        CGPoint newCenter;
-        newCenter.x = initCenter.x + dx;
-        newCenter.y = initCenter.y + dy;
-        self.center = newCenter;
-        [self.delegate boxDidMove:self];
+        __weak BSDBox *weakself = self;
+        [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+            CGFloat dx = loc.x - initLoc.x;
+            CGFloat dy = loc.y - initLoc.y;
+            CGPoint newCenter;
+            newCenter.x = initCenter.x + dx;
+            newCenter.y = initCenter.y + dy;
+            weakself.center = newCenter;
+            [weakself.delegate boxDidMove:self];
+        }];
+
     }else{
         
         switch (recognizer.state) {
@@ -258,12 +262,18 @@
                 break;
             case UIGestureRecognizerStateChanged:
             {
-                [self.delegate box:self portView:selectedPort drawLineToPoint:loc];
+                __weak BSDBox *weakself = self;
+                [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+                    [weakself.delegate box:weakself portView:selectedPort drawLineToPoint:loc];
+                }];
             }
                 break;
             case UIGestureRecognizerStateEnded:
             {
-                [self.delegate box:self portView:selectedPort endedAtPoint:loc];
+                __weak BSDBox *weakself = self;
+                [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+                    [weakself.delegate box:weakself portView:selectedPort endedAtPoint:loc];
+                }];
             }
                 break;
                 

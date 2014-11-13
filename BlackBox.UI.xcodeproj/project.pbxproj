@@ -139,6 +139,8 @@
 		F2AAF7A319C7DD16004EFE87 /* BSDRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A219C7DD16004EFE87 /* BSDRandom.m */; };
 		F2AAF7A619C7FB4B004EFE87 /* BSDCanvasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */; };
 		F2AAF7A919C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A819C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m */; };
+		F2B0C46F1A145C0400FEE17F /* BSDControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C46E1A145C0400FEE17F /* BSDControl.m */; };
+		F2B0C4721A145D0500FEE17F /* BSDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C4711A145D0500FEE17F /* BSDButton.m */; };
 		F2C8A2F81A129AED00CAF039 /* BSDActionPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */; };
 		F2CFDEB019DA1E7800A156DB /* BSDAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEAF19DA1E7800A156DB /* BSDAnimation.m */; };
 		F2CFDEB319DA29A800A156DB /* BSDTransform3d.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEB219DA29A800A156DB /* BSDTransform3d.m */; };
@@ -496,6 +498,10 @@
 		F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCanvasViewController.m; sourceTree = "<group>"; };
 		F2AAF7A719C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+HBVUtils.h"; sourceTree = "<group>"; };
 		F2AAF7A819C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+HBVUtils.m"; sourceTree = "<group>"; };
+		F2B0C46D1A145C0400FEE17F /* BSDControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDControl.h; sourceTree = "<group>"; };
+		F2B0C46E1A145C0400FEE17F /* BSDControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDControl.m; sourceTree = "<group>"; };
+		F2B0C4701A145D0500FEE17F /* BSDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDButton.h; sourceTree = "<group>"; };
+		F2B0C4711A145D0500FEE17F /* BSDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDButton.m; sourceTree = "<group>"; };
 		F2C8A2F61A129AED00CAF039 /* BSDActionPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDActionPopup.h; sourceTree = "<group>"; };
 		F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDActionPopup.m; sourceTree = "<group>"; };
 		F2CFDEAE19DA1E7800A156DB /* BSDAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnimation.h; sourceTree = "<group>"; };
@@ -1045,6 +1051,10 @@
 				F20426D61A13E50400A455E7 /* BSDBezierPath.m */,
 				F20426D81A13EC9400A455E7 /* BSDShapeLayer.h */,
 				F20426D91A13EC9400A455E7 /* BSDShapeLayer.m */,
+				F2B0C46D1A145C0400FEE17F /* BSDControl.h */,
+				F2B0C46E1A145C0400FEE17F /* BSDControl.m */,
+				F2B0C4701A145D0500FEE17F /* BSDButton.h */,
+				F2B0C4711A145D0500FEE17F /* BSDButton.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1483,6 +1493,7 @@
 				F283A20319CA11DF005CC98B /* BSDOutletBox.m in Sources */,
 				F21E50D719C3FE1A00E51383 /* BSDNumberBox.m in Sources */,
 				F21E534819C51BC300E51383 /* BSDBuffer.m in Sources */,
+				F2B0C4721A145D0500FEE17F /* BSDButton.m in Sources */,
 				F2AAF7A319C7DD16004EFE87 /* BSDRandom.m in Sources */,
 				F21E534619C51BC300E51383 /* BSDVideoStream.m in Sources */,
 				F21E533D19C51BC300E51383 /* BSDFormatString.m in Sources */,
@@ -1519,6 +1530,7 @@
 				F21E530619C51BC300E51383 /* BSDDictionarySerialize.m in Sources */,
 				F28C806219E25788001A578C /* BSDAbstractionBox.m in Sources */,
 				F21E531E19C51BC300E51383 /* BSDSubtract.m in Sources */,
+				F2B0C46F1A145C0400FEE17F /* BSDControl.m in Sources */,
 				F24A3B0B19D0CB0200FBA887 /* BSDSplitDictionary.m in Sources */,
 				F2F5139219B927A700323096 /* BSDObjectDescription.m in Sources */,
 				F2EB860519D5034B007B8C3C /* BSDCollectionInlet.m in Sources */,
