@@ -260,6 +260,10 @@
         [result addObject:key];
     }
     
+    if (properties) {
+        free(properties);
+    }
+    
     return result;
 }
 
@@ -301,8 +305,18 @@
 
 - (NSDictionary *)mapLayer:(CALayer *)layer
 {
-    NSArray *properties = [self properties:layer];
-    return [layer dictionaryWithValuesForKeys:properties];
+    return [self mapObject:layer];
+}
+
+- (NSDictionary *)mapObject:(id)obj
+{
+    NSMutableArray *properties = [self properties:obj].mutableCopy;
+    NSString *badKey = @"unsatisfiableConstraintsLoggingSuspended";
+    if ([properties containsObject:badKey]) {
+        [properties removeObject:badKey];
+    }
+    
+    return [obj dictionaryWithValuesForKeys:properties];
 }
 
 @end
