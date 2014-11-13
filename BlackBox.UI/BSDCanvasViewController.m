@@ -85,9 +85,9 @@
         CGRect frame = self.view.bounds;
         frame.origin.y = 104;
         self.scrollView = [[UIScrollView alloc]initWithFrame:frame];
-        self.scrollView.contentSize = CGSizeMake(frame.size.width * 2, frame.size.height * 2);
+        self.scrollView.contentSize = CGSizeMake(frame.size.width * 3, frame.size.height * 3);
         self.scrollView.delegate = self;
-        self.scrollView.minimumZoomScale = 1;
+        self.scrollView.minimumZoomScale = 0.33;
         self.scrollView.maximumZoomScale = 1;
         self.scrollView.scrollEnabled = YES;
         self.scrollView.alwaysBounceHorizontal = YES;
@@ -108,7 +108,7 @@
             rect.origin = self.scrollView.bounds.origin;
             rect.size = self.scrollView.contentSize;
             BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
-            NSString *blank = [BSDCanvas blankCanvasDescription];
+            NSString *blank = [self emptyCanvasDescription];
             if (desc) {
                 self.curentCanvas = [compiler restoreCanvasWithText:desc];
             }else{
@@ -417,6 +417,23 @@
 
 #pragma mark - editing state management
 
+- (CGSize)defaultCanvasSize
+{
+    return self.scrollView.contentSize;
+}
+
+- (NSString *)emptyCanvasDescriptionName:(NSString *)name
+{
+    CGSize size = [self defaultCanvasSize];
+    NSString *entry = [NSString stringWithFormat:@"#N canvas 0 0 %@ %@ %@;\n",@(size.width),@(size.height),name];
+    return entry;
+}
+
+- (NSString *)emptyCanvasDescription
+{
+    return [self emptyCanvasDescriptionName:@"untitled"];
+}
+
 - (void)newCanvasForPatch:(NSString *)patchName withBox:(BSDGraphBox *)graphBox
 {
     NSDictionary *dictionary = [NSUserDefaults valueForKey:@"descriptions"];
@@ -620,6 +637,11 @@
     return self.curentCanvas;
 }
 
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView
+{
+    NSLog(@"scroll view did zoom");
+}
+
 #pragma mark - PopoverContentViewController Delegate
 
 - (void)itemWasSelected:(NSString *)patchName
@@ -656,7 +678,7 @@
         }else if ([patchName isEqualToString:@"object"]){
             [myCanvas addGraphBoxAtPoint:point];
         }else if ([patchName isEqualToString:@"canvas"]){
-            [self presentCanvasForPatchWithName:@"new patch"];
+            [self presentCanvasForPatchWithName:@"untitled"];
         }else if ([patchName isEqualToString:@"comment"]){
             [myCanvas addCommentBoxAtPoint:point];
         }else if ([patchName isEqualToString:@"hslider"]){

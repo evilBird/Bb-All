@@ -283,18 +283,22 @@
     }
 
 }
-
+/*
 + (NSString *)blankCanvasDescription
 {
     CGRect bounds = [UIScreen mainScreen].bounds;
     NSString *entry = [NSString stringWithFormat:@"#N canvas 0 0 %@ %@ %@;\n",@(bounds.size.width * 2),@(bounds.size.height * 2),@"untitled"];
     return entry;
 }
+ */
 
 - (NSString *)genericCanvasDescriptionName:(NSString *)string
 {
+    return [self.delegate emptyCanvasDescriptionName:string];
+    /*
     NSString *entry = [NSString stringWithFormat:@"#N canvas 0 0 %@ %@ %@;\n",@(self.bounds.size.width),@(self.bounds.size.height),string];
     return entry;
+     */
 }
 
 - (void)encapsulatedCopiedContentWithName:(NSString *)name

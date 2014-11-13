@@ -567,8 +567,10 @@
     if (!canvas) {
         return nil;
     }
-    
+    /*
     NSString *result = [NSString stringWithFormat:@"#N canvas %@ %@ %@ %@ %@;\n",@((NSInteger)canvas.frame.origin.x),@((NSInteger)canvas.frame.origin.y),@((NSInteger)canvas.frame.size.width),@((NSInteger)canvas.frame.size.height),canvas.name];
+     */
+    NSString *result = [NSString stringWithFormat:@"#N canvas %@ %@ %@ %@ %@;\n",@((NSInteger)canvas.bounds.origin.x),@((NSInteger)canvas.bounds.origin.y),@((NSInteger)canvas.bounds.size.width),@((NSInteger)canvas.bounds.size.height),canvas.name];
     
     if (!canvas && canvas.graphBoxes.count == 0)
     {

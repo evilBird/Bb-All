@@ -25,6 +25,10 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 - (void)saveCanvas:(id)canvas description:(NSString *)description name:(NSString *)name;
 - (void)setCurrentCanvas:(id)canvas;
 - (void)newCanvasForPatch:(NSString *)patchName withBox:(BSDGraphBox *)graphBox;
+- (CGSize)defaultCanvasSize;
+- (NSString *)emptyCanvasDescription;
+- (NSString *)emptyCanvasDescriptionName:(NSString *)name;
+
 
 @end
 
@@ -46,7 +50,7 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 @property (nonatomic,strong)NSNumber *instanceId;
 @property (nonatomic,strong)NSArray *creationArgArray;
 
-+ (NSString *)blankCanvasDescription;
+//+ (NSString *)blankCanvasDescription;
 - (void)updateCompiledInstancesWithName:(NSString *)name;
 + (CGRect)frameWithEntry:(NSString *)entry;
 + (CGRect)rectForType:(NSString *)type;
