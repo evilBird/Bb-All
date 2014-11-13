@@ -139,7 +139,7 @@
         
         if (self.object != nil) {
             [[(BSDMessage *)self.object hotInlet]input:@{@"set":theMessage}];
-            [[self.object hotInlet]input:[BSDBang bang]];
+            //[[self.object hotInlet]input:[BSDBang bang]];
         }
     }
 }
@@ -159,6 +159,7 @@
     self.frame = frame;
     self.textField.frame = CGRectInset(self.bounds, size.width * 0.15, 0);
     self.center = oldCenter;
+    [self.delegate boxDidMove:self];
 }
 
 - (void)resizeToFitText:(NSString *)messageText
@@ -200,7 +201,6 @@
         NSString *nt = [nnl stringByReplacingOccurrencesOfString:@"\t" withString:@""];
         NSString *nq = [nt stringByReplacingOccurrencesOfString:@"\"" withString:@""];
         self.textField.text = nq;
-        //[self resizeToFitText:self.textField.text];
         [self resizeForText:self.textField.text];
         [self setNeedsDisplay];
     }

@@ -438,8 +438,10 @@
 
 - (void)handleScreenDelegateNotification:(NSNotification *)notification
 {
-    BSDScreen *screen = notification.object;
-    screen.delegate = self;
+    if (!self.presentedViewController) {
+        BSDScreen *screen = notification.object;
+        screen.delegate = self;
+    }
 }
 
 - (void)canvas:(id)canvas editingStateChanged:(BSDCanvasEditState)editState
@@ -568,19 +570,19 @@
         self.curentCanvas.name = name;
         BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
         NSString *description = [compiler saveCanvas:self.curentCanvas];//[compiler.stringOutlet value];
-        if (self.curentCanvas.parentCanvas) {
-            self.curentCanvas.parentCanvas.isDirty = @(YES);
-        }
-        
         [self saveDescription:description withName:name];
         if (kCanvasWillClose) {
-            BSDCanvasViewController *parent = (BSDCanvasViewController *)self.presentingViewController;
-            [parent dismissViewControllerAnimated:YES
-                                       completion:^{
-                                           kCanvasWillClose = NO;
-                                           [parent saveCurrentDescription];
-                                           [parent loadDescriptionWithName:parent.currentPatchName];
-                                       }];
+            [self.curentCanvas clearCurrentPatch];
+            self.canvases = nil;
+            self.curentCanvas = nil;
+            __weak BSDCanvasViewController *weakself = self;
+            [self.presentingViewController dismissViewControllerAnimated:YES
+                                                              completion:^{
+                                                                  kCanvasWillClose = NO;
+                                                                  BSDCanvasViewController *parent = (BSDCanvasViewController *)weakself.presentingViewController;
+                                                                  [parent saveCurrentDescription];
+                                                                  [parent loadDescriptionWithName:parent.currentPatchName];
+                                                              }];
         }
     }else if (alertView.tag == 1 && buttonIndex == 1){
         NSString *name = [alertView textFieldAtIndex:0].text;
@@ -590,16 +592,18 @@
     }else if (alertView.tag == 2){
         
         if (buttonIndex == 1) {
-            BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
-            BSDCanvas *canvas = self.canvases.lastObject;
-            NSString *description = [compiler saveCanvas:canvas];
-            [self saveDescription:description withName:canvas.name];
-            BSDCanvasViewController *parent = (BSDCanvasViewController *)self.presentingViewController;
-            [parent dismissViewControllerAnimated:YES
-                                     completion:^{
-                                         [parent saveCurrentDescription];
-                                         [parent loadDescriptionWithName:parent.currentPatchName];
-                                     }];
+            [self saveCurrentDescription];
+            [self.curentCanvas clearCurrentPatch];
+            self.curentCanvas = nil;
+            self.canvases = nil;
+            __weak BSDCanvasViewController *weakself = self;
+            [self.presentingViewController dismissViewControllerAnimated:YES
+                                                              completion:^{
+                                                                  kCanvasWillClose = NO;
+                                                                  BSDCanvasViewController *parent = (BSDCanvasViewController *)weakself.presentingViewController;
+                                                                  [parent saveCurrentDescription];
+                                                                  [parent loadDescriptionWithName:parent.currentPatchName];
+                                                              }];
         }else if (buttonIndex == 2){
             kCanvasWillClose = YES;
             [self showSavePatchAlertView];

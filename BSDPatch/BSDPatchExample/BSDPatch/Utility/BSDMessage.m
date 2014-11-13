@@ -10,6 +10,7 @@
 
 @interface BSDMessage ()
 
+@property (nonatomic,strong)id lastMessage;
 
 @end
 
@@ -24,6 +25,7 @@
 {
     self.hotInlet.delegate = self;
     self.name = @"message";
+    self.lastMessage = nil;
     if (arguments != nil){
         [self.hotInlet input:@{@"set":arguments}];
     }
@@ -44,13 +46,16 @@
 - (void)calculateOutput
 {
     id theMessage = [self theMessage];
-    if (theMessage == NULL) {
+    if (theMessage == nil) {
         return;
     }
+    
     [self.mainOutlet output:theMessage];
+    
     NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",[self objectId]];
     NSDictionary *changeInfo = @{@"value":theMessage};
     [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:changeInfo];
+    self.lastMessage = theMessage;
 }
 
 - (id)theMessage
@@ -59,6 +64,10 @@
     id value = nil;
     if (hot == nil) {
         return nil;
+    }
+    
+    if ([hot isKindOfClass:[BSDBang class]]) {
+        return self.lastMessage;
     }
     
     if ([hot isKindOfClass:[NSArray class]]) {
