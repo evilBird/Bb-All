@@ -35,11 +35,11 @@
         id toPrint = [value mutableCopy];
         NSString *text = [NSString stringWithFormat:@"bB %@: %@",self.text,toPrint];
         [[NSNotificationCenter defaultCenter]postNotificationName:kPrintNotificationChannel object:text];
-        //NSLog(@"%@",text);
+        NSLog(@"%@",text);
     }else{
         NSString *text = [NSString stringWithFormat:@"bB %@: %@",self.text,value];
         [[NSNotificationCenter defaultCenter]postNotificationName:kPrintNotificationChannel object:text];
-        //NSLog(@"%@",text);
+        NSLog(@"%@",text);
     }
 }
 
