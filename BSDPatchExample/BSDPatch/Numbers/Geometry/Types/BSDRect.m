@@ -63,12 +63,20 @@
 
 - (BSDInlet *)makeLeftInlet
 {
-    return nil;
+    BSDNumberInlet *inlet = [[BSDNumberInlet alloc]initHot];
+    inlet.name = @"originX";
+    inlet.delegate = self;
+    self.originXInlet = inlet;
+    return inlet;
 }
 
 - (BSDInlet *)makeRightInlet
 {
-    return nil;
+    BSDNumberInlet *inlet = [[BSDNumberInlet alloc]initHot];
+    inlet.name = @"originY";
+    inlet.delegate = self;
+    self.originYInlet = inlet;
+    return inlet;
 }
 
 - (void)calculateOutput
@@ -77,6 +85,9 @@
     NSNumber *y = self.originYInlet.value;
     NSNumber *w = self.widthInlet.value;
     NSNumber *h = self.heightInlet.value;
+    if (![self typeCheck]) {
+        return;
+    }
     
     if (x && y && w && h) {
         CGRect result;
@@ -87,5 +98,21 @@
         self.mainOutlet.value = [NSValue wrapRect:result];
     }
 }
+- (BOOL)typeCheck
+{
+    NSNumber *x = self.originXInlet.value;
+    NSNumber *y = self.originYInlet.value;
+    NSNumber *w = self.widthInlet.value;
+    NSNumber *h = self.heightInlet.value;
+    
+    if (![x isKindOfClass:[NSNumber class]] || ![y isKindOfClass:[NSNumber class]] || ![w isKindOfClass:[NSNumber class]] || ![h isKindOfClass:[NSNumber class]]) {
+        
+        return NO;
+    }
+    
+    return YES;
+}
+                                    
+
 
 @end

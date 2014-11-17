@@ -29,7 +29,36 @@
 
 - (void)calculateOutput
 {
-    self.mainOutlet.value = @([self.hotInlet.value doubleValue] == [self.coldInlet.value doubleValue]);
+    id hot = self.hotInlet.value;
+    id cold = self.coldInlet.value;
+    if (!hot || !cold) {
+        return;
+    }
+    if (![cold isKindOfClass:[hot class]]) {
+        [self.mainOutlet output:@(NO)];
+        return;
+    }
+    
+    if ([cold isKindOfClass:[NSArray class]]){
+        BOOL result = [cold isEqualToArray:hot];
+        [self.mainOutlet output:@(result)];
+        return;
+    }
+    
+    if ([cold isKindOfClass:[NSString class]]) {
+        BOOL result = [cold isEqualToString:hot];
+        [self.mainOutlet output:@(result)];
+        return;
+    }
+    
+    if ([cold isKindOfClass:[NSNumber class]]) {
+        BOOL result = [hot doubleValue] == [cold doubleValue];
+        [self.mainOutlet output:@(result)];
+        return;
+    }
+    BOOL result = hot == cold;
+    [self.mainOutlet output:@(result)];
+    
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "BSDDivide.h"
+#import "BSDNumberInlet.h"
 
 @implementation BSDDivide
 
@@ -24,6 +25,21 @@
     }else{
         self.coldInlet.value = @0.000001;
     }
+}
+
+- (BSDInlet *)makeLeftInlet
+{
+    BSDNumberInlet *inlet = [[BSDNumberInlet alloc]initHot];
+    inlet.name = @"hot";
+    inlet.delegate = self;
+    return inlet;
+}
+- (BSDInlet *)makeRightInlet
+{
+    BSDInlet *inlet = [[BSDNumberInlet alloc]initCold];
+    inlet.name = @"cold";
+    inlet.delegate = self;
+    return inlet;
 }
 
 - (void)calculateOutput
