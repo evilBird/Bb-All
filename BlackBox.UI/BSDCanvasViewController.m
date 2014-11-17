@@ -88,7 +88,7 @@
         self.scrollView.contentSize = CGSizeMake(frame.size.width * 3, frame.size.height * 3);
         self.scrollView.delegate = self;
         self.scrollView.minimumZoomScale = 0.33;
-        self.scrollView.maximumZoomScale = 1;
+        self.scrollView.maximumZoomScale = 2;
         self.scrollView.scrollEnabled = YES;
         self.scrollView.alwaysBounceHorizontal = YES;
         self.scrollView.alwaysBounceVertical = YES;

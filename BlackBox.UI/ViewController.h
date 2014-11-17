@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <iCloud/iCloud.h>
 #import "BSDCanvasViewController.h"
+#import "BlackBoxCategories.h"
 
 @interface ViewController : UIViewController<iCloudDelegate,iCloudDocumentDelegate,BSDCanvasViewControllerDelegate>
 

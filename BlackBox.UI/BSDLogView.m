@@ -31,6 +31,9 @@
         _textView.layer.borderWidth = 1;
         _textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _textView.editable = NO;
+        //_textView.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize]];
+
+        _textView.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize] + 4];
     }
     
     return self;

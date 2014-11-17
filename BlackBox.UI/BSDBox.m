@@ -431,7 +431,7 @@
 
 - (void)makeObjectInstanceArgs:(id)args
 {
-    if (!self.className) {
+    if (!self.className || [self.className isEqualToString:@"(null)"]) {
         return;
     }
     

@@ -24,6 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSDictionary *result = [NSDictionary saveText:@"sometext" path:@"path" dictionary:nil];
 
     /*
     [[iCloud sharedCloud] setDelegate:self]; // Set this if you plan to use the delegate

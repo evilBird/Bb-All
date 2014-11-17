@@ -490,6 +490,7 @@
 		F28C806D19E314DF001A578C /* BSD2WayPort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSD2WayPort.m; sourceTree = "<group>"; };
 		F28C806F19E3B1C7001A578C /* BSDPatchCompiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchCompiler.h; sourceTree = "<group>"; };
 		F28C807019E3B1C7001A578C /* BSDPatchCompiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchCompiler.m; sourceTree = "<group>"; };
+		F28C839C1A159C66007BB297 /* BlackBoxCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackBoxCategories.h; sourceTree = "<group>"; };
 		F2AAF79E19C7CB97004EFE87 /* BSDPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPrint.h; sourceTree = "<group>"; };
 		F2AAF79F19C7CB97004EFE87 /* BSDPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPrint.m; sourceTree = "<group>"; };
 		F2AAF7A119C7DD16004EFE87 /* BSDRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDRandom.h; sourceTree = "<group>"; };
@@ -1266,6 +1267,7 @@
 				F2C8A2F61A129AED00CAF039 /* BSDActionPopup.h */,
 				F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */,
 				F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */,
+				F28C839C1A159C66007BB297 /* BlackBoxCategories.h */,
 				F2CFDECA19DB3D2C00A156DB /* Assets */,
 				F2F5132419B8D97C00323096 /* Main.storyboard */,
 				F2F5132719B8D97C00323096 /* Images.xcassets */,
