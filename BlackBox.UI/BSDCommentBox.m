@@ -84,11 +84,17 @@
     self.frame = CGRectInset(frame,-8,-8);
     self.textField.frame = CGRectInset(self.bounds, 8, 8);
     self.argString = messageText;
+    NSArray *message = [NSArray arrayWithObject:self.argString];
+    self.creationArguments = message;
+    [[self.object hotInlet]input:message];
 }
 
 - (void)initializeWithText:(NSString *)text
 {
     [self makeObjectInstanceArgs:text];
+    if (text) {
+        [self makeObjectInstanceArgs:@[text]];
+    }
 }
 
 /*

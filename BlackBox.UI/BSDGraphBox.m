@@ -166,9 +166,11 @@
     if (argsString) {
         self.argString = [NSString stringWithString:argsString];
     }
-    
-    [self createObjectWithName:name arguments:argsList];
-    kAllowEdit = NO;
+    if (![name isEqualToString:@"(null)"]) {
+        [self createObjectWithName:name arguments:argsList];
+        kAllowEdit = NO;
+    }
+
 }
 
 

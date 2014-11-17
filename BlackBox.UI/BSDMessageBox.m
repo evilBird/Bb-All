@@ -206,11 +206,102 @@
     }
 }
 
+- (NSArray *)formatMessage:(NSString *)message
+{
+    if (!message) {
+        return nil;
+    }
+    
+    NSMutableArray *result = [NSMutableArray array];
+    NSArray *comp = [message componentsSeparatedByString:@","];
+    
+    if (comp.count > 1) {
+        for (NSInteger i = 0; i < comp.count; i ++) {
+            [result addObject:[self formatMessage:comp[i]]];
+        }
+        
+        return result;
+    }
+    NSString *quotesRemoved = [message stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    NSInteger diff = message.length - quotesRemoved.length;
+    if (diff == 2) {
+        [result addObject:quotesRemoved];
+        return result;
+    }
+    
+    NSArray *elems = [message componentsSeparatedByString:@" "];
+    for (NSInteger i  = 0; i < elems.count; i ++) {
+        NSString *e = elems[i];
+        [result addObject:[self setTypeForString:e]];
+    }
+    
+    return result;
+}
+/*
+- (id)formatElement:(NSString *)element
+{
+    id val = [self findQuotesInElement:element];
+    return [self setTypeForString:val];
+}
+
+- (id)findQuotesInElement:(NSString *)element
+{
+    NSString *quotesRemoved = [element stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    NSInteger diff = element.length - quotesRemoved.length;
+    if (diff == 2) {
+        return element;
+    }
+    
+    NSMutableString *result = [NSMutableString stringWithString:@""];
+    
+    for (NSInteger i = 0; i < components.count; i++) {
+        if (i%2 == 0) {
+            [result appendString:components[i]];
+        }
+    }
+    
+    return result;
+}
+*/
+- (NSString *)formatValue:(id)value
+{
+    NSMutableString *result = nil;
+    if ([value isKindOfClass:[NSArray class]]) {
+        NSArray *array = value;
+        for (NSInteger i = 0; i < array.count; i ++) {
+            id val = array[i];
+            if ([val isKindOfClass:[NSArray class]]) {
+                if (!result) {
+                    result = [[NSMutableString alloc]init];
+                    result = [NSMutableString stringWithFormat:@"%@",[self formatValue:val]];
+                }else{
+                    [result appendFormat:@", %@",[self formatValue:val]];
+                }
+            }else{
+                
+                if (!result) {
+                    result = [[NSMutableString alloc]init];
+                }
+                
+                if ((i + 1) == array.count) {
+                    [result appendFormat:@"%@",val];
+                }else{
+                    [result appendFormat:@"%@ ",val];
+                }
+            }
+        }
+    }
+    
+    return result;
+}
+
 - (id)setTypeForString:(NSString *)string
 {
     NSRange n = [string rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
+    NSRange s = [string rangeOfCharacterFromSet:[NSCharacterSet symbolCharacterSet]];
     
     if (n.length > 0) {
+    if (n.length > 0 || s.length > 0) {
         return string;
     }else{
         return @([string doubleValue]);
