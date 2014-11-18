@@ -15,6 +15,9 @@
 		F20D1A151A0B4D2200710F3A /* BSDPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = F20D1A141A0B4D2200710F3A /* BSDPredicate.m */; };
 		F21A5B5E19DF86BA00E6F21B /* BSDPatchDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */; };
 		F21A5B6119E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */; };
+		F21BAEC31A1AAD1500F20FDD /* BSDTextMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F21BAEC21A1AAD1500F20FDD /* BSDTextMessage.m */; };
+		F21BAEC51A1AB18C00F20FDD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F21BAEC41A1AB18C00F20FDD /* CoreLocation.framework */; };
+		F21BAEC81A1AB62300F20FDD /* HBVImageBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = F21BAEC71A1AB62300F20FDD /* HBVImageBlur.m */; };
 		F21E4C5519C8FDD600D20D60 /* BSDClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E4C5419C8FDD600D20D60 /* BSDClient.m */; };
 		F21E4C5819C8FF4900D20D60 /* BSDGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E4C5719C8FF4900D20D60 /* BSDGPS.m */; };
 		F21E50D419C3F63200E51383 /* BSDBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E50D319C3F63200E51383 /* BSDBox.m */; };
@@ -142,6 +145,7 @@
 		F2B0C46F1A145C0400FEE17F /* BSDControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C46E1A145C0400FEE17F /* BSDControl.m */; };
 		F2B0C4721A145D0500FEE17F /* BSDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C4711A145D0500FEE17F /* BSDButton.m */; };
 		F2C8A2F81A129AED00CAF039 /* BSDActionPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */; };
+		F2CFC8511A19E36A00FFAAC1 /* BSDArr2Dict.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFC8501A19E36A00FFAAC1 /* BSDArr2Dict.m */; };
 		F2CFDEB019DA1E7800A156DB /* BSDAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEAF19DA1E7800A156DB /* BSDAnimation.m */; };
 		F2CFDEB319DA29A800A156DB /* BSDTransform3d.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEB219DA29A800A156DB /* BSDTransform3d.m */; };
 		F2CFDEB619DA2B9600A156DB /* BSDTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEB519DA2B9600A156DB /* BSDTrigger.m */; };
@@ -250,6 +254,11 @@
 		F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchDescription.m; sourceTree = "<group>"; };
 		F21A5B5F19E0AF4F00E6F21B /* BSDPatchDescriptionUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchDescriptionUtility.h; sourceTree = "<group>"; };
 		F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchDescriptionUtility.m; sourceTree = "<group>"; };
+		F21BAEC11A1AAD1500F20FDD /* BSDTextMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTextMessage.h; sourceTree = "<group>"; };
+		F21BAEC21A1AAD1500F20FDD /* BSDTextMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTextMessage.m; sourceTree = "<group>"; };
+		F21BAEC41A1AB18C00F20FDD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		F21BAEC61A1AB62300F20FDD /* HBVImageBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBVImageBlur.h; path = BlackBox.UI/HBVImageBlur.h; sourceTree = "<group>"; };
+		F21BAEC71A1AB62300F20FDD /* HBVImageBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBVImageBlur.m; path = BlackBox.UI/HBVImageBlur.m; sourceTree = "<group>"; };
 		F21E4C5319C8FDD600D20D60 /* BSDClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDClient.h; sourceTree = "<group>"; };
 		F21E4C5419C8FDD600D20D60 /* BSDClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDClient.m; sourceTree = "<group>"; };
 		F21E4C5619C8FF4900D20D60 /* BSDGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSDGPS.h; path = ../Utility/BSDGPS.h; sourceTree = "<group>"; };
@@ -505,6 +514,8 @@
 		F2B0C4711A145D0500FEE17F /* BSDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDButton.m; sourceTree = "<group>"; };
 		F2C8A2F61A129AED00CAF039 /* BSDActionPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDActionPopup.h; sourceTree = "<group>"; };
 		F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDActionPopup.m; sourceTree = "<group>"; };
+		F2CFC84F1A19E36A00FFAAC1 /* BSDArr2Dict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDArr2Dict.h; sourceTree = "<group>"; };
+		F2CFC8501A19E36A00FFAAC1 /* BSDArr2Dict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDArr2Dict.m; sourceTree = "<group>"; };
 		F2CFDEAE19DA1E7800A156DB /* BSDAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnimation.h; sourceTree = "<group>"; };
 		F2CFDEAF19DA1E7800A156DB /* BSDAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnimation.m; sourceTree = "<group>"; };
 		F2CFDEB119DA29A800A156DB /* BSDTransform3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTransform3d.h; sourceTree = "<group>"; };
@@ -636,6 +647,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F21BAEC51A1AB18C00F20FDD /* CoreLocation.framework in Frameworks */,
 				F25F71B919EA2509002B082A /* CoreMotion.framework in Frameworks */,
 				F25F71B719EA24FA002B082A /* MapKit.framework in Frameworks */,
 				5EC7E8FBB4FC43EB8F4060BE /* libPods-BlackBox.UI.a in Frameworks */,
@@ -656,6 +668,7 @@
 		04119221047643E083A0AD2F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F21BAEC41A1AB18C00F20FDD /* CoreLocation.framework */,
 				F25F71B819EA2509002B082A /* CoreMotion.framework */,
 				F25F71B619EA24FA002B082A /* MapKit.framework */,
 				F25F71B319EA06A5002B082A /* CloudKit.framework */,
@@ -751,6 +764,8 @@
 		F21E525619C51BC300E51383 /* Dictionaries */ = {
 			isa = PBXGroup;
 			children = (
+				F2CFC84F1A19E36A00FFAAC1 /* BSDArr2Dict.h */,
+				F2CFC8501A19E36A00FFAAC1 /* BSDArr2Dict.m */,
 				F21E525719C51BC300E51383 /* BSDDictionarySerialize.h */,
 				F21E525819C51BC300E51383 /* BSDDictionarySerialize.m */,
 				F24A3B0F19D0E5C900FBA887 /* BSDDictionaryEnumerate.h */,
@@ -1109,6 +1124,8 @@
 				F2CFDEBB19DA56B200A156DB /* BSDFormatRequest.m */,
 				F2FF09E419D149540095C3E4 /* BSDWebImage.h */,
 				F2FF09E519D149540095C3E4 /* BSDWebImage.m */,
+				F21BAEC11A1AAD1500F20FDD /* BSDTextMessage.h */,
+				F21BAEC21A1AAD1500F20FDD /* BSDTextMessage.m */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -1179,6 +1196,8 @@
 		F2F5130E19B8D97C00323096 = {
 			isa = PBXGroup;
 			children = (
+				F21BAEC61A1AB62300F20FDD /* HBVImageBlur.h */,
+				F21BAEC71A1AB62300F20FDD /* HBVImageBlur.m */,
 				F2CFDEE219DB46DC00A156DB /* UIImage+Resize.h */,
 				F2CFDEE119DB46DC00A156DB /* UIImage+Resize.m */,
 				F289D8C919D5884F00CA1BC0 /* runtime */,
@@ -1516,6 +1535,7 @@
 				F21E532A19C51BC300E51383 /* BSDIntersect2CirclesHelper.m in Sources */,
 				F2389B0819EF8FCB008B51DB /* BSDAny2Array.m in Sources */,
 				F21E534719C51BC300E51383 /* BSDView.m in Sources */,
+				F21BAEC81A1AB62300F20FDD /* HBVImageBlur.m in Sources */,
 				F2EB85EA19D34F46007B8C3C /* BSDDictionaryInlet.m in Sources */,
 				F24A3B0819D0C11900FBA887 /* BSDAny2String.m in Sources */,
 				F21E531419C51BC300E51383 /* BSDCreate.m in Sources */,
@@ -1558,6 +1578,7 @@
 				F21E532119C51BC300E51383 /* BSDEqualLess.m in Sources */,
 				F289D8CC19D63FC800CA1BC0 /* BSDFactory.m in Sources */,
 				F2CFDEB619DA2B9600A156DB /* BSDTrigger.m in Sources */,
+				F21BAEC31A1AAD1500F20FDD /* BSDTextMessage.m in Sources */,
 				F21E531919C51BC300E51383 /* BSDExponent.m in Sources */,
 				F21E533F19C51BC300E51383 /* BSDBasicAnimation.m in Sources */,
 				F21E532B19C51BC300E51383 /* BSDSin.m in Sources */,
@@ -1581,6 +1602,7 @@
 				F21E531519C51BC300E51383 /* BSDObject.m in Sources */,
 				F21E531F19C51BC300E51383 /* BSDEqual.m in Sources */,
 				F21E52F619C51BC300E51383 /* BSDArrayAccum.m in Sources */,
+				F2CFC8511A19E36A00FFAAC1 /* BSDArr2Dict.m in Sources */,
 				F21E531119C51BC300E51383 /* BSDGenerator.m in Sources */,
 				F2EB85F319D3507B007B8C3C /* BSDNumberObject.m in Sources */,
 				F2EE14B319C9EF9B008D83E2 /* BSDMessageBox.m in Sources */,

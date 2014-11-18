@@ -36,7 +36,14 @@
 
 - (void)calculateOutput
 {
-    self.mainOutlet.value = @([self.hotInlet.value doubleValue] + [self.coldInlet.value doubleValue]);
+    NSNumber *hot = self.hotInlet.value;
+    NSNumber *cold = self.coldInlet.value;
+    if (!hot || !cold) {
+        return;
+    }
+    NSNumber *output = @(hot.doubleValue + cold.doubleValue);
+    [self.mainOutlet output:output];
+    
 }
 
 @end

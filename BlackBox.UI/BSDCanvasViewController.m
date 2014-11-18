@@ -85,7 +85,7 @@
         CGRect frame = self.view.bounds;
         frame.origin.y = 104;
         self.scrollView = [[UIScrollView alloc]initWithFrame:frame];
-        self.scrollView.contentSize = CGSizeMake(frame.size.width * 3, frame.size.height * 3);
+        self.scrollView.contentSize = CGSizeMake(frame.size.width * 2, frame.size.height * 2);
         self.scrollView.delegate = self;
         self.scrollView.minimumZoomScale = 0.33;
         self.scrollView.maximumZoomScale = 2;

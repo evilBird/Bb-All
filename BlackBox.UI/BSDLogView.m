@@ -50,8 +50,10 @@
     }else{
         toDisplay = [toPrint stringByAppendingFormat:@"%@\n",toPrint];
     }
+    [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+        [self updateTextView:self.textView andScrollView:self.scrollView withText:toDisplay];
+    }];
     
-    [self updateTextView:self.textView andScrollView:self.scrollView withText:toDisplay];
 }
 
 - (void)updateTextView:(UITextView *)textView andScrollView:(UIScrollView *)scrollview withText:(NSString *)text

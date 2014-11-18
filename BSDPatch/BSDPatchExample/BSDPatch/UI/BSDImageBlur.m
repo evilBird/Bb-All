@@ -7,55 +7,38 @@
 //
 
 #import "BSDImageBlur.h"
+#import "HBVImageBlur.h"
 
 @implementation BSDImageBlur
 
-
-
-- (instancetype)initWithBlurRadius:(NSNumber *)blurRadius saturation:(NSNumber*)saturation
+- (instancetype)initWithArguments:(id)arguments
 {
-    return [super initWithArguments:@{@"radius":blurRadius,
-                                      @"saturation":saturation
-                                      }];
+    return [super initWithArguments:arguments];
 }
+
 
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"image blur";
-    NSDictionary *args = arguments;
-    if (args) {
-        self.parameters = [NSMutableDictionary dictionaryWithDictionary:args];
+    if (arguments && [arguments isKindOfClass:[NSNumber class]]) {
+        self.coldInlet.value = arguments;
+    }else{
+        self.coldInlet.value = @(0);
     }
 }
 
 - (void)calculateOutput
 {
-    NSDictionary *args = self.coldInlet.value;
+    UIImage *hot = self.hotInlet.value;
+    NSNumber *cold = self.coldInlet.value;
     
-    if (args) {
-        [self updateParametersWithArgs:args];
+    if (!hot || !cold || ![hot isKindOfClass:[UIImage class]] || ![cold isKindOfClass:[NSNumber class]]) {
+        return;
     }
-    
-    UIImage *image = self.hotInlet.value;
-
-    if (image && self.parameters) {
-        
-        NSNumber *blurRadius = self.parameters[@"radius"];
-        //self.mainOutlet.value = [HBVImageBlur applyBlurType:HBVImageBlurTypevImage
-          //                                          onImage:image withRadius:blurRadius.floatValue];
-        
-    }
-    
-    
+    CGFloat blur = cold.floatValue;
+    UIImage *output = [HBVImageBlur applyBlurType:HBVImageBlurTypevImage onImage:hot withRadius:blur];
+    [self.mainOutlet output:output];
 }
 
-- (void)updateParametersWithArgs:(NSDictionary *)args
-{
-    for (id key in args.allKeys) {
-        self.parameters[key] = args[key];
-    }
-    
-    self.coldInlet.value = nil;
-}
 
 @end

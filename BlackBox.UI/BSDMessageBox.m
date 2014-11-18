@@ -88,14 +88,8 @@
     }
     self.argString = text;
     id theMessage = nil;
-    NSMutableString *argText = nil;
-    NSString *quotesRemoved = [text stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-    NSInteger diff = text.length - quotesRemoved.length;
-    if (diff == 2) {
-        theMessage = quotesRemoved;
-        argText = [[NSMutableString alloc]initWithString:theMessage];
-    }else{
-        
+    theMessage = [self formatMessage:text];
+        /*
         NSArray *components = [text componentsSeparatedByString:@" "];
         if (components.count == 1) {
             id component = components.firstObject;
@@ -122,13 +116,7 @@
             }
             theMessage = [temp mutableCopy];
         }
-        
-    }
-    
-    if (argText != nil) {
-        self.argString = [NSString stringWithString:argText];
-    }
-    
+         */
     if (theMessage!=nil) {
         
         if ([theMessage respondsToSelector:@selector(count)]) {
@@ -139,7 +127,6 @@
         
         if (self.object != nil) {
             [[(BSDMessage *)self.object hotInlet]input:@{@"set":theMessage}];
-            //[[self.object hotInlet]input:[BSDBang bang]];
         }
     }
 }
@@ -196,17 +183,13 @@
     NSDictionary *changeInfo = notification.object;
     id val = changeInfo[@"value"];
     if (val) {
-        NSString *displayText = [NSString stringWithFormat:@"%@",val];
-        NSString *nnl = [displayText stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        NSString *nt = [nnl stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-        NSString *nq = [nt stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-        self.textField.text = nq;
+        self.textField.text = [self formatValue:val];
         [self resizeForText:self.textField.text];
         [self setNeedsDisplay];
     }
 }
 
-- (NSArray *)formatMessage:(NSString *)message
+- (id)formatMessage:(NSString *)message
 {
     if (!message) {
         return nil;
@@ -225,44 +208,24 @@
     NSString *quotesRemoved = [message stringByReplacingOccurrencesOfString:@"\"" withString:@""];
     NSInteger diff = message.length - quotesRemoved.length;
     if (diff == 2) {
-        [result addObject:quotesRemoved];
-        return result;
+
+        return quotesRemoved;
     }
     
     NSArray *elems = [message componentsSeparatedByString:@" "];
     for (NSInteger i  = 0; i < elems.count; i ++) {
         NSString *e = elems[i];
+        
         [result addObject:[self setTypeForString:e]];
     }
     
-    return result;
-}
-/*
-- (id)formatElement:(NSString *)element
-{
-    id val = [self findQuotesInElement:element];
-    return [self setTypeForString:val];
+    if (result.count > 1) {
+        return result;
+    }
+    
+    return result.firstObject;
 }
 
-- (id)findQuotesInElement:(NSString *)element
-{
-    NSString *quotesRemoved = [element stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-    NSInteger diff = element.length - quotesRemoved.length;
-    if (diff == 2) {
-        return element;
-    }
-    
-    NSMutableString *result = [NSMutableString stringWithString:@""];
-    
-    for (NSInteger i = 0; i < components.count; i++) {
-        if (i%2 == 0) {
-            [result appendString:components[i]];
-        }
-    }
-    
-    return result;
-}
-*/
 - (NSString *)formatValue:(id)value
 {
     NSMutableString *result = nil;
@@ -290,6 +253,8 @@
                 }
             }
         }
+    }else if ([value isKindOfClass:[NSString class]]||[value isKindOfClass:[NSNumber class]]){
+        result = [NSMutableString stringWithFormat:@"%@",value];
     }
     
     return result;
@@ -300,12 +265,12 @@
     NSRange n = [string rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
     NSRange s = [string rangeOfCharacterFromSet:[NSCharacterSet symbolCharacterSet]];
     
-    if (n.length > 0) {
     if (n.length > 0 || s.length > 0) {
         return string;
     }else{
         return @([string doubleValue]);
     }
+    return nil;
 }
 
 - (void)initializeWithText:(NSString *)text
@@ -318,6 +283,7 @@
         [self handleText:text];
     }
 }
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

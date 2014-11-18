@@ -22,6 +22,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationUsageDescription</key>
+	<string>NSLocationWhenInUseUsageDescription</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Black Box wants to use your location.</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UIMainStoryboardFile</key>

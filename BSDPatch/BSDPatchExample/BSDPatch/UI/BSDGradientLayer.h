@@ -6,14 +6,11 @@
 //  Copyright (c) 2014 birdSound LLC. All rights reserved.
 //
 
-#import "BSDObject.h"
+#import "BSDLayer.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface BSDGradientLayer : BSDObject
+@interface BSDGradientLayer : BSDLayer
 
-@property (nonatomic,strong)BSDInlet *startPointInlet;
-@property (nonatomic,strong)BSDInlet *endPointInlet;
-@property (nonatomic,strong)BSDInlet *startColorInlet;
-@property (nonatomic,strong)BSDInlet *endColorInlet;
+
 
 @end
