@@ -195,6 +195,13 @@
         return nil;
     }
     
+    NSString *quotesRemoved = [message stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    NSInteger diff = message.length - quotesRemoved.length;
+    if (diff == 2) {
+        self.argString = message;
+        return quotesRemoved;
+    }
+    
     NSMutableArray *result = [NSMutableArray array];
     NSArray *comp = [message componentsSeparatedByString:@","];
     
@@ -204,12 +211,6 @@
         }
         
         return result;
-    }
-    NSString *quotesRemoved = [message stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-    NSInteger diff = message.length - quotesRemoved.length;
-    if (diff == 2) {
-
-        return quotesRemoved;
     }
     
     NSArray *elems = [message componentsSeparatedByString:@" "];
