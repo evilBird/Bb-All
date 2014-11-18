@@ -18,6 +18,7 @@
 - (CALayer *)makeMyLayerWithFrame:(CGRect)frame;
 - (NSString *)displayName;
 - (NSDictionary *)mapLayer:(CALayer *)layer;
+- (NSDictionary *)propertiesForObject:(id)obj;
 
 - (void)doAnimation;
 - (void)doSelector;

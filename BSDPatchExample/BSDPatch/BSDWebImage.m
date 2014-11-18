@@ -9,11 +9,26 @@
 #import "BSDWebImage.h"
 #import "UIImageView+AFNetworking.h"
 
+@interface BSDWebImage ()
+
+@property (nonatomic,strong)UIImage *previousImage;
+
+@end
+
 @implementation BSDWebImage
 
 - (instancetype)initWithArguments:(id)arguments
 {
     return [super initWithArguments:arguments];
+}
+
+- (void)inletReceievedBang:(BSDInlet *)inlet
+{
+    if (inlet == self.hotInlet) {
+        if (self.previousImage) {
+            [self.mainOutlet output:self.previousImage];
+        }
+    }
 }
 
 - (void)setupWithArguments:(id)arguments
@@ -34,6 +49,7 @@
                          placeholderImage:nil
                                   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                       [weakself.mainOutlet output:image];
+                                      weakself.previousImage = image;
                                       [weakself.hotInlet setOpen:YES];
                                   } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                                       [weakself.mainOutlet setOpen:YES];
