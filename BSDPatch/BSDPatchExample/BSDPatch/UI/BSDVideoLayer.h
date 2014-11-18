@@ -6,8 +6,9 @@
 //  Copyright (c) 2014 birdSound LLC. All rights reserved.
 //
 
-#import "BSDObject.h"
+#import "BSDLayer.h"
 
-@interface BSDVideoStream : BSDObject
+@interface BSDVideoLayer : BSDLayer
+
 
 @end

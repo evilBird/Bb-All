@@ -18,13 +18,13 @@
 #import "BSDPatch.h"
 #import "NSUserDefaults+HBVUtils.h"
 #import "BSDPatchCompiler.h"
+#import "BSDPatchManager.h"
 
 @interface BSDCompiledPatch ()
 
 @property (nonatomic,strong)NSMutableDictionary *objectGraph;
 @property (nonatomic,strong)NSMutableDictionary *patchInlets;
 @property (nonatomic,strong)NSMutableArray *views;
-@property (nonatomic,strong)BSDCanvas *canvas;
 
 @end
 
@@ -42,9 +42,11 @@
     if (arguments) {
         if ([arguments isKindOfClass:[NSString class]]) {
             patchName = arguments;
+            self.patchName = patchName;
         }else if ([arguments isKindOfClass:[NSArray class]]){
             NSArray *args = (NSArray *)arguments;
             patchName = args.firstObject;
+            self.patchName = patchName;
             if (args.count > 1) {
                 NSRange creationArgsRange;
                 creationArgsRange.location = 1;
@@ -52,50 +54,57 @@
                 NSIndexSet *argsIndexSet = [NSIndexSet indexSetWithIndexesInRange:creationArgsRange];
                 NSArray *ca = [args objectsAtIndexes:argsIndexSet];
                 self.creationArgs = ca.mutableCopy;
-                NSLog(@"patch %@ has creation args: %@",patchName,self.creationArgs);
+                //NSLog(@"patch %@ has creation args: %@",patchName,self.creationArgs);
             }
         }
     }
     
     if (patchName) {
         NSString *patch = [self patchDescriptionWithName:patchName];
+        self.patchName = patchName;
         if (patch) {
             [self loadPatchWithString:patch];
         }
     }
 }
 
+- (void)reloadPatch:(NSString *)desc
+{
+    [self.canvas clearCurrentPatch];
+    [self loadPatchWithString:desc];
+}
+
 - (void)loadPatchWithString:(NSString *)string
 {
     BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
     self.canvas = [compiler restoreCanvasWithText:string creationArgs:self.creationArgs];
-
+    
     NSInteger idx = 0;
     for (BSDInlet *inlet in self.canvas.inlets) {
-        BSDInlet *myInlet = [[BSDInlet alloc]initHot];
-        myInlet.name = [NSString stringWithFormat:@"%@-%@",inlet.name,@(idx)];
-        myInlet.delegate = self;
-        [self addPort:myInlet];
+        NSString *inletName = [NSString stringWithFormat:@"%@-%@",inlet.name,@(idx)];
+        BSDInlet *myInlet = [self inletNamed:inletName];
+        if (!myInlet) {
+            myInlet = [[BSDInlet alloc]initHot];
+            myInlet.name = [NSString stringWithFormat:@"%@-%@",inlet.name,@(idx)];
+            myInlet.delegate = self;
+            [self addPort:myInlet];
+        }
         [myInlet forwardToPort:inlet];
         idx++;
     }
     idx = 0;
     for (BSDOutlet *outlet in self.canvas.outlets) {
-        BSDOutlet *myOutlet = [[BSDOutlet alloc]init];
-        myOutlet.name = [NSString stringWithFormat:@"%@-%@",outlet.name,@(idx)];
-        [self addPort:myOutlet];
+        NSString *outletName = [NSString stringWithFormat:@"%@-%@",outlet.name,@(idx)];
+        BSDOutlet *myOutlet = [self outletNamed:outletName];
+        if (!myOutlet) {
+            myOutlet = [[BSDOutlet alloc]init];
+            myOutlet.name = outletName;
+            [self addPort:myOutlet];
+        }
         [outlet forwardToPort:myOutlet];
         idx++;
     }
-    
     [self.canvas loadBang];
-    
-    /*
-    for (BSDBox *box in self.canvas.graphBoxes) {
-        BSDObject *obj = box.object;
-        [obj loadBang];
-    }
-     */
 }
 
 - (void)setDelegate:(id<BSDCompiledPatchDelegate>)delegate
@@ -105,6 +114,7 @@
 
 - (NSString *)patchDescriptionWithName:(NSString *)name
 {
+    /*
     NSDictionary *savedPatches = [NSUserDefaults valueForKey:@"descriptions"];
     
     if (!savedPatches) {
@@ -116,12 +126,15 @@
     }
     
     NSString *desc = savedPatches[name];
-    
+    */
+    NSString *patchName = [name stringByAppendingPathExtension:@"bb"];
+    NSString *desc = [NSString stringWithString:[[BSDPatchManager sharedInstance]getPatchNamed:patchName]];
     return [NSString stringWithString:desc];
 }
 
 - (NSDictionary *)patchWithName:(NSString *)patchName
 {
+    /*
     NSDictionary *savedPatches = [NSUserDefaults valueForKey:@"patches"];
     if (!savedPatches) {
         return nil;
@@ -130,9 +143,12 @@
     if (!patchName || ![savedPatches.allKeys containsObject:patchName]) {
         return nil;
     }
+    
     NSMutableDictionary *copy = savedPatches.mutableCopy;
     
     return copy[patchName];
+     */
+    return nil;
 }
 
 - (void)loadPatchWithDictionary:(NSDictionary *)dictionary

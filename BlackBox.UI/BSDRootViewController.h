@@ -10,8 +10,9 @@
 #import <iCloud/iCloud.h>
 #import "BSDCanvasViewController.h"
 #import "BlackBoxCategories.h"
+#import "NSDictionary+BSDUtils.h"
 
-@interface ViewController : UIViewController<iCloudDelegate,iCloudDocumentDelegate,BSDCanvasViewControllerDelegate>
+@interface BSDRootViewController : UIViewController<BSDCanvasViewControllerDelegate>
 
 
 @end

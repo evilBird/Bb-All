@@ -68,7 +68,7 @@
         }else if ([desc.boxClassName isEqualToString:@"BSDCommentBox"]){
             
             if (self.creationArguments != nil) {
-                NSLog(@"comment box has creations args: %@",self.creationArguments);
+                //NSLog(@"comment box has creations args: %@",self.creationArguments);
                 NSArray *arr = self.creationArguments;
                 if (arr && [arr isKindOfClass:[NSArray class]]) {
                     NSString *comment = arr.firstObject;

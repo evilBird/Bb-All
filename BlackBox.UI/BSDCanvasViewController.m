@@ -11,8 +11,9 @@
 #import "BSDPatchDescription.h"
 #import "BSDPatchCompiler.h"
 #import "BSDLogView.h"
+#import "BSDNestedPatchTableViewController.h"
 
-@interface BSDCanvasViewController ()<UIScrollViewDelegate,UITableViewDelegate>
+@interface BSDCanvasViewController ()<UIScrollViewDelegate,UITableViewDelegate,BSDNestedPatchTableViewControllerDelegate>
 {
     NSString *desc;
     BOOL kCanvasWillClose;
@@ -25,6 +26,7 @@
 @property (nonatomic,strong)UIButton *closeDisplayViewButton;
 @property (nonatomic,strong)BSDLogView *logView;
 @property (nonatomic,strong)NSMutableDictionary *boxDictionary;
+@property (nonatomic,strong)BSDCompiledPatch *compiledPatch;
 
 @end
 
@@ -39,13 +41,40 @@
     return self;
 }
 
+- (instancetype)initWithCompiledPatch:(BSDCompiledPatch *)compiledPatch
+{
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        _compiledPatch = compiledPatch;
+        _curentCanvas = compiledPatch.canvas;
+        _currentPatchName = _curentCanvas.name;
+        //NSDictionary *patches = [NSUserDefaults valueForKey:@"descriptions"];
+        //desc = patches[_currentPatchName];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithCanvas:(BSDCanvas *)canvas
+{
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        _currentPatchName = canvas.name;
+        //NSDictionary *patches = [NSUserDefaults valueForKey:@"descriptions"];
+        //desc = patches[_currentPatchName];
+        self.curentCanvas = canvas;
+    }
+    
+    return self;
+}
+
 - (instancetype)initWithName:(NSString *)name
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _currentPatchName = name;
-        NSDictionary *patches = [NSUserDefaults valueForKey:@"descriptions"];
-        desc = patches[name];
+        //NSDictionary *patches = [NSUserDefaults valueForKey:@"descriptions"];
+        //desc = patches[name];
         if (!_currentPatchName) {
             _currentPatchName = @"untitled";
         }
@@ -66,6 +95,16 @@
     }
     
     return self;
+}
+
+- (void)configureWithName:(NSString *)name
+                     data:(id)data
+                 delegate:(id<BSDCanvasViewControllerDelegate>)delegate
+{
+    self.delegate = delegate;
+    self.currentPatchName = name;
+    self.curentCanvas.name = name;
+    self.title = name;
 }
 
 - (void)viewDidLoad
@@ -114,29 +153,28 @@
             }else{
                 self.curentCanvas = [compiler restoreCanvasWithText:blank];
             }
-            //self.curentCanvas = [compiler restoreCanvasWithText:test];
-            self.curentCanvas.delegate = self;
-            [self.scrollView addSubview:self.curentCanvas];
-            [self.curentCanvas boxDidMove:nil];
-            [self.view addSubview:self.scrollView];
-            frame = self.view.bounds;
-            frame.size.height = 104;
-            self.toolbarView = [[BSDCanvasToolbarView alloc]initWithFrame:frame];
-            self.toolbarView.delegate = self;
-            [self.toolbarView setEditState:BSDCanvasEditStateDefault];
-            self.toolbarView.titleLabel.text = self.currentPatchName;
-            self.toolbarView.titleLabel.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize]];
-            [self.view addSubview:self.toolbarView];
-            [self configureConstraints];
-            frame = self.view.bounds;
-            frame.size.height *= 0.15;
-            frame.origin.y = CGRectGetMaxY(self.view.bounds) - frame.size.height;
-            self.logView = [[BSDLogView alloc]initWithFrame:frame];
-            [self.view addSubview:self.logView];
-            //[self configureConstraintsForLogView:self.logView];
-            self.canvases = [NSMutableArray array];
-            [self.canvases addObject:self.curentCanvas];
         }
+        self.curentCanvas.delegate = self;
+        [self.scrollView addSubview:self.curentCanvas];
+        [self.curentCanvas boxDidMove:nil];
+        [self.view addSubview:self.scrollView];
+        frame = self.view.bounds;
+        frame.size.height = 104;
+        self.toolbarView = [[BSDCanvasToolbarView alloc]initWithFrame:frame];
+        self.toolbarView.delegate = self;
+        [self.toolbarView setEditState:BSDCanvasEditStateDefault];
+        self.toolbarView.titleLabel.text = self.currentPatchName;
+        self.toolbarView.titleLabel.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize]];
+        [self.view addSubview:self.toolbarView];
+        [self configureConstraints];
+        frame = self.view.bounds;
+        frame.size.height *= 0.15;
+        frame.origin.y = CGRectGetMaxY(self.view.bounds) - frame.size.height;
+        self.logView = [[BSDLogView alloc]initWithFrame:frame];
+        [self.view addSubview:self.logView];
+        //[self configureConstraintsForLogView:self.logView];
+        self.canvases = [NSMutableArray array];
+        [self.canvases addObject:self.curentCanvas];
     }
 }
 
@@ -269,11 +307,11 @@
 {
     BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
     NSString *currentDescription = [compiler saveCanvas:canvas];
-    NSDictionary *patches = [NSUserDefaults valueForKey:@"descriptions"];
+    //NSDictionary *patches = [NSUserDefaults valueForKey:@"descriptions"];
     if (!canvas.name) {
         return YES;
     }
-    NSString *savedDescription = patches[canvas.name];
+    NSString *savedDescription = [self.delegate savedPatchWithName:canvas.name sender:self];
     if (!savedDescription) {
         return YES;
     }
@@ -377,8 +415,12 @@
 - (void)showSavedPatchesPopoverFromBarButtonItem:(UIBarButtonItem *)sender
 {
     if (self.myPopoverController == nil) {
-        PopoverContentTableViewController *sp = [self savedPatchesTableViewController];
-        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UINavigationController *sp = [storyboard instantiateViewControllerWithIdentifier:@"NestedPatchNavController"];
+        BSDNestedPatchTableViewController *npt = sp.viewControllers.firstObject;
+        npt.patches = [self.delegate savedPatchesSender:self];
+        npt.title = @"Saved Patches";
+        npt.delegate = self;
         self.myPopoverController = [self popoverControllerWithContentViewController:sp];
         [self.myPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
         
@@ -436,9 +478,22 @@
 
 - (void)newCanvasForPatch:(NSString *)patchName withBox:(BSDGraphBox *)graphBox
 {
-    NSDictionary *dictionary = [NSUserDefaults valueForKey:@"descriptions"];
-    NSString *description = dictionary[patchName];
+    //NSDictionary *dictionary = [NSUserDefaults valueForKey:@"descriptions"];
+    NSString *description = [self.delegate savedPatchWithName:patchName sender:self];
     BSDCanvasViewController *cvc = [[BSDCanvasViewController alloc]initWithName:patchName description:description];
+    [self presentViewController:cvc animated:YES completion:NULL];
+}
+
+- (void)showCanvas:(BSDCanvas *)canvas
+{
+    BSDCanvasViewController *cvc = [[BSDCanvasViewController alloc]initWithCanvas:canvas];
+    cvc.delegate = self.delegate;
+    [self presentViewController:cvc animated:YES completion:NULL];
+}
+
+- (void)showCanvasForCompiledPatch:(BSDCompiledPatch *)patch
+{
+    BSDCanvasViewController *cvc = [[BSDCanvasViewController alloc]initWithCompiledPatch:patch];
     [self presentViewController:cvc animated:YES completion:NULL];
 }
 
@@ -511,18 +566,17 @@
         return;
     }
     
-    NSDictionary *descriptions = [NSUserDefaults valueForKey:@"descriptions"];
-    if (!descriptions) {
-        descriptions = [NSDictionary dictionary];
-    }
+    //NSDictionary *descriptions = [NSUserDefaults valueForKey:@"descriptions"];
+    //if (!descriptions) {
+      //  descriptions = [NSDictionary dictionary];
+   // }
     
-    NSMutableDictionary *copy = descriptions.mutableCopy;
-    copy[name] = description;
-    [NSUserDefaults setUserValue:[NSDictionary dictionaryWithDictionary:copy] forKey:@"descriptions"];
+    //NSMutableDictionary *copy = descriptions.mutableCopy;
+    //copy[name] = description;
+    //[NSUserDefaults setUserValue:[NSDictionary dictionaryWithDictionary:copy] forKey:@"descriptions"];
+    [self.delegate savePatchDescription:description withName:name sender:self];
     self.currentPatchName = name;
-    self.curentCanvas.name = name;
-    
-    [self.delegate syncPatch:description withName:name];
+    self.curentCanvas.name = name;    
 }
 
 - (NSString *)savedDescriptionWithName:(NSString *)name
@@ -531,13 +585,13 @@
         return nil;
     }
     
-    NSDictionary *descriptions = [NSUserDefaults valueForKey:@"descriptions"];
-    if (!descriptions || ![descriptions.allKeys containsObject:name]) {
-        return nil;
-    }
+    //NSDictionary *descriptions = [NSUserDefaults valueForKey:@"descriptions"];
+    //if (!descriptions || ![descriptions.allKeys containsObject:name]) {
+      //  return nil;
+   // }
     
-    NSString *description = [descriptions valueForKey:name];
-    return [NSString stringWithString:description];
+    //NSString *description = [descriptions valueForKey:name];
+    return [self.delegate savedPatchWithName:name sender:self];
     
 }
 
@@ -560,12 +614,8 @@
     if (!name) {
         return;
     }
-    NSDictionary *descriptions = [NSUserDefaults valueForKey:@"descriptions"];
-    if (!descriptions) {
-        descriptions = [NSDictionary dictionary];
-    }
     
-    NSString *description = [descriptions valueForKey:name];
+    NSString *description = [self.delegate savedPatchWithName:name sender:self];
     if (description) {
         NSString *toLoad = [NSString stringWithString:description];
         [self.curentCanvas tearDown];
@@ -658,7 +708,8 @@
         CGPoint point = [self.curentCanvas optimalFocusPoint];
         [self contentTableViewControllerWasDismissed:nil];
         
-        BSDCanvas *myCanvas = nil;
+        BSDCanvas *myCanvas = self.canvases.lastObject;
+        
         for (UIView *subview in self.curentCanvas.subviews) {
             if ([subview isKindOfClass:[BSDCanvas class]]) {
                 myCanvas = (BSDCanvas *)subview;
@@ -692,12 +743,7 @@
             [myCanvas addHSliderBoxAtPoint:point];
         }
         
-        
-    }else{
-        [self contentTableViewControllerWasDismissed:nil];
-        [self loadDescriptionWithName:patchName];
     }
-    
 }
 
 - (void)contentTableViewControllerWasDismissed:(id)sender
@@ -737,8 +783,7 @@
     PopoverContentTableViewController *sptvc = [[PopoverContentTableViewController alloc]initWithStyle:UITableViewStylePlain];
     sptvc.delegate = self;
     sptvc.title = @"Load Patch";
-    NSDictionary *savedPatches = [NSUserDefaults valueForKey:@"descriptions"];
-    //NSArray *savedPatches = [self.delegate patchList];
+    NSDictionary *savedPatches = [self.delegate savedPatchesSender:self];
     if (savedPatches) {
         NSMutableArray *arr = [savedPatches.allKeys mutableCopy];
         sptvc.itemNames = [arr sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
@@ -774,8 +819,27 @@
     }
 }
 
+#pragma mark - BSDNestedPatchTableViewControllerDelegate
+- (void)patchTableViewController:(id)sender selectedPatchWithName:(NSString *)patchName patchText:(NSString *)patchText
+{
+    [self.myPopoverController dismissPopoverAnimated:YES];
+    self.myPopoverController = nil;
+    [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+        [self loadDescriptionWithName:patchName];
+    }];
+}
 
-
+/*
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (self.compiledPatch) {
+        NSDictionary *patches = [NSUserDefaults valueForKey:@"descriptions"];
+        desc = patches[_currentPatchName];
+        [self.compiledPatch reloadPatch:desc];
+    }
+}
+*/
 /*
 #pragma mark - Navigation
 

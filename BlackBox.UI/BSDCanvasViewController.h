@@ -14,9 +14,14 @@
 
 @protocol BSDCanvasViewControllerDelegate <NSObject>
 
-- (NSArray *)patchList;
-- (void)syncPatch:(NSString *)patch withName:(NSString *)name;
-- (void)deleteSyncedPatchWithName:(NSString *)name;
+- (NSDictionary *)savedPatchesSender:(id)sender;
+- (NSString *)savedPatchWithName:(NSString *)name sender:(id)sender;
+- (void)savePatchDescription:(NSString *)description withName:(NSString *)name sender:(id)sender;
+- (void)deleteItemAtPath:(NSString *)path sender:(id)sender;
+- (void)showCanvas:(BSDCanvas *)canvas sender:(id)sender;
+- (void)showCanvasForCompiledPatch:(BSDCompiledPatch *)compiledPatch sender:(id)sender;
+- (void)showCanvasForPatchName:(NSString *)patchName sender:(id)sender;
+- (void)showCanvasForPatchDescription:(NSString *)description name:(NSString *)name sender:(id)sender;
 
 @end
 
@@ -24,6 +29,12 @@
 
 - (instancetype)initWithName:(NSString *)name;
 - (instancetype)initWithName:(NSString *)name description:(NSString *)description;
+- (instancetype)initWithCanvas:(BSDCanvas *)canvas;
+- (instancetype)initWithCompiledPatch:(BSDCompiledPatch *)compiledPatch;
+
+- (void)configureWithName:(NSString *)name
+                     data:(id)data
+                 delegate:(id<BSDCanvasViewControllerDelegate>)delegate;
 
 @property (nonatomic,strong)NSString *currentPatchName;
 @property (nonatomic,strong)BSDCanvas *curentCanvas;

@@ -22,6 +22,7 @@
 
 - (void)doAnimation;
 - (void)doSelector;
+- (void)updateLayer;
 
 
 @property (nonatomic,strong)BSDInlet *layerInlet;

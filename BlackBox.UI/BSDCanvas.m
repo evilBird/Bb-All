@@ -475,7 +475,9 @@
 {
     NSArray *args = graphBox.creationArguments;
     NSString *patchName = args.firstObject;
-    [self.delegate newCanvasForPatch:patchName withBox:graphBox];
+    BSDCompiledPatch *patch = graphBox.object;
+    [self.delegate showCanvasForCompiledPatch:patch];
+    //[self.delegate newCanvasForPatch:patchName withBox:graphBox];
 }
 
 - (void)closeCanvas:(UIButton *)sender
