@@ -20,14 +20,14 @@
 {
     self.name = @"BSDRect";
     
-    self.originXInlet = [[BSDInlet alloc]initHot];
+    self.originXInlet = [[BSDNumberInlet alloc]initHot];
     self.originXInlet.name = @"originX";
     self.originXInlet.delegate = self;
-    self.originYInlet = [[BSDInlet alloc]initHot];
+    self.originYInlet = [[BSDNumberInlet alloc]initCold];
     self.originYInlet.name = @"originY";
-    self.widthInlet = [[BSDInlet alloc]initHot];
+    self.widthInlet = [[BSDNumberInlet alloc]initCold];
     self.widthInlet.name = @"width";
-    self.heightInlet = [[BSDInlet alloc]initHot];
+    self.heightInlet = [[BSDNumberInlet alloc]initCold];
     self.heightInlet.name = @"height";
     self.originXInlet.value = @(0);
     self.originYInlet.value = @(0);
@@ -63,20 +63,12 @@
 
 - (BSDInlet *)makeLeftInlet
 {
-    BSDNumberInlet *inlet = [[BSDNumberInlet alloc]initHot];
-    inlet.name = @"originX";
-    inlet.delegate = self;
-    self.originXInlet = inlet;
-    return inlet;
+    return nil;
 }
 
 - (BSDInlet *)makeRightInlet
 {
-    BSDNumberInlet *inlet = [[BSDNumberInlet alloc]initHot];
-    inlet.name = @"originY";
-    inlet.delegate = self;
-    self.originYInlet = inlet;
-    return inlet;
+    return nil;
 }
 
 - (void)calculateOutput
