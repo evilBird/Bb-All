@@ -65,6 +65,42 @@ static NSString *kNestedCellId = @"PatchCellNested";
     return result;
 }
 
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSString *toDelete = nil;
+        if (indexPath.section == 0) {
+            NSArray *sortedNames = [self.leafPatches.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+            toDelete = [self patchTitleForName:sortedNames[indexPath.row]];
+            NSMutableDictionary *dict = self.leafPatches.mutableCopy;
+            [dict removeObjectForKey:sortedNames[indexPath.row]];
+            self.leafPatches = dict;
+        }else if (indexPath.section == 1){
+            NSArray *sortedNames = [self.subpatches.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+            NSString *folderName = sortedNames[indexPath.row];
+            toDelete = [self pathForSubpatchFolder:folderName];
+            NSMutableDictionary *dict = self.subpatches.mutableCopy;
+            [dict removeObjectForKey:sortedNames[indexPath.row]];
+            self.subpatches = dict;
+        }
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView reloadData];
+        
+        if (toDelete){
+            [self.delegate patchTableViewController:self deletedItemAtPath:toDelete];
+        }
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger section = indexPath.section;

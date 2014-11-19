@@ -45,12 +45,18 @@
 -(void)notification_OrientationWillChange:(NSNotification*)n
 {
     orientation = (UIInterfaceOrientation)[[n.userInfo objectForKey:UIApplicationStatusBarOrientationUserInfoKey] intValue];
+    NSDictionary *toSend = @{@"interfaceOrientationWillChange":@(orientation)};
+    [self.getterOutlet output:toSend];
 }
 
 -(void)notification_OrientationDidChange:(NSNotification*)n
 {
     NSValue *rect = [NSValue wrapRect:[[UIScreen mainScreen]bounds]];
-    [self.setterInlet input:@{@"frame":rect}];
+    NSDictionary *newBounds = @{@"bounds":rect};
+    [self.setterInlet input:newBounds];
+    NSDictionary *toSend = @{@"interfaceOrientationDidChange":@(orientation)};
+    [self.getterOutlet output:toSend];
+    [self.getterOutlet output:newBounds];
 }
 
 - (void)setupWithArguments:(id)arguments

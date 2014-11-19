@@ -749,6 +749,11 @@
     }];
 }
 
+- (void)patchTableViewController:(id)sender deletedItemAtPath:(NSString *)keyPath
+{
+    [self.delegate deleteItemAtPath:keyPath sender:self];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"ShowDisplayView"]) {
