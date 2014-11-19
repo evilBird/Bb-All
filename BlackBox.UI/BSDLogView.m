@@ -59,6 +59,8 @@
         _textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _textView.editable = NO;
         _textView.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize] + 1];
+        NSString *dateString = [self dateString];
+        _textView.text = [NSString stringWithFormat:@"BlackBox Log Session %@\n",dateString];
         [self addSubview:_textView];
         [self configureConstraints];
     }
@@ -66,10 +68,21 @@
     return self;
 }
 
+- (NSString *)dateString
+{
+    NSDate *now = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateStyle = NSDateFormatterShortStyle;
+    formatter.timeStyle = NSDateFormatterMediumStyle;
+    NSString *dateString = [formatter stringFromDate:now];
+    return dateString;
+}
 
 - (void)handlePrintNotification:(NSNotification *)notification
 {
-    NSString *toPrint = notification.object;
+    NSString *rawText = notification.object;
+    NSString *dateString = [self dateString];
+    NSString *toPrint = [dateString stringByAppendingFormat:@" %@",rawText];
     NSString *existingText = self.textView.text;
     NSString *toDisplay = nil;
     if (existingText) {
@@ -87,6 +100,8 @@
     }];
     
 }
+                          
+                          
 
 - (CGRect)visibleRectForContentSize:(CGSize)size padding:(CGFloat)padding
 {

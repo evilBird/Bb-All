@@ -102,7 +102,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-341" y="-613"/>
+            <point key="canvasLocation" x="-755" y="-613"/>
         </scene>
         <!--CanvasViewController-->
         <scene sceneID="XXK-0H-FfD">
@@ -123,7 +123,7 @@
                                     <constraint firstAttribute="height" constant="60" id="afO-an-OnP"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" minimumZoomScale="0.75" maximumZoomScale="2" translatesAutoresizingMaskIntoConstraints="NO" id="H07-8w-4YK">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" minimumZoomScale="0.5" maximumZoomScale="1.25" translatesAutoresizingMaskIntoConstraints="NO" id="H07-8w-4YK">
                                 <rect key="frame" x="0.0" y="60" width="600" height="374"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -244,7 +244,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Nfo-lD-4p8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="qmH-Te-XrP">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                        <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ehh-BT-zoc" customClass="BSDCanvasToolbarView">
@@ -254,7 +254,7 @@
                                     <constraint firstAttribute="height" constant="60" id="dIN-0Z-yLV"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" minimumZoomScale="0.75" maximumZoomScale="2" translatesAutoresizingMaskIntoConstraints="NO" id="wcz-ud-BoZ">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" minimumZoomScale="0.5" maximumZoomScale="1.25" translatesAutoresizingMaskIntoConstraints="NO" id="wcz-ud-BoZ">
                                 <rect key="frame" x="0.0" y="60" width="600" height="374"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>

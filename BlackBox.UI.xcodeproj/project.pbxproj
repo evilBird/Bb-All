@@ -131,6 +131,8 @@
 		F25F71B719EA24FA002B082A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25F71B619EA24FA002B082A /* MapKit.framework */; };
 		F25F71B919EA2509002B082A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25F71B819EA2509002B082A /* CoreMotion.framework */; };
 		F25F71BC19EA26AA002B082A /* BSDPointer.m in Sources */ = {isa = PBXBuildFile; fileRef = F25F71BB19EA26AA002B082A /* BSDPointer.m */; };
+		F26BB6421A1D5B73000909F4 /* bb_stdlib 2.plist in Resources */ = {isa = PBXBuildFile; fileRef = F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */; };
+		F26BB6441A1D5B78000909F4 /* bb_stdlib.plist in Resources */ = {isa = PBXBuildFile; fileRef = F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */; };
 		F2789E4119C8D4C6006F6CA4 /* PopoverContentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */; };
 		F27D1FF11A0C3ACB0057EDFC /* SavedPatches.plist in Resources */ = {isa = PBXBuildFile; fileRef = F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */; };
 		F283A1FA19CA06DF005CC98B /* BSDPatchInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1F919CA06DF005CC98B /* BSDPatchInlet.m */; };
@@ -491,6 +493,8 @@
 		F25F71B819EA2509002B082A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		F25F71BA19EA26AA002B082A /* BSDPointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPointer.h; sourceTree = "<group>"; };
 		F25F71BB19EA26AA002B082A /* BSDPointer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPointer.m; sourceTree = "<group>"; };
+		F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "bb_stdlib 2.plist"; sourceTree = "<group>"; };
+		F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bb_stdlib.plist; sourceTree = "<group>"; };
 		F2789E3F19C8D4C6006F6CA4 /* PopoverContentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverContentTableViewController.h; sourceTree = "<group>"; };
 		F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverContentTableViewController.m; sourceTree = "<group>"; };
 		F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedPatches.plist; sourceTree = "<group>"; };
@@ -1125,6 +1129,15 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		F26BB6401A1D5B67000909F4 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */,
+				F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
 		F289D8C919D5884F00CA1BC0 /* runtime */ = {
 			isa = PBXGroup;
 			children = (
@@ -1239,6 +1252,7 @@
 		F2F5131919B8D97C00323096 /* BlackBox.UI */ = {
 			isa = PBXGroup;
 			children = (
+				F26BB6401A1D5B67000909F4 /* libs */,
 				F25F71B219EA0661002B082A /* BlackBox.UI.entitlements */,
 				F21E50DC19C433ED00E51383 /* UIColor+HBVHarmonies.h */,
 				F21E50DB19C433ED00E51383 /* UIColor+HBVHarmonies.m */,
@@ -1463,8 +1477,10 @@
 				F2CFDF1F19DCFF5400A156DB /* toolbar_patch@2x.png in Resources */,
 				F2CFDF2119DCFF5400A156DB /* toolbar_paste@3x.png in Resources */,
 				F2CFDF3A19DCFF5400A156DB /* toolbar_add@2x.png in Resources */,
+				F26BB6421A1D5B73000909F4 /* bb_stdlib 2.plist in Resources */,
 				F2CFDF3119DCFF5400A156DB /* toolbar_cut@2x.png in Resources */,
 				F2CFDF3819DCFF5400A156DB /* toolbar_back.png in Resources */,
+				F26BB6441A1D5B78000909F4 /* bb_stdlib.plist in Resources */,
 				F2CFDF1819DCFF5400A156DB /* toolbar_view@2x.png in Resources */,
 				F2CFDF2F19DCFF5400A156DB /* toolbar_delete.png in Resources */,
 				F2F5132619B8D97C00323096 /* Main.storyboard in Resources */,

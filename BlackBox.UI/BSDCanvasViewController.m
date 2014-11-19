@@ -20,7 +20,6 @@
     BOOL kCanvasWillClose;
 }
 
-//@property (nonatomic,strong)UIScrollView *scrollView;
 @property (nonatomic,strong)UIViewController *displayViewController;
 @property (strong, nonatomic) UIPopoverController *myPopoverController;
 @property (nonatomic,strong)NSMutableDictionary *boxDictionary;
@@ -28,61 +27,12 @@
 @property (strong, nonatomic) IBOutlet BSDCanvasToolbarView *toolbarView;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet BSDLogView *logView;
+@property (strong, nonatomic) NSTimer *displayPreviewTimer;
 
 @end
 
 @implementation BSDCanvasViewController
-/*
-- (instancetype)initWithCompiledPatch:(BSDCompiledPatch *)compiledPatch
-{
-    self = [super initWithNibName:nil bundle:nil];
-    if (self) {
-        _compiledPatch = compiledPatch;
-        _curentCanvas = compiledPatch.canvas;
-        _currentPatchName = _curentCanvas.name;
-    }
-    
-    return self;
-}
 
-- (instancetype)initWithCanvas:(BSDCanvas *)canvas
-{
-    self = [super initWithNibName:nil bundle:nil];
-    if (self) {
-        _currentPatchName = canvas.name;
-        self.curentCanvas = canvas;
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithName:(NSString *)name
-{
-    self = [super initWithNibName:nil bundle:nil];
-    if (self) {
-        _currentPatchName = name;
-        if (!_currentPatchName) {
-            _currentPatchName = @"untitled";
-        }
-    }
-    
-    return self;
-}
-- (instancetype)initWithName:(NSString *)name description:(NSString *)description
-{
-    self = [super initWithNibName:nil bundle:nil];
-    if (self) {
-        _currentPatchName = name;
-        desc = description;
-        kCanvasWillClose = NO;
-        if (!_currentPatchName) {
-            _currentPatchName = @"untitled";
-        }
-    }
-    
-    return self;
-}
-*/
 
 - (BSDCanvas *)canvasFromPatchName:(NSString *)name
 {
@@ -118,6 +68,7 @@
     self.scrollView.backgroundColor = [UIColor whiteColor];
     self.curentCanvas.backgroundColor = [UIColor whiteColor];
     [self.scrollView addSubview:self.curentCanvas];
+    self.scrollView.zoomScale = 0.5;
     self.toolbarView.delegate = self;
     [self.toolbarView setEditState:BSDCanvasEditStateDefault];
     [[NSNotificationCenter defaultCenter]addObserver:self.logView selector:@selector(handlePrintNotification:) name:kPrintNotificationChannel object:nil];
@@ -149,6 +100,14 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    //self.displayPreviewTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updatePreviewImage) userInfo:nil repeats:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    //[self.displayPreviewTimer invalidate];
+    //self.displayPreviewTimer = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -156,8 +115,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 - (void)tapInToolBar:(id)sender item:(id)item
 {
@@ -345,6 +302,20 @@
         [self.myPopoverController dismissPopoverAnimated:YES];
         self.myPopoverController = nil;
     }
+}
+
+- (void)updatePreviewImage
+{
+    if (!self.displayView) {
+        return;
+    }
+    
+    UIView *snap = [self.displayView snapshotViewAfterScreenUpdates:YES];
+    if (self.displayPreviewImageView.subviews.count) {
+        [self.displayPreviewImageView.subviews.firstObject removeFromSuperview];
+    }
+    [self.displayPreviewImageView addSubview:snap];
+    
 }
 /*
 - (void)showSavedPatchesTableView
@@ -654,7 +625,9 @@
         id dest = segue.destinationViewController;
         if ([dest isKindOfClass:[BSDCanvasViewController class]]) {
             BSDCanvasViewController *c = (BSDCanvasViewController *)dest;
+            c.delegate = self.delegate;
             c.configuration = @{@"data":self.childPatch};
+            
         }
     }
 }
@@ -675,9 +648,9 @@
     if (pan.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [pan translationInView:pan.view];
         CGFloat constant = self.logViewHeight.constant;
-        constant -= (translation.y * 0.1);
-        if (constant < 0) {
-            constant = 0;
+        constant -= (translation.y);
+        if (constant < 100) {
+            constant = 100;
         }
         [UIView animateWithDuration:0.1
                          animations:^{

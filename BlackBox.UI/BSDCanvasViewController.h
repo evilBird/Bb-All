@@ -30,19 +30,8 @@
 @end
 @class BSDCompiledPatch;
 @interface BSDCanvasViewController : UIViewController <BSDCanvasToolbarViewDelegate,BSDCanvasDelegate,PopoverContentTableViewControllerDelegate,UIPopoverControllerDelegate,BSDScreenDelegate>
-/*
-- (instancetype)initWithName:(NSString *)name;
-- (instancetype)initWithName:(NSString *)name description:(NSString *)description;
-- (instancetype)initWithCanvas:(BSDCanvas *)canvas;
-- (instancetype)initWithCompiledPatch:(BSDCompiledPatch *)compiledPatch;
-*/
-- (NSString *)emptyCanvasDescription;
-- (void)configureWithData:(id)data;
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *logViewHeight;
-
-- (IBAction)handleLogControlPan:(id)sender;
-
 @property (nonatomic,strong)BSDCanvas *canvas;
 @property (nonatomic,strong)NSString *currentPatchName;
 @property (nonatomic,strong)BSDCanvas *curentCanvas;
@@ -52,5 +41,10 @@
 @property (nonatomic,strong)UIView *displayView;
 @property (nonatomic,strong)BSDCompiledPatch *childPatch;
 @property (nonatomic,strong)NSDictionary *configuration;
+@property (strong, nonatomic) IBOutlet UIImageView *displayPreviewImageView;
+
+- (IBAction)handleLogControlPan:(id)sender;
+- (NSString *)emptyCanvasDescription;
+- (void)configureWithData:(id)data;
 
 @end
