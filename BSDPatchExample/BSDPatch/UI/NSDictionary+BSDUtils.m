@@ -141,6 +141,54 @@
     return result;
 }
 
+- (void)removeObjectAtKeyPath:(NSString *)keyPath
+{
+    NSMutableArray *components = [keyPath componentsSeparatedByString:@"."].mutableCopy;
+    if (components.count == 1) {
+        [self removeObjectForKey:components.firstObject];
+        return;
+    }
+    
+    NSString *lastComponent = components.lastObject;
+    NSString *lastKey = nil;
+    if ([lastComponent isEqualToString:@"bb"]) {
+        [components removeLastObject];
+        lastKey = [components.lastObject stringByAppendingPathExtension:lastComponent];
+        if (components.count == 1) {
+            [self removeObjectForKey:lastKey];
+            return;
+        }
+    }
+    
+    NSString *parentPath = [self pathWithComponents:components];
+    NSMutableDictionary *parent = [self objectAtKeyPath:parentPath];
+    if (!lastKey) {
+        NSInteger index = components.count - 2;
+        lastKey = components[index];
+    }
+    
+    [parent removeObjectForKey:lastKey];
+    NSLog(@"removed object for key %@ from path %@",lastKey,parentPath);
+}
+
+- (NSString *)pathWithComponents:(NSArray *)components
+{
+    if (!components) {
+        return nil;
+    }
+    
+    NSMutableString *result = [[NSMutableString alloc]init];
+    for (NSString *comp in components) {
+        [result appendFormat:@"%@.",comp];
+    }
+    
+    NSRange toTrim;
+    toTrim.location = result.length - 1;
+    toTrim.length = 1;
+    
+    return [result stringByReplacingCharactersInRange:toTrim withString:@""];
+}
+
 - (void)addObject:(id)object atKeyPath:(NSString *)keyPath
 {
     NSArray *allKeys = self.allKeys;
@@ -178,6 +226,19 @@
     NSRange toTrim = [path rangeOfString:formattedComponent];
     NSString *trimmedPath = [path stringByReplacingCharactersInRange:toTrim withString:@""];
     return trimmedPath;
+}
+
+- (NSString *)trimLastComponentFromPath:(NSString *)path
+{
+    NSArray *components = [path componentsSeparatedByString:@"."];
+    if (components.count == 1) {
+        return nil;
+    }
+    NSString *formattedComponent = [NSString stringWithFormat:@"%@.",components.lastObject];
+    NSRange toTrim = [path rangeOfString:formattedComponent];
+    NSString *trimmedPath = [path stringByReplacingCharactersInRange:toTrim withString:@""];
+    return trimmedPath;
+    
 }
 
 
