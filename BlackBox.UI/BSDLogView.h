@@ -14,4 +14,6 @@
 @property (nonatomic,strong)UIScrollView *scrollView;
 @property (nonatomic,strong)UITextView *textView;
 
+- (void)handlePrintNotification:(NSNotification *)notification;
+
 @end

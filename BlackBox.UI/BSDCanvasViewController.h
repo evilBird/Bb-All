@@ -22,24 +22,34 @@
 - (void)showCanvasForCompiledPatch:(BSDCompiledPatch *)compiledPatch sender:(id)sender;
 - (void)showCanvasForPatchName:(NSString *)patchName sender:(id)sender;
 - (void)showCanvasForPatchDescription:(NSString *)description name:(NSString *)name sender:(id)sender;
+- (void)addCanvasToStack:(id)sender;
+- (void)popCanvas:(id)sender;
+- (void)popCanvas:(id)sender reload:(BOOL)reload;
+- (BOOL)enableHomeButton:(id)sender;
 
 @end
-
+@class BSDCompiledPatch;
 @interface BSDCanvasViewController : UIViewController <BSDCanvasToolbarViewDelegate,BSDCanvasDelegate,PopoverContentTableViewControllerDelegate,UIPopoverControllerDelegate,BSDScreenDelegate>
 
 - (instancetype)initWithName:(NSString *)name;
 - (instancetype)initWithName:(NSString *)name description:(NSString *)description;
 - (instancetype)initWithCanvas:(BSDCanvas *)canvas;
 - (instancetype)initWithCompiledPatch:(BSDCompiledPatch *)compiledPatch;
+- (NSString *)emptyCanvasDescriptionName:(NSString *)name;
+- (NSString *)emptyCanvasDescription;
 
 - (void)configureWithName:(NSString *)name
                      data:(id)data
                  delegate:(id<BSDCanvasViewControllerDelegate>)delegate;
 
+@property (nonatomic,strong)BSDCanvas *canvas;
 @property (nonatomic,strong)NSString *currentPatchName;
 @property (nonatomic,strong)BSDCanvas *curentCanvas;
 @property (nonatomic,strong)NSMutableArray *canvases;
 @property (nonatomic,strong)NSMutableDictionary *displayViews;
 @property (nonatomic,weak)id<BSDCanvasViewControllerDelegate>delegate;
+@property (nonatomic,strong)UIView *displayView;
+@property (nonatomic,strong)BSDCompiledPatch *childPatch;
+@property (nonatomic,strong)NSDictionary *configuration;
 
 @end

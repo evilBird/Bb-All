@@ -443,6 +443,11 @@
     invocation.target = instance;
     invocation.selector = aSelector;
     
+    if (args && ![args isKindOfClass:[NSArray class]]) {
+        id a = args;
+        args = [NSArray arrayWithObject:a];
+    }
+    
     if (args != NULL) {
         NSArray *a = args;
         if (a.count == 1) {

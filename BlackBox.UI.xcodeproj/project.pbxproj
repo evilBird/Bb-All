@@ -11,6 +11,8 @@
 		F202D2131A1BB69500AED9C7 /* NSDictionary+BSDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F202D2121A1BB69500AED9C7 /* NSDictionary+BSDUtils.m */; };
 		F202D2161A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F202D2151A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.m */; };
 		F202D2191A1BE6DC00AED9C7 /* BSDPatchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F202D2181A1BE6DC00AED9C7 /* BSDPatchManager.m */; };
+		F202D21C1A1C1A9D00AED9C7 /* BSDDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F202D21B1A1C1A9D00AED9C7 /* BSDDisplayViewController.m */; };
+		F202D21F1A1C1CC200AED9C7 /* BSDComment.m in Sources */ = {isa = PBXBuildFile; fileRef = F202D21E1A1C1CC200AED9C7 /* BSDComment.m */; };
 		F20426D71A13E50400A455E7 /* BSDBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = F20426D61A13E50400A455E7 /* BSDBezierPath.m */; };
 		F20426DA1A13EC9400A455E7 /* BSDShapeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F20426D91A13EC9400A455E7 /* BSDShapeLayer.m */; };
 		F204D60419F71E7200175B24 /* BSDHSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = F204D60319F71E7200175B24 /* BSDHSlider.m */; };
@@ -249,6 +251,10 @@
 		F202D2151A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDNestedPatchTableViewController.m; sourceTree = "<group>"; };
 		F202D2171A1BE6DC00AED9C7 /* BSDPatchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchManager.h; sourceTree = "<group>"; };
 		F202D2181A1BE6DC00AED9C7 /* BSDPatchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchManager.m; sourceTree = "<group>"; };
+		F202D21A1A1C1A9D00AED9C7 /* BSDDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDDisplayViewController.h; sourceTree = "<group>"; };
+		F202D21B1A1C1A9D00AED9C7 /* BSDDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDDisplayViewController.m; sourceTree = "<group>"; };
+		F202D21D1A1C1CC200AED9C7 /* BSDComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDComment.h; sourceTree = "<group>"; };
+		F202D21E1A1C1CC200AED9C7 /* BSDComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDComment.m; sourceTree = "<group>"; };
 		F20426D51A13E50400A455E7 /* BSDBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDBezierPath.h; sourceTree = "<group>"; };
 		F20426D61A13E50400A455E7 /* BSDBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDBezierPath.m; sourceTree = "<group>"; };
 		F20426D81A13EC9400A455E7 /* BSDShapeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDShapeLayer.h; sourceTree = "<group>"; };
@@ -1087,6 +1093,8 @@
 		F21E52ED19C51BC300E51383 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				F202D21D1A1C1CC200AED9C7 /* BSDComment.h */,
+				F202D21E1A1C1CC200AED9C7 /* BSDComment.m */,
 				F21E52EE19C51BC300E51383 /* BSDBuffer.h */,
 				F21E52EF19C51BC300E51383 /* BSDBuffer.m */,
 				F21E52F019C51BC300E51383 /* BSDSpeedLimit.h */,
@@ -1246,6 +1254,8 @@
 				F2F5132219B8D97C00323096 /* BSDRootViewController.m */,
 				F202D2171A1BE6DC00AED9C7 /* BSDPatchManager.h */,
 				F202D2181A1BE6DC00AED9C7 /* BSDPatchManager.m */,
+				F202D21A1A1C1A9D00AED9C7 /* BSDDisplayViewController.h */,
+				F202D21B1A1C1A9D00AED9C7 /* BSDDisplayViewController.m */,
 				F2AAF7A419C7FB4B004EFE87 /* BSDCanvasViewController.h */,
 				F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */,
 				F2CFDEC719DB36A900A156DB /* BSDCanvasToolbarView.h */,
@@ -1523,6 +1533,7 @@
 				F21E50D419C3F63200E51383 /* BSDBox.m in Sources */,
 				F21E531719C51BC300E51383 /* BSDAdd.m in Sources */,
 				F2CFDEB919DA521800A156DB /* BSDDictionaryAccum.m in Sources */,
+				F202D21F1A1C1CC200AED9C7 /* BSDComment.m in Sources */,
 				F204D60419F71E7200175B24 /* BSDHSlider.m in Sources */,
 				F28C807119E3B1C7001A578C /* BSDPatchCompiler.m in Sources */,
 				F21E531019C51BC300E51383 /* BSDValue.m in Sources */,
@@ -1599,6 +1610,7 @@
 				F21BAEC31A1AAD1500F20FDD /* BSDTextMessage.m in Sources */,
 				F21E531919C51BC300E51383 /* BSDExponent.m in Sources */,
 				F21E533F19C51BC300E51383 /* BSDBasicAnimation.m in Sources */,
+				F202D21C1A1C1A9D00AED9C7 /* BSDDisplayViewController.m in Sources */,
 				F21E532B19C51BC300E51383 /* BSDSin.m in Sources */,
 				F21E531819C51BC300E51383 /* BSDDivide.m in Sources */,
 				F21E535119C5249100E51383 /* BSDBangControlBox.m in Sources */,
