@@ -47,32 +47,22 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        _scrollView  = [[UIScrollView alloc]initWithFrame:self.bounds];
-        _scrollView.contentSize = self.bounds.size;
         _textView = [[UITextView alloc]initWithFrame:self.bounds];
-        [_scrollView addSubview:_textView];
-        _scrollView.backgroundColor = [UIColor redColor];
-        [self addSubview:_scrollView];
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handlePrintNotification:) name:kPrintNotificationChannel object:nil];
         _textView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
-        //_textView.backgroundColor = [UIColor blueColor];
         UIEdgeInsets insets = _textView.textContainerInset;
         insets.left = 10;
         insets.right = 10;
         insets.bottom = 10;
         insets.top = 10;
         _textView.textContainerInset = insets;
-        /*
-        _textView.autoresizingMask = UIViewAutoresizingFlexibleHeight&UIViewAutoresizingFlexibleWidth;
-         */
         _textView.layer.borderWidth = 1;
         _textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _textView.editable = NO;
-        //_textView.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize]];
-        
         _textView.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize] + 1];
+        [self addSubview:_textView];
         [self configureConstraints];
     }
+    
     return self;
 }
 
@@ -87,17 +77,38 @@
     }else{
         toDisplay = [toPrint stringByAppendingFormat:@"%@\n",toPrint];
     }
+    
+    CGSize size = self.textView.contentSize;
+    CGRect scrollToRect = [self visibleRectForContentSize:size padding:20];    
+    __weak BSDLogView *weakself = self;
     [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-        [self updateTextView:self.textView andScrollView:self.scrollView withText:toDisplay];
+        weakself.textView.text = toDisplay;
+        [weakself.textView scrollRectToVisible:scrollToRect animated:YES];
     }];
     
 }
+
+- (CGRect)visibleRectForContentSize:(CGSize)size padding:(CGFloat)padding
+{
+    CGRect result = self.textView.bounds;
+    result.origin.y = size.height - result.size.height + padding;
+    return result;
+}
+
 
 - (void)updateTextView:(UITextView *)textView andScrollView:(UIScrollView *)scrollview withText:(NSString *)text
 {
     CGFloat height = [self heightForText:text];
     NSLog(@"height for text: %@",@(height));
+    NSRange scrollToRange;
+    //scrollToRange.location = textView.text.length;
+    //scrollToRange.length = text.length;
     textView.text = text;
+    scrollToRange.location = textView.text.length;
+    scrollToRange.length = 0;
+    [textView scrollRangeToVisible:scrollToRange];
+    
+    /*
     CGSize size = scrollview.contentSize;
     NSLayoutConstraint *constraint = nil;
     size.height = height;
@@ -112,12 +123,12 @@
                   constant:height];
     self.textViewHeightConstraint = constraint;
     [self setNeedsLayout];
-    
+    */
 }
 
 - (void)configureConstraints
 {
-    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    //self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
     self.textView.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *constraint = nil;
     
@@ -125,7 +136,7 @@
                   constraintWithItem:self.textView
                   attribute:NSLayoutAttributeTop
                   relatedBy:NSLayoutRelationEqual
-                  toItem:self.scrollView
+                  toItem:self
                   attribute:NSLayoutAttributeTop
                   multiplier:1.0
                   constant:0.0];
@@ -135,7 +146,7 @@
                   constraintWithItem:self.textView
                   attribute:NSLayoutAttributeLeading
                   relatedBy:NSLayoutRelationEqual
-                  toItem:self.scrollView
+                  toItem:self
                   attribute:NSLayoutAttributeLeading
                   multiplier:1.0
                   constant:0.0];
@@ -145,7 +156,7 @@
                   constraintWithItem:self.textView
                   attribute:NSLayoutAttributeTrailing
                   relatedBy:NSLayoutRelationEqual
-                  toItem:self.scrollView
+                  toItem:self
                   attribute:NSLayoutAttributeTrailing
                   multiplier:1.0
                   constant:0.0];
@@ -155,14 +166,14 @@
                   constraintWithItem:self.textView
                   attribute:NSLayoutAttributeWidth
                   relatedBy:NSLayoutRelationEqual
-                  toItem:self.scrollView
+                  toItem:self
                   attribute:NSLayoutAttributeWidth
                   multiplier:1.0
                   constant:0.0];
     [self addConstraint:constraint];
     
     constraint = [NSLayoutConstraint
-                  constraintWithItem:self.scrollView
+                  constraintWithItem:self.textView
                   attribute:NSLayoutAttributeBottom
                   relatedBy:NSLayoutRelationEqual
                   toItem:self
@@ -170,7 +181,7 @@
                   multiplier:1.0
                   constant:0.0];
     [self addConstraint:constraint];
-    
+    /*
     constraint = [NSLayoutConstraint
                   constraintWithItem:self.scrollView
                   attribute:NSLayoutAttributeTop
@@ -211,6 +222,7 @@
                                      multiplier:1.0
                                      constant:0.0];
     [self addConstraint:self.textViewHeightConstraint];
+     */
     
 }
 

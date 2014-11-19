@@ -15,6 +15,7 @@
 - (id)objectAtKeyPath:(NSString *)keyPath;
 - (NSString *)printNestedKeys;
 - (BOOL)dictionaryExistsAtKeyPath:(NSString *)keyPath;
++ (NSString *)pathWithComponents:(NSArray *)components;
 
 @end
 

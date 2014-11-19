@@ -60,14 +60,14 @@
     id canvas = grandChildren.firstObject;
     if ([canvas isKindOfClass:[BSDCanvasViewController class]]){
         BSDCanvasViewController *c = (BSDCanvasViewController *)canvas;
+        NSDictionary *data = @{@"untitled":[canvas emptyCanvasDescription]};
+        [c setDelegate:self];
+        [c configureWithData:data];
         if (!self.canvasStack) {
             self.canvasStack = [NSMutableArray array];
         }
         
         [self.canvasStack addObject:c];
-        [c configureWithName:@"untitled"
-                        data:[c emptyCanvasDescription]
-                    delegate:self];
     }
 }
 
@@ -130,6 +130,12 @@
 
 - (void)savePatchDescription:(NSString *)description withName:(NSString *)name sender:(id)sender
 {
+    NSMutableArray *components = [name componentsSeparatedByString:@"."].mutableCopy;
+    if ([components.lastObject isEqualToString:@"bb"]) {
+        [components removeLastObject];
+        name = [NSDictionary pathWithComponents:components];
+    }
+    
     [[BSDPatchManager sharedInstance]savePatchDescription:description withName:name];
 }
 

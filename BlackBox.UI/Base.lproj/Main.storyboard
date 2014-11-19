@@ -123,19 +123,23 @@
                                     <constraint firstAttribute="height" constant="60" id="afO-an-OnP"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" minimumZoomScale="0.5" maximumZoomScale="2" translatesAutoresizingMaskIntoConstraints="NO" id="H07-8w-4YK">
-                                <rect key="frame" x="0.0" y="60" width="600" height="392"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" minimumZoomScale="0.75" maximumZoomScale="2" translatesAutoresizingMaskIntoConstraints="NO" id="H07-8w-4YK">
+                                <rect key="frame" x="0.0" y="60" width="600" height="374"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="delegate" destination="rPs-ph-CJ4" id="7iZ-nL-zso"/>
                                 </connections>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wAY-in-ygd" userLabel="Log Controls">
-                                <rect key="frame" x="0.0" y="452" width="600" height="4"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="0.0" y="434" width="600" height="22"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="4" id="Rm0-u2-coe"/>
+                                    <constraint firstAttribute="height" constant="22" id="Rm0-u2-coe"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="udR-bd-hxR" appends="YES" id="2Li-OV-ESn"/>
+                                </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5dC-ia-FcY" userLabel="Log View" customClass="BSDLogView">
                                 <rect key="frame" x="0.0" y="456" width="600" height="100"/>
@@ -175,6 +179,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="logView" destination="5dC-ia-FcY" id="Vdx-Eo-Xsv"/>
+                        <outlet property="logViewHeight" destination="JEZ-pF-UG3" id="zPz-68-JxX"/>
                         <outlet property="scrollView" destination="H07-8w-4YK" id="Sd9-IS-fBu"/>
                         <outlet property="toolbarView" destination="Had-Yd-qc6" id="wXK-oH-loV"/>
                         <segue destination="QWB-ic-ptj" kind="presentation" identifier="ShowDisplayView" modalTransitionStyle="flipHorizontal" id="GgD-ZL-IeG"/>
@@ -182,6 +187,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="104-ok-z5u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="udR-bd-hxR">
+                    <connections>
+                        <action selector="handleLogControlPan:" destination="rPs-ph-CJ4" id="mdC-in-oqa"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="984" y="-613"/>
         </scene>
@@ -244,19 +254,23 @@
                                     <constraint firstAttribute="height" constant="60" id="dIN-0Z-yLV"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" minimumZoomScale="0.5" maximumZoomScale="2" translatesAutoresizingMaskIntoConstraints="NO" id="wcz-ud-BoZ">
-                                <rect key="frame" x="0.0" y="60" width="600" height="392"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" minimumZoomScale="0.75" maximumZoomScale="2" translatesAutoresizingMaskIntoConstraints="NO" id="wcz-ud-BoZ">
+                                <rect key="frame" x="0.0" y="60" width="600" height="374"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="delegate" destination="VAs-ef-8pA" id="RHX-GN-lEa"/>
                                 </connections>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRN-uV-3mR" userLabel="Log Controls">
-                                <rect key="frame" x="0.0" y="452" width="600" height="4"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="0.0" y="434" width="600" height="22"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="4" id="rNE-Kl-cgo"/>
+                                    <constraint firstAttribute="height" constant="22" id="rNE-Kl-cgo"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="wH3-Oq-lhb" appends="YES" id="ier-zo-aQ2"/>
+                                </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1xr-5d-7rV" userLabel="Log View" customClass="BSDLogView">
                                 <rect key="frame" x="0.0" y="456" width="600" height="100"/>
@@ -296,11 +310,17 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="logView" destination="1xr-5d-7rV" id="d35-lK-0a6"/>
+                        <outlet property="logViewHeight" destination="akt-qA-LeF" id="mwl-2t-gFd"/>
                         <outlet property="scrollView" destination="wcz-ud-BoZ" id="fSy-Nk-0Uz"/>
                         <outlet property="toolbarView" destination="Ehh-BT-zoc" id="UMt-hw-oXW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bH8-NR-DyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="wH3-Oq-lhb">
+                    <connections>
+                        <action selector="handleLogControlPan:" destination="VAs-ef-8pA" id="Gjs-nS-nYT"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="984" y="-1447"/>
         </scene>

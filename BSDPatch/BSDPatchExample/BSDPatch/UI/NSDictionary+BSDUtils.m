@@ -123,6 +123,24 @@
     return NO;
 }
 
++ (NSString *)pathWithComponents:(NSArray *)components
+{
+    if (!components) {
+        return nil;
+    }
+    
+    NSMutableString *result = [[NSMutableString alloc]init];
+    for (NSString *comp in components) {
+        [result appendFormat:@"%@.",comp];
+    }
+    
+    NSRange toTrim;
+    toTrim.location = result.length - 1;
+    toTrim.length = 1;
+    
+    return [result stringByReplacingCharactersInRange:toTrim withString:@""];
+}
+
 @end
 
 @implementation NSMutableDictionary (BSDUtils)
@@ -160,7 +178,7 @@
         }
     }
     
-    NSString *parentPath = [self pathWithComponents:components];
+    NSString *parentPath = [NSDictionary pathWithComponents:components];
     NSMutableDictionary *parent = [self objectAtKeyPath:parentPath];
     if (!lastKey) {
         NSInteger index = components.count - 2;
@@ -171,23 +189,7 @@
     NSLog(@"removed object for key %@ from path %@",lastKey,parentPath);
 }
 
-- (NSString *)pathWithComponents:(NSArray *)components
-{
-    if (!components) {
-        return nil;
-    }
-    
-    NSMutableString *result = [[NSMutableString alloc]init];
-    for (NSString *comp in components) {
-        [result appendFormat:@"%@.",comp];
-    }
-    
-    NSRange toTrim;
-    toTrim.location = result.length - 1;
-    toTrim.length = 1;
-    
-    return [result stringByReplacingCharactersInRange:toTrim withString:@""];
-}
+
 
 - (void)addObject:(id)object atKeyPath:(NSString *)keyPath
 {

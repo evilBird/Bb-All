@@ -108,8 +108,13 @@ static NSString *kLibName = @"bb_stdlib";
         dictPath = [[paths objectAtIndex:0]
                     stringByAppendingPathComponent:filePath];
     }
-    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:dictPath];
-    return dict;
+    if (dictPath) {
+        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:dictPath];
+        return dict;
+    }
+    
+    return nil;
+
 }
 
 @end
