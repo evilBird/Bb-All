@@ -123,3 +123,4 @@
 #import "BSDArr2Dict.h"
 #import "BSDComment.h"
 #import "BSDAnnotationFactory.h"
+#import "BSDGPUImage.h"
