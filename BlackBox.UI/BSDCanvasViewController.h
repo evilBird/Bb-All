@@ -42,6 +42,7 @@
 @property (nonatomic,strong)BSDCompiledPatch *childPatch;
 @property (nonatomic,strong)NSDictionary *configuration;
 @property (strong, nonatomic) IBOutlet UIImageView *displayPreviewImageView;
+- (IBAction)clearLog:(id)sender;
 
 - (IBAction)handleLogControlPan:(id)sender;
 - (NSString *)emptyCanvasDescription;

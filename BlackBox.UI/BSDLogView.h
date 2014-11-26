@@ -15,5 +15,6 @@
 @property (nonatomic,strong)UITextView *textView;
 
 - (void)handlePrintNotification:(NSNotification *)notification;
+- (void)clear;
 
 @end

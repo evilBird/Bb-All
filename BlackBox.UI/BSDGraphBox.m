@@ -139,6 +139,8 @@
     if (components.count) {
         for (NSString *comp in components) {
             NSRange r = [comp rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
+            NSRange sym = [comp rangeOfCharacterFromSet:[NSCharacterSet symbolCharacterSet]];
+            
             NSRange s = [comp rangeOfString:@"$"];
             if (!argsString) {
                 argsString = [[NSMutableString alloc]init];
@@ -147,7 +149,7 @@
                 [argsString appendFormat:@" %@",comp];
             }
             
-            if (r.length == 0 && s.length == 0) {
+            if (r.length == 0 && s.length == 0 && sym.length == 0) {
                 NSNumber *arg = @(comp.floatValue);
                 if (!argsList) {
                     argsList = [NSMutableArray array];

@@ -133,6 +133,8 @@
 		F25F71BC19EA26AA002B082A /* BSDPointer.m in Sources */ = {isa = PBXBuildFile; fileRef = F25F71BB19EA26AA002B082A /* BSDPointer.m */; };
 		F26BB6421A1D5B73000909F4 /* bb_stdlib 2.plist in Resources */ = {isa = PBXBuildFile; fileRef = F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */; };
 		F26BB6441A1D5B78000909F4 /* bb_stdlib.plist in Resources */ = {isa = PBXBuildFile; fileRef = F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */; };
+		F26BB6471A1D8187000909F4 /* BSDAnnotationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = F26BB6461A1D8187000909F4 /* BSDAnnotationFactory.m */; };
+		F26BB64A1A1D8247000909F4 /* BSDAnnotationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F26BB6491A1D8247000909F4 /* BSDAnnotationObject.m */; };
 		F2789E4119C8D4C6006F6CA4 /* PopoverContentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */; };
 		F27D1FF11A0C3ACB0057EDFC /* SavedPatches.plist in Resources */ = {isa = PBXBuildFile; fileRef = F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */; };
 		F283A1FA19CA06DF005CC98B /* BSDPatchInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1F919CA06DF005CC98B /* BSDPatchInlet.m */; };
@@ -495,6 +497,10 @@
 		F25F71BB19EA26AA002B082A /* BSDPointer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPointer.m; sourceTree = "<group>"; };
 		F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "bb_stdlib 2.plist"; sourceTree = "<group>"; };
 		F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bb_stdlib.plist; sourceTree = "<group>"; };
+		F26BB6451A1D8187000909F4 /* BSDAnnotationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnnotationFactory.h; sourceTree = "<group>"; };
+		F26BB6461A1D8187000909F4 /* BSDAnnotationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnnotationFactory.m; sourceTree = "<group>"; };
+		F26BB6481A1D8247000909F4 /* BSDAnnotationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnnotationObject.h; sourceTree = "<group>"; };
+		F26BB6491A1D8247000909F4 /* BSDAnnotationObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnnotationObject.m; sourceTree = "<group>"; };
 		F2789E3F19C8D4C6006F6CA4 /* PopoverContentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverContentTableViewController.h; sourceTree = "<group>"; };
 		F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverContentTableViewController.m; sourceTree = "<group>"; };
 		F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedPatches.plist; sourceTree = "<group>"; };
@@ -972,6 +978,8 @@
 				F21E52B819C51BC300E51383 /* BSDRectSplit.m */,
 				F21E52B919C51BC300E51383 /* BSDSplitPoint.h */,
 				F21E52BA19C51BC300E51383 /* BSDSplitPoint.m */,
+				F26BB6481A1D8247000909F4 /* BSDAnnotationObject.h */,
+				F26BB6491A1D8247000909F4 /* BSDAnnotationObject.m */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1090,6 +1098,8 @@
 				F2B0C46E1A145C0400FEE17F /* BSDControl.m */,
 				F2B0C4701A145D0500FEE17F /* BSDButton.h */,
 				F2B0C4711A145D0500FEE17F /* BSDButton.m */,
+				F26BB6451A1D8187000909F4 /* BSDAnnotationFactory.h */,
+				F26BB6461A1D8187000909F4 /* BSDAnnotationFactory.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1569,6 +1579,7 @@
 				F21E533819C51BC300E51383 /* BSDClipSoft.m in Sources */,
 				F2EB85FC19D35227007B8C3C /* BSDDictionaryObject.m in Sources */,
 				F24A3B1419D0EBD900FBA887 /* BSDAtomizer.m in Sources */,
+				F26BB6471A1D8187000909F4 /* BSDAnnotationFactory.m in Sources */,
 				F2F5132319B8D97C00323096 /* BSDRootViewController.m in Sources */,
 				F21E532519C51BC300E51383 /* BSDMin.m in Sources */,
 				F2EB85F019D34FB5007B8C3C /* BSDNumberOutlet.m in Sources */,
@@ -1654,6 +1665,7 @@
 				F2EE14B319C9EF9B008D83E2 /* BSDMessageBox.m in Sources */,
 				F2EE14B619C9F070008D83E2 /* BSDMessage.m in Sources */,
 				F2CFDEEE19DCAA6700A156DB /* BSDSend.m in Sources */,
+				F26BB64A1A1D8247000909F4 /* BSDAnnotationObject.m in Sources */,
 				F2CFDEC019DA6E8900A156DB /* BSDTouchView.m in Sources */,
 				F21E533919C51BC300E51383 /* BSDInt.m in Sources */,
 				F21E532319C51BC300E51383 /* BSDLess.m in Sources */,

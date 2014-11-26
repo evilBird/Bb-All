@@ -37,6 +37,7 @@
         self.inletViews = nil;
         self.outletViews = nil;
         self.boxClassString = @"BSDCommentBox";
+        self.className = @"BSDComment";
     }
     
     return self;
@@ -66,7 +67,22 @@
         self.creationArguments = @[textField.text];
         [textField endEditing:YES];
         [textField resignFirstResponder];
-        [self resizeToFitText:textField.text];
+        [self handleText:textField.text];
+    }
+}
+
+- (void)handleText:(NSString *)text
+{
+    self.argString = text;
+    NSArray *message = [NSArray arrayWithObject:self.argString];
+    self.creationArguments = message;
+    [self resizeToFitText:text];
+    if (self.object == nil) {
+        [self makeObjectInstanceArgs:self.creationArguments];
+    }
+    
+    if (![self.textField.text isEqualToString:text]) {
+        self.textField.text = text;
     }
 }
 
@@ -82,18 +98,21 @@
     frame.size = size;
     
     self.frame = CGRectInset(frame,-8,-8);
+
     self.textField.frame = CGRectInset(self.bounds, 8, 8);
+    /*
     self.argString = messageText;
     NSArray *message = [NSArray arrayWithObject:self.argString];
-    self.creationArguments = message;
-    [[self.object hotInlet]input:message];
+    self.creationArguments = messageText;
+     */
+    
 }
 
 - (void)initializeWithText:(NSString *)text
 {
-    [self makeObjectInstanceArgs:text];
+    //[self makeObjectInstanceArgs:text];
     if (text) {
-        [self makeObjectInstanceArgs:@[text]];
+        [self handleText:text];
     }
 }
 

@@ -122,3 +122,4 @@
 #import "BSDButton.h"
 #import "BSDArr2Dict.h"
 #import "BSDComment.h"
+#import "BSDAnnotationFactory.h"

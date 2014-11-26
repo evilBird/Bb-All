@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreMotion/CoreMotion.h>
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 #import "NSValue+BSD.h"
 #import "BSDPoint3D.h"
+
 
 @interface NSValue (BSD)
 //wrap C structs in an instance of NSValue;

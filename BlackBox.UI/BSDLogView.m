@@ -68,6 +68,12 @@
     return self;
 }
 
+- (void)clear
+{
+    NSString *dateString = [self dateString];
+    self.textView.text = [NSString stringWithFormat:@"BlackBox Log Session %@\n",dateString];
+}
+
 - (NSString *)dateString
 {
     NSDate *now = [NSDate date];
@@ -92,10 +98,10 @@
     }
     
     CGSize size = self.textView.contentSize;
-    CGRect scrollToRect = [self visibleRectForContentSize:size padding:20];    
+    CGRect scrollToRect = [self visibleRectForContentSize:size padding:20];
+    self.textView.text = toDisplay;
     __weak BSDLogView *weakself = self;
     [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-        weakself.textView.text = toDisplay;
         [weakself.textView scrollRectToVisible:scrollToRect animated:YES];
     }];
     

@@ -26,19 +26,23 @@
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"pack";
-    NSNumber *packCount = arguments;
-    if (packCount && [packCount isKindOfClass:[NSNumber class]]) {
-        for (NSUInteger idx = 0; idx < packCount.integerValue; idx ++) {
+    NSMutableString *name = [NSMutableString stringWithString:@"pack"];
+    NSArray *packingList = arguments;
+    if (packingList && [packingList isKindOfClass:[NSArray class]]) {
+        for (NSUInteger idx = 0; idx < packingList.count; idx ++) {
             BSDInlet *inlet = nil;
             if (idx == 0) {
                 inlet = [[BSDInlet alloc]initHot];
                 inlet.delegate = self;
+            }else{
+                inlet = [[BSDInlet alloc]initCold];
             }
             
             inlet.name = [NSString stringWithFormat:@"%@-Inlet-%@",self.objectId,@(idx)];
             [self addPort:inlet];
         }
     }
+    
 }
 
 - (BSDInlet *)makeLeftInlet
@@ -87,6 +91,9 @@
     
     if (output) {
         [self.mainOutlet output:output.mutableCopy];
+        for (BSDInlet *inlet in self.inlets) {
+            inlet.value = nil;
+        }
     }
 }
 

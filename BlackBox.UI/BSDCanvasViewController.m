@@ -68,11 +68,11 @@
     self.scrollView.backgroundColor = [UIColor whiteColor];
     self.curentCanvas.backgroundColor = [UIColor whiteColor];
     [self.scrollView addSubview:self.curentCanvas];
-    self.scrollView.zoomScale = 0.5;
+    self.scrollView.zoomScale = 0.9;
     self.toolbarView.delegate = self;
     [self.toolbarView setEditState:BSDCanvasEditStateDefault];
     [[NSNotificationCenter defaultCenter]addObserver:self.logView selector:@selector(handlePrintNotification:) name:kPrintNotificationChannel object:nil];
-    self.displayView = [[UIView alloc]initWithFrame:self.view.bounds];
+    self.displayView = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [self.curentCanvas loadBang];
 }
 
@@ -641,6 +641,11 @@
     }];
 }
 
+
+- (IBAction)clearLog:(id)sender {
+    
+    [self.logView clear];
+}
 
 - (IBAction)handleLogControlPan:(id)sender {
     
