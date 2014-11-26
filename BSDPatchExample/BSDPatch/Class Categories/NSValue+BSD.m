@@ -8,7 +8,9 @@
 
 #import "NSValue+BSD.h"
 
+
 @implementation NSValue (BSD)
+
 
 + (NSValue *)wrapPoint:(CGPoint)point
 {
@@ -37,5 +39,6 @@
              @"z":@(accel.z)};
     
 }
+
 
 @end
