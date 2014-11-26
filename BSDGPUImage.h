@@ -10,4 +10,6 @@
 
 @interface BSDGPUImage : BSDObject
 
+@property (nonatomic,strong)BSDOutlet *rightOutlet;
+
 @end

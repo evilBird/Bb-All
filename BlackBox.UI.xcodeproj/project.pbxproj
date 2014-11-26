@@ -133,10 +133,13 @@
 		F25F71BC19EA26AA002B082A /* BSDPointer.m in Sources */ = {isa = PBXBuildFile; fileRef = F25F71BB19EA26AA002B082A /* BSDPointer.m */; };
 		F26BB6421A1D5B73000909F4 /* bb_stdlib 2.plist in Resources */ = {isa = PBXBuildFile; fileRef = F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */; };
 		F26BB6441A1D5B78000909F4 /* bb_stdlib.plist in Resources */ = {isa = PBXBuildFile; fileRef = F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */; };
-		F26BB6471A1D8187000909F4 /* BSDAnnotationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = F26BB6461A1D8187000909F4 /* BSDAnnotationFactory.m */; };
-		F26BB64A1A1D8247000909F4 /* BSDAnnotationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F26BB6491A1D8247000909F4 /* BSDAnnotationObject.m */; };
 		F2789E4119C8D4C6006F6CA4 /* PopoverContentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */; };
 		F27D1FF11A0C3ACB0057EDFC /* SavedPatches.plist in Resources */ = {isa = PBXBuildFile; fileRef = F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */; };
+		F28094781A26398D00C3AFA1 /* BSDGPUImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F28094771A26398D00C3AFA1 /* BSDGPUImage.m */; };
+		F280947B1A263CF800C3AFA1 /* BSDAnnotationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = F280947A1A263CF800C3AFA1 /* BSDAnnotationFactory.m */; };
+		F280947E1A263DA700C3AFA1 /* BSDAnnotationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F280947D1A263DA700C3AFA1 /* BSDAnnotationObject.m */; };
+		F28094801A26711800C3AFA1 /* shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F280947F1A26711800C3AFA1 /* shader.fsh */; };
+		F28094821A26724E00C3AFA1 /* kaleidoscope1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F28094811A26724E00C3AFA1 /* kaleidoscope1.fsh */; };
 		F283A1FA19CA06DF005CC98B /* BSDPatchInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1F919CA06DF005CC98B /* BSDPatchInlet.m */; };
 		F283A1FD19CA0709005CC98B /* BSDPatchOutlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1FC19CA0709005CC98B /* BSDPatchOutlet.m */; };
 		F283A20019CA11C8005CC98B /* BSDInletBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1FF19CA11C8005CC98B /* BSDInletBox.m */; };
@@ -249,6 +252,8 @@
 
 /* Begin PBXFileReference section */
 		0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BlackBox.UI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B7BFC171202632827E0FFE2 /* Pods-BlackBox.UI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBox.UI.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlackBox.UI/Pods-BlackBox.UI.release.xcconfig"; sourceTree = "<group>"; };
+		6490D4841FB3C553AB6DE6ED /* Pods-BlackBox.UI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBox.UI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BlackBox.UI/Pods-BlackBox.UI.debug.xcconfig"; sourceTree = "<group>"; };
 		F202D2111A1BB69500AED9C7 /* NSDictionary+BSDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+BSDUtils.h"; path = "../BSDPatch/BSDPatchExample/BSDPatch/UI/NSDictionary+BSDUtils.h"; sourceTree = "<group>"; };
 		F202D2121A1BB69500AED9C7 /* NSDictionary+BSDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+BSDUtils.m"; path = "../BSDPatch/BSDPatchExample/BSDPatch/UI/NSDictionary+BSDUtils.m"; sourceTree = "<group>"; };
 		F202D2141A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDNestedPatchTableViewController.h; sourceTree = "<group>"; };
@@ -497,13 +502,17 @@
 		F25F71BB19EA26AA002B082A /* BSDPointer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPointer.m; sourceTree = "<group>"; };
 		F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "bb_stdlib 2.plist"; sourceTree = "<group>"; };
 		F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bb_stdlib.plist; sourceTree = "<group>"; };
-		F26BB6451A1D8187000909F4 /* BSDAnnotationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnnotationFactory.h; sourceTree = "<group>"; };
-		F26BB6461A1D8187000909F4 /* BSDAnnotationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnnotationFactory.m; sourceTree = "<group>"; };
-		F26BB6481A1D8247000909F4 /* BSDAnnotationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnnotationObject.h; sourceTree = "<group>"; };
-		F26BB6491A1D8247000909F4 /* BSDAnnotationObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnnotationObject.m; sourceTree = "<group>"; };
 		F2789E3F19C8D4C6006F6CA4 /* PopoverContentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverContentTableViewController.h; sourceTree = "<group>"; };
 		F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverContentTableViewController.m; sourceTree = "<group>"; };
 		F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedPatches.plist; sourceTree = "<group>"; };
+		F28094761A26398D00C3AFA1 /* BSDGPUImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDGPUImage.h; sourceTree = "<group>"; };
+		F28094771A26398D00C3AFA1 /* BSDGPUImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDGPUImage.m; sourceTree = "<group>"; };
+		F28094791A263CF800C3AFA1 /* BSDAnnotationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnnotationFactory.h; sourceTree = "<group>"; };
+		F280947A1A263CF800C3AFA1 /* BSDAnnotationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnnotationFactory.m; sourceTree = "<group>"; };
+		F280947C1A263DA700C3AFA1 /* BSDAnnotationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnnotationObject.h; sourceTree = "<group>"; };
+		F280947D1A263DA700C3AFA1 /* BSDAnnotationObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnnotationObject.m; sourceTree = "<group>"; };
+		F280947F1A26711800C3AFA1 /* shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.fsh; sourceTree = "<group>"; };
+		F28094811A26724E00C3AFA1 /* kaleidoscope1.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = kaleidoscope1.fsh; sourceTree = "<group>"; };
 		F283A1F819CA06DF005CC98B /* BSDPatchInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchInlet.h; sourceTree = "<group>"; };
 		F283A1F919CA06DF005CC98B /* BSDPatchInlet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchInlet.m; sourceTree = "<group>"; };
 		F283A1FB19CA0709005CC98B /* BSDPatchOutlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchOutlet.h; sourceTree = "<group>"; };
@@ -664,7 +673,6 @@
 		F2F5139719B9342400323096 /* BSDCompiledPatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCompiledPatch.m; sourceTree = "<group>"; };
 		F2FF09E419D149540095C3E4 /* BSDWebImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDWebImage.h; sourceTree = "<group>"; };
 		F2FF09E519D149540095C3E4 /* BSDWebImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDWebImage.m; sourceTree = "<group>"; };
-		F7FDFF3A9D8F468DBAEB9C03 /* Pods-BlackBox.UI.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBox.UI.xcconfig"; path = "Pods/Pods-BlackBox.UI.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -700,6 +708,15 @@
 				0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		274C158579B960BBF3FAD100 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6490D4841FB3C553AB6DE6ED /* Pods-BlackBox.UI.debug.xcconfig */,
+				3B7BFC171202632827E0FFE2 /* Pods-BlackBox.UI.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		F21E523219C51BC300E51383 /* BSDPatch */ = {
@@ -978,8 +995,8 @@
 				F21E52B819C51BC300E51383 /* BSDRectSplit.m */,
 				F21E52B919C51BC300E51383 /* BSDSplitPoint.h */,
 				F21E52BA19C51BC300E51383 /* BSDSplitPoint.m */,
-				F26BB6481A1D8247000909F4 /* BSDAnnotationObject.h */,
-				F26BB6491A1D8247000909F4 /* BSDAnnotationObject.m */,
+				F280947C1A263DA700C3AFA1 /* BSDAnnotationObject.h */,
+				F280947D1A263DA700C3AFA1 /* BSDAnnotationObject.m */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1098,8 +1115,8 @@
 				F2B0C46E1A145C0400FEE17F /* BSDControl.m */,
 				F2B0C4701A145D0500FEE17F /* BSDButton.h */,
 				F2B0C4711A145D0500FEE17F /* BSDButton.m */,
-				F26BB6451A1D8187000909F4 /* BSDAnnotationFactory.h */,
-				F26BB6461A1D8187000909F4 /* BSDAnnotationFactory.m */,
+				F28094791A263CF800C3AFA1 /* BSDAnnotationFactory.h */,
+				F280947A1A263CF800C3AFA1 /* BSDAnnotationFactory.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1240,13 +1257,15 @@
 				F21BAEC71A1AB62300F20FDD /* HBVImageBlur.m */,
 				F2CFDEE219DB46DC00A156DB /* UIImage+Resize.h */,
 				F2CFDEE119DB46DC00A156DB /* UIImage+Resize.m */,
+				F28094761A26398D00C3AFA1 /* BSDGPUImage.h */,
+				F28094771A26398D00C3AFA1 /* BSDGPUImage.m */,
 				F289D8C919D5884F00CA1BC0 /* runtime */,
 				F21E523219C51BC300E51383 /* BSDPatch */,
 				F2F5131919B8D97C00323096 /* BlackBox.UI */,
 				F2F5133019B8D97C00323096 /* BlackBox.UITests */,
 				F2F5131819B8D97C00323096 /* Products */,
-				F7FDFF3A9D8F468DBAEB9C03 /* Pods-BlackBox.UI.xcconfig */,
 				04119221047643E083A0AD2F /* Frameworks */,
+				274C158579B960BBF3FAD100 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1262,6 +1281,8 @@
 		F2F5131919B8D97C00323096 /* BlackBox.UI */ = {
 			isa = PBXGroup;
 			children = (
+				F28094811A26724E00C3AFA1 /* kaleidoscope1.fsh */,
+				F280947F1A26711800C3AFA1 /* shader.fsh */,
 				F26BB6401A1D5B67000909F4 /* libs */,
 				F25F71B219EA0661002B082A /* BlackBox.UI.entitlements */,
 				F21E50DC19C433ED00E51383 /* UIColor+HBVHarmonies.h */,
@@ -1487,12 +1508,14 @@
 				F2CFDF1F19DCFF5400A156DB /* toolbar_patch@2x.png in Resources */,
 				F2CFDF2119DCFF5400A156DB /* toolbar_paste@3x.png in Resources */,
 				F2CFDF3A19DCFF5400A156DB /* toolbar_add@2x.png in Resources */,
+				F28094801A26711800C3AFA1 /* shader.fsh in Resources */,
 				F26BB6421A1D5B73000909F4 /* bb_stdlib 2.plist in Resources */,
 				F2CFDF3119DCFF5400A156DB /* toolbar_cut@2x.png in Resources */,
 				F2CFDF3819DCFF5400A156DB /* toolbar_back.png in Resources */,
 				F26BB6441A1D5B78000909F4 /* bb_stdlib.plist in Resources */,
 				F2CFDF1819DCFF5400A156DB /* toolbar_view@2x.png in Resources */,
 				F2CFDF2F19DCFF5400A156DB /* toolbar_delete.png in Resources */,
+				F28094821A26724E00C3AFA1 /* kaleidoscope1.fsh in Resources */,
 				F2F5132619B8D97C00323096 /* Main.storyboard in Resources */,
 				F2CFDF1A19DCFF5400A156DB /* toolbar_view @2x.png in Resources */,
 				F2CFDF2519DCFF5400A156DB /* toolbar_load@2x.png in Resources */,
@@ -1525,7 +1548,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-BlackBox.UI-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlackBox.UI/Pods-BlackBox.UI-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CDA6F22F2CDB437BA27823D2 /* Check Pods Manifest.lock */ = {
@@ -1579,7 +1602,6 @@
 				F21E533819C51BC300E51383 /* BSDClipSoft.m in Sources */,
 				F2EB85FC19D35227007B8C3C /* BSDDictionaryObject.m in Sources */,
 				F24A3B1419D0EBD900FBA887 /* BSDAtomizer.m in Sources */,
-				F26BB6471A1D8187000909F4 /* BSDAnnotationFactory.m in Sources */,
 				F2F5132319B8D97C00323096 /* BSDRootViewController.m in Sources */,
 				F21E532519C51BC300E51383 /* BSDMin.m in Sources */,
 				F2EB85F019D34FB5007B8C3C /* BSDNumberOutlet.m in Sources */,
@@ -1662,10 +1684,10 @@
 				F2CFC8511A19E36A00FFAAC1 /* BSDArr2Dict.m in Sources */,
 				F21E531119C51BC300E51383 /* BSDGenerator.m in Sources */,
 				F2EB85F319D3507B007B8C3C /* BSDNumberObject.m in Sources */,
+				F280947E1A263DA700C3AFA1 /* BSDAnnotationObject.m in Sources */,
 				F2EE14B319C9EF9B008D83E2 /* BSDMessageBox.m in Sources */,
 				F2EE14B619C9F070008D83E2 /* BSDMessage.m in Sources */,
 				F2CFDEEE19DCAA6700A156DB /* BSDSend.m in Sources */,
-				F26BB64A1A1D8247000909F4 /* BSDAnnotationObject.m in Sources */,
 				F2CFDEC019DA6E8900A156DB /* BSDTouchView.m in Sources */,
 				F21E533919C51BC300E51383 /* BSDInt.m in Sources */,
 				F21E532319C51BC300E51383 /* BSDLess.m in Sources */,
@@ -1673,10 +1695,12 @@
 				F2AAF7A619C7FB4B004EFE87 /* BSDCanvasViewController.m in Sources */,
 				F2F5139819B9342400323096 /* BSDCompiledPatch.m in Sources */,
 				F21E534219C51BC300E51383 /* BSDImageBlur.m in Sources */,
+				F280947B1A263CF800C3AFA1 /* BSDAnnotationFactory.m in Sources */,
 				F21E534919C51BC300E51383 /* BSDSpeedLimit.m in Sources */,
 				F21E533E19C51BC300E51383 /* BSDMetro.m in Sources */,
 				F21E534B19C51BC300E51383 /* BSDVelocity.m in Sources */,
 				F28C00E119D21F6000BFA206 /* BSDDelay.m in Sources */,
+				F28094781A26398D00C3AFA1 /* BSDGPUImage.m in Sources */,
 				F2EB85ED19D34F6C007B8C3C /* BSDArrayInlet.m in Sources */,
 				F20426D71A13E50400A455E7 /* BSDBezierPath.m in Sources */,
 				F2AAF7A019C7CB97004EFE87 /* BSDPrint.m in Sources */,
@@ -1843,7 +1867,7 @@
 		};
 		F2F5133819B8D97C00323096 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F7FDFF3A9D8F468DBAEB9C03 /* Pods-BlackBox.UI.xcconfig */;
+			baseConfigurationReference = 6490D4841FB3C553AB6DE6ED /* Pods-BlackBox.UI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1861,7 +1885,7 @@
 		};
 		F2F5133919B8D97C00323096 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F7FDFF3A9D8F468DBAEB9C03 /* Pods-BlackBox.UI.xcconfig */;
+			baseConfigurationReference = 3B7BFC171202632827E0FFE2 /* Pods-BlackBox.UI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

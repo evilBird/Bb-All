@@ -1,0 +1,8 @@
+CLANG_MODULES_AUTOLINK = YES
+FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/iCloudDocumentSync"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/GPUImage" "${PODS_ROOT}/Headers/Public/iCloudDocumentSync"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/AFNetworking" -isystem "${PODS_ROOT}/Headers/Public/GPUImage" -isystem "${PODS_ROOT}/Headers/Public/iCloudDocumentSync"
+OTHER_LDFLAGS = -ObjC -l"Pods-BlackBox.UI-AFNetworking" -l"Pods-BlackBox.UI-GPUImage" -l"Pods-BlackBox.UI-iCloudDocumentSync" -framework "AVFoundation" -framework "CoreGraphics" -framework "CoreMedia" -framework "Foundation" -framework "MobileCoreServices" -framework "OpenGLES" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration" -framework "UIKit" -framework "iCloud"
+OTHER_LIBTOOLFLAGS = $(OTHER_LDFLAGS)
+PODS_ROOT = ${SRCROOT}/Pods

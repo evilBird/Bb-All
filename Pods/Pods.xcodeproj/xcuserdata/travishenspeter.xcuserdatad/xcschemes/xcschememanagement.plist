@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-BlackBox.UI-GPUImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-BlackBox.UI-iCloudDocumentSync.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>63E5BEFA1CFF4F31A3C39CA3</key>
+		<key>0399BC49A0D6C1B605E9685D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B4C0B27C1D444625A722F0F2</key>
+		<key>19A0C886A80C173BC84F581B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EC428FF712FC4B9893B1889F</key>
+		<key>618E5E93A4D2BE34D10EAFC9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E5057A6E097D9E03F354D432</key>
 		<dict>
 			<key>primary</key>
 			<true/>
