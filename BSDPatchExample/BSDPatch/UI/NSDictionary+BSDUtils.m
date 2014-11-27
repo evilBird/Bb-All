@@ -64,6 +64,10 @@
 
 - (id) objectAtKeyPath:(NSString *)keyPath
 {
+    if (keyPath == nil) {
+        return self;
+    }
+    
     NSMutableArray *components = [keyPath componentsSeparatedByString:@"."].mutableCopy;
     NSString *lastComponent = components.lastObject;
     NSString *lastKey = nil;
@@ -162,31 +166,34 @@
 - (void)removeObjectAtKeyPath:(NSString *)keyPath
 {
     NSMutableArray *components = [keyPath componentsSeparatedByString:@"."].mutableCopy;
-    if (components.count == 1) {
-        [self removeObjectForKey:components.firstObject];
-        return;
-    }
-    
-    NSString *lastComponent = components.lastObject;
-    NSString *lastKey = nil;
-    if ([lastComponent isEqualToString:@"bb"]) {
+    NSString *relativePath = nil;
+    if ([components.lastObject isEqualToString:@"bb"]) {
+        id component1 = components.lastObject;
         [components removeLastObject];
-        lastKey = [components.lastObject stringByAppendingPathExtension:lastComponent];
-        if (components.count == 1) {
-            [self removeObjectForKey:lastKey];
-            return;
+        if (components.count > 1) {
+            id component2 = components.lastObject;
+            [components removeLastObject];
+            relativePath = [NSDictionary pathWithComponents:@[component1, component2]];
+        }else{
+            relativePath = keyPath;
+            components = nil;
         }
+    }else{
+        relativePath = components.lastObject;
+        [components removeLastObject];
+    }
+    NSString *parentPath = nil;
+    if (components != nil) {
+        parentPath = [NSDictionary pathWithComponents:components];
     }
     
-    NSString *parentPath = [NSDictionary pathWithComponents:components];
-    NSMutableDictionary *parent = [self objectAtKeyPath:parentPath];
-    if (!lastKey) {
-        NSInteger index = components.count - 2;
-        lastKey = components[index];
+    if ([[self objectAtKeyPath:parentPath] isKindOfClass:[NSDictionary class]]) {
+        [[self objectAtKeyPath:parentPath]removeObjectForKey:relativePath];
+    }else{
+        NSLog(@"parent is not a dictionary...fuck");
     }
     
-    [parent removeObjectForKey:lastKey];
-    NSLog(@"removed object for key %@ from path %@",lastKey,parentPath);
+
 }
 
 
@@ -197,12 +204,25 @@
     NSArray *pathComponents = [keyPath componentsSeparatedByString:@"."];
     //Is the dictionary a leaf?
     if (pathComponents.count == 1) {
-        //Dictionary is a leaf.Add .bb path extension
-        NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-        self[pathComponents.firstObject] = dictionary;
-        NSString *leafKey = [NSString stringWithFormat:@"%@.bb",pathComponents.firstObject];
-        dictionary[leafKey] = object;
-        return;
+        //Path is a leaf. Add .bb path extension
+        BOOL fileExistsAtPath = [self.allKeys containsObject:pathComponents.firstObject];
+        if (!fileExistsAtPath) {
+            NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+            self[pathComponents.firstObject] = dictionary;
+            NSString *leafKey = [NSString stringWithFormat:@"%@.bb",pathComponents.firstObject];
+            dictionary[leafKey] = object;
+            return;
+        }else{
+            id existingFile = self[pathComponents.firstObject];
+            if ([existingFile isKindOfClass:[NSDictionary class]]) {
+                NSString *leafKey = [NSString stringWithFormat:@"%@.bb",pathComponents.firstObject];
+                self[pathComponents.firstObject][leafKey] = object;
+                return;
+            }else if ([existingFile isKindOfClass:[NSString class]]){
+                NSLog(@"the file at that path is a string");
+                return;
+            }
+        }
     }
     
     //Dictionary is not a leaf, there are at least 2 path components
