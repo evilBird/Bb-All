@@ -194,6 +194,13 @@
     
     
     NSMutableString *displayName = [[NSMutableString alloc]initWithString:[self.object name]];
+    NSArray *argsArray = args;
+    if (([self.className isEqualToString:@"BSDCanvas"] || [self.className isEqualToString:@"BSDCompiledPatch"]) && argsArray.count > 0) {
+        NSMutableArray *copy = argsArray.mutableCopy;
+        [copy removeObjectAtIndex:0];
+        args = copy;
+    }
+    
     for (id arg in args) {
         if ([arg isKindOfClass:[NSNumber class]]|| [arg isKindOfClass:[NSString class]]) {
             [displayName appendFormat:@" %@",arg];

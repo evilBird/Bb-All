@@ -14,7 +14,6 @@
 + (BSDPatchManager *)sharedInstance;
 
 - (NSDictionary *)savedPatches;
-
 - (void)savePatchDescription:(NSString *)patchDescription withName:(NSString *)name;
 - (NSString *)getPatchNamed:(NSString *)name;
 - (void)deleteItemAtPath:(NSString *)path;

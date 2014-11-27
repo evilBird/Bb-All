@@ -64,6 +64,13 @@
         self.patchName = patchName;
         if (patch) {
             [self loadPatchWithString:patch];
+            NSArray *components = [patchName componentsSeparatedByString:@"."];
+            NSInteger count = components.count;
+            if ([patchName hasSuffix:@".bb"]) {
+                self.name = components[count - 2];
+            }else{
+                self.name = components.lastObject;
+            }
         }
     }
 }
@@ -104,7 +111,8 @@
         [outlet forwardToPort:myOutlet];
         idx++;
     }
-    [self.canvas loadBang];
+    
+    //[self.canvas loadBang];
 }
 
 - (void)setDelegate:(id<BSDCompiledPatchDelegate>)delegate

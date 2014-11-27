@@ -50,6 +50,7 @@
 @property (nonatomic,strong)UIColor *currentColor;
 @property (nonatomic,strong)NSString *canvasId;
 @property (nonatomic,strong)NSArray *canvasCreationArgs;
+@property (nonatomic,strong)NSValue *translation;
 
 - (NSString *)getDescription;
 

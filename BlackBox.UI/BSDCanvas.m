@@ -38,6 +38,7 @@
 @property (nonatomic,strong)NSMutableArray *connectionBezierPaths;
 @property (nonatomic,strong)NSMutableArray *connectedPorts;
 @property (nonatomic,strong)NSString *pasteBoard;
+@property (nonatomic,strong)NSValue *previousTranslation;
 
 @end
 
@@ -55,19 +56,22 @@
     if (!self.graphBoxes) {
         return;
     }
+    
+    //then everything else
+    for (BSDBox *box in self.graphBoxes) {
+        id object = box.object;
+        if (![object isKindOfClass:[BSDCanvas class]] && ![object isKindOfClass:[BSDCompiledPatch class]]) {
+            [object loadBang];
+        }
+    }
+    
     //depth first
     for (BSDBox *box in self.graphBoxes) {
         id object = box.object;
         if ([object isKindOfClass:[BSDCanvas class]]) {
             [object loadBang];
-        }
-    }
-    
-    //then everything else
-    for (BSDBox *box in self.graphBoxes) {
-        id object = box.object;
-        if (![object isKindOfClass:[BSDCanvas class]]) {
-            [object loadBang];
+        }else if ([object isKindOfClass:[BSDCompiledPatch class]]){
+            [[(BSDCompiledPatch *)object canvas]loadBang];
         }
     }
 }
@@ -283,22 +287,10 @@
     }
 
 }
-/*
-+ (NSString *)blankCanvasDescription
-{
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    NSString *entry = [NSString stringWithFormat:@"#N canvas 0 0 %@ %@ %@;\n",@(bounds.size.width * 2),@(bounds.size.height * 2),@"untitled"];
-    return entry;
-}
- */
 
 - (NSString *)genericCanvasDescriptionName:(NSString *)string
 {
     return [self.delegate emptyCanvasDescriptionName:string];
-    /*
-    NSString *entry = [NSString stringWithFormat:@"#N canvas 0 0 %@ %@ %@;\n",@(self.bounds.size.width),@(self.bounds.size.height),string];
-    return entry;
-     */
 }
 
 - (void)encapsulatedCopiedContentWithName:(NSString *)name
@@ -309,7 +301,13 @@
     
     NSString *canvasDesc = [self genericCanvasDescriptionName:name];
     NSString *full = [NSString stringWithFormat:@"%@%@",canvasDesc,self.pasteBoard];
+    [self.delegate saveDescription:full withName:name];
+    BSDBox *box = [self newGraphBoxAtPoint:kFocusPoint];
+    box.argString = name;
+    box.className = @"BSDCompiledPatch";
+    [self addGraphBox:box initialize:YES arg:name];
     
+    /*
     BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
     BSDCanvas *canvas = [compiler restoreCanvasWithText:full];
     BSDAbstractionBox *box = [self newAbstractionBox:name atPoint:kFocusPoint];
@@ -325,6 +323,7 @@
     
     [self.graphBoxes addObject:box];
     [self addSubview:box];
+     */
 }
 
 - (void)tearDown
@@ -560,11 +559,42 @@
     for (BSDBox *box in self.graphBoxes) {
         [box setSelectedPortView:nil];
     }
+    
+    self.previousTranslation = nil;
 }
 
 - (void)boxDidMove:(id)sender
 {
     self.connectionPaths = nil;
+    if (sender != nil && [sender isKindOfClass:[BSDBox class]] && self.editState > 1 && [sender selected] == 1) {
+        NSValue *trans = [sender translation];
+        CGPoint translation;
+        if (self.previousTranslation != nil) {
+            CGPoint pt = self.previousTranslation.CGPointValue;
+            CGPoint tt = trans.CGPointValue;
+            translation.x = tt.x - pt.x;
+            translation.y = tt.y - pt.y;
+        }else{
+            translation = trans.CGPointValue;
+        }
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == 1",@"selected"];
+        NSArray *selectedBoxes = [self.graphBoxes filteredArrayUsingPredicate:predicate];
+        NSMutableArray *selectedCopy = selectedBoxes.mutableCopy;
+        if ([selectedCopy containsObject:sender]) {
+            [selectedCopy removeObject:sender];
+        }
+        
+        for (BSDBox *box in selectedCopy) {
+            CGPoint center = box.center;
+            center.x += translation.x;
+            center.y += translation.y;
+            box.center = center;
+        }
+        
+        self.previousTranslation = [NSValue wrapPoint:trans.CGPointValue];
+    }
+    
     self.connectionPaths = [NSMutableArray arrayWithArray:[self allConnections]];
     [self setNeedsDisplay];
 }

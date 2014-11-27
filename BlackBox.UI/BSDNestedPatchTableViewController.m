@@ -7,6 +7,7 @@
 //
 
 #import "BSDNestedPatchTableViewController.h"
+#import "BSDPatchManager.h"
 
 static NSString *kCellId = @"PatchCell";
 static NSString *kNestedCellId = @"PatchCellNested";
@@ -15,7 +16,6 @@ static NSString *kNestedCellId = @"PatchCellNested";
 
 @property (nonatomic,strong)NSDictionary *leafPatches;
 @property (nonatomic,strong)NSDictionary *subpatches;
-
 
 @end
 
@@ -90,11 +90,13 @@ static NSString *kNestedCellId = @"PatchCellNested";
             [dict removeObjectForKey:sortedNames[indexPath.row]];
             self.subpatches = dict;
         }
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [tableView reloadData];
         
         if (toDelete){
-            [self.delegate patchTableViewController:self deletedItemAtPath:toDelete];
+            ///[self.delegate patchTableViewController:self deletedItemAtPath:toDelete];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [[BSDPatchManager sharedInstance]deleteItemAtPath:toDelete];
+            [self refreshData];
+            [tableView reloadData];
         }
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -161,6 +163,33 @@ static NSString *kNestedCellId = @"PatchCellNested";
     }
     
     return [self.path stringByAppendingPathExtension:folderName];
+}
+
+- (void)refreshData
+{
+    NSDictionary *patches = [[BSDPatchManager sharedInstance]savedPatches];
+    self.patches = [patches objectAtKeyPath:self.path];
+    if (![self.navigationController.viewControllers containsObject:self]) {
+        return;
+    }
+    
+    NSInteger index = [self.navigationController.viewControllers indexOfObject:self];
+    
+    if (index == 0){
+        return;
+    }
+    
+    NSInteger parentIndex = index - 1;
+    if (parentIndex > self.navigationController.viewControllers.count) {
+        return;
+    }
+    id parent = self.navigationController.viewControllers[parentIndex];
+    
+    if ([parent isKindOfClass:[BSDNestedPatchTableViewController class]]) {
+        [self.navigationController.viewControllers[parentIndex] refreshData];
+        return;
+    }
+    
 }
 
 @end

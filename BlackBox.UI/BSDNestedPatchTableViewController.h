@@ -21,4 +21,6 @@
 @property (nonatomic,strong)NSString *path;
 @property (nonatomic,weak)id<BSDNestedPatchTableViewControllerDelegate>delegate;
 
+- (void)refreshData;
+
 @end

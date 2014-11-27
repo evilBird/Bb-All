@@ -74,11 +74,12 @@
     if (!self.inlets) {
         return;
     }
-    
+    self.hotInlet.open = NO;
     NSMutableArray *output = nil;
     for (BSDInlet *inlet in self.inlets) {
         id value = inlet.value;
         if (value == nil) {
+            self.hotInlet.open = YES;
             return;
         }
         
@@ -91,10 +92,8 @@
     
     if (output) {
         [self.mainOutlet output:output.mutableCopy];
-        for (BSDInlet *inlet in self.inlets) {
-            inlet.value = nil;
-        }
     }
+    self.hotInlet.open = YES;
 }
 
 - (void)test

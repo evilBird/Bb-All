@@ -238,6 +238,7 @@
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         initLoc = loc;
         initCenter = self.center;
+        self.translation = nil;
     }
     
     if (selectedPort == nil) {
@@ -245,6 +246,8 @@
         [[NSOperationQueue mainQueue]addOperationWithBlock:^{
             CGFloat dx = loc.x - initLoc.x;
             CGFloat dy = loc.y - initLoc.y;
+            CGPoint trans = CGPointMake(dx, dy);
+            self.translation = [NSValue valueWithCGPoint:trans];
             CGPoint newCenter;
             newCenter.x = initCenter.x + dx;
             newCenter.y = initCenter.y + dy;

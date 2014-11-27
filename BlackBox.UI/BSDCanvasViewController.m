@@ -13,6 +13,7 @@
 #import "BSDLogView.h"
 #import "BSDDisplayViewController.h"
 #import "BSDNestedPatchTableViewController.h"
+#import "NSDictionary+BSDUtils.h"
 
 @interface BSDCanvasViewController ()<UIScrollViewDelegate,UITableViewDelegate,BSDNestedPatchTableViewControllerDelegate,BSDDisplayViewControllerDelegate>
 {
@@ -268,6 +269,16 @@
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     
     if (self.currentPatchName) {
+        /*
+        if ([self.currentPatchName hasSuffix:@".bb"]) {
+            NSMutableArray *components = [self.currentPatchName componentsSeparatedByString:@"."].mutableCopy;
+            [components removeLastObject];
+            NSString *formattedName = [NSDictionary pathWithComponents:components];
+            [[alert textFieldAtIndex:0]setText:formattedName];
+        }else{
+            
+        }
+         */
         [[alert textFieldAtIndex:0]setText:self.currentPatchName];
     }
     
@@ -276,13 +287,26 @@
 
 - (void)showSaveAsPatchAlertView
 {
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Make abstraction"
-                                                   message:@"Enter a name for this abstraction"
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Save selected"
+                                                   message:@"Enter a name for this patch"
                                                   delegate:self
                                          cancelButtonTitle:@"Cancel"
                                          otherButtonTitles:@"Save", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = 1;
+    if (self.curentCanvas.name) {
+        NSString *formattedName = nil;
+        if ([self.curentCanvas.name hasSuffix:@".bb"]) {
+            NSMutableArray *components = [self.curentCanvas.name componentsSeparatedByString:@"."].mutableCopy;
+            [components removeLastObject];
+            formattedName = [NSDictionary pathWithComponents:components];
+        }else{
+            formattedName = [NSString stringWithString:self.curentCanvas.name];
+        }
+        
+        [[alert textFieldAtIndex:0]setText:[formattedName stringByAppendingString:@"."]];
+    }
+    
     [alert show];
 }
 
@@ -375,8 +399,20 @@
 - (void)showCanvasForCompiledPatch:(BSDCompiledPatch *)patch
 {
     self.childPatch = patch;
+    __weak BSDCanvasViewController *weakself = self;
+    NSInteger stack = self.navigationController.viewControllers.count;
+    
     [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-        [self performSegueWithIdentifier:@"ShowCanvasForChildPatch" sender:self];
+        
+        if (stack == 1) {
+            [weakself performSegueWithIdentifier:@"ShowCanvasForChildPatch" sender:weakself];
+        }else if (stack > 1){
+            UIViewController *parent = weakself.navigationController.viewControllers.firstObject;
+            if ([parent isKindOfClass:[BSDCanvasViewController class]]) {
+                [(BSDCanvasViewController *)parent setChildPatch:patch];
+                [parent performSegueWithIdentifier:@"ShowCanvasForChildPatch" sender:weakself];
+            }
+        }
     }];
 
 }
