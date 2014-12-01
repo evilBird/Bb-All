@@ -13,6 +13,9 @@
 @interface BSDGPUImage ()
 
 @property (nonatomic,strong)NSDictionary *filterDictionary;
+@property (nonatomic,strong)UIImage *sourceImage;
+@property (nonatomic,strong)GPUImageFilter *myFilter;
+@property (nonatomic,strong)NSString *prevFilterKey;
 
 @end
 
@@ -25,7 +28,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"GPUImage";
+    self.name = @"image filter";
     self.rightOutlet = [[BSDOutlet alloc]init];
     self.rightOutlet.name = @"right";
     [self addPort:self.rightOutlet];
@@ -59,40 +62,45 @@
     if (!hot || ![hot isKindOfClass:[UIImage class]]) {
         return;
     }
-    
+    UIImage *inputImage = hot;
+
     id cold = self.coldInlet.value;
-    NSString *filterName = nil;
-    if ([cold isKindOfClass:[NSString class]]) {
-        filterName = [NSString stringWithString:cold];
-    }else if ([cold isKindOfClass:[NSDictionary class]]){
-        NSDictionary *parms = cold;
-        if (![parms.allKeys containsObject:@"filter"]) {
-            return;
-        }
+    if (![cold isKindOfClass:[NSDictionary class]]){
+        return;
+    }
+    
+    NSMutableDictionary *parms = [self.coldInlet.value mutableCopy];
+    if (![parms.allKeys containsObject:@"filter"] && !self.prevFilterKey) {
+        return;
     }
     
     self.hotInlet.open = NO;
-    
-    UIImage *inputImage = hot;
-    GPUImageFilter *filter = nil;
-    
-    if (filterName) {
-        filter = [self filterWithName:filterName];
-    }else{
-        filter = [self filterWithParameters:self.coldInlet.value];
+    if (![parms.allKeys containsObject:@"filter"]) {
+        parms[@"filter"] = self.prevFilterKey;
     }
+    
+    NSString *filterName = parms[@"filter"];
+    if (!self.prevFilterKey || ![filterName isEqualToString:self.prevFilterKey]) {
+        self.myFilter = [self filterWithParameters:parms];
+    }else {
+        [parms removeObjectForKey:@"filter"];
+        [self updateFilter:self.myFilter withParameters:parms];
+    }
+    
     __weak BSDGPUImage *weakself = self;
     dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(concurrentQueue, ^{
         __block UIImage *output = nil;
         dispatch_sync(concurrentQueue, ^{
-            output = [filter imageByFilteringImage:inputImage];
+            output = [weakself.myFilter imageByFilteringImage:inputImage];
         });
         dispatch_async(dispatch_get_main_queue(), ^{
-                [weakself.mainOutlet output:[filter imageByFilteringImage:inputImage]];
+                [weakself.mainOutlet output:output];
+                weakself.prevFilterKey = filterName;
                 weakself.hotInlet.open = YES;
         });
     });
+    
 }
 
 - (GPUImageFilter *)filterWithName:(NSString *)filterName
@@ -127,6 +135,22 @@
     return filter;
 }
 
+- (void)updateFilter:(id)filter withParameters:(NSDictionary *)parameters
+{
+    NSMutableDictionary *parms = parameters.mutableCopy;
+    if ([parms.allKeys containsObject:@"filter"]) {
+        [parms removeObjectForKey:@"filter"];
+    }
+    
+    if (parms.allKeys.count) {
+        
+        for (NSString *aKey in parms.allKeys) {
+            id newValue = parms[aKey];
+            [filter setValue:newValue forKey:aKey];
+        }
+    }
+}
+
 - (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
 {
     if (inlet == self.hotInlet) {
@@ -150,9 +174,9 @@
 {
     NSMutableArray *list = self.filterDictionary.allKeys.mutableCopy;
     NSArray *orderedList = [list sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    NSDictionary *toPrint = @{@"filters":orderedList.mutableCopy};
+    NSDictionary *toPrint = @{@"filters":orderedList.mutableCopy,
+                              @"parameters":self.filterDictionary[@"parameters"]};
     [self.rightOutlet output:toPrint];
-    NSDictionary *parms = self.filterDictionary[@"parameters"];
 }
 
 - (NSDictionary *)getFilters

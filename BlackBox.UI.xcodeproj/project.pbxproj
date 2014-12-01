@@ -120,6 +120,7 @@
 		F2389B0819EF8FCB008B51DB /* BSDAny2Array.m in Sources */ = {isa = PBXBuildFile; fileRef = F2389B0719EF8FCB008B51DB /* BSDAny2Array.m */; };
 		F241578919CB85B0003E32CA /* BSDObjectLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = F241578819CB85B0003E32CA /* BSDObjectLookup.m */; };
 		F241578C19CB8EEF003E32CA /* BSDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = F241578B19CB8EEF003E32CA /* BSDNumber.m */; };
+		F2415F471A26D6880070C1FB /* grass.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F2415F461A26D6880070C1FB /* grass.fsh */; };
 		F24A3B0519D0B9CF00FBA887 /* BSDType.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B0419D0B9CF00FBA887 /* BSDType.m */; };
 		F24A3B0819D0C11900FBA887 /* BSDAny2String.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B0719D0C11900FBA887 /* BSDAny2String.m */; };
 		F24A3B0B19D0CB0200FBA887 /* BSDSplitDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B0A19D0CB0200FBA887 /* BSDSplitDictionary.m */; };
@@ -480,6 +481,7 @@
 		F241578819CB85B0003E32CA /* BSDObjectLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDObjectLookup.m; sourceTree = "<group>"; };
 		F241578A19CB8EEF003E32CA /* BSDNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDNumber.h; sourceTree = "<group>"; };
 		F241578B19CB8EEF003E32CA /* BSDNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDNumber.m; sourceTree = "<group>"; };
+		F2415F461A26D6880070C1FB /* grass.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = grass.fsh; sourceTree = "<group>"; };
 		F24A3B0319D0B9CF00FBA887 /* BSDType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDType.h; sourceTree = "<group>"; };
 		F24A3B0419D0B9CF00FBA887 /* BSDType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDType.m; sourceTree = "<group>"; };
 		F24A3B0619D0C11900FBA887 /* BSDAny2String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAny2String.h; sourceTree = "<group>"; };
@@ -1281,6 +1283,7 @@
 		F2F5131919B8D97C00323096 /* BlackBox.UI */ = {
 			isa = PBXGroup;
 			children = (
+				F2415F461A26D6880070C1FB /* grass.fsh */,
 				F28094811A26724E00C3AFA1 /* kaleidoscope1.fsh */,
 				F280947F1A26711800C3AFA1 /* shader.fsh */,
 				F26BB6401A1D5B67000909F4 /* libs */,
@@ -1509,6 +1512,7 @@
 				F2CFDF2119DCFF5400A156DB /* toolbar_paste@3x.png in Resources */,
 				F2CFDF3A19DCFF5400A156DB /* toolbar_add@2x.png in Resources */,
 				F28094801A26711800C3AFA1 /* shader.fsh in Resources */,
+				F2415F471A26D6880070C1FB /* grass.fsh in Resources */,
 				F26BB6421A1D5B73000909F4 /* bb_stdlib 2.plist in Resources */,
 				F2CFDF3119DCFF5400A156DB /* toolbar_cut@2x.png in Resources */,
 				F2CFDF3819DCFF5400A156DB /* toolbar_back.png in Resources */,
