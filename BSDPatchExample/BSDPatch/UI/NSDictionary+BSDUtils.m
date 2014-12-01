@@ -183,16 +183,19 @@
         [components removeLastObject];
     }
     NSString *parentPath = nil;
-    if (components != nil) {
+    
+    
+    if (components != nil && components.count > 0) {
         parentPath = [NSDictionary pathWithComponents:components];
-    }
-    
-    if ([[self objectAtKeyPath:parentPath] isKindOfClass:[NSDictionary class]]) {
-        [[self objectAtKeyPath:parentPath]removeObjectForKey:relativePath];
+        if ([[self objectAtKeyPath:parentPath] isKindOfClass:[NSDictionary class]]) {
+            [[self objectAtKeyPath:parentPath]removeObjectForKey:relativePath];
+        }else{
+            NSLog(@"parent is not a dictionary...fuck");
+        }
     }else{
-        NSLog(@"parent is not a dictionary...fuck");
+        
+        [self removeObjectForKey:relativePath];
     }
-    
 
 }
 
