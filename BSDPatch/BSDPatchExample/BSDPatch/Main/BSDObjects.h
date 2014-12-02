@@ -124,3 +124,4 @@
 #import "BSDComment.h"
 #import "BSDAnnotationFactory.h"
 #import "BSDGPUImage.h"
+#import "BSDTableView.h"

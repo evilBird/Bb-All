@@ -151,6 +151,7 @@
 		F28C806219E25788001A578C /* BSDAbstractionBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C806119E25788001A578C /* BSDAbstractionBox.m */; };
 		F28C806E19E314DF001A578C /* BSD2WayPort.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C806D19E314DF001A578C /* BSD2WayPort.m */; };
 		F28C807119E3B1C7001A578C /* BSDPatchCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C807019E3B1C7001A578C /* BSDPatchCompiler.m */; };
+		F2946D8F1A2D566700FBEE13 /* BSDTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2946D8E1A2D566700FBEE13 /* BSDTableView.m */; };
 		F2AAF7A019C7CB97004EFE87 /* BSDPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF79F19C7CB97004EFE87 /* BSDPrint.m */; };
 		F2AAF7A319C7DD16004EFE87 /* BSDRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A219C7DD16004EFE87 /* BSDRandom.m */; };
 		F2AAF7A619C7FB4B004EFE87 /* BSDCanvasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */; };
@@ -536,6 +537,8 @@
 		F28C806F19E3B1C7001A578C /* BSDPatchCompiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchCompiler.h; sourceTree = "<group>"; };
 		F28C807019E3B1C7001A578C /* BSDPatchCompiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchCompiler.m; sourceTree = "<group>"; };
 		F28C839C1A159C66007BB297 /* BlackBoxCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackBoxCategories.h; sourceTree = "<group>"; };
+		F2946D8D1A2D566700FBEE13 /* BSDTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTableView.h; sourceTree = "<group>"; };
+		F2946D8E1A2D566700FBEE13 /* BSDTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTableView.m; sourceTree = "<group>"; };
 		F2AAF79E19C7CB97004EFE87 /* BSDPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPrint.h; sourceTree = "<group>"; };
 		F2AAF79F19C7CB97004EFE87 /* BSDPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPrint.m; sourceTree = "<group>"; };
 		F2AAF7A119C7DD16004EFE87 /* BSDRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDRandom.h; sourceTree = "<group>"; };
@@ -1119,6 +1122,8 @@
 				F2B0C4711A145D0500FEE17F /* BSDButton.m */,
 				F28094791A263CF800C3AFA1 /* BSDAnnotationFactory.h */,
 				F280947A1A263CF800C3AFA1 /* BSDAnnotationFactory.m */,
+				F2946D8D1A2D566700FBEE13 /* BSDTableView.h */,
+				F2946D8E1A2D566700FBEE13 /* BSDTableView.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1628,6 +1633,7 @@
 				F21E532219C51BC300E51383 /* BSDGreater.m in Sources */,
 				F28C806E19E314DF001A578C /* BSD2WayPort.m in Sources */,
 				F21E530319C51BC300E51383 /* BSDBang.m in Sources */,
+				F2946D8F1A2D566700FBEE13 /* BSDTableView.m in Sources */,
 				F21E533219C51BC300E51383 /* BSDAverage.m in Sources */,
 				F21E534319C51BC300E51383 /* BSDImageView.m in Sources */,
 				F21E52FE19C51BC300E51383 /* BSDArrayPack.m in Sources */,
