@@ -9,6 +9,7 @@
 #import "BSDObjectLookup.h"
 #import <objc/runtime.h>
 #import "NSUserDefaults+HBVUtils.h"
+#import "BSDPatchManager.h"
 
 @interface BSDObjectLookup ()
 
@@ -113,7 +114,7 @@
 
 - (NSArray *)patchList
 {
-    NSDictionary *patches = [NSUserDefaults valueForKey:@"descriptions"];
+    NSDictionary *patches = [[BSDPatchManager sharedInstance]savedPatches];
     if (patches) {
         NSMutableDictionary *copy = patches.mutableCopy;
         return copy.allKeys;

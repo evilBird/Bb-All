@@ -166,7 +166,9 @@
             break;
         case 11:
             //[self toggleCanvasVisibility];
-            [self performSegueWithIdentifier:@"ShowDisplayView" sender:self];
+            if (!self.displayDisabled) {
+                [self performSegueWithIdentifier:@"ShowDisplayView" sender:self];
+            }
             break;
         default:
             break;
@@ -662,6 +664,7 @@
         if ([dest isKindOfClass:[BSDCanvasViewController class]]) {
             BSDCanvasViewController *c = (BSDCanvasViewController *)dest;
             c.delegate = self.delegate;
+            c.displayDisabled = YES;
             c.configuration = @{@"data":self.childPatch};
             
         }

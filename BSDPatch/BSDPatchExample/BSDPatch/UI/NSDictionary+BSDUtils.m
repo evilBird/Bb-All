@@ -10,6 +10,165 @@
 
 @implementation NSDictionary (BSDUtils)
 
+- (NSArray *)allPaths
+{
+    return [self pathsForObject:self withKey:@""];
+}
+
+- (NSArray *)pathsAtPath:(NSString *)path
+{
+    id obj = nil;
+    if (!path) {
+        path = @"";
+        obj = self;
+    }else{
+        obj = [self objectAtKeyPath:path];
+    }
+    NSMutableArray *result = nil;
+    if ([obj respondsToSelector:@selector(allKeys)]) {
+        NSArray *keys = [obj allKeys];
+        for (NSString *aKey in keys) {
+            NSString *newKey = [path stringByAppendingFormat:@".%@",aKey];
+            id toAdd = [self pathsAtPath:newKey];
+            if (toAdd) {
+                if (!result) {
+                    result = [NSMutableArray array];
+                }
+                [result addObject:toAdd];
+            }
+        }
+    }else{
+        if (!result) {
+            result = [NSMutableArray array];
+        }
+        [result addObject:path];
+    }
+    
+    return result;
+}
+
+-(NSArray *)pathsForObject:(id)obj withKey:(NSString *)key
+{
+    NSMutableArray *result = nil;
+    
+    if ([obj respondsToSelector:@selector(allKeys)]) {
+        for (NSString *aKey in [obj allKeys]) {
+            id o = [obj valueForKey:aKey];
+            if (!result) {
+                result = [NSMutableArray array];
+            }
+            
+            NSString *newKey = nil;
+            if (key && key.length) {
+                newKey = [key stringByAppendingFormat:@".%@",aKey];
+            }else{
+                newKey = aKey;
+            }
+            
+
+            [result addObjectsFromArray:[self pathsForObject:o withKey:newKey]];
+        }
+    }else{
+        
+        if (!result) {
+            result = [NSMutableArray array];
+        }
+        NSMutableArray *comp = [key componentsSeparatedByString:@"."].mutableCopy;
+        if ([[comp lastObject]isEqualToString:@"bb"] && comp.count > 2) {
+            [comp removeLastObject];
+            [comp removeLastObject];
+            NSString *path = [NSDictionary pathWithComponents:comp];
+            [result addObject:[path stringByAppendingFormat:@".bb"]];
+        }else{
+            [result addObject:key];
+        }
+    }
+    
+    return result;
+}
+
+- (NSArray *)paths
+{
+    NSArray *keys = self.allKeys;
+    NSMutableArray *result = nil;
+    for (NSString *aKey in keys) {
+        id obj = [self valueForKey:aKey];
+        if ([obj respondsToSelector:@selector(allKeys)]) {
+            NSArray *paths = [obj paths];
+            if (paths) {
+                if (!result) {
+                    result = [NSMutableArray array];
+                }
+                
+                for (NSString *aPath in paths) {
+                    if (!result) {
+                        result = [NSMutableArray array];
+                    }
+                    NSString *newPath = [aKey stringByAppendingFormat:@".%@",aPath];
+                    NSMutableArray *components = [newPath componentsSeparatedByString:@"."].mutableCopy;
+                    if ([aPath hasSuffix:@"bb"]) {
+                        [result addObject:aPath];
+                    }else{
+                        [result addObject:newPath];
+                    }
+                }
+            }
+            
+        }else{
+            
+                if (!result) {
+                    result = [NSMutableArray array];
+                }
+                
+                [result addObject:aKey];
+        }
+    }
+    
+    return result;
+}
+
+- (id)subPathsForKeyPath:(NSString *)keyPath
+{
+    id obj = nil;
+    if (!keyPath) {
+        keyPath = @"";
+        obj = self;
+    }else{
+        obj = [self objectAtKeyPath:keyPath];
+    }
+    
+    if (!obj) {
+        return nil;
+    }
+    
+    if ([obj isKindOfClass:[NSDictionary class]]) {
+        NSArray *keys = [obj allKeys];
+        NSMutableArray *result = nil;
+        for (NSString *aKey in keys) {
+            NSString *kp = nil;
+            if (keyPath && keyPath.length) {
+                kp = [keyPath stringByAppendingPathExtension:aKey];
+            }else{
+                kp = aKey;
+            }
+            
+            NSArray *paths = [self subPathsForKeyPath:kp];
+            if (paths){
+                if (!result) {
+                    result = [NSMutableArray array];
+                }
+                
+                [result addObjectsFromArray:paths];
+            }
+        }
+        
+        return result;
+        
+    }else{
+        return @[keyPath];
+    }
+}
+
 - (NSString *)printNestedKeys
 {
     NSMutableString *result = [[NSMutableString alloc]init];

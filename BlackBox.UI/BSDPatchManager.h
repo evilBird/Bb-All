@@ -13,11 +13,13 @@
 
 + (BSDPatchManager *)sharedInstance;
 
+@property (nonatomic,strong)NSString *workingPath;
+
 - (NSDictionary *)savedPatches;
+- (NSArray *)allSavedPatchNames;
 - (void)savePatchDescription:(NSString *)patchDescription withName:(NSString *)name;
 - (NSString *)getPatchNamed:(NSString *)name;
 - (void)deleteItemAtPath:(NSString *)path;
-
 - (NSDictionary *)importFromDocuments:(NSString *)fileName;
 - (void) exportToDocuments:(NSDictionary *)dictionary fileName:(NSString *)fileName;
 

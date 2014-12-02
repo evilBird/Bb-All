@@ -39,6 +39,12 @@ static NSString *kLibName = @"bb_stdlib";
     return self;
 }
 
+- (NSArray *)allSavedPatchNames
+{
+    NSDictionary *saved = [self savedPatches];
+    return [saved allPaths];
+}
+
 - (NSDictionary *)migrateOldPatches
 {
     NSDictionary *patches = [NSUserDefaults valueForKey:@"descriptions"];

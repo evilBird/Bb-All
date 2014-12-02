@@ -19,6 +19,10 @@
     
     BSDPortView *selectedPort;
     BOOL kAllowEdit;
+    NSString *kPreviousClassName;
+    id kPreviousArgs;
+    NSArray *reconnectInletViews;
+    NSArray *reconnectOutletViews;
 }
 
 @end
@@ -70,10 +74,103 @@
     return self;
 }
 
+- (void)editingRequested
+{
+    kAllowEdit = YES;
+    kPreviousClassName = self.className;
+    [self prepareToReinitializeRemovePortViews:YES];
+    [self.textField becomeFirstResponder];
+}
+
+- (void)prepareToReinitializeRemovePortViews:(BOOL)portViews
+{
+    if (portViews) {
+        [self removePortViews];
+        [self.delegate boxDidMove:self];
+    }
+    
+    if (self.object) {
+        [self.object tearDown];
+        self.object = nil;
+    }
+}
+
+- (void)removePortViews
+{
+    //reconnectInletViews = nil;
+    //NSMutableArray *connectedInlets = nil;
+    for (BSDPortView *portView in self.inletViews) {
+        /*
+        NSArray *cp = portView.connectedPortViews.copy;
+        if (cp) {
+            if (!connectedInlets) {
+                connectedInlets = [NSMutableArray array];
+            }
+            
+            [connectedInlets addObject:cp.mutableCopy];
+        }
+         */
+        portView.delegate = nil;
+        [portView tearDown];
+        [portView removeFromSuperview];
+    }
+    
+    //if (connectedInlets) {
+      //  reconnectInletViews = [NSArray arrayWithArray:connectedInlets];
+   // }
+    
+    [self.inletViews removeAllObjects];
+    self.inletViews = nil;
+    //NSMutableArray *connectedOutlets = nil;
+    for (BSDPortView *portView in self.outletViews) {
+        /*
+        NSArray *cp = portView.connectedPortViews.copy;
+        if (cp) {
+            if (!connectedOutlets) {
+                connectedOutlets = [NSMutableArray array];
+            }
+            
+            [connectedOutlets addObject:cp.mutableCopy];
+        }
+         */
+        [portView tearDown];
+        portView.delegate = nil;
+        [portView removeFromSuperview];
+    }
+    
+    //if (connectedOutlets) {
+      //  reconnectOutletViews = connectedOutlets;
+    //}
+    
+    [self.outletViews removeAllObjects];
+    self.outletViews = nil;
+}
+
+- (void)reconnectPortViews:(NSArray *)portViews referencePorts:(NSArray *)ports direction:(NSInteger)direction
+{
+    //Direction
+    //0 = reconnecting inlets
+    //1 = reconnecting outlets
+    if (ports) {
+        for (NSInteger i = 0; i < ports.count; i ++) {
+            NSArray *toReconnect = ports[i];
+            if (portViews.count > i) {
+                for (BSDPortView *pv in toReconnect) {
+                    if (direction == 0) {
+                        [pv addConnectionToPortView:portViews[i]];
+                    }else {
+                        [portViews[i] addConnectionToPortView:pv];
+                    }
+                }
+            }
+        }
+    }
+}
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     BSDTextField *tf = (BSDTextField *)textField;
-    //[tf editingWillBegin];
+    [tf editingWillBegin];
     return kAllowEdit;
 }
 
@@ -86,7 +183,7 @@
 - (void)textDidChange:(id)sender
 {
     if (sender == self.textField){
-        [self.textField suggestedCompletionForText:self.textField.text];
+        //[self.textField suggestedCompletionForText:self.textField.text];
     }
 }
 
@@ -98,7 +195,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     BSDTextField *tf = (BSDTextField *)textField;
-    //[tf editingWillEnd];
+    [tf editingWillEnd];
     [textField endEditing:YES];
     return NO;
 }
@@ -192,6 +289,10 @@
         [self makeObjectInstance];
     }
     
+    NSString *n = [self.object name];
+    if (!n) {
+        return;
+    }
     
     NSMutableString *displayName = [[NSMutableString alloc]initWithString:[self.object name]];
     NSArray *argsArray = args;
@@ -210,6 +311,7 @@
     [self.textField setText:displayName];
     [self resizeForText:displayName];
     kAllowEdit = NO;
+    kPreviousClassName = nil;
 }
 
 - (NSArray *)makeSubstitutionsInArgs:(NSArray *)args
@@ -302,5 +404,24 @@
 {
     return self.creationArguments;
 }
+/*
+- (void)createPortViewsForObject:(id)object
+{
+    [super createPortViewsForObject:object];
+    
+    if (reconnectInletViews) {
+        [self reconnectPortViews:self.inletViews referencePorts:reconnectInletViews direction:0];
+    }
+    
+    if (reconnectOutletViews) {
+        [self reconnectPortViews:self.outletViews referencePorts:reconnectOutletViews direction:1];
+    }
+    
+    reconnectOutletViews = nil;
+    reconnectInletViews = nil;
+    [self.delegate boxDidMove:self];
+    
+}
+*/
 
 @end

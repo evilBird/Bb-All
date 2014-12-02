@@ -131,7 +131,7 @@
 		F25F71B419EA06A5002B082A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25F71B319EA06A5002B082A /* CloudKit.framework */; };
 		F25F71B719EA24FA002B082A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25F71B619EA24FA002B082A /* MapKit.framework */; };
 		F25F71B919EA2509002B082A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25F71B819EA2509002B082A /* CoreMotion.framework */; };
-		F25F71BC19EA26AA002B082A /* BSDPointer.m in Sources */ = {isa = PBXBuildFile; fileRef = F25F71BB19EA26AA002B082A /* BSDPointer.m */; };
+		F25F71BC19EA26AA002B082A /* BSDMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = F25F71BB19EA26AA002B082A /* BSDMethod.m */; };
 		F26BB6421A1D5B73000909F4 /* bb_stdlib 2.plist in Resources */ = {isa = PBXBuildFile; fileRef = F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */; };
 		F26BB6441A1D5B78000909F4 /* bb_stdlib.plist in Resources */ = {isa = PBXBuildFile; fileRef = F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */; };
 		F2789E4119C8D4C6006F6CA4 /* PopoverContentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */; };
@@ -500,8 +500,8 @@
 		F25F71B319EA06A5002B082A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		F25F71B619EA24FA002B082A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F25F71B819EA2509002B082A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		F25F71BA19EA26AA002B082A /* BSDPointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPointer.h; sourceTree = "<group>"; };
-		F25F71BB19EA26AA002B082A /* BSDPointer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPointer.m; sourceTree = "<group>"; };
+		F25F71BA19EA26AA002B082A /* BSDMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDMethod.h; sourceTree = "<group>"; };
+		F25F71BB19EA26AA002B082A /* BSDMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDMethod.m; sourceTree = "<group>"; };
 		F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "bb_stdlib 2.plist"; sourceTree = "<group>"; };
 		F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bb_stdlib.plist; sourceTree = "<group>"; };
 		F2789E3F19C8D4C6006F6CA4 /* PopoverContentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverContentTableViewController.h; sourceTree = "<group>"; };
@@ -1152,8 +1152,8 @@
 				F2CFDEED19DCAA6700A156DB /* BSDSend.m */,
 				F2CFDEEF19DCACA000A156DB /* BSDReceive.h */,
 				F2CFDEF019DCACA000A156DB /* BSDReceive.m */,
-				F25F71BA19EA26AA002B082A /* BSDPointer.h */,
-				F25F71BB19EA26AA002B082A /* BSDPointer.m */,
+				F25F71BA19EA26AA002B082A /* BSDMethod.h */,
+				F25F71BB19EA26AA002B082A /* BSDMethod.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1751,7 +1751,7 @@
 				F21E52FD19C51BC300E51383 /* BSDArrayNormalize.m in Sources */,
 				F21E534A19C51BC300E51383 /* BSDTestVariable.m in Sources */,
 				F21E530719C51BC300E51383 /* BSDMapObject.m in Sources */,
-				F25F71BC19EA26AA002B082A /* BSDPointer.m in Sources */,
+				F25F71BC19EA26AA002B082A /* BSDMethod.m in Sources */,
 				F24A3B0E19D0DB9D00FBA887 /* BSDDictionaryLength.m in Sources */,
 				F21A5B5E19DF86BA00E6F21B /* BSDPatchDescription.m in Sources */,
 				F21E530519C51BC300E51383 /* NSValue+BSD.m in Sources */,

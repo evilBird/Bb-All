@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 birdSound LLC. All rights reserved.
 //
 
-#import "BSDPointer.h"
+#import "BSDMethod.h"
 #import <objc/runtime.h>
 
-@implementation BSDPointer
+@implementation BSDMethod
 
 - (instancetype)initWithArguments:(id)arguments
 {
@@ -18,7 +18,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"pointer";
+    self.name = @"method";
     
     self.selectorInlet = [[BSDStringInlet alloc]initCold];
     self.selectorInlet.name = @"selector";
@@ -53,6 +53,8 @@
     }else{
         [self.mainOutlet output:[BSDBang bang]];
     }
+    
+    self.coldInlet.value = nil;
 }
 
 - (id)doSelectorWithPointer:(id)pointer selectorName:(NSString *)selectorName arguments:(NSArray *)arguments
@@ -64,21 +66,46 @@
     }
     const char *class = [NSStringFromClass([pointer class]) UTF8String];
     id c = objc_getClass(class);
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:aSelector]];
+    NSMethodSignature *methodSig = [c instanceMethodSignatureForSelector:aSelector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
     [invocation setTarget:pointer];
     [invocation setSelector:aSelector];
     if (arguments) {
         
         for (NSInteger idx = 0; idx < arguments.count; idx++) {
             id arg = arguments[idx];
-            [invocation setArgument:&arg atIndex:(2+idx)];
+            NSInteger maxIdx = [methodSig numberOfArguments];
+            NSInteger argIdx = idx + 2;
+            if (argIdx < maxIdx) {
+                NSString *argType = [NSString stringWithUTF8String:[methodSig getArgumentTypeAtIndex:argIdx]];
+                NSLog(@"arg type: %@",argType);
+                if ([argType isEqualToString:@"i"]) {
+                    int a = [arg intValue];
+                    [invocation setArgument:&a atIndex:(2+idx)];
+                }else if ([argType isEqualToString:@"d"]) {
+                    double a = [arg doubleValue];
+                    [invocation setArgument:&a atIndex:(2+idx)];
+                }else if ([argType isEqualToString:@"f"]) {
+                    double a = [arg floatValue];
+                    [invocation setArgument:&a atIndex:(2+idx)];
+                }else if ([argType isEqualToString:@"@"]){
+                    [invocation setArgument:&arg atIndex:(2+idx)];
+                }else if ([argType isEqualToString:@"Q"]){
+                    NSInteger a = [arg integerValue];
+                    [invocation setArgument:&a atIndex:(2+idx)];
+                }
+            }
         }
     }
     
-    void* result = malloc([[c methodSignatureForSelector:aSelector] methodReturnLength]);
+    id result = nil;
     [invocation invoke];
-    [invocation getReturnValue:&result];
-    return (__bridge id)(result);
+    NSString *returnType = [NSString stringWithUTF8String:[methodSig methodReturnType]];
+    NSLog(@"return type: %@",returnType);
+    if (![returnType isEqualToString:@"v"]) {
+        [invocation getReturnValue:&result];
+    }
+    return result;
 }
 
 

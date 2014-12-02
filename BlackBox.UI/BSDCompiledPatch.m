@@ -135,8 +135,20 @@
     
     NSString *desc = savedPatches[name];
     */
-    NSString *patchName = [name stringByAppendingPathExtension:@"bb"];
+    NSLog(@"loading patch with name %@",name);
+    NSString *patchName = nil;
+    if ([name hasSuffix:@"bb"]) {
+        patchName = name;
+    }else{
+        patchName = [name stringByAppendingString:@".bb"];
+    }
+    
     NSString *desc = [NSString stringWithString:[[BSDPatchManager sharedInstance]getPatchNamed:patchName]];
+    
+    if (!desc) {
+        return nil;
+    }
+    
     return [NSString stringWithString:desc];
 }
 

@@ -18,6 +18,7 @@
 - (void)handleText:(NSString *)text;
 
 @property (nonatomic,strong)BSDTextField *textField;
+- (void)prepareToReinitializeRemovePortViews:(BOOL)portViews;
 - (void)createObjectWithName:(NSString *)name arguments:(NSArray *)args;
 
 @end

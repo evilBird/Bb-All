@@ -32,6 +32,7 @@
     
     BSDPortView *selectedPort;
     BOOL kAllowEdit;
+    BOOL kReinit;
 }
 
 @property (nonatomic,strong)UIPanGestureRecognizer *panGesture;
@@ -80,6 +81,8 @@
 - (void)tearDown;
 - (void)handleObjectValueShouldChangeNotification:(NSNotification *)notification;
 - (CGSize)minimumSize;
+
+- (void)editingRequested;
 
 
 @end

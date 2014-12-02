@@ -126,7 +126,9 @@
         }
         
         if (self.object != nil) {
-            [[(BSDMessage *)self.object hotInlet]input:@{@"set":theMessage}];
+            NSMutableArray *toSend = [self.creationArguments mutableCopy];
+            [toSend insertObject:@"set" atIndex:0];
+            [[(BSDMessage *)self.object hotInlet]input:toSend];
         }
     }
 }
@@ -183,7 +185,8 @@
     NSDictionary *changeInfo = notification.object;
     id val = changeInfo[@"value"];
     if (val) {
-        self.textField.text = [self formatValue:val];
+        self.textField.text = val;
+        //self.textField.text = [self formatValue:val];
         [self resizeForText:self.textField.text];
         [self setNeedsDisplay];
     }

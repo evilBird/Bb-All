@@ -125,6 +125,17 @@
 
 - (NSString *)savedPatchWithName:(NSString *)name sender:(id)sender
 {
+    NSString *workingPath = nil;
+    NSMutableArray *pathComponents = [name componentsSeparatedByString:@"."].mutableCopy;
+    if ([pathComponents.lastObject isEqualToString:@"bb"]) {
+        [pathComponents removeLastObject];
+    }
+    
+    if (pathComponents.count) {
+        workingPath = [NSDictionary pathWithComponents:pathComponents];
+        [BSDPatchManager sharedInstance].workingPath = workingPath;
+    }
+    
     return [[BSDPatchManager sharedInstance]getPatchNamed:name];
 }
 

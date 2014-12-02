@@ -475,7 +475,14 @@
     NSArray *args = graphBox.creationArguments;
     NSString *patchName = args.firstObject;
     BSDCompiledPatch *patch = graphBox.object;
+    CGRect frame = self.bounds;
+    frame.origin = CGPointMake(0, 0);
+    patch.canvas.frame = frame;
+    patch.canvas.name = patchName;
     [self.delegate showCanvasForCompiledPatch:patch];
+    
+    NSValue *rect = [NSValue wrapRect:patch.canvas.frame];
+    NSLog(@"rect: %@",rect);
     //[self.delegate newCanvasForPatch:patchName withBox:graphBox];
 }
 

@@ -15,7 +15,7 @@
 
 @interface BSDBox ()
 
-
+@property (nonatomic,strong)UILongPressGestureRecognizer *longPress;
 
 @end
 
@@ -37,9 +37,29 @@
         self.layer.borderWidth = 1.0f;
         self.layer.borderColor = self.defaultColor.CGColor;
         [self setSelected:NO];
+        
+        _longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+        _longPress.delegate = self;
+        _longPress.minimumPressDuration = 1.0;
+        _longPress.allowableMovement = 20;
+        [self addGestureRecognizer:_longPress];
     }
     
     return self;
+}
+
+- (void)handleLongPress:(id)sender
+{
+    UIGestureRecognizerState state = [(UILongPressGestureRecognizer *)sender state];
+    if (state == UIGestureRecognizerStateBegan) {
+        [self editingRequested];
+    }
+    
+}
+
+- (void)editingRequested
+{
+    
 }
 
 - (instancetype)initWithDescription:(BSDObjectDescription *)desc
@@ -130,9 +150,10 @@
     NSMutableArray *result = [NSMutableArray array];
     for (BSDInlet *inlet in inlets) {
         frame.origin.x = (CGFloat)idx * step;
-        BSDPortView *portView = [self inletViewWithName:inlet.name];
+        NSString *portName = [NSString stringWithFormat:@"%@-%@",self.className,inlet.name];
+        BSDPortView *portView = [self inletViewWithName:portName];
         if (!portView) {
-            portView = [[BSDPortView alloc]initWithName:inlet.name delegate:self];
+            portView = [[BSDPortView alloc]initWithName:portName delegate:self];
             portView.portName = inlet.name;
             [self addSubview:portView];
         }
@@ -165,9 +186,10 @@
     NSMutableArray *result = [NSMutableArray array];
     for (BSDOutlet *outlet in outlets) {
         frame.origin.x = (CGFloat)idx * step;
-        BSDPortView *portView = [self outletViewWithName:outlet.name];
+        NSString *portName = [NSString stringWithFormat:@"%@-%@",self.className,outlet.name];
+        BSDPortView *portView = [self outletViewWithName:portName];
         if (!portView) {
-            portView = [[BSDPortView alloc]initWithName:outlet.name delegate:self];
+            portView = [[BSDPortView alloc]initWithName:portName delegate:self];
             portView.portName = outlet.name;
             [self addSubview:portView];
         }
@@ -442,6 +464,9 @@
     id c = objc_getClass(class);
     id instance = [c alloc];
     SEL aSelector = NSSelectorFromString(@"initWithArguments:");
+    if (![instance respondsToSelector:aSelector]) {
+        return;
+    }
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:aSelector]];
     invocation.target = instance;
     invocation.selector = aSelector;
