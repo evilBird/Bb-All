@@ -26,6 +26,8 @@
     
     if (arguments && [arguments isKindOfClass:[NSString class]]) {
         self.coldInlet.value = arguments;
+    }else if (arguments && [arguments isKindOfClass:[NSArray class]]){
+        NSLog(@"args to send object are of array type");
     }
 }
 
