@@ -20,6 +20,4 @@
 
 - (NSString *)suggestedCompletionForText:(NSString *)text;
 
-
-
 @end

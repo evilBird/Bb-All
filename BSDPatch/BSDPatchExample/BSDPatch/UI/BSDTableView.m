@@ -62,7 +62,7 @@ static NSString *kCellId = @"cellId";
         }
         
         self.data = data;
-        
+        [self.viewInlet.value reloadData];
         return;
     }
     

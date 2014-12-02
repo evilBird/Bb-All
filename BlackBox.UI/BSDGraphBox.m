@@ -189,6 +189,7 @@
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
+    [self.textField editingWillEnd];
     return YES;
 }
 
