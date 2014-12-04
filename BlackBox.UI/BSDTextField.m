@@ -351,7 +351,23 @@
         return @"BSDRect";
     }
     if ([text isEqualToString:@"po"]) {
-        return @"BSDPoint";
+        return @"BSDPoint2D";
+    }
+    
+    if ([text isEqualToString:@"pr"]) {
+        return @"BSDArrayPrepend";
+    }
+    
+    if ([text isEqualToString:@"dr"]) {
+        return @"BSDSerializeArray";
+    }
+    
+    if ([text isEqualToString:@"a"]) {
+        return @"BSDAddKey";
+    }
+    
+    if ([text isEqualToString:@"v"]) {
+        return @"BSDView";
     }
     
     return nil;
@@ -826,7 +842,7 @@
     
     NSPredicate *predicate = nil;
     NSArray *filteredClassList = nil;
-    predicate = [NSPredicate predicateWithFormat:@"SELF == %@",word];
+    predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] %@ AND SELF ENDSWITH[cd] %@",word,word];
     filteredClassList = [classList filteredArrayUsingPredicate:predicate];
     if (filteredClassList) {
         classKey = filteredClassList.firstObject;

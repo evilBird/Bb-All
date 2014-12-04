@@ -9,13 +9,19 @@
 #import "BSDGPUImage.h"
 #import "GPUImage.h"
 #import <objc/runtime.h>
+#import "BSDObjects.h"
+
 
 @interface BSDGPUImage ()
 
 @property (nonatomic,strong)NSDictionary *filterDictionary;
 @property (nonatomic,strong)UIImage *sourceImage;
+@property (nonatomic,strong)GPUImagePicture *picture;
 @property (nonatomic,strong)GPUImageFilter *myFilter;
+@property (nonatomic,strong)GPUImageView *imageView;
+@property (nonatomic,strong)UIImage *previousImage;
 @property (nonatomic,strong)NSString *prevFilterKey;
+@property (nonatomic)BOOL ready;
 
 @end
 
@@ -33,60 +39,75 @@
     self.rightOutlet.name = @"right";
     [self addPort:self.rightOutlet];
     self.filterDictionary = [self getFilters];
+    self.parameterInlet = [[BSDInlet alloc]initCold];
+    self.parameterInlet.name = @"parameters";
+    self.parameterInlet.delegate = self;
+    [self addPort:self.parameterInlet];
     
     if (arguments == nil) {
-        NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-        dictionary[@"filter"] = @"sepia";
-        self.coldInlet.value = dictionary;
+        self.coldInlet.value = @"sepia";
         return;
     }
     
     if (arguments && [arguments isKindOfClass:[NSString class]]) {
-        self.name = @"image filter";
-        NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-        dictionary[@"filter"] = arguments;
-        self.coldInlet.value = dictionary;
+        self.coldInlet.value = arguments;
         return;
     }
     
-    if (arguments && [arguments isKindOfClass:[NSDictionary class]]) {
-        self.coldInlet.value = [arguments mutableCopy];
-        return;
-    }
-    
+    self.ready = YES;
 }
-
+/*
 - (void)calculateOutput
 {
     id hot = self.hotInlet.value;
-    if (!hot || ![hot isKindOfClass:[UIImage class]]) {
+    if (hot && [hot isKindOfClass:[UIImage class]] && hot != self.sourceImage) {
+        self.sourceImage = hot;
+        self.picture = nil;
+        self.picture = [[GPUImagePicture alloc]initWithImage:self.sourceImage smoothlyScaleOutput:YES];
+    }
+    
+    UIImage *inputImage = self.sourceImage;
+    if (!inputImage) {
         return;
     }
-    UIImage *inputImage = hot;
-
+    
+    
     id cold = self.coldInlet.value;
-    if (![cold isKindOfClass:[NSDictionary class]]){
+    if (cold && ![cold isKindOfClass:[NSDictionary class]]){
         return;
     }
-    
-    NSMutableDictionary *parms = [self.coldInlet.value mutableCopy];
-    if (![parms.allKeys containsObject:@"filter"] && !self.prevFilterKey) {
-        return;
-    }
-    
     self.hotInlet.open = NO;
-    if (![parms.allKeys containsObject:@"filter"]) {
-        parms[@"filter"] = self.prevFilterKey;
+    NSMutableDictionary *parms = [self.coldInlet.value mutableCopy];
+    NSString *filterName = nil;
+    if ([parms.allKeys containsObject:@"filter"]) {
+        filterName = [parms valueForKey:@"filter"];
+        [parms removeObjectForKey:@"filter"];
+        if (parms.allKeys.count == 0) {
+            parms = nil;
+        }
+    }else{
+        filterName = self.prevFilterKey;
     }
     
-    NSString *filterName = parms[@"filter"];
-    if (!self.prevFilterKey || ![filterName isEqualToString:self.prevFilterKey]) {
-        self.myFilter = [self filterWithParameters:parms];
-    }else {
-        [parms removeObjectForKey:@"filter"];
+    if (![filterName isEqualToString:self.prevFilterKey]) {
+        self.myFilter = nil;
+        self.prevFilterKey = filterName;
+    }
+    
+    if (!self.myFilter) {
+        self.myFilter = [self filterWithName:filterName];
+    }else{
+        [self.myFilter useNextFrameForImageCapture];
+    }
+    
+    if (parms) {
         [self updateFilter:self.myFilter withParameters:parms];
     }
     
+    [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+        [self.mainOutlet output:[self.myFilter imageByFilteringImage:inputImage]];
+        self.hotInlet.open = YES;
+    }];
     __weak BSDGPUImage *weakself = self;
     dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(concurrentQueue, ^{
@@ -100,6 +121,259 @@
                 weakself.hotInlet.open = YES;
         });
     });
+     self.myFilter = [[GPUImageFilter alloc] initWithFragmentShaderFromFile:@"mandelbrot"];
+     UIImage *output = [self.myFilter imageByFilteringImage:hot];
+     [self.mainOutlet output:output];
+}
+*/
+
+- (void)inletReceievedBang:(BSDInlet *)inlet
+{
+    if (inlet == self.hotInlet) {
+        [self hotInlet:inlet receivedValue:self.previousImage];
+    }
+}
+
+- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
+{
+    if (inlet == self.hotInlet) {
+        if ([value isKindOfClass:[NSString class]] && [[value lowercaseString]isEqualToString:@"filters"]) {
+                [self printFilterList];
+                return;
+        }
+        if (!self.ready) {
+            //return;
+        }
+        
+        self.ready = NO;
+        //Handle the image input
+        UIImage *sourceImage = nil;
+        //If the image is new, we will create a new GPUImagePicture instance
+        BOOL imageIsNew = NO;
+        static UIImage *prevImage;
+        //validate input. if valid, assign to sourceImage var
+        if (!value || ![value isKindOfClass:[UIImage class]]) {
+            //try to use prev image
+            if (prevImage && [prevImage isKindOfClass:[UIImage class]]) {
+                sourceImage = prevImage;
+                imageIsNew = NO;
+            }
+        }else{
+            //if there is no previous image or the new value is not the same as the previous image, we update the imageIsNew var
+            if (!prevImage || value != prevImage) {
+                imageIsNew = YES;
+            }
+            sourceImage = value;
+        }
+        
+        //If the source image is nil at this point, we bail
+        if (!sourceImage) {
+            self.ready = YES;
+            return;
+        }
+        //If image is new, we'll set up a new pictureImage
+        if (imageIsNew) {
+            [self.picture removeAllTargets];
+            self.picture = nil;
+            self.picture = [self pictureWithImage:sourceImage];
+        }
+        
+        //See if we need to change filter type
+        NSString *filterKey = self.coldInlet.value;
+        BOOL filterIsNew = NO;
+        
+        if (!filterKey){
+            filterKey = self.prevFilterKey;
+            filterIsNew = YES;
+        }else if (![filterKey isEqualToString:self.prevFilterKey]){
+            filterIsNew = YES;
+        }else if (!self.myFilter){
+            filterIsNew = YES;
+        }
+        
+        //if the filter is new, we'll create a new one and make it the target of our picture
+        if (filterIsNew) {
+            [self.myFilter removeAllTargets];
+            self.myFilter = nil;
+            self.myFilter = [self filterWithName:filterKey];
+            [self.picture addTarget:self.myFilter];
+            //since we've loaded a new filter, we'll map it and send the result to the right outlet
+            BSDMapObject *mapper = [[BSDMapObject alloc]init];
+            NSDictionary *map = @{@"parameters":[mapper dictionaryForObject:self.myFilter]};
+            [self.rightOutlet output:map];
+        }else{
+            //if filter is not new, we add still need to add it as a target of our picture if the image is new
+            if (imageIsNew) {
+                [self.picture addTarget:self.myFilter];
+            }
+        }
+        
+        //since the filter and picture are configured, we'll force the filter to render at the size of the image
+        [self.myFilter forceProcessingAtSize:sourceImage.size];
+        
+        NSDictionary *parms = self.parameterInlet.value;
+        
+        //void update filter parms as needed
+        if (parms && [parms isKindOfClass:[NSDictionary class]]) {
+            [self updateFilter:self.myFilter withParameters:parms];
+        }
+        
+        //Everything should be set up, let's process the image...
+        prevImage = sourceImage;
+        self.prevFilterKey = filterKey;
+        self.previousImage = sourceImage;
+        [self.myFilter useNextFrameForImageCapture];
+        [self.picture processImageWithCompletionHandler:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //[self.mainOutlet output:self.myFilter.imageFromCurrentFramebuffer];
+                [self.mainOutlet output:[self.myFilter imageFromCurrentFramebufferWithOrientation:UIImageOrientationUp]];
+
+                [self setReady:YES];
+            });
+        }];
+        
+        
+        
+        /*
+        
+        BOOL newFilter = NO;
+        if (!self.prevFilterKey || ![self.prevFilterKey isEqualToString:self.coldInlet.value]) {
+            newFilter = YES;
+        }
+        
+        if ([value isKindOfClass:[UIImage class]] && value != prevImage) {
+            if (newFilter) {
+                [self createFilterAndCalculateOutput];
+            }else{
+                [self filterImage];
+            }
+            prevImage = value;
+            self.prevFilterKey = self.coldInlet.value;
+        }
+        
+        return;
+         */
+    }
+    /*
+    if (inlet == self.parameterInlet) {
+        
+        BOOL newFilter = NO;
+        if (!self.prevFilterKey || ![self.prevFilterKey isEqualToString:self.coldInlet.value]) {
+            newFilter = YES;
+        }
+        
+        if (newFilter) {
+            [self createFilterAndCalculateOutput];
+        }else{
+            [self updateFilterAndCalculateOutput];
+        }
+        self.prevFilterKey = self.coldInlet.value;
+    }
+     */
+}
+
+- (void)filterImage
+{
+    if (!self.ready) {
+        //return;
+    }
+    self.ready = NO;
+    [self.picture removeAllTargets];
+    self.picture = nil;
+    self.picture = [self pictureWithImage:self.hotInlet.value];
+    [self.picture addTarget:self.myFilter];
+    [self.myFilter forceProcessingAtSize:self.picture.outputImageSize];
+    [self.myFilter useNextFrameForImageCapture];
+    [self.picture processImageWithCompletionHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.mainOutlet output:self.myFilter.imageFromCurrentFramebuffer];
+            [self setReady:YES];
+        });
+    }];
+}
+
+- (void)createFilterAndCalculateOutput
+{
+    if (!self.ready) {
+        //return;
+    }
+    id filterKey = self.coldInlet.value;
+    if (!filterKey ||
+        ![filterKey isKindOfClass:[NSString class]] ||
+        ![self.filterDictionary.allKeys containsObject:[filterKey lowercaseString]])
+    {
+        return;
+    }
+    self.ready = NO;
+
+    if (!self.picture) {
+        self.picture = [self pictureWithImage:self.hotInlet.value];
+    }
+    
+    [self.picture removeAllTargets];
+    [self.myFilter removeAllTargets];
+    self.myFilter = nil;
+    self.myFilter = [self filterWithName:filterKey];
+    [self.picture addTarget:self.myFilter];
+    [self.myFilter forceProcessingAtSize:self.picture.outputImageSize];
+    [self.myFilter useNextFrameForImageCapture];
+    [self.picture processImageWithCompletionHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.mainOutlet output:self.myFilter.imageFromCurrentFramebuffer];
+            [self setReady:YES];
+        });
+    }];
+}
+
+- (void)updateFilterAndCalculateOutput
+{
+    if (!self.ready) {
+        //return;
+    }
+    self.ready = NO;
+    id parms = self.parameterInlet.value;
+    if (parms && [parms isKindOfClass:[NSDictionary class]]) {
+        [self updateFilter:self.myFilter withParameters:parms];
+    }
+    [self.myFilter forceProcessingAtSize:self.picture.outputImageSize];
+    [self.myFilter useNextFrameForImageCapture];
+    [self.picture processImageWithCompletionHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.mainOutlet output:self.myFilter.imageFromCurrentFramebuffer];
+            [self setReady:YES];
+        });
+    }];
+}
+
+- (GPUImagePicture *)pictureWithImage:(UIImage *)image
+{
+    return [[GPUImagePicture alloc]initWithImage:image smoothlyScaleOutput:YES];
+}
+
+- (GPUImageView *)imageViewForPicture:(GPUImagePicture *)picture
+{
+    CGRect frame = CGRectMake(0.0, 0.0, picture.outputImageSize.width, picture.outputImageSize.height);
+    GPUImageView *imageView = [[GPUImageView alloc]initWithFrame:frame];
+    return imageView;
+}
+
+- (void)calculateOutput
+{
+    /*
+    id hot = self.hotInlet.value;
+    static UIImage *sourceImage;
+    if (hot && [hot isKindOfClass:[UIImage class]] && hot != sourceImage) {
+        sourceImage = nil;
+        self.picture = nil;
+        sourceImage = hot;
+        self.picture = [[GPUImagePicture alloc]initWithImage:sourceImage smoothlyScaleOutput:YES];
+    }
+    
+    if (!self.picture) {
+        NSLog(@"no picture");
+        return;
+    }
+    */
     
 }
 
@@ -137,20 +411,24 @@
 
 - (void)updateFilter:(id)filter withParameters:(NSDictionary *)parameters
 {
-    NSMutableDictionary *parms = parameters.mutableCopy;
-    if ([parms.allKeys containsObject:@"filter"]) {
-        [parms removeObjectForKey:@"filter"];
+    if (!parameters || !filter) {
+        return;
     }
     
+    NSMutableDictionary *parms = parameters.mutableCopy;
+    BSDMapObject *mapper = [[BSDMapObject alloc]init];
+    NSArray *properties = [mapper properties:filter];
     if (parms.allKeys.count) {
         
         for (NSString *aKey in parms.allKeys) {
             id newValue = parms[aKey];
-            [filter setValue:newValue forKey:aKey];
+            if ([properties containsObject:aKey]) {
+                [filter setValue:newValue forKey:aKey];
+            }
         }
     }
 }
-
+/*
 - (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
 {
     if (inlet == self.hotInlet) {
@@ -168,7 +446,7 @@
     }
 }
 
-
+*/
 
 - (void)printFilterList
 {

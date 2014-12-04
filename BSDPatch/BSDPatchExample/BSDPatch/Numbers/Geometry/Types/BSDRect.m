@@ -8,6 +8,14 @@
 
 #import "BSDRect.h"
 #import "BSDCreate.h"
+#import <UIKit/UIKit.h>
+
+@interface BSDRect (){
+    CGRect kRect;
+}
+
+
+@end
 
 @implementation BSDRect
 
@@ -23,11 +31,11 @@
     self.originXInlet = [[BSDNumberInlet alloc]initHot];
     self.originXInlet.name = @"originX";
     self.originXInlet.delegate = self;
-    self.originYInlet = [[BSDNumberInlet alloc]initCold];
+    self.originYInlet = [[BSDNumberInlet alloc]initHot];
     self.originYInlet.name = @"originY";
-    self.widthInlet = [[BSDNumberInlet alloc]initCold];
+    self.widthInlet = [[BSDNumberInlet alloc]initHot];
     self.widthInlet.name = @"width";
-    self.heightInlet = [[BSDNumberInlet alloc]initCold];
+    self.heightInlet = [[BSDNumberInlet alloc]initHot];
     self.heightInlet.name = @"height";
     self.originXInlet.value = @(0);
     self.originYInlet.value = @(0);
@@ -51,6 +59,12 @@
         self.widthInlet.value = @(44);
         self.heightInlet.value = @(44);
     }
+    
+    kRect = CGRectMake([self.originXInlet.value floatValue],
+                       [self.originYInlet.value floatValue],
+                       [self.widthInlet.value floatValue],
+                       [self.heightInlet.value floatValue]
+                       );
 
 }
 
@@ -58,6 +72,23 @@
 {
     if (inlet == self.originXInlet) {
         [self calculateOutput];
+    }
+}
+
+- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
+{
+    if (![value isKindOfClass:[NSNumber class]]) {
+        return;
+    }
+    
+    if (inlet == self.originXInlet) {
+        kRect.origin.x = [value floatValue];
+    }else if (inlet == self.originYInlet){
+        kRect.origin.y = [value floatValue];
+    }else if (inlet == self.widthInlet){
+        kRect.size.width = [value floatValue];
+    }else if (inlet == self.heightInlet){
+        kRect.size.height = [value floatValue];
     }
 }
 
@@ -73,22 +104,22 @@
 
 - (void)calculateOutput
 {
-    NSNumber *x = self.originXInlet.value;
-    NSNumber *y = self.originYInlet.value;
-    NSNumber *w = self.widthInlet.value;
-    NSNumber *h = self.heightInlet.value;
+    NSValue *output = [NSValue wrapRect:kRect];
+    [self.mainOutlet output:output];
+    
+    /*
     if (![self typeCheck]) {
         return;
     }
     
-    if (x && y && w && h) {
-        CGRect result;
-        result.origin.x = x.doubleValue;
-        result.origin.y = y.doubleValue;
-        result.size.width = w.doubleValue;
-        result.size.height = h.doubleValue;
-        self.mainOutlet.value = [NSValue wrapRect:result];
-    }
+    CGRect result;
+    result.size.height = [self.heightInlet.value floatValue];
+    result.size.width = [self.widthInlet.value floatValue];
+    result.origin.y = [self.originYInlet.value floatValue];
+    result.origin.x = [self.originXInlet.value floatValue];
+    NSValue *output = [NSValue wrapRect:result];
+    [self.mainOutlet output:output];
+     */
 }
 - (BOOL)typeCheck
 {
@@ -97,7 +128,7 @@
     NSNumber *w = self.widthInlet.value;
     NSNumber *h = self.heightInlet.value;
     
-    if (![x isKindOfClass:[NSNumber class]] || ![y isKindOfClass:[NSNumber class]] || ![w isKindOfClass:[NSNumber class]] || ![h isKindOfClass:[NSNumber class]]) {
+    if (!x || ![x isKindOfClass:[NSNumber class]] || !y || ![y isKindOfClass:[NSNumber class]] || !w || ![w isKindOfClass:[NSNumber class]] || !h || ![h isKindOfClass:[NSNumber class]]) {
         
         return NO;
     }

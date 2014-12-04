@@ -463,6 +463,11 @@
     self.currentPatchName = name;
     self.curentCanvas.name = name;
     self.title = name;
+    
+    if (self.parent != nil) {
+        id parent = self.parent;
+        [(BSDCanvasViewController*)parent loadDescriptionWithName:[(BSDCanvasViewController *)parent currentPatchName]];
+    }
 }
 
 - (NSString *)savedDescriptionWithName:(NSString *)name
@@ -476,7 +481,9 @@
 
 - (void)saveCanvas:(id)canvas description:(NSString *)description name:(NSString *)name
 {
-    
+    if (description && name) {
+        [self.delegate savePatchDescription:description withName:name sender:self];
+    }
 }
 
 - (void)setCurrentCanvas:(id)canvas
@@ -666,7 +673,7 @@
             c.delegate = self.delegate;
             c.displayDisabled = YES;
             c.configuration = @{@"data":self.childPatch};
-            
+            c.parent = self;
         }
     }
 }

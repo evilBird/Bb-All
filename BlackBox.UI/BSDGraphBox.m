@@ -169,13 +169,19 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    BSDTextField *tf = (BSDTextField *)textField;
-    [tf editingWillBegin];
     return kAllowEdit;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    BSDTextField *tf = (BSDTextField *)textField;
+    NSString *text = @"";
+    if (self.className && self.argString) {
+        text = [NSString stringWithFormat:@"%@ %@",self.className,self.argString];
+    }
+    tf.text = text;
+    [self resizeForText:tf.text];
+    [tf editingWillBegin];
     self.className = nil;
     self.selected = NO;
 }
@@ -183,7 +189,14 @@
 - (void)textDidChange:(id)sender
 {
     if (sender == self.textField){
-        //[self.textField suggestedCompletionForText:self.textField.text];
+        
+        static NSString *previousText;
+        NSString *text = self.textField.text;
+        if (previousText && ![text isEqualToString:previousText]) {
+            [self resizeForText:text];
+        }
+        
+        previousText = text;
     }
 }
 
@@ -313,6 +326,9 @@
     [self resizeForText:displayName];
     kAllowEdit = NO;
     kPreviousClassName = nil;
+    if ([self.object isKindOfClass:[BSDCompiledPatch class]]) {
+        [[self.object canvas]loadBang];
+    }
 }
 
 - (NSArray *)makeSubstitutionsInArgs:(NSArray *)args

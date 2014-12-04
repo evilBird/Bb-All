@@ -11,5 +11,6 @@
 @interface BSDGPUImage : BSDObject
 
 @property (nonatomic,strong)BSDOutlet *rightOutlet;
+@property (nonatomic,strong)BSDInlet *parameterInlet;
 
 @end

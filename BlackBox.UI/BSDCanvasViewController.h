@@ -43,6 +43,7 @@
 @property (nonatomic,strong)NSDictionary *configuration;
 @property (strong, nonatomic) IBOutlet UIImageView *displayPreviewImageView;
 @property (nonatomic)BOOL displayDisabled;
+@property (nonatomic,weak)BSDCanvasViewController *parent;
 
 - (IBAction)clearLog:(id)sender;
 - (IBAction)handleLogControlPan:(id)sender;

@@ -301,29 +301,12 @@
     
     NSString *canvasDesc = [self genericCanvasDescriptionName:name];
     NSString *full = [NSString stringWithFormat:@"%@%@",canvasDesc,self.pasteBoard];
-    [self.delegate saveDescription:full withName:name];
+    [self.delegate saveCanvas:nil description:full name:name];
     BSDBox *box = [self newGraphBoxAtPoint:kFocusPoint];
     box.argString = name;
     box.className = @"BSDCompiledPatch";
     [self addGraphBox:box initialize:YES arg:name];
-    
-    /*
-    BSDPatchCompiler *compiler = [[BSDPatchCompiler alloc]initWithArguments:nil];
-    BSDCanvas *canvas = [compiler restoreCanvasWithText:full];
-    BSDAbstractionBox *box = [self newAbstractionBox:name atPoint:kFocusPoint];
-    box.object = canvas;
-    box.delegate = self;
-    canvas.parentCanvas = self;
-    canvas.delegate = self.delegate;
-    [box initializeWithText:name];
-    
-    if (!self.graphBoxes) {
-        self.graphBoxes = [NSMutableArray array];
-    }
-    
-    [self.graphBoxes addObject:box];
-    [self addSubview:box];
-     */
+
 }
 
 - (void)tearDown
