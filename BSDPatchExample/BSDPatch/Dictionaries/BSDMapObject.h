@@ -17,7 +17,7 @@
 //Main outlet: emits a dictionary
 
 - (NSDictionary *)dictionaryForObject:(id)object;
-
+- (NSArray *)properties:(id)obj;
 NSDictionary* plist_for_object(id obj);
 
 @end

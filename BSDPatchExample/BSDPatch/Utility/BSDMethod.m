@@ -9,6 +9,12 @@
 #import "BSDMethod.h"
 #import <objc/runtime.h>
 
+@interface BSDMethod ()
+
+@property (nonatomic,strong)id returnVal;
+
+@end
+
 @implementation BSDMethod
 
 - (instancetype)initWithArguments:(id)arguments
@@ -49,7 +55,7 @@
     id output = [self doSelectorWithPointer:pointer selectorName:[NSString stringWithString:selectorName] arguments:[NSMutableArray arrayWithArray:arguments]];
     
     if (output) {
-        [self.mainOutlet output:output];
+        [self.mainOutlet output:self.returnVal];
     }else{
         [self.mainOutlet output:[BSDBang bang]];
     }
@@ -98,13 +104,15 @@
         }
     }
     
-    id result = nil;
+    id result;
     [invocation invoke];
     NSString *returnType = [NSString stringWithUTF8String:[methodSig methodReturnType]];
-    NSLog(@"return type: %@",returnType);
-    if (![returnType isEqualToString:@"v"]) {
+    if (![returnType isEqualToString:@"v"] && [returnType isEqualToString:@"@"]) {
         [invocation getReturnValue:&result];
     }
+    
+    self.returnVal = result;
+    
     return result;
 }
 

@@ -59,17 +59,18 @@
 
 - (void)calculateOutput
 {
-    NSValue *hot = self.hotInlet.value;
-    NSValue *cold = self.coldInlet.value;
-    if (!hot) {
-        hot = cold;
+    id hot = self.hotInlet.value;
+    
+    if (!hot || ![hot isKindOfClass:[NSValue class]]) {
+        return;
     }
-    CGRect rect = hot.CGRectValue;
+
+    CGRect rect = [(NSValue *)hot CGRectValue];
     self.heightOutlet.value = @(rect.size.height);
     self.widthOutlet.value = @(rect.size.width);
     self.originYOutlet.value = @(rect.origin.y);
     self.originXOutlet.value = @(rect.origin.x);
-    self.coldInlet.value = [NSValue wrapRect:rect];
+    //self.coldInlet.value = [NSValue wrapRect:rect];
 }
 
 - (void)test

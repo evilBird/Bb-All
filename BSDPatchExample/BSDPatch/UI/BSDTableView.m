@@ -130,8 +130,7 @@ static NSString *kCellId = @"cellId";
     
     return cell;
 }
-
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < self.data.count) {
         NSDictionary *cellData = self.data[indexPath.row];
@@ -139,5 +138,6 @@ static NSString *kCellId = @"cellId";
         [self.getterOutlet output:output];
     }
 }
+
 
 @end
