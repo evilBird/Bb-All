@@ -216,6 +216,7 @@
 		F2CFDF3919DCFF5400A156DB /* toolbar_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2CFDF1419DCFF5400A156DB /* toolbar_add@3x.png */; };
 		F2CFDF3A19DCFF5400A156DB /* toolbar_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2CFDF1519DCFF5400A156DB /* toolbar_add@2x.png */; };
 		F2CFDF3B19DCFF5400A156DB /* toolbar_add.png in Resources */ = {isa = PBXBuildFile; fileRef = F2CFDF1619DCFF5400A156DB /* toolbar_add.png */; };
+		F2E507C11A37F66A008D67D9 /* BSDCPUMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E507C01A37F66A008D67D9 /* BSDCPUMonitor.m */; };
 		F2EB85E419D34CA8007B8C3C /* BSDNumberInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85E319D34CA8007B8C3C /* BSDNumberInlet.m */; };
 		F2EB85E719D34EE8007B8C3C /* BSDStringInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85E619D34EE8007B8C3C /* BSDStringInlet.m */; };
 		F2EB85EA19D34F46007B8C3C /* BSDDictionaryInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85E919D34F46007B8C3C /* BSDDictionaryInlet.m */; };
@@ -635,6 +636,8 @@
 		F2CFDF1419DCFF5400A156DB /* toolbar_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar_add@3x.png"; sourceTree = "<group>"; };
 		F2CFDF1519DCFF5400A156DB /* toolbar_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar_add@2x.png"; sourceTree = "<group>"; };
 		F2CFDF1619DCFF5400A156DB /* toolbar_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_add.png; sourceTree = "<group>"; };
+		F2E507BF1A37F66A008D67D9 /* BSDCPUMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDCPUMonitor.h; sourceTree = "<group>"; };
+		F2E507C01A37F66A008D67D9 /* BSDCPUMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCPUMonitor.m; sourceTree = "<group>"; };
 		F2EB85E219D34CA8007B8C3C /* BSDNumberInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDNumberInlet.h; sourceTree = "<group>"; };
 		F2EB85E319D34CA8007B8C3C /* BSDNumberInlet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDNumberInlet.m; sourceTree = "<group>"; };
 		F2EB85E519D34EE8007B8C3C /* BSDStringInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDStringInlet.h; sourceTree = "<group>"; };
@@ -1182,6 +1185,8 @@
 				F2CFDEF019DCACA000A156DB /* BSDReceive.m */,
 				F25F71BA19EA26AA002B082A /* BSDMethod.h */,
 				F25F71BB19EA26AA002B082A /* BSDMethod.m */,
+				F2E507BF1A37F66A008D67D9 /* BSDCPUMonitor.h */,
+				F2E507C01A37F66A008D67D9 /* BSDCPUMonitor.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1722,6 +1727,7 @@
 				F21E531F19C51BC300E51383 /* BSDEqual.m in Sources */,
 				F21E52F619C51BC300E51383 /* BSDArrayAccum.m in Sources */,
 				F2CFC8511A19E36A00FFAAC1 /* BSDArr2Dict.m in Sources */,
+				F2E507C11A37F66A008D67D9 /* BSDCPUMonitor.m in Sources */,
 				F21E531119C51BC300E51383 /* BSDGenerator.m in Sources */,
 				F2EB85F319D3507B007B8C3C /* BSDNumberObject.m in Sources */,
 				F280947E1A263DA700C3AFA1 /* BSDAnnotationObject.m in Sources */,
