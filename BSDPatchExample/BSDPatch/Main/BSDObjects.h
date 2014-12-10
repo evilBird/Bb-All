@@ -128,3 +128,4 @@
 #import "BSDShader.h"
 #import "BSDLayer2Image.h"
 #import "BSDimages2Gif.h"
+#import "BSDCPUMonitor.h"
