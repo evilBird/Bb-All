@@ -220,6 +220,11 @@ typedef id (^ArgHandler)(id);
 
 - (id)parseText:(NSString *)text
 {
+    
+    if ([text isEqualToString:@" "]) {
+        return @[text];
+    }
+    
     NSMutableArray *result = nil;
     NSArray *components = [text componentsSeparatedByString:@" "];
     for (NSString *aComponent in components) {
@@ -242,7 +247,9 @@ typedef id (^ArgHandler)(id);
 {
     NSRange r = [string rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
     NSRange sym = [string rangeOfCharacterFromSet:[NSCharacterSet symbolCharacterSet]];
-    if (r.length == 0 && sym.length == 0) {
+    NSRange punc = [string rangeOfCharacterFromSet:[NSCharacterSet punctuationCharacterSet]];
+    NSRange ws = [string rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (r.length == 0 && sym.length == 0 && punc.length == 0 && ws.length == 0) {
         return @(string.floatValue);
     }
     return string;

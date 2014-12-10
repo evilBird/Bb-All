@@ -129,3 +129,6 @@
 #import "BSDLayer2Image.h"
 #import "BSDimages2Gif.h"
 #import "BSDCPUMonitor.h"
+#import "BSDStringComponents.h"
+#import "BSDStringAppend.h"
+#import "BSDArr2String.h"
