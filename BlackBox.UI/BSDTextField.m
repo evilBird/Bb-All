@@ -12,7 +12,9 @@
 #import "BSDPatchManager.h"
 
 @interface BSDTextField ()
-
+{
+    BOOL kAllowCompletion;
+}
 @property (nonatomic,strong)NSStringDrawingContext *context;
 @property (nonatomic,strong)NSMutableArray *words;
 @property (nonatomic,strong)NSMutableArray *completedWords;
@@ -44,6 +46,7 @@
     self.suggestedText = nil;
     self.className = nil;
     self.arguments = nil;
+    kAllowCompletion = YES;
     [self setNeedsDisplay];
     [self addTarget:self action:@selector(textFieldTextDidChange:) forControlEvents:UIControlEventAllEditingEvents];
 }
@@ -117,74 +120,7 @@
     }
     return nil;
 }
-/*
-- (void)textFieldTextDidChange:(id)sender
-{
-    static NSString *previousText;
-    BSDTextField *textField = sender;
-    NSString *currentText = textField.text;
-    NSString *newText = nil;
-    NSString *removedText = nil;
-    if (previousText) {
-        NSRange oldRange = [currentText rangeOfString:previousText];
-        if (oldRange.length > 0) {
-            newText = [currentText stringByReplacingOccurrencesOfString:previousText withString:@""];
-            NSLog(@"added text: %@",newText);
-            if ([newText isEqualToString:@" "]) {
-                
-                if (self.className) {
-                    NSMutableArray *theWords = [currentText componentsSeparatedByString:@" "].mutableCopy;
-                    [theWords replaceObjectAtIndex:0 withObject:self.className];
-                    self.text = [self completionTextWithWords:theWords];
-                }
 
-            }else{
-                
-            }
-        }else{
-            NSRange newRange = [previousText rangeOfString:currentText];
-            if (newRange.length > 0) {
-                removedText = [previousText stringByReplacingOccurrencesOfString:currentText withString:@""];
-                NSLog(@"removed text: %@",newText);
-            }
-        }
-    }
-    previousText = currentText;
-    NSMutableArray *words = [currentText componentsSeparatedByString:@" "].mutableCopy;
-    
-    self.className = [self classNameForWord:words.firstObject];
-    
-    
-    
-    if (words.count > 1) {
-        if ([self.className isEqualToString:@"BSDCompiledPatch"]) {
-            NSString *secondWord = words[1];
-            NSArray *components = [secondWord componentsSeparatedByString:@"."];
-            NSMutableString *path = [[NSMutableString alloc]initWithString:@""];
-            for (NSString *c in components) {
-                NSLog(@"looking for word %@ at path %@",c,path);
-                NSString *new = [self patchNameForWord:c atPath:path];
-                NSLog(@"new %@",new);
-                if (new) {
-                    if (path.length == 0) {
-                        [path appendString:new];
-                    }else{
-                        [path appendFormat:@".%@",new];
-                    }
-                    self.suggestedCompletion = path;
-                    [self setNeedsDisplay];
-                }
-            }
-            
-            NSLog(@"path: %@",path);
-        }
-    }
-    
-    //self.suggestedCompletion = [self completionTextWithWords:words];
-    //[self setNeedsDisplay];
-
-}
-*/
 - (NSString *)completionTextWithWords:(NSArray *)words
 {
     if (!words || !words.count) {
@@ -373,58 +309,7 @@
     return nil;
 }
 
-/*
-- (void)textFieldTextDidChange:(id)sender
-{
-    BSDTextField *textField = sender;
-    NSString *currentText = textField.text;
-    NSArray *words = [currentText componentsSeparatedByString:@" "];
-    
-    if (!words || words.count == 0) {
-        self.suggestedCompletion = nil;
-        [self setNeedsDisplay];
-    } else if (words.count == 1) {
-        NSString *classText = words.firstObject;
-        NSString *shortName = [self completionForText:classText withDatasource:[self allShortBSDClassNames]];
-        if (shortName) {
-            NSString *className = [@"BSD" stringByAppendingString:shortName];
-            self.suggestedCompletion = className;
-            [self setNeedsDisplay];
-        }
-    }else if (words.count == 2) {
-        
-        if ([words.firstObject isEqualToString:@"BSDCompiledPatch"]) {
-            NSString *patchText = words[1];
-            NSString *patchName = [self completionForText:patchText withDatasource:[self allPatchNames]];
-            if (patchName) {
-                self.suggestedCompletion = [@"BSDCompiledPatch" stringByAppendingFormat:@" %@",patchName];
-                [self setNeedsDisplay];
-            }else{
-                self.suggestedCompletion = [@"BSDCompiledPatch" stringByAppendingFormat:@" %@",patchText];
-                [self setNeedsDisplay];
-            }
-            
-            return;
-        }
-        
-        
-        NSString *classText = words.firstObject;
-        NSString *shortName = [self completionForText:classText withDatasource:[self allShortBSDClassNames]];
-        if (shortName) {
-            NSString *className = [@"BSD" stringByAppendingString:shortName];
-            if (![classText isEqualToString:className]) {
-                NSString *updatedText = [currentText stringByReplacingOccurrencesOfString:classText withString:className];
-                self.text = updatedText;
-                self.suggestedCompletion = nil;
-                [self setNeedsDisplay];
-                return;
-            }
-        }
-    }
-}
 
-
-*/
 - (NSString *)completionForText:(NSString *)text withDatasource:(NSArray *)datasource
 {
     if (!datasource) {
@@ -619,7 +504,6 @@
         className = completedWords.firstObject;
     }
     self.suggestedCompletion = [self suggestedCompletionForWord:currentWord atIndex:numCompleteWords className:className];
-    //NSLog(@"\nTEXTFIELD DEBUG\ntextField old text: %@\ntextField new text: %@\naddedText: %@\nremovedText: %@\ncompletedText: %@\nnumber completed words:%@\ncompletedWords: %@\ncurrentWord: %@\nclassName: %@\nsuggestedCompletion: %@\n",[sender text],text,addedText,removedText,self.completedText,@(numCompleteWords),completedWords,currentWord,className,self.suggestedCompletion);
 
     if (![text isEqualToString:[sender text]]) {
         if (self.replacementText) {
@@ -896,27 +780,39 @@
     
     NSPredicate *predicate = nil;
     NSArray *filteredPatchList = nil;
-    predicate = [NSPredicate predicateWithFormat:@"SELF == [cd] %@",word];
+    predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] %@ AND SELF ENDSWITH[cd] %@",word,word];
     filteredPatchList = [patchList filteredArrayUsingPredicate:predicate];
     if (filteredPatchList && filteredPatchList.count) {
-        return filteredPatchList.firstObject;
+        return [self trimPatchNameSuffix:filteredPatchList.firstObject];
     }
     
     predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] %@",word];
     filteredPatchList = [patchList filteredArrayUsingPredicate:predicate];
     if (filteredPatchList && filteredPatchList.count) {
-        return filteredPatchList.firstObject;
+        return [self trimPatchNameSuffix:filteredPatchList.firstObject];
     }
     
     predicate = [NSPredicate predicateWithFormat:@"SELF LIKE[cd] %@",word];
     filteredPatchList = [patchList filteredArrayUsingPredicate:predicate];
     if (filteredPatchList && filteredPatchList.count) {
-        return filteredPatchList.firstObject;
+        return [self trimPatchNameSuffix:filteredPatchList.firstObject];
     }
     
     return nil;
 }
 
+- (NSString *)trimPatchNameSuffix:(NSString *)patchName
+{
+    if ([patchName hasSuffix:@".bb"]) {
+        NSRange toTrim;
+        toTrim.location = patchName.length - 3;
+        toTrim.length = 3;
+        NSString *result = [patchName stringByReplacingCharactersInRange:toTrim withString:@""];
+        return result;
+    }
+    
+    return patchName;
+}
 
 - (BOOL)shouldSubWorkingPath:(NSString *)workingPath inWord:(NSString *)word
 {
