@@ -164,7 +164,7 @@
             
             NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
             UIImage *output = [UIImage imageWithData:imageData];
-            [self.getterOutlet output:@{@"captureImage":output}];
+            [self.getterOutlet output:@{@"image":output}];
         }
     }];
 }

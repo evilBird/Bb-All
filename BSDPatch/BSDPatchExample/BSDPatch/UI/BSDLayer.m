@@ -106,7 +106,7 @@
 {
     id hot = self.setterInlet.value;
     id layer = self.layerInlet.value;
-    if (!hot || !layer || ![hot isKindOfClass:[NSDictionary class]]) {
+    if (!hot || !layer || ![layer isKindOfClass:[CALayer class]] || ![hot isKindOfClass:[NSDictionary class]]) {
         return;
     }
     

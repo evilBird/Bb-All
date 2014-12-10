@@ -130,6 +130,8 @@
 		F24A3B1719D0FCFA00FBA887 /* BSDMake.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B1619D0FCFA00FBA887 /* BSDMake.m */; };
 		F2597D6D1A2EB6B10015C057 /* BSDImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = F2597D6C1A2EB6B10015C057 /* BSDImageFilter.m */; };
 		F2597D701A2EC5470015C057 /* BSDSourceImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F2597D6F1A2EC5470015C057 /* BSDSourceImage.m */; };
+		F2597D731A303ACD0015C057 /* BSDShader.m in Sources */ = {isa = PBXBuildFile; fileRef = F2597D721A303ACD0015C057 /* BSDShader.m */; };
+		F2597D761A303D8E0015C057 /* BSDLayer2Image.m in Sources */ = {isa = PBXBuildFile; fileRef = F2597D751A303D8E0015C057 /* BSDLayer2Image.m */; };
 		F25F71B419EA06A5002B082A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25F71B319EA06A5002B082A /* CloudKit.framework */; };
 		F25F71B719EA24FA002B082A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25F71B619EA24FA002B082A /* MapKit.framework */; };
 		F25F71B919EA2509002B082A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25F71B819EA2509002B082A /* CoreMotion.framework */; };
@@ -142,11 +144,12 @@
 		F280947B1A263CF800C3AFA1 /* BSDAnnotationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = F280947A1A263CF800C3AFA1 /* BSDAnnotationFactory.m */; };
 		F280947E1A263DA700C3AFA1 /* BSDAnnotationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F280947D1A263DA700C3AFA1 /* BSDAnnotationObject.m */; };
 		F28094801A26711800C3AFA1 /* shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F280947F1A26711800C3AFA1 /* shader.fsh */; };
-		F28094821A26724E00C3AFA1 /* kaleidoscope1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F28094811A26724E00C3AFA1 /* kaleidoscope1.fsh */; };
+		F28094821A26724E00C3AFA1 /* k1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F28094811A26724E00C3AFA1 /* k1.fsh */; };
 		F283A1FA19CA06DF005CC98B /* BSDPatchInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1F919CA06DF005CC98B /* BSDPatchInlet.m */; };
 		F283A1FD19CA0709005CC98B /* BSDPatchOutlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1FC19CA0709005CC98B /* BSDPatchOutlet.m */; };
 		F283A20019CA11C8005CC98B /* BSDInletBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1FF19CA11C8005CC98B /* BSDInletBox.m */; };
 		F283A20319CA11DF005CC98B /* BSDOutletBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A20219CA11DF005CC98B /* BSDOutletBox.m */; };
+		F286235B1A32426B005737EE /* BSDimages2Gif.m in Sources */ = {isa = PBXBuildFile; fileRef = F286235A1A32426B005737EE /* BSDimages2Gif.m */; };
 		F289D8CC19D63FC800CA1BC0 /* BSDFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = F289D8CB19D63FC800CA1BC0 /* BSDFactory.m */; };
 		F28C00E119D21F6000BFA206 /* BSDDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C00E019D21F6000BFA206 /* BSDDelay.m */; };
 		F28C00E419D2823E00BFA206 /* BSDMapSuper.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C00E319D2823E00BFA206 /* BSDMapSuper.m */; };
@@ -503,6 +506,10 @@
 		F2597D6C1A2EB6B10015C057 /* BSDImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDImageFilter.m; sourceTree = "<group>"; };
 		F2597D6E1A2EC5470015C057 /* BSDSourceImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDSourceImage.h; sourceTree = "<group>"; };
 		F2597D6F1A2EC5470015C057 /* BSDSourceImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDSourceImage.m; sourceTree = "<group>"; };
+		F2597D711A303ACD0015C057 /* BSDShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSDShader.h; path = ../../../../BSDShader.h; sourceTree = "<group>"; };
+		F2597D721A303ACD0015C057 /* BSDShader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSDShader.m; path = ../../../../BSDShader.m; sourceTree = "<group>"; };
+		F2597D741A303D8E0015C057 /* BSDLayer2Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDLayer2Image.h; sourceTree = "<group>"; };
+		F2597D751A303D8E0015C057 /* BSDLayer2Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDLayer2Image.m; sourceTree = "<group>"; };
 		F25F71B219EA0661002B082A /* BlackBox.UI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BlackBox.UI.entitlements; sourceTree = "<group>"; };
 		F25F71B319EA06A5002B082A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		F25F71B619EA24FA002B082A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -514,14 +521,14 @@
 		F2789E3F19C8D4C6006F6CA4 /* PopoverContentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverContentTableViewController.h; sourceTree = "<group>"; };
 		F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverContentTableViewController.m; sourceTree = "<group>"; };
 		F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedPatches.plist; sourceTree = "<group>"; };
-		F28094761A26398D00C3AFA1 /* BSDGPUImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDGPUImage.h; sourceTree = "<group>"; };
-		F28094771A26398D00C3AFA1 /* BSDGPUImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDGPUImage.m; sourceTree = "<group>"; };
+		F28094761A26398D00C3AFA1 /* BSDGPUImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSDGPUImage.h; path = ../../../../BSDGPUImage.h; sourceTree = "<group>"; };
+		F28094771A26398D00C3AFA1 /* BSDGPUImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSDGPUImage.m; path = ../../../../BSDGPUImage.m; sourceTree = "<group>"; };
 		F28094791A263CF800C3AFA1 /* BSDAnnotationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnnotationFactory.h; sourceTree = "<group>"; };
 		F280947A1A263CF800C3AFA1 /* BSDAnnotationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnnotationFactory.m; sourceTree = "<group>"; };
 		F280947C1A263DA700C3AFA1 /* BSDAnnotationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnnotationObject.h; sourceTree = "<group>"; };
 		F280947D1A263DA700C3AFA1 /* BSDAnnotationObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnnotationObject.m; sourceTree = "<group>"; };
 		F280947F1A26711800C3AFA1 /* shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.fsh; sourceTree = "<group>"; };
-		F28094811A26724E00C3AFA1 /* kaleidoscope1.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = kaleidoscope1.fsh; sourceTree = "<group>"; };
+		F28094811A26724E00C3AFA1 /* k1.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = k1.fsh; sourceTree = "<group>"; };
 		F283A1F819CA06DF005CC98B /* BSDPatchInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchInlet.h; sourceTree = "<group>"; };
 		F283A1F919CA06DF005CC98B /* BSDPatchInlet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchInlet.m; sourceTree = "<group>"; };
 		F283A1FB19CA0709005CC98B /* BSDPatchOutlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchOutlet.h; sourceTree = "<group>"; };
@@ -530,6 +537,8 @@
 		F283A1FF19CA11C8005CC98B /* BSDInletBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDInletBox.m; sourceTree = "<group>"; };
 		F283A20119CA11DF005CC98B /* BSDOutletBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDOutletBox.h; sourceTree = "<group>"; };
 		F283A20219CA11DF005CC98B /* BSDOutletBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDOutletBox.m; sourceTree = "<group>"; };
+		F28623591A32426B005737EE /* BSDimages2Gif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDimages2Gif.h; sourceTree = "<group>"; };
+		F286235A1A32426B005737EE /* BSDimages2Gif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDimages2Gif.m; sourceTree = "<group>"; };
 		F289D8CA19D63FC800CA1BC0 /* BSDFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDFactory.h; sourceTree = "<group>"; };
 		F289D8CB19D63FC800CA1BC0 /* BSDFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDFactory.m; sourceTree = "<group>"; };
 		F28C00DF19D21F6000BFA206 /* BSDDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDDelay.h; sourceTree = "<group>"; };
@@ -1090,6 +1099,10 @@
 		F21E52DA19C51BC300E51383 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				F28094761A26398D00C3AFA1 /* BSDGPUImage.h */,
+				F28094771A26398D00C3AFA1 /* BSDGPUImage.m */,
+				F2597D711A303ACD0015C057 /* BSDShader.h */,
+				F2597D721A303ACD0015C057 /* BSDShader.m */,
 				F21E52DB19C51BC300E51383 /* BSDBasicAnimation.h */,
 				F21E52DC19C51BC300E51383 /* BSDBasicAnimation.m */,
 				F2CFDEAE19DA1E7800A156DB /* BSDAnimation.h */,
@@ -1130,6 +1143,10 @@
 				F280947A1A263CF800C3AFA1 /* BSDAnnotationFactory.m */,
 				F2946D8D1A2D566700FBEE13 /* BSDTableView.h */,
 				F2946D8E1A2D566700FBEE13 /* BSDTableView.m */,
+				F2597D741A303D8E0015C057 /* BSDLayer2Image.h */,
+				F2597D751A303D8E0015C057 /* BSDLayer2Image.m */,
+				F28623591A32426B005737EE /* BSDimages2Gif.h */,
+				F286235A1A32426B005737EE /* BSDimages2Gif.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1270,8 +1287,6 @@
 				F21BAEC71A1AB62300F20FDD /* HBVImageBlur.m */,
 				F2CFDEE219DB46DC00A156DB /* UIImage+Resize.h */,
 				F2CFDEE119DB46DC00A156DB /* UIImage+Resize.m */,
-				F28094761A26398D00C3AFA1 /* BSDGPUImage.h */,
-				F28094771A26398D00C3AFA1 /* BSDGPUImage.m */,
 				F2597D6B1A2EB6B10015C057 /* BSDImageFilter.h */,
 				F2597D6C1A2EB6B10015C057 /* BSDImageFilter.m */,
 				F2597D6E1A2EC5470015C057 /* BSDSourceImage.h */,
@@ -1299,7 +1314,7 @@
 			isa = PBXGroup;
 			children = (
 				F2415F461A26D6880070C1FB /* mandelbrot.fsh */,
-				F28094811A26724E00C3AFA1 /* kaleidoscope1.fsh */,
+				F28094811A26724E00C3AFA1 /* k1.fsh */,
 				F280947F1A26711800C3AFA1 /* shader.fsh */,
 				F26BB6401A1D5B67000909F4 /* libs */,
 				F25F71B219EA0661002B082A /* BlackBox.UI.entitlements */,
@@ -1534,7 +1549,7 @@
 				F26BB6441A1D5B78000909F4 /* bb_stdlib.plist in Resources */,
 				F2CFDF1819DCFF5400A156DB /* toolbar_view@2x.png in Resources */,
 				F2CFDF2F19DCFF5400A156DB /* toolbar_delete.png in Resources */,
-				F28094821A26724E00C3AFA1 /* kaleidoscope1.fsh in Resources */,
+				F28094821A26724E00C3AFA1 /* k1.fsh in Resources */,
 				F2F5132619B8D97C00323096 /* Main.storyboard in Resources */,
 				F2CFDF1A19DCFF5400A156DB /* toolbar_view @2x.png in Resources */,
 				F2CFDF2519DCFF5400A156DB /* toolbar_load@2x.png in Resources */,
@@ -1628,6 +1643,7 @@
 				F202D2191A1BE6DC00AED9C7 /* BSDPatchManager.m in Sources */,
 				F2EB85E719D34EE8007B8C3C /* BSDStringInlet.m in Sources */,
 				F2F5134219B8E54400323096 /* BSDPortView.m in Sources */,
+				F2597D761A303D8E0015C057 /* BSDLayer2Image.m in Sources */,
 				F2389B0519EF5766008B51DB /* BSDLogView.m in Sources */,
 				F21E532A19C51BC300E51383 /* BSDIntersect2CirclesHelper.m in Sources */,
 				F2389B0819EF8FCB008B51DB /* BSDAny2Array.m in Sources */,
@@ -1655,6 +1671,7 @@
 				F24A3B0B19D0CB0200FBA887 /* BSDSplitDictionary.m in Sources */,
 				F2F5139219B927A700323096 /* BSDObjectDescription.m in Sources */,
 				F2EB860519D5034B007B8C3C /* BSDCollectionInlet.m in Sources */,
+				F2597D731A303ACD0015C057 /* BSDShader.m in Sources */,
 				F21E532819C51BC300E51383 /* BSDDistanceFrom2DPoint.m in Sources */,
 				F21E533119C51BC300E51383 /* BSDSplitPoint.m in Sources */,
 				F2CFDEC619DA78BC00A156DB /* BSDCommentBox.m in Sources */,
@@ -1688,6 +1705,7 @@
 				F21E533619C51BC300E51383 /* BSDAccum.m in Sources */,
 				F21E532619C51BC300E51383 /* BSDCos.m in Sources */,
 				F2EB85F919D351CE007B8C3C /* BSDStringObject.m in Sources */,
+				F286235B1A32426B005737EE /* BSDimages2Gif.m in Sources */,
 				F21E532919C51BC300E51383 /* BSDIntersect2Circles.m in Sources */,
 				F21E530F19C51BC300E51383 /* BSDSwap.m in Sources */,
 				F21E530819C51BC300E51383 /* BSDAddKey.m in Sources */,
