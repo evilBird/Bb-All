@@ -8,6 +8,13 @@
 
 #import "BSDMessage.h"
 
+@interface BSDMultipleReturnFlag : NSObject
+@property (nonatomic,strong)NSString *command;
+@property (nonatomic,strong)NSArray *args;
+@end
+@implementation BSDMultipleReturnFlag
+@end
+
 typedef id (^ArgHandler)(id);
 
 @interface BSDMessage ()
@@ -48,30 +55,70 @@ typedef id (^ArgHandler)(id);
 
 - (void)calculateOutput
 {
-    /*
-     
-     id theMessage = [self theMessage];
-     if (theMessage == nil) {
-     return;
-     }
-     
-     [self.mainOutlet output:theMessage];
-     
-     NSString *notificationName = [NSString stringWithFormat:@"BSDBox%@ValueShouldChangeNotification",[self objectId]];
-     NSDictionary *changeInfo = @{@"value":theMessage};
-     [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:changeInfo];
-     self.lastMessage = theMessage;
-     */
-    
     id hot = self.hotInlet.value;
     if (hot == nil) {
         return;
     }
     id output = [self outputFromInput:hot];
-    if (output) {
+    if (!output) {
+        return;
+    }
+    
+    if (![output isKindOfClass:[BSDMultipleReturnFlag class]]) {
         [self.mainOutlet output:output];
         self.lastMessage = output;
+        return;
     }
+    
+    //If output is of class BSDMultipleReturnFlag, we need to take each element of the array, prepend any commands present to each member array, and send them out sequentially.
+    BSDMultipleReturnFlag *flag = output;
+    NSMutableString *displayedText = [[NSMutableString alloc]init];
+    NSInteger index = 0;
+    NSInteger subIndex = 0;
+    BOOL setCommand = NO;
+    if (flag.command && [flag.command isEqualToString:@"set"]) {
+        setCommand = YES;
+    }
+    
+    for (id anArg in flag.args) {
+        //Get the input into an array
+        NSMutableArray *argArray = nil;
+        if ([anArg isKindOfClass:[NSArray class]]) {
+            argArray = [NSMutableArray arrayWithArray:anArg];
+        }else{
+            argArray = [NSMutableArray arrayWithObject:anArg];
+        }
+        if (setCommand) {
+            //Insert the proper command at the beginning of each array
+            NSString *argArrayDisplayText = [self displayTextForArgs:argArray];
+            if (argArrayDisplayText && argArrayDisplayText.length) {
+                [displayedText appendString:argArrayDisplayText];
+                id message = [self outputForSetCommandArgs:argArray displayText:argArrayDisplayText];
+                [self.mainOutlet output:message];
+            }
+        }else if ([self countSubs:self.displayedText] > subIndex){
+            NSArray *components = [self.displayedText componentsSeparatedByString:@","];
+            NSString *textToSub = components[index];
+            NSString *interpretedText = [self makeSubs:[argArray mutableCopy]
+                                     withDisplayedText:textToSub
+                                            firstIndex:subIndex];
+            id message = [self parseText:interpretedText];
+            [self.mainOutlet output:message];
+            subIndex += argArray.count;
+        }
+        
+        index++;
+        
+        if (setCommand && index < flag.args.count) {
+            [displayedText appendString:@","];
+        }
+    }
+    
+    if (displayedText && displayedText.length > 0) {
+        self.displayedText = displayedText;
+    }
+    
+    self.lastMessage = flag;
 }
 
 - (void)setDisplayedText:(NSString *)displayedText
@@ -105,6 +152,14 @@ typedef id (^ArgHandler)(id);
     if ([commands containsObject:command]) {
         return [self outputForCommand:command args:args];
     }else{
+        
+        if (self.displayedText && [self.displayedText rangeOfString:@","].length > 0) {
+            BSDMultipleReturnFlag *flag = [BSDMultipleReturnFlag new];
+            flag.args = input;
+            flag.command = nil;
+            return flag;
+        }
+        
         NSInteger subCount = [self countSubs:self.displayedText];
         if (subCount == 0) {
             return nil;
@@ -121,6 +176,14 @@ typedef id (^ArgHandler)(id);
     return @[@"set",@"add2",@"addcomma"];
 }
 
+- (id)outputForSetCommandArgs:(id)args displayText:(NSString *)displayText
+{
+    if (args == nil) {
+        return nil;
+    }
+    return [self parseText:displayText];
+}
+
 - (id)outputForCommand:(id)command args:(id)args
 {
     if ([command isEqualToString:@"set"]) {
@@ -128,7 +191,10 @@ typedef id (^ArgHandler)(id);
             self.displayedText = @"";
             return nil;
         }
-        
+        id flagArgs = [self flagArgsForMultipleReturns:args command:command];
+        if (flagArgs) {
+            return flagArgs;
+        }
         self.displayedText = [self displayTextForArgs:args];
         return [self parseText:self.displayedText];
     }
@@ -208,6 +274,20 @@ typedef id (^ArgHandler)(id);
     return result;
 }
 
+- (NSString *)makeSubs:(id)input withDisplayedText:(NSString *)text firstIndex:(NSInteger)firstIndex
+{
+    NSString *result = [NSString stringWithString:text];
+    for (NSInteger i = 0; i < [input count]; i ++) {
+        NSInteger j = i+firstIndex+1;
+        NSString *sub = [NSString stringWithFormat:@"$%@",@(j)];
+        NSString *replacement = [NSString stringWithFormat:@"%@",input[i]];
+        result = [result stringByReplacingOccurrencesOfString:sub withString:replacement];
+    }
+    
+    return result;
+}
+
+
 - (NSString *)displayTextForArgs:(id)args
 {
     if (args == nil) {
@@ -226,6 +306,25 @@ typedef id (^ArgHandler)(id);
     return result;
 }
 
+- (id)flagArgsForMultipleReturns:(id)args command:(NSString *)command
+{
+    if (!args || ![args isKindOfClass:[NSArray class]]) {
+        return nil;
+    }
+    NSArray *toEnumerate = args;
+    for (id anArg in toEnumerate) {
+        if ([anArg isKindOfClass:[NSArray class]]) {
+            BSDMultipleReturnFlag *flag = [BSDMultipleReturnFlag new];
+            flag.args = args;
+            flag.command = command;
+            return flag;
+        }
+    }
+    
+    return nil;
+}
+
+/*
 - (id)theMessage
 {
     id hot = self.hotInlet.value;
@@ -276,5 +375,5 @@ typedef id (^ArgHandler)(id);
     
     return nil;
 }
-
+*/
 @end
