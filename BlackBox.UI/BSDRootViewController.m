@@ -12,6 +12,7 @@
 #import "NSUserDefaults+HBVUtils.h"
 #import <MessageUI/MessageUI.h>
 #import "BSDPatchManager.h"
+#import "BSDiCloud.h"
 
 @interface BSDRootViewController ()
 {
@@ -30,6 +31,50 @@
     
     [super viewDidLoad];
     kInitialized = NO;
+    [self testCloudUpload];
+}
+
+- (void)testCloudListDocs
+{
+    BSDiCloud *cloud = [[BSDiCloud alloc]initWithArguments:nil];
+    cloud.mainOutlet.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
+        NSLog(@"cloud document list output: %@",outlet.value);
+    };
+    [cloud.hotInlet input:kGetFileListSelectorKey];
+}
+
+- (void)testCloudUpload
+{
+    NSString *docsPath = [BSDPatchManager documentsDirectoryPath];
+    NSString *fileName = @"bb_stdlib.plist";
+    NSString *filePath = [docsPath stringByAppendingPathComponent:fileName];
+    NSData *fileData = [BSDiCloud dataForPlistAtPath:filePath];
+    NSArray *arguments = @[fileName,fileData];
+    BSDiCloud *cloud = [[BSDiCloud alloc]initWithArguments:arguments];
+    cloud.mainOutlet.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
+        NSDictionary *output = outlet.value;
+        NSData *data = nil;
+        if (output) {
+            data = output[@"documentData"];
+        }
+        
+        if (data) {
+            NSDictionary *plist = [BSDiCloud plistWithData:data];
+            NSLog(@"cloud upload test plist: %@, doc: %@",plist,output[@"cloudDocument"]);
+        }else{
+            NSLog(@"cloud upload test output: %@",outlet.value);
+        }
+    };
+    [cloud.hotInlet input:kUploadFileSelectorKey];
+}
+
+- (void)testCloudDownload
+{
+    BSDiCloud *cloud = [[BSDiCloud alloc]initWithArguments:@"bb_stdlib.plist"];
+    cloud.mainOutlet.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
+        NSLog(@"cloud download test output: %@",outlet.value);
+    };
+    [cloud.hotInlet input:kDownloadFileSelectorKey];
 }
 
 - (void)viewWillAppear:(BOOL)animated

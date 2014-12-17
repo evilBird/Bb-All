@@ -133,7 +133,9 @@
             if ([[UIDevice currentDevice]userInterfaceIdiom]==UIUserInterfaceIdiomPad) {
                 [self showSavedPatchesPopoverFromBarButtonItem:bbi];
             }else if ([[UIDevice currentDevice]userInterfaceIdiom]==UIUserInterfaceIdiomPhone){
+                //[self showSavedPatchesPopoverFromBarButtonItem:bbi];
                 //[self showSavedPatchesTableView];
+                [self performSegueWithIdentifier:@"ShowSavedPatchesSegue" sender:self];
             }
         }
             break;
@@ -314,6 +316,9 @@
 
 - (void)showSavedPatchesPopoverFromBarButtonItem:(UIBarButtonItem *)sender
 {
+    if ([[UIDevice currentDevice]userInterfaceIdiom]==UIUserInterfaceIdiomPhone){
+    }
+    
     if (self.myPopoverController == nil) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UINavigationController *sp = [storyboard instantiateViewControllerWithIdentifier:@"NestedPatchNavController"];

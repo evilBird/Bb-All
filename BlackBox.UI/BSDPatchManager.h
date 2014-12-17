@@ -15,6 +15,8 @@
 
 @property (nonatomic,strong)NSString *workingPath;
 
++ (NSString *)documentsDirectoryPath;
+
 - (NSDictionary *)savedPatches;
 - (NSArray *)allSavedPatchNames;
 - (void)savePatchDescription:(NSString *)patchDescription withName:(NSString *)name;

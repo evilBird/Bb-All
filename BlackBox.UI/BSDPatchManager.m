@@ -24,6 +24,21 @@ static NSString *kLibName = @"bb_stdlib";
     return _sharedInstance;
 }
 
++ (NSString *)documentsDirectoryPath
+{
+    // Get path to documents directory
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                         NSUserDomainMask, YES);
+    
+    if ([paths count] > 0)
+    {
+        // Path to save dictionary
+        return [paths objectAtIndex:0];
+    }
+    
+    return nil;
+}
+
 - (instancetype)init
 {
     self = [super init];

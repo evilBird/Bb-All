@@ -1,11 +1,11 @@
 PODS:
   - AFNetworking (2.2.1):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-    - AFNetworking/UIKit
+    - AFNetworking/NSURLConnection (= 2.2.1)
+    - AFNetworking/NSURLSession (= 2.2.1)
+    - AFNetworking/Reachability (= 2.2.1)
+    - AFNetworking/Security (= 2.2.1)
+    - AFNetworking/Serialization (= 2.2.1)
+    - AFNetworking/UIKit (= 2.2.1)
   - AFNetworking/NSURLConnection (2.2.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
@@ -31,4 +31,4 @@ SPEC CHECKSUMS:
   GPUImage: cecb0830bb9428f50192042e3c7b53810f51388e
   iCloudDocumentSync: 76ebc7391e6a3d2246248263b35cb202b66fb05e
 
-COCOAPODS: 0.34.4
+COCOAPODS: 0.35.0

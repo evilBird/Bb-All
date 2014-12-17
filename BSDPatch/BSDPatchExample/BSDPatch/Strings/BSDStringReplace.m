@@ -50,7 +50,7 @@
 {
     NSString *hot = self.hotInlet.value;
     NSString *toReplace = self.stringToReplaceInlet.value;
-    NSString *replacement = self.replacementStringInlet.value;
+    NSString *replacement = [self myReplacementString:self.replacementStringInlet.value];
     if (!hot || !toReplace || !replacement) {
         return;
     }
@@ -59,12 +59,22 @@
         return;
     }
 
-    NSString *hotCopy = [NSString stringWithString:hot];
-    NSString *toReplaceCopy = [NSString stringWithFormat:@"%@",toReplace];
-    NSString *replacementCopy = [NSString stringWithFormat:@"%@",replacement];
-    NSString *output = [hotCopy stringByReplacingOccurrencesOfString:toReplaceCopy withString:replacementCopy];
+    //NSString *hotCopy = [NSString stringWithString:hot];
+    //NSString *toReplaceCopy = [NSString stringWithFormat:@"%@",toReplace];
+    //NSString *replacementCopy = [NSString stringWithFormat:@"%@",replacement];
+    NSString *output = [hot stringByReplacingOccurrencesOfString:toReplace withString:replacement];
     
     [self.mainOutlet output:output];
+}
+
+- (NSString *)myReplacementString:(NSString *)replacement
+{
+    NSString *myReplacement = replacement;
+    if ([replacement isKindOfClass:[NSNumber class]]) {
+        myReplacement = @"";
+    }
+    
+    return myReplacement;
 }
 
 

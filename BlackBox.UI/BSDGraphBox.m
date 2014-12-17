@@ -238,9 +238,15 @@
 
 - (void)handleText:(NSString *)text
 {
+    self.argString = nil;
     NSMutableArray *components = [[text componentsSeparatedByString:@" "]mutableCopy];
     NSMutableString *argsString = nil;
     NSString *name = nil;
+    NSString *quotationString = nil;
+    if ([components.firstObject isEqualToString:@"\""]&&[components.lastObject isEqualToString:@"\""]) {
+        self.argString = [text stringByReplacingOccurrencesOfString:@"\"" withString:@" "];
+    }
+    
     if (components) {
         name = components.firstObject;
         [components removeObject:name];
@@ -249,9 +255,7 @@
     NSMutableArray *argsList = nil;
     if (components.count) {
         for (NSString *comp in components) {
-            NSRange r = [comp rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
-            NSRange sym = [comp rangeOfCharacterFromSet:[NSCharacterSet symbolCharacterSet]];
-            
+
             NSRange s = [comp rangeOfString:@"$"];
             if (!argsString) {
                 argsString = [[NSMutableString alloc]init];
@@ -260,7 +264,12 @@
                 [argsString appendFormat:@" %@",comp];
             }
             
-            if (r.length == 0 && s.length == 0 && sym.length == 0) {
+            NSRange r = [comp rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
+            NSRange sym = [comp rangeOfCharacterFromSet:[NSCharacterSet symbolCharacterSet]];
+            NSRange punc = [comp rangeOfCharacterFromSet:[NSCharacterSet punctuationCharacterSet]];
+            NSRange ws = [comp rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+            
+            if (r.length == 0 && s.length == 0 && sym.length == 0 && punc.length == 0 && ws.length == 0) {
                 NSNumber *arg = @(comp.floatValue);
                 if (!argsList) {
                     argsList = [NSMutableArray array];
@@ -275,6 +284,15 @@
             }
         }
     }
+    
+    if (name && self.argString) {
+        argsList = nil;
+        argsList = @[[NSString stringWithFormat:@"%@",self.argString]].mutableCopy;
+        [self createObjectWithName:name arguments:argsList];
+        kAllowEdit = NO;
+        return;
+    }
+    
     
     if (argsString) {
         self.argString = [NSString stringWithString:argsString];
