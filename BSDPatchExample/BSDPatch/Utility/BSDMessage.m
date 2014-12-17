@@ -224,7 +224,14 @@ typedef id (^ArgHandler)(id);
     if ([text isEqualToString:@" "]) {
         return @[text];
     }
-    
+    /*
+    if ([[text substringToIndex:1] isEqualToString:@"\""] && [[text substringToIndex:text.length]isEqualToString:@"\""]) {
+        NSString *s1 = [text stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        
+        NSString *s2 = [s1 stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        return @[s2];
+    }
+    */
     NSMutableArray *result = nil;
     NSArray *components = [text componentsSeparatedByString:@" "];
     for (NSString *aComponent in components) {
