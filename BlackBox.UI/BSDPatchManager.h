@@ -16,6 +16,10 @@
 @property (nonatomic,strong)NSString *workingPath;
 
 + (NSString *)documentsDirectoryPath;
++ (void)updateHistoryForFile:(NSString *)fileName;
++ (NSDate *)lastUpdateForFile:(NSString *)fileName;
+
+@property (nonatomic,strong)NSString *currentPlistName;
 
 - (NSDictionary *)savedPatches;
 - (NSArray *)allSavedPatchNames;
@@ -24,5 +28,14 @@
 - (void)deleteItemAtPath:(NSString *)path;
 - (NSDictionary *)importFromDocuments:(NSString *)fileName;
 - (void) exportToDocuments:(NSDictionary *)dictionary fileName:(NSString *)fileName;
+- (void) syncWithCloud;
+- (NSTimeInterval)timeSincePull;
+- (NSTimeInterval)timeSincePush;
+- (BOOL)shouldPush;
+- (BOOL)shouldPull;
+- (void)push;
+- (void)pull;
+- (NSInteger)diffCount;
+- (void)update;
 
 @end

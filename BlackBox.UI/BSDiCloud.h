@@ -14,17 +14,17 @@
 //Returns: an array of file names stored in iCloud
 static NSString *kGetFileListSelectorKey = @"list";
 //Download file:
-//Cold inlet args: iCloud URL of the file to download
+//Cold inlet args: NSString, name of the file to be downloaded
 //Returns: The requested file if found, an error message if not found
 static NSString *kDownloadFileSelectorKey = @"download";
 //Upload file:
-//Cold inlet args: the name of the file in app's documents directory to be uploaded
-//Returns: The iCloud URL of the upload if successful, an error message if not
+//Cold inlet args: NSArray, args[0] must be name of file to upload (NSString), args[1] must be file data to upload (NSData)
+//Returns: A dictionary with keys fileData, documentName, and cloudDocument if found, an error message if not
 static NSString *kUploadFileSelectorKey = @"upload";
 //Synchronize file:
 //Cold inlet args: An array containing: 1)The URL of the master file, 2)The URL of the file to be overwritten by 1)
 //Returns: nil if successful, an error message if not
-static NSString *kSynchronizeFileSelectorKey = @"sync";
+static NSString *kSynchronizeFileSelectorKey = @"update";
 //Get file version:
 //Cold inlet args: An array containing 1)The iCloud URL of the file to be versioned, 2)The version id of the file to be retrieved
 //Returns: The specified file version if successful, an error message if not

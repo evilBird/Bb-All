@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "BSDiCloud.h"
 #import "BSDPatchManager.h"
+#import "MyCloud.h"
 
 @interface BlackBox_UITests : XCTestCase
 
@@ -116,6 +117,108 @@
             XCTFail(@"cloud download timed out: %@",error);
         }
     }];
+}
+
+- (void)testCloudSync
+{
+    NSArray *localKeys = [BSDPatchManager sharedInstance].savedPatches.allKeys;
+    [[MyCloud sharedCloud]sync];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test cloud sync"];
+    [[MyCloud sharedCloud]downloadPlistNamed:@"bb_stdlib" completion:^(id result, NSError *err) {
+        [expectation fulfill];
+        if (err) {
+            XCTFail(@"failed to download plist: %@",err);
+        }
+        
+        XCTAssertTrue([result isKindOfClass:[NSDictionary class]],@"download plist must return a dictionary");
+        NSDictionary *plist = result;
+        NSArray *cloudKeys = plist.allKeys;
+        NSSet *cloudSet = [NSMutableSet setWithArray:cloudKeys];
+        NSMutableSet *localSet = [NSMutableSet setWithArray:localKeys];
+        [localSet minusSet:cloudSet];
+        XCTAssertTrue(localSet.allObjects.count == 0, @"local and cloud plists should be the same");
+    }];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+        if (error) {
+            XCTFail(@"cloud sync test timed out: %@",error);
+        }
+    }];
+    
+}
+
+- (void)testCloudChangeThenSync
+{
+    NSArray *startKeys = [[BSDPatchManager sharedInstance]savedPatches].allKeys;
+    if ([startKeys containsObject:@"TEST_NAME"]) {
+        [[BSDPatchManager sharedInstance]deleteItemAtPath:@"TEST_NAME"];
+        startKeys = [[BSDPatchManager sharedInstance]savedPatches].allKeys;
+    }
+    
+    NSLog(@"start keys: %@",startKeys);
+    [[BSDPatchManager sharedInstance]savePatchDescription:@"TEST_DESCRIPTION" withName:@"TEST_NAME"];
+    [[MyCloud sharedCloud]sync];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test cloud sync"];
+    [[MyCloud sharedCloud]downloadPlistNamed:@"bb_stdlib" completion:^(id result, NSError *err) {
+        [expectation fulfill];
+        if (err) {
+            XCTFail(@"failed to download plist: %@",err);
+        }
+        
+        XCTAssertTrue([result isKindOfClass:[NSDictionary class]],@"download plist must return a dictionary");
+        NSDictionary *plist = result;
+        NSArray *downloadedKeys = plist.allKeys;
+        NSMutableSet *downloadedSet = [NSMutableSet setWithArray:downloadedKeys];
+        NSSet *startSet = [NSSet setWithArray:startKeys];
+        [downloadedSet minusSet:startSet];
+        NSLog(@"downloaded set: %@",downloadedSet);
+        XCTAssertTrue(downloadedSet.allObjects.count == 1, @"downloaded plist should have 1 more key than original plist");
+        NSString *newKey = downloadedSet.allObjects.firstObject;
+        XCTAssertTrue([newKey isEqualToString:@"TEST_NAME"],@"added key %@ should be TEST_KEY",newKey);
+    }];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+        if (error) {
+            XCTFail(@"cloud sync test timed out: %@",error);
+        }
+    }];
+    
+}
+
+- (void)testCloudSyncThenChange
+{
+    [[MyCloud sharedCloud]sync];
+    if ([[[BSDPatchManager sharedInstance]savedPatches].allKeys containsObject:@"TEST_NAME"]) {
+        [[BSDPatchManager sharedInstance]deleteItemAtPath:@"TEST_NAME"];
+    }
+    
+    [[MyCloud sharedCloud]sync];
+    [[BSDPatchManager sharedInstance]savePatchDescription:@"TEST_DESCRIPTION" withName:@"TEST_NAME"];
+    NSArray *localKeys = [BSDPatchManager sharedInstance].savedPatches.allKeys;
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test cloud sync"];
+    [[MyCloud sharedCloud]downloadPlistNamed:@"bb_stdlib" completion:^(id result, NSError *err) {
+        [expectation fulfill];
+        if (err) {
+            XCTFail(@"failed to download plist: %@",err);
+        }
+        
+        XCTAssertTrue([result isKindOfClass:[NSDictionary class]],@"download plist must return a dictionary");
+        NSDictionary *plist = result;
+        NSArray *cloudKeys = plist.allKeys;
+        NSSet *cloudSet = [NSMutableSet setWithArray:cloudKeys];
+        NSMutableSet *localSet = [NSMutableSet setWithArray:localKeys];
+        [localSet minusSet:cloudSet];
+        XCTAssertTrue(localSet.allObjects.count == 1, @"local plist should have 1 more key than cloud plist");
+        NSString *newKey = localSet.allObjects.firstObject;
+        XCTAssertTrue([newKey isEqualToString:@"TEST_NAME"],@"local extra key %@ should be TEST_KEY",newKey);
+    }];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+        if (error) {
+            XCTFail(@"cloud sync test timed out: %@",error);
+        }
+    }];
+    
 }
 
 - (void)testPerformanceExample {

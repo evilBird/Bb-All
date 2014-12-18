@@ -98,10 +98,16 @@ typedef void(^iCloudCompletionBlock)(id result, NSError *error);
     
     if ([selectorKey isEqualToString:kDownloadFileSelectorKey]) {
         [self downloadFileWithName:arguments completion:completionBlock];
+        return;
     }
     
     if ([selectorKey isEqualToString:kUploadFileSelectorKey]) {
         [self uploadFileWithName:arguments[0] data:arguments[1] completion:completionBlock];
+        return;
+    }
+    
+    if ([selectorKey isEqualToString:kSynchronizeFileSelectorKey]) {
+        [self synchronizeCloud];
         return;
     }
 }
@@ -143,9 +149,9 @@ typedef void(^iCloudCompletionBlock)(id result, NSError *error);
     [[iCloud sharedCloud] retrieveCloudDocumentWithName:fileName completion:^(UIDocument *cloudDocument, NSData *documentData, NSError *error) {
         if (error == nil) {
             NSString *documentName = [cloudDocument.fileURL lastPathComponent];
-            //NSData *fileData = documentData;
             NSDictionary *dict = @{@"documentName":documentName,
-                                   @"fileData":documentData
+                                   @"fileData":documentData,
+                                   @"cloudDocument":cloudDocument
                                    };
             completion(dict,nil);
         }else{
@@ -159,13 +165,19 @@ typedef void(^iCloudCompletionBlock)(id result, NSError *error);
     [[iCloud sharedCloud] saveAndCloseDocumentWithName:fileName withContent:fileData completion:^(UIDocument *cloudDocument, NSData *documentData, NSError *error) {
         if (error == nil) {
             // Code here to use the UIDocument or NSData objects which have been passed with the completion handler
-            NSDictionary *dict = @{@"cloudDocument":cloudDocument,
-                                   @"documentData":documentData};
+            NSDictionary *dict = @{@"documentName":fileName,
+                                   @"fileData":documentData,
+                                   @"cloudDocument":cloudDocument};
             completion(dict,nil);
         }else{
             completion(nil,error);
         }
     }];
+}
+
+- (void)synchronizeCloud
+{
+    [[iCloud sharedCloud]updateFiles];
 }
 
 #pragma mark - Keyed selector helper methods
@@ -233,6 +245,10 @@ typedef void(^iCloudCompletionBlock)(id result, NSError *error);
         return nil;
     }
     
+    if ([selectorKey isEqualToString:kSynchronizeFileSelectorKey]) {
+        return nil;
+    }
+    
     return nil;
 }
 
@@ -283,6 +299,7 @@ typedef void(^iCloudCompletionBlock)(id result, NSError *error);
 
 - (void)iCloudFilesDidChange:(NSMutableArray *)files withNewFileNames:(NSMutableArray *)fileNames {
     // Get the query results
+    NSLog(@"files changed: %@",fileNames);
 }
 
 - (void)iCloudFileConflictBetweenCloudFile:(NSDictionary *)cloudFile andLocalFile:(NSDictionary *)localFile

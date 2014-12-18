@@ -12,7 +12,9 @@
 #import "NSUserDefaults+HBVUtils.h"
 #import <MessageUI/MessageUI.h>
 #import "BSDPatchManager.h"
-#import "BSDiCloud.h"
+#import "MyCloud.h"
+
+static BOOL kCloudIsReady = NO;
 
 @interface BSDRootViewController ()
 {
@@ -28,61 +30,15 @@
 #pragma mark - UIViewController overrides
 
 - (void)viewDidLoad {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCloudIsReadyNotification:) name:@"com.birdSound.bb.cloudIsReadyNotification" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleApplicationWillBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleApplicationWillForegroundNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [super viewDidLoad];
     kInitialized = NO;
-    //[self testCloudListDocs];
 }
-
-- (void)testCloudListDocs
-{
-    BSDiCloud *cloud = [[BSDiCloud alloc]initWithArguments:nil];
-    cloud.mainOutlet.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
-        NSLog(@"cloud document list output: %@",outlet.value);
-    };
-    [cloud.hotInlet input:kGetFileListSelectorKey];
-}
-
-- (void)testCloudUpload
-{
-    NSString *docsPath = [BSDPatchManager documentsDirectoryPath];
-    NSString *fileName = @"bb_stdlib.plist";
-    NSString *filePath = [docsPath stringByAppendingPathComponent:fileName];
-    NSData *fileData = [BSDiCloud dataForPlistAtPath:filePath];
-    NSArray *arguments = @[fileName,fileData];
-    BSDiCloud *cloud = [[BSDiCloud alloc]initWithArguments:arguments];
-    cloud.mainOutlet.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
-        NSDictionary *output = outlet.value;
-        NSData *data = nil;
-        if (output) {
-            data = output[@"documentData"];
-        }
-        
-        if (data) {
-            NSDictionary *plist = [BSDiCloud plistWithData:data];
-            NSLog(@"cloud upload test plist: %@, doc: %@",plist,output[@"cloudDocument"]);
-        }else{
-            NSLog(@"cloud upload test output: %@",outlet.value);
-        }
-    };
-    [cloud.hotInlet input:kUploadFileSelectorKey];
-}
-
 - (void)testCloudDownload
 {
-    NSString *docsPath = [BSDPatchManager documentsDirectoryPath];
-    NSString *fileName = @"bb_stdlib.plist";
-    BSDiCloud *cloud = [[BSDiCloud alloc]initWithArguments:fileName];
-    cloud.mainOutlet.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
-        
-        NSDictionary *output = outlet.value;
-        NSString *documentName = [output valueForKey:@"documentName"];
-        NSData *data = [output valueForKey:@"fileData"];
-        NSDictionary *dict = [BSDiCloud plistWithData:data];
-        NSLog(@"cloud download test result\ndocumentName: %@\ndocumentData: %@\n",documentName,dict);
 
-    };
-    [cloud.hotInlet input:kDownloadFileSelectorKey];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -218,9 +174,24 @@
     
 }
 
+- (void)handleCloudIsReadyNotification:(NSNotification *)notification
+{
+    kCloudIsReady = YES;
+    [[BSDPatchManager sharedInstance]update];
+}
+
+- (void)handleApplicationWillForegroundNotification:(NSNotification *)notification
+{
+    if (kCloudIsReady) {
+        [[BSDPatchManager sharedInstance]update];
+    }
+}
+
 - (void)handleApplicationWillBackgroundNotification:(NSNotification *)notification
 {
-    
+    if (kCloudIsReady) {
+        [[BSDPatchManager sharedInstance]update];
+    }
 }
 
 @end

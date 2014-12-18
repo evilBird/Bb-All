@@ -7,6 +7,10 @@
 //
 
 #import "BSDPatchManager.h"
+#import "MyCloud.h"
+#import "NSUserDefaults+HBVUtils.h"
+
+static NSString *kUpdateHistoryKey = @"com.birdSound.bb.updateHistoryDictionary";
 
 static NSString *kLibName = @"bb_stdlib";
 
@@ -43,12 +47,7 @@ static NSString *kLibName = @"bb_stdlib";
 {
     self = [super init];
     if (self) {
-        
-        NSDictionary *saved = [self savedPatches];
-        if (!saved) {
-            saved = [self migrateOldPatches];
-            [self exportToDocuments:saved fileName:kLibName];
-        }
+        _currentPlistName = kLibName;
     }
     
     return self;
@@ -69,7 +68,7 @@ static NSString *kLibName = @"bb_stdlib";
 
 - (NSDictionary *)savedPatches
 {
-    return [self importFromDocuments:kLibName];
+    return [self importFromDocuments:self.currentPlistName];
 }
 
 - (NSString *)getPatchNamed:(NSString *)name
@@ -85,7 +84,7 @@ static NSString *kLibName = @"bb_stdlib";
     NSMutableDictionary *copy = saved.mutableCopy;
     [copy addObject:patchDescription atKeyPath:name];
     saved = copy;
-    [self exportToDocuments:saved fileName:kLibName];
+    [self exportToDocuments:saved fileName:self.currentPlistName];
 }
 
 - (void)deleteItemAtPath:(NSString *)path
@@ -94,7 +93,7 @@ static NSString *kLibName = @"bb_stdlib";
     NSMutableDictionary *copy = saved.mutableCopy;
     [copy removeObjectAtKeyPath:path];
     saved = copy;
-    [self exportToDocuments:saved fileName:kLibName];
+    [self exportToDocuments:saved fileName:self.currentPlistName];
 }
 
 - (void) exportToDocuments:(NSDictionary *)dictionary fileName:(NSString *)fileName
@@ -113,6 +112,7 @@ static NSString *kLibName = @"bb_stdlib";
         
         // Write dictionary
         [dictionary.mutableCopy writeToFile:dictPath atomically:YES];
+        [BSDPatchManager updateHistoryForFile:fileName];
     }
 }
 
@@ -136,6 +136,119 @@ static NSString *kLibName = @"bb_stdlib";
     
     return nil;
 
+}
+
+- (void)syncWithCloud
+{
+    [[MyCloud sharedCloud]syncFileName:self.currentPlistName];
+}
+
+- (BOOL)shouldPush
+{
+    return ([self timeSincePush] > 0.0);
+}
+
+- (BOOL)shouldPull
+{
+    return ([self timeSincePull] > 0.0);
+}
+
+- (void)push
+{
+    //TODO: push
+    NSLog(@"PUSH!");
+    [[MyCloud sharedCloud]uploadPlistNamed:self.currentPlistName completion:^(id result, NSError *err) {
+        if (err) {
+            NSLog(@"push failed");
+        }else{
+            NSLog(@"push succeeded");
+        }
+    }];
+}
+
+- (void)pull
+{
+    //TODO: pull
+    NSLog(@"PULL!");
+    [[MyCloud sharedCloud]downloadPlistNamed:self.currentPlistName completion:^(id result, NSError *err) {
+        if (!err) {
+            NSLog(@"pull succeeded");
+            [self exportToDocuments:result fileName:self.currentPlistName];
+        }else{
+            NSLog(@"pull failed");
+        }
+    }];
+}
+
+- (NSInteger)diffCount
+{
+    return 0;
+}
+
+- (NSTimeInterval)timeSincePull
+{
+    NSDate *localDate = [BSDPatchManager lastUpdateForFile:self.currentPlistName];
+    NSDate *cloudDate = [MyCloud plistModifiedDate:self.currentPlistName];
+    NSTimeInterval diff = [cloudDate timeIntervalSinceDate:localDate];
+    return diff;
+}
+
+- (NSTimeInterval)timeSincePush
+{
+    NSDate *localDate = [BSDPatchManager lastUpdateForFile:self.currentPlistName];
+    NSDate *cloudDate = [MyCloud plistModifiedDate:self.currentPlistName];
+    NSTimeInterval diff = [localDate timeIntervalSinceDate:cloudDate];
+    return diff;
+}
+/*
+- (void)update
+{
+    NSTimeInterval timeSincePush = [self timeSincePush];
+    NSTimeInterval timeSincePull = [self timeSincePull];
+    BOOL push = [self shouldPush];
+    BOOL pull = [self shouldPull];
+    if (push && !pull) {
+        NSLog(@"%@ hours since push",@(timeSincePush/3600.0));
+        [self push];
+        return;
+    }
+    if (pull && !push){
+        NSLog(@"%@ hours since pull",@(timeSincePull/3600.0));
+        [self pull];
+        return;
+    }
+    
+    if ((!push && !pull) || (push && pull)) {
+        NSLog(@"what the fuck");
+    }
+}
+*/
+- (void)update
+{
+    [[MyCloud sharedCloud]syncFileName:self.currentPlistName];
+}
++ (void)updateHistoryForFile:(NSString *)fileName
+{
+    NSDictionary *savedDictionary = [NSUserDefaults valueForKey:kUpdateHistoryKey];
+    NSMutableDictionary *fileHistoryDictionary = nil;
+    if (!savedDictionary) {
+        fileHistoryDictionary = [NSMutableDictionary dictionary];
+    }else{
+        fileHistoryDictionary = savedDictionary.mutableCopy;
+    }
+    
+    [fileHistoryDictionary setValue:[NSDate date] forKey:fileName];
+    [NSUserDefaults setUserValue:fileHistoryDictionary forKey:kUpdateHistoryKey];
+}
+
++ (NSDate *)lastUpdateForFile:(NSString *)fileName
+{
+    NSMutableDictionary *fileHistoryDictionary = [NSUserDefaults valueForKey:kUpdateHistoryKey];
+    if (!fileHistoryDictionary) {
+        return nil;
+    }
+    
+    return [fileHistoryDictionary valueForKey:fileName];
 }
 
 @end

@@ -680,6 +680,17 @@
             c.configuration = @{@"data":self.childPatch};
             c.parent = self;
         }
+    }else if ([segue.identifier isEqualToString:@"ShowSavedPatchesSegue"]){
+        id dest = segue.destinationViewController;
+        id nest = [(UINavigationController *)dest viewControllers].lastObject;
+        if ([nest isKindOfClass:[BSDNestedPatchTableViewController class]]) {
+            BSDNestedPatchTableViewController *npt = nest;
+            npt.patches = [self.delegate savedPatchesSender:self];
+            npt.title = @"Library";
+            npt.delegate = self;
+        }else{
+            
+        }
     }
 }
 
