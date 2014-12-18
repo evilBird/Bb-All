@@ -143,9 +143,9 @@ typedef void(^iCloudCompletionBlock)(id result, NSError *error);
     [[iCloud sharedCloud] retrieveCloudDocumentWithName:fileName completion:^(UIDocument *cloudDocument, NSData *documentData, NSError *error) {
         if (error == nil) {
             NSString *documentName = [cloudDocument.fileURL lastPathComponent];
-            NSData *fileData = documentData;
+            //NSData *fileData = documentData;
             NSDictionary *dict = @{@"documentName":documentName,
-                                   @"fileData":fileData
+                                   @"fileData":documentData
                                    };
             completion(dict,nil);
         }else{

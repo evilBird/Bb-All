@@ -10,5 +10,7 @@ end
 
 target "BlackBox.UITests" do
 
+pod 'iCloudDocumentSync'
+
 end
 

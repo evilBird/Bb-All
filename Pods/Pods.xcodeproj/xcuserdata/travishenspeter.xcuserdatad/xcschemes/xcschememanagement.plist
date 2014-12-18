@@ -24,25 +24,45 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-BlackBox.UITests-iCloudDocumentSync.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-BlackBox.UITests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>160369F3AE4D0DC968086C15</key>
+		<key>379339AEA8DE90304368A154</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>27CEDC1D4EAF16E0BD35181F</key>
+		<key>4A2E0DD849C89E7FDCC7F790</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5F4257487183A0283F6D4B3D</key>
+		<key>725DE55D367B77BEA0414814</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>875E1BC4CA2AD2A567A2A44B</key>
+		<key>7AE6F4ACB960A7A158174000</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B7ED9618733EBC0180D9C2E6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FD26147E6CCF79BCE7D2C122</key>
 		<dict>
 			<key>primary</key>
 			<true/>

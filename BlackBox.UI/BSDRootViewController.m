@@ -28,10 +28,10 @@
 #pragma mark - UIViewController overrides
 
 - (void)viewDidLoad {
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleApplicationWillBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [super viewDidLoad];
     kInitialized = NO;
-    [self testCloudUpload];
+    //[self testCloudListDocs];
 }
 
 - (void)testCloudListDocs
@@ -70,9 +70,17 @@
 
 - (void)testCloudDownload
 {
-    BSDiCloud *cloud = [[BSDiCloud alloc]initWithArguments:@"bb_stdlib.plist"];
+    NSString *docsPath = [BSDPatchManager documentsDirectoryPath];
+    NSString *fileName = @"bb_stdlib.plist";
+    BSDiCloud *cloud = [[BSDiCloud alloc]initWithArguments:fileName];
     cloud.mainOutlet.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
-        NSLog(@"cloud download test output: %@",outlet.value);
+        
+        NSDictionary *output = outlet.value;
+        NSString *documentName = [output valueForKey:@"documentName"];
+        NSData *data = [output valueForKey:@"fileData"];
+        NSDictionary *dict = [BSDiCloud plistWithData:data];
+        NSLog(@"cloud download test result\ndocumentName: %@\ndocumentData: %@\n",documentName,dict);
+
     };
     [cloud.hotInlet input:kDownloadFileSelectorKey];
 }
@@ -206,6 +214,11 @@
 }
 
 - (void)showCanvasForCompiledPatch:(BSDCompiledPatch *)compiledPatch sender:(id)sender
+{
+    
+}
+
+- (void)handleApplicationWillBackgroundNotification:(NSNotification *)notification
 {
     
 }
