@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 @interface BSDActionPopup : UIView
 
-+ (BSDActionPopup *)showPopupWithActions:(NSArray *)actions inView:(UIView *)view anchorPoint:(CGPoint)point completion:(void(^)(NSInteger selectedIndex))completion;
++ (BSDActionPopup *)showPopupWithActions:(NSArray *)actions inSuperview:(UIView *)superview anchorPoint:(CGPoint)point completion:(void(^)(NSInteger selectedIndex))completion;
+
++ (BSDActionPopup *)showPopupWithActions:(NSArray *)actions associatedView:(UIView *)associatedView anchorPoint:(CGPoint)point completion:(void(^)(NSInteger selectedIndex))completion;
+
 
 @end

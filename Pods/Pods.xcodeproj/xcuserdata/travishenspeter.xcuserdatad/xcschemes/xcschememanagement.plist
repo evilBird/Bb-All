@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-BlackBox.UI-PureLayout.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-BlackBox.UI-iCloudDocumentSync.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,32 +42,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>379339AEA8DE90304368A154</key>
+		<key>057AF0056F616688F062B64B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4A2E0DD849C89E7FDCC7F790</key>
+		<key>3D0D5AD909FDBB6CA28E80CE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>725DE55D367B77BEA0414814</key>
+		<key>600B7BC4CA3A56C722A5B13E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7AE6F4ACB960A7A158174000</key>
+		<key>AAE5DC74576EB6B6C4E88867</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B7ED9618733EBC0180D9C2E6</key>
+		<key>AD928DB4EECD9CAD7922A97A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FD26147E6CCF79BCE7D2C122</key>
+		<key>B1BF9C5917EC28804159F6D4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E20A028CC985A8F470B77B1E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

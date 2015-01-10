@@ -19,48 +19,110 @@ typedef void(^BSDActionPopupCompletionBlock)(NSInteger);
 
 @interface BSDActionPopup ()
 
+@property (nonatomic,strong) UIView *associatedView;
 @property (nonatomic,strong) BSDActionPopupCompletionBlock completionBlock;
 
 @end
 
 @implementation BSDActionPopup
 
-+ (BSDActionPopup *)showPopupWithActions:(NSArray *)actions inView:(UIView *)view anchorPoint:(CGPoint)point completion:(void(^)(NSInteger selectedIndex))completion
++ (BSDActionPopup *)showPopupWithActions:(NSArray *)actions inSuperview:(UIView *)superview anchorPoint:(CGPoint)point completion:(void(^)(NSInteger selectedIndex))completion
 {
     if (!actions) {
         return nil;
     }
     
+    NSArray *possibleActions = @[@"open",@"help",@"test",@"cancel"];
+
     CGRect frame;
-    frame.size.width = kButtonWidth * actions.count + kHorizontalPadding * (actions.count + 1);
+    frame.size.width = kButtonWidth * possibleActions.count + kHorizontalPadding * (possibleActions.count + 1);
     frame.size.height = kButtonHeight + kVerticalPadding * 2 + kTailHeight;
     frame.origin.x = point.x - frame.size.width/2;
     frame.origin.y = point.y - frame.size.height - kTailHeight;
     BSDActionPopup *popup = [[BSDActionPopup alloc]initWithFrame:frame];
     popup.clipsToBounds = NO;
     popup.backgroundColor = [UIColor clearColor];
-    for (NSUInteger index = 0; index < actions.count; index++) {
+    for (NSUInteger index = 0; index < possibleActions.count; index++) {
         CGRect buttonRect;
+        NSString *actionName = possibleActions[index];
         buttonRect.origin.x = kHorizontalPadding * (index + 1) + kButtonWidth * index;
         buttonRect.origin.y = kVerticalPadding;
         buttonRect.size.width = kButtonWidth;
         buttonRect.size.height = kButtonHeight;
         UIButton *actionButton = [[UIButton alloc]initWithFrame:buttonRect];
         actionButton.tag = index;
-        [actionButton setTitle:actions[index] forState:UIControlStateNormal];
+        [actionButton setTitle:actionName forState:UIControlStateNormal];
         [actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [actionButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+        [actionButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateDisabled];
         [actionButton setBackgroundColor:[UIColor clearColor]];
-        [actionButton addTarget:popup action:@selector(handleSelection:) forControlEvents:UIControlEventTouchUpInside];
+        if ([actions containsObject:actionName]) {
+            actionButton.enabled = YES;
+            [actionButton addTarget:popup action:@selector(handleSelection:) forControlEvents:UIControlEventTouchUpInside];
+        }else{
+            actionButton.enabled = NO;
+        }
         [popup addSubview:actionButton];
     }
     
     popup.completionBlock = completion;
     [popup setNeedsDisplay];
-    [view addSubview:popup];
+    [superview addSubview:popup];
     return popup;
 }
 
++ (BSDActionPopup *)showPopupWithActions:(NSArray *)actions associatedView:(UIView *)associatedView anchorPoint:(CGPoint)point completion:(void(^)(NSInteger selectedIndex))completion
+{
+    if (!actions) {
+        return nil;
+    }
+    
+    NSArray *possibleActions = @[@"open",@"help",@"test",@"cancel"];
+    
+    CGRect frame;
+    frame.size.width = kButtonWidth * possibleActions.count + kHorizontalPadding * (possibleActions.count + 1);
+    frame.size.height = kButtonHeight + kVerticalPadding * 2 + kTailHeight;
+    frame.origin.x = point.x - frame.size.width/2;
+    frame.origin.y = point.y - frame.size.height - kTailHeight;
+    BSDActionPopup *popup = [[BSDActionPopup alloc]initWithFrame:frame];
+    popup.clipsToBounds = NO;
+    popup.backgroundColor = [UIColor clearColor];
+    for (NSUInteger index = 0; index < possibleActions.count; index++) {
+        CGRect buttonRect;
+        NSString *actionName = possibleActions[index];
+        buttonRect.origin.x = kHorizontalPadding * (index + 1) + kButtonWidth * index;
+        buttonRect.origin.y = kVerticalPadding;
+        buttonRect.size.width = kButtonWidth;
+        buttonRect.size.height = kButtonHeight;
+        UIButton *actionButton = [[UIButton alloc]initWithFrame:buttonRect];
+        actionButton.tag = index;
+        [actionButton setTitle:actionName forState:UIControlStateNormal];
+        [actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [actionButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+        [actionButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateDisabled];
+        [actionButton setBackgroundColor:[UIColor clearColor]];
+        if ([actions containsObject:actionName]) {
+            actionButton.enabled = YES;
+            [actionButton addTarget:popup action:@selector(handleSelection:) forControlEvents:UIControlEventTouchUpInside];
+        }else{
+
+            actionButton.enabled = NO;
+        }
+        [popup addSubview:actionButton];
+    }
+    
+    popup.completionBlock = completion;
+    [popup setNeedsDisplay];
+    [associatedView.superview addSubview:popup];
+    popup.associatedView = associatedView;
+    return popup;
+}
+
+- (void)setAssociatedView:(UIView *)associatedView
+{
+    _associatedView = associatedView;
+    [associatedView addObserver:self forKeyPath:@"center" options:NSKeyValueObservingOptionNew context:nil];
+}
 
 - (void)handleSelection:(id)sender
 {
@@ -82,6 +144,18 @@ typedef void(^BSDActionPopupCompletionBlock)(NSInteger);
                      }];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == nil) {
+        
+        [object removeObserver:self forKeyPath:keyPath];
+        [self removeFromSuperview];
+        self.associatedView = nil;
+
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -105,6 +179,13 @@ typedef void(^BSDActionPopupCompletionBlock)(NSInteger);
     [[UIColor blackColor]setFill];
     [mainPath fill];
     [tailPath fill];
+}
+
+- (void)dealloc
+{
+    [self.associatedView removeObserver:self forKeyPath:@"center"];
+    [self removeFromSuperview];
+    self.associatedView = nil;
 }
 
 @end

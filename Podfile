@@ -6,6 +6,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 pod 'AFNetworking', '2.2.1'
 pod 'iCloudDocumentSync'
 pod 'GPUImage'
+pod 'PureLayout'
+
 end
 
 target "BlackBox.UITests" do

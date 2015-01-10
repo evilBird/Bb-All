@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7AE6F4ACB960A7A158174000"
+               BlueprintIdentifier = "E20A028CC985A8F470B77B1E"
                BuildableName = "libPods-BlackBox.UI-iCloudDocumentSync.a"
                BlueprintName = "Pods-BlackBox.UI-iCloudDocumentSync"
                ReferencedContainer = "container:Pods.xcodeproj">

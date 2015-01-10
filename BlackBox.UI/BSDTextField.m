@@ -504,7 +504,7 @@
         className = completedWords.firstObject;
     }
     self.suggestedCompletion = [self suggestedCompletionForWord:currentWord atIndex:numCompleteWords className:className];
-
+    
     if (![text isEqualToString:[sender text]]) {
         if (self.replacementText) {
             [(BSDTextField *)sender setText:self.replacementText];
@@ -672,6 +672,11 @@
     return [text isEqualToString:@" "];
 }
 
+- (BOOL)isDot:(NSString *)text
+{
+    return [text isEqualToString:@"."];
+}
+
 - (NSInteger)countCompletedWordsInText:(NSString *)text
 {
     if (!text || text.length == 0) {
@@ -776,8 +781,8 @@
         self.replacementText = nil;
     }
     
-    NSArray *patchList = [[BSDPatchManager sharedInstance]allSavedPatchNames];
     
+    NSArray *patchList = [[BSDPatchManager sharedInstance]allSavedPatchNames];
     NSPredicate *predicate = nil;
     NSArray *filteredPatchList = nil;
     predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] %@ AND SELF ENDSWITH[cd] %@",word,word];
@@ -786,13 +791,13 @@
         return [self trimPatchNameSuffix:filteredPatchList.firstObject];
     }
     
-    predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] %@",word];
+    predicate = [NSPredicate predicateWithFormat:@"SELF LIKE[cd] %@",word];
     filteredPatchList = [patchList filteredArrayUsingPredicate:predicate];
     if (filteredPatchList && filteredPatchList.count) {
         return [self trimPatchNameSuffix:filteredPatchList.firstObject];
     }
     
-    predicate = [NSPredicate predicateWithFormat:@"SELF LIKE[cd] %@",word];
+    predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] %@",word];
     filteredPatchList = [patchList filteredArrayUsingPredicate:predicate];
     if (filteredPatchList && filteredPatchList.count) {
         return [self trimPatchNameSuffix:filteredPatchList.firstObject];

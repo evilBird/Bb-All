@@ -101,7 +101,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    //self.displayPreviewTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updatePreviewImage) userInfo:nil repeats:YES];
+    if ([self.curentCanvas.isDirty boolValue]==YES) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self loadDescriptionWithName:self.currentPatchName];
+            self.curentCanvas.isDirty = @(NO);
+        });
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -471,7 +476,8 @@
     
     if (self.parent != nil) {
         id parent = self.parent;
-        [(BSDCanvasViewController*)parent loadDescriptionWithName:[(BSDCanvasViewController *)parent currentPatchName]];
+        self.parent.curentCanvas.isDirty = @(YES);
+        //[(BSDCanvasViewController*)parent loadDescriptionWithName:[(BSDCanvasViewController *)parent currentPatchName]];
     }
 }
 
@@ -649,8 +655,12 @@
 #pragma mark - BSDNestedPatchTableViewControllerDelegate
 - (void)patchTableViewController:(id)sender selectedPatchWithName:(NSString *)patchName patchText:(NSString *)patchText
 {
-    [self.myPopoverController dismissPopoverAnimated:YES];
-    self.myPopoverController = nil;
+    if ([[UIDevice currentDevice]userInterfaceIdiom]==UIUserInterfaceIdiomPad) {
+        [self.myPopoverController dismissPopoverAnimated:YES];
+        self.myPopoverController = nil;
+    }else{
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }
     [[NSOperationQueue mainQueue]addOperationWithBlock:^{
         [self loadDescriptionWithName:patchName];
     }];

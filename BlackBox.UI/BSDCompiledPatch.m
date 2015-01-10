@@ -135,7 +135,7 @@
     
     NSString *desc = savedPatches[name];
     */
-    NSLog(@"loading patch with name %@",name);
+    //NSLog(@"loading patch with name %@",name);
     NSString *patchName = nil;
     if ([name hasSuffix:@"bb"]) {
         patchName = name;

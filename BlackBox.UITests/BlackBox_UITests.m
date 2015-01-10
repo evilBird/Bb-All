@@ -10,6 +10,7 @@
 #import "BSDiCloud.h"
 #import "BSDPatchManager.h"
 #import "MyCloud.h"
+#import "BSDObjects.h"
 
 @interface BlackBox_UITests : XCTestCase
 
@@ -219,6 +220,19 @@
         }
     }];
     
+}
+
+- (void)testExpressionObject
+{
+    BSDExpression *exp = [[BSDExpression alloc]initWithArguments:nil];
+    NSString *format = @"%K > 5";
+    NSArray *args = @[@"value",@(5)];
+    NSDictionary *object = @{@"value":@(10)};
+    exp.argsInlet.value = args;
+    exp.coldInlet.value = format;
+    [exp.hotInlet input:object];
+    id output = exp.mainOutlet.value;
+    XCTAssertTrue(([output integerValue] == 1),@"OUTPUT SHOULD EQUAL 1 NOT %@",output);
 }
 
 - (void)testPerformanceExample {

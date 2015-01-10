@@ -15,7 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        _textField = [[UITextField alloc]initWithFrame:self.bounds];
+        _textField = [[UITextView alloc]initWithFrame:self.bounds];
         _textField.textAlignment = NSTextAlignmentCenter;
         _textField.text = [NSString stringWithFormat:@"%@",@(0)];
         _textField.textColor = [UIColor blackColor];
@@ -29,6 +29,7 @@
         _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _textField.keyboardType = UIKeyboardTypeDefault;
         self.defaultColor = [UIColor whiteColor];
+
         self.selectedColor = [UIColor colorWithWhite:1 alpha:1];
         self.currentColor = self.defaultColor;
         self.backgroundColor = self.currentColor;
@@ -41,6 +42,38 @@
     }
     
     return self;
+}
+
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].length > 0) {
+        [textView endEditing:YES];
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
+{
+    return YES;
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@"comment"]) {
+        textView.text = @"";
+    }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if (textView.text && textView.text.length > 0) {
+        self.creationArguments = @[textView.text];
+        [textView endEditing:YES];
+        [textView resignFirstResponder];
+        [self handleText:textView.text];
+    }
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
@@ -58,6 +91,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField endEditing:YES];
+    //textField.text = [textField.text stringByAppendingString:@"/n"];
     return YES;
 }
 
@@ -86,20 +120,28 @@
     }
 }
 
+- (CGSize)sizeForText:(NSString *)text
+{
+    UITextView *textView = [UITextView new];
+    textView.frame = self.textField.frame;
+    textView.font = self.textField.font;
+    textView.text = text;
+    textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    [textView sizeToFit];
+    return textView.frame.size;
+}
+
 - (void)resizeToFitText:(NSString *)messageText
 {
-    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc]init];
-    style.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    NSDictionary *attributes = @{NSFontAttributeName:self.textField.font,
-                                 NSParagraphStyleAttributeName:style};
-    CGSize size = [messageText sizeWithAttributes:attributes];
+    CGSize size = [self sizeForText:messageText];
     CGRect frame = self.frame;
     frame.size = size;
-    
-    self.frame = CGRectInset(frame,-8,-8);
+    self.frame = frame;
+    self.textField.frame = self.bounds;
 
-    self.textField.frame = CGRectInset(self.bounds, 8, 8);
+    //self.textField.frame = CGRectInset(self.bounds, 8, 8);
+    //self.textField.frame = self.bounds;
+    //self.textField.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
     /*
     self.argString = messageText;
     NSArray *message = [NSArray arrayWithObject:self.argString];

@@ -24,6 +24,8 @@
 #import "BSDPort.h"
 #import "BSDHSlider.h"
 #import "BSDActionPopup.h"
+#import "BSDPatchManager.h"
+#import "BSDPrint.h"
 
 @interface BSDCanvas ()<UIGestureRecognizerDelegate,BSDScreenDelegate,BSDPortDelegate>
 {
@@ -39,6 +41,8 @@
 @property (nonatomic,strong)NSMutableArray *connectedPorts;
 @property (nonatomic,strong)NSString *pasteBoard;
 @property (nonatomic,strong)NSValue *previousTranslation;
+
+@property (nonatomic,strong)BSDObject *testObject;
 
 @end
 
@@ -381,7 +385,7 @@
     CGPoint loc = [sender locationOfTouch:0 inView:self];
     kFocusPoint = loc;
     UIView *theView = [self hitTest:loc withEvent:UIEventTypeTouches];
-    
+    /*
     if ([theView isKindOfClass:[BSDAbstractionBox class]]) {
         [self showActionPopupForBox:(BSDBox *)theView];
         return;
@@ -391,7 +395,7 @@
         [self showActionPopupForBox:(BSDBox *)theView.superview];
         return;
     }
-    
+    */
     if ([theView isKindOfClass:[BSDBox class]]
         || [theView.superview isKindOfClass:[BSDBox class]]
         || [theView isKindOfClass:[UITextField class]]
@@ -404,8 +408,11 @@
             box = (BSDBox *)theView.superview;
         }
         
-        if ([box.object isKindOfClass:[BSDCompiledPatch class]]) {
-            [self showActionPopupForBox:box];
+        NSArray *actions = [self actionsForBox:box];
+        
+        
+        if (actions) {
+            [self showActionPopupForBox:box withActions:actions];
         }
         
         return;
@@ -415,25 +422,129 @@
     
 }
 
-- (void)showActionPopupForBox:(BSDBox *)box
+- (void)showActionPopupForBox:(BSDBox *)box withActions:(NSArray *)actions
 {
     CGPoint anchor;
     anchor.y = CGRectGetMinY(box.frame);
     anchor.x = CGRectGetMidX(box.frame);
-    NSArray *actions = @[@"open",@"cancel"];
     __weak BSDCanvas *weakself = self;
     [BSDActionPopup showPopupWithActions:actions
-                                  inView:self
+                          associatedView:box
                              anchorPoint:anchor
                               completion:^(NSInteger selectedIndex) {
-                                  if (selectedIndex == 0) {
-                                      if ([box isKindOfClass:[BSDAbstractionBox class]]) {
-                                          [weakself openAbstraction:(BSDAbstractionBox *)box];
-                                      }else if ([box.object isKindOfClass:[BSDCompiledPatch class]]){
-                                          [weakself openGraphBox:(BSDGraphBox *)box];
-                                      }
-                                  }
+                                  [weakself doAction:selectedIndex withBox:box];
                               }];
+
+}
+
+- (void)doAction:(NSInteger)action withBox:(BSDBox *)box
+{
+    switch (action) {
+        case 0:
+            [self openGraphBox:(BSDGraphBox *)box];
+            break;
+            case 1:
+            [self openHelpPatchForBox:box];
+            break;
+            case 2:
+            [self testBox:box];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)openHelpPatchForBox:(BSDBox *)box
+{
+    NSString *patchName = nil;
+    if ([box.object isKindOfClass:[BSDCompiledPatch class]]) {
+        patchName = [box argString];
+    }else{
+        patchName = [box className];
+    }
+    
+    NSString *helpPatchName = [patchName stringByAppendingPathExtension:@"help"];
+    BSDCompiledPatch *helpPatch = [[BSDCompiledPatch alloc]initWithArguments:helpPatchName];
+    [self.delegate showCanvasForCompiledPatch:helpPatch];
+}
+
+- (void)testBox:(BSDBox *)box
+{
+    NSString *patchName = [box argString];
+    NSString *testPatchName = [patchName stringByAppendingPathExtension:@"test"];
+    self.testObject = [[BSDCompiledPatch alloc]initWithArguments:@[testPatchName,patchName]];
+    [[(BSDCompiledPatch *)self.testObject canvas]loadBang];
+    [self.testObject.inlets.firstObject input:[BSDBang bang]];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.testObject tearDown];
+        self.testObject = nil;
+    });
+
+}
+
+- (NSArray *)actionsForBox:(BSDBox *)box
+{
+    NSMutableArray *result = nil;
+    
+    if ([box isKindOfClass:[BSDCompiledPatch class]]) {
+        if (!result) {
+            result = [NSMutableArray array];
+        }
+        
+        [result addObject:@"open"];
+        NSString *argString = box.argString;
+        NSString *testPatchName = [argString stringByAppendingPathExtension:@"test"];
+        NSString *helpPatchName = [argString stringByAppendingPathExtension:@"help"];
+        id help = [[BSDPatchManager sharedInstance]getPatchNamed:helpPatchName];
+        if (help != nil) {
+            [result addObject:@"help"];
+        }
+        
+        id test = [[BSDPatchManager sharedInstance]getPatchNamed:testPatchName];
+        if (test != nil) {
+            [result addObject:@"test"];
+        }
+        
+        [result addObject:@"cancel"];
+        
+        return result;
+    }
+    
+    NSString *objectClass = NSStringFromClass([box.object class]);
+    NSString *helpPatchName = [objectClass stringByAppendingPathExtension:@"help"];
+    id helpPatch = [[BSDPatchManager sharedInstance]getPatchNamed:helpPatchName];
+    if (helpPatch) {
+        if (!result) {
+            result = [NSMutableArray array];
+        }
+        
+        [result addObject:@"help"];
+        [result addObject:@"cancel"];
+    }
+    
+    return result;
+    /*
+    if ([box.object isKindOfClass:[BSDCompiledPatch class]]) {
+        [result addObject:@"open"];
+        NSString *argString = box.argString;
+        NSString *testPatchName = [argString stringByAppendingPathExtension:@"test"];
+        NSString *helpPatchName = [argString stringByAppendingPathExtension:@"help"];
+        id help = [[BSDPatchManager sharedInstance]getPatchNamed:helpPatchName];
+        if (help != nil) {
+            [result addObject:@"help"];
+        }
+
+        id test = [[BSDPatchManager sharedInstance]getPatchNamed:testPatchName];
+        if (test != nil) {
+            [result addObject:@"test"];
+        }
+    }
+    
+    [result addObject:@"cancel"];
+     */
+    return result;
+    return nil;
 }
 
 - (void)openAbstraction:(BSDAbstractionBox *)abs
@@ -463,10 +574,8 @@
     patch.canvas.frame = frame;
     patch.canvas.name = patchName;
     [self.delegate showCanvasForCompiledPatch:patch];
-    
     NSValue *rect = [NSValue wrapRect:patch.canvas.frame];
     NSLog(@"rect: %@",rect);
-    //[self.delegate newCanvasForPatch:patchName withBox:graphBox];
 }
 
 - (void)closeCanvas:(UIButton *)sender
@@ -483,6 +592,7 @@
                              
                              [canvas removeFromSuperview];
                              [sender removeFromSuperview];
+                             
                              [weakself.delegate setCurrentCanvas:weakself];
                              BSDBox *box = [weakself boxForCanvas:canvas];
                              if (!box) {

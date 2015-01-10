@@ -1,6 +1,6 @@
 #include "Pods-BlackBox.UITests-iCloudDocumentSync.xcconfig"
 FRAMEWORK_SEARCH_PATHS = ${PODS_BLACKBOX_UITESTS_ICLOUDDOCUMENTSYNC_FRAMEWORK_SEARCH_PATHS}
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/iCloudDocumentSync" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/GPUImage" "${PODS_ROOT}/Headers/Public/iCloudDocumentSync"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/iCloudDocumentSync" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/GPUImage" "${PODS_ROOT}/Headers/Public/PureLayout" "${PODS_ROOT}/Headers/Public/iCloudDocumentSync"
 OTHER_LDFLAGS = ${PODS_BLACKBOX_UITESTS_ICLOUDDOCUMENTSYNC_OTHER_LDFLAGS} -ObjC
 PODS_ROOT = ${SRCROOT}

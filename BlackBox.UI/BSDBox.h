@@ -62,7 +62,6 @@
 
 - (void)initializeWithText:(NSString *)text;
 - (void)createPortViewsForObject:(id)object;
-
 - (void)updateInletViews;
 - (void)updateOutletViews;
 
@@ -83,6 +82,5 @@
 - (CGSize)minimumSize;
 
 - (void)editingRequested;
-
 
 @end
