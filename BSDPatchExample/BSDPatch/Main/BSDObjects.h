@@ -133,3 +133,6 @@
 #import "BSDStringAppend.h"
 #import "BSDArr2String.h"
 #import "BSDDynamicObject.h"
+#import "BSDExpression.h"
+#import "BSDPinEdge.h"
+#import "BSDJSObject.h"
