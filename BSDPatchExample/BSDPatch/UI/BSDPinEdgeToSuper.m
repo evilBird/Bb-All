@@ -27,11 +27,11 @@
     NSNumber *insetVal = self.coldInlet.value;
     ALEdge edge = [self edgeForNumber:sideVal];
     CGFloat inset = [insetVal floatValue];
-    PinEdgeToSuperBlock block = ^(UIView *view){
+    InstallConstraintsOnViewBlock block = ^(UIView *view){
         [view autoPinEdgeToSuperviewEdge:edge withInset:inset];
-        [view layoutIfNeeded];
     };
-    [self.mainOutlet output:block];
+    NSArray *output = @[kContraintsKey,kPinEdgeToSuperKey,[block copy]];
+    [self.mainOutlet output:output];
 }
 
 - (ALEdge)edgeForNumber:(NSNumber *)edgeNumber
@@ -47,9 +47,8 @@
             return ALEdgeBottom;
             break;
         case 3:
-            return ALEdgeRight;
+            return ALEdgeLeft;
             break;
-            
         default:
             return ALEdgeTop;
             break;
