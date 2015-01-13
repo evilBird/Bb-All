@@ -118,6 +118,8 @@
 		F21E534B19C51BC300E51383 /* BSDVelocity.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52F519C51BC300E51383 /* BSDVelocity.m */; };
 		F21E535119C5249100E51383 /* BSDBangControlBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E534F19C5249100E51383 /* BSDBangControlBox.m */; };
 		F22AA33219F01E80003E256A /* BSDStringReplace.m in Sources */ = {isa = PBXBuildFile; fileRef = F22AA33119F01E80003E256A /* BSDStringReplace.m */; };
+		F22FF24D1A648DD400C6EC52 /* BSDClassMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = F22FF24C1A648DD400C6EC52 /* BSDClassMethod.m */; };
+		F22FF2501A649E1C00C6EC52 /* BSDPinEdgeToSuper.m in Sources */ = {isa = PBXBuildFile; fileRef = F22FF24F1A649E1C00C6EC52 /* BSDPinEdgeToSuper.m */; };
 		F2389B0519EF5766008B51DB /* BSDLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2389B0419EF5766008B51DB /* BSDLogView.m */; };
 		F2389B0819EF8FCB008B51DB /* BSDAny2Array.m in Sources */ = {isa = PBXBuildFile; fileRef = F2389B0719EF8FCB008B51DB /* BSDAny2Array.m */; };
 		F241578919CB85B0003E32CA /* BSDObjectLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = F241578819CB85B0003E32CA /* BSDObjectLookup.m */; };
@@ -496,6 +498,10 @@
 		F21E535019C5249100E51383 /* BSDBangControlBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDBangControlBox.h; sourceTree = "<group>"; };
 		F22AA33019F01E80003E256A /* BSDStringReplace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDStringReplace.h; sourceTree = "<group>"; };
 		F22AA33119F01E80003E256A /* BSDStringReplace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDStringReplace.m; sourceTree = "<group>"; };
+		F22FF24B1A648DD400C6EC52 /* BSDClassMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDClassMethod.h; sourceTree = "<group>"; };
+		F22FF24C1A648DD400C6EC52 /* BSDClassMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDClassMethod.m; sourceTree = "<group>"; };
+		F22FF24E1A649E1C00C6EC52 /* BSDPinEdgeToSuper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPinEdgeToSuper.h; sourceTree = "<group>"; };
+		F22FF24F1A649E1C00C6EC52 /* BSDPinEdgeToSuper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPinEdgeToSuper.m; sourceTree = "<group>"; };
 		F2389B0319EF5766008B51DB /* BSDLogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDLogView.h; sourceTree = "<group>"; };
 		F2389B0419EF5766008B51DB /* BSDLogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDLogView.m; sourceTree = "<group>"; };
 		F2389B0619EF8FCB008B51DB /* BSDAny2Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAny2Array.h; sourceTree = "<group>"; };
@@ -1211,6 +1217,8 @@
 				F26D6F5C1A492EEF00675857 /* BSDConstraint.m */,
 				F26D6F581A492E0E00675857 /* BSDPinEdge.h */,
 				F26D6F591A492E0E00675857 /* BSDPinEdge.m */,
+				F22FF24E1A649E1C00C6EC52 /* BSDPinEdgeToSuper.h */,
+				F22FF24F1A649E1C00C6EC52 /* BSDPinEdgeToSuper.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1246,6 +1254,8 @@
 				F2CFDEF019DCACA000A156DB /* BSDReceive.m */,
 				F25F71BA19EA26AA002B082A /* BSDMethod.h */,
 				F25F71BB19EA26AA002B082A /* BSDMethod.m */,
+				F22FF24B1A648DD400C6EC52 /* BSDClassMethod.h */,
+				F22FF24C1A648DD400C6EC52 /* BSDClassMethod.m */,
 				F2E507BF1A37F66A008D67D9 /* BSDCPUMonitor.h */,
 				F2E507C01A37F66A008D67D9 /* BSDCPUMonitor.m */,
 				F2F84AB51A39159200AFCD0A /* BSDDynamicObject.h */,
@@ -1777,6 +1787,7 @@
 				F28C806219E25788001A578C /* BSDAbstractionBox.m in Sources */,
 				F21E531E19C51BC300E51383 /* BSDSubtract.m in Sources */,
 				F2B0C46F1A145C0400FEE17F /* BSDControl.m in Sources */,
+				F22FF24D1A648DD400C6EC52 /* BSDClassMethod.m in Sources */,
 				F24A3B0B19D0CB0200FBA887 /* BSDSplitDictionary.m in Sources */,
 				F2F5139219B927A700323096 /* BSDObjectDescription.m in Sources */,
 				F2EB860519D5034B007B8C3C /* BSDCollectionInlet.m in Sources */,
@@ -1818,6 +1829,7 @@
 				F286235B1A32426B005737EE /* BSDimages2Gif.m in Sources */,
 				F21E532919C51BC300E51383 /* BSDIntersect2Circles.m in Sources */,
 				F21E530F19C51BC300E51383 /* BSDSwap.m in Sources */,
+				F22FF2501A649E1C00C6EC52 /* BSDPinEdgeToSuper.m in Sources */,
 				F21E530819C51BC300E51383 /* BSDAddKey.m in Sources */,
 				F21E50DD19C433ED00E51383 /* UIColor+HBVHarmonies.m in Sources */,
 				F21E533719C51BC300E51383 /* BSDClipHard.m in Sources */,

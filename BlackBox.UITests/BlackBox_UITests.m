@@ -37,6 +37,68 @@
     XCTAssert(YES, @"Pass");
 }
 
+- (void)testPinToSuper
+{
+    BSDPinEdgeToSuper *obj = [[BSDPinEdgeToSuper alloc]init];
+    [obj.hotInlet input:@(1)];
+    PinEdgeToSuperBlock block = [obj.mainOutlet.value copy];
+    XCTAssertNotNil(block,@"block should not be nil");
+    block(nil,nil,nil);
+}
+
+- (void)testClassMethod
+{
+    BSDClassMethod *cls = [[BSDClassMethod alloc]initWithArguments:nil];
+    [cls.argumentsInlet input:@[[@"http://www.google.com" stringByReplacingPercentEscapesUsingEncoding:4]]];
+    [cls.selectorInlet input:@"URLWithString:"];
+    [cls.coldInlet input:@"NSURL"];
+    [cls.hotInlet input:[BSDBang bang]];
+    id output = cls.mainOutlet.value;
+    
+    XCTAssertNotNil(output,@"output should not be nil");
+    XCTAssertTrue([output isKindOfClass:[NSURL class]],@"Output should be NSURL");
+    NSLog(@"URL: %@",output);
+    
+}
+
+- (void)testCreateURL
+{
+    BSDFactory *factory = [[BSDFactory alloc]initWithArguments:nil];
+    factory.debug = YES;
+    [factory.creationArgsInlet input: @"http://www.google.com"];
+    [factory.selectorInlet input:@"initWithString:"];
+    [factory.classNameInlet input:@"NSURL"];
+    [factory.hotInlet input:[BSDBang bang]];
+    id output = [[factory.mainOutlet value]copy];
+    XCTAssertNotNil(output,@"Output should not be nil");
+    XCTAssertTrue([output isKindOfClass:[NSURL class]],@"Output should be NSURL");
+}
+
+- (void)testCreateURLRequest
+{
+    BSDFactory *factory = [[BSDFactory alloc]initWithArguments:nil];
+    factory.debug = YES;
+    [factory.creationArgsInlet input: @"http://www.google.com"];
+    [factory.selectorInlet input:@"initWithString:"];
+    [factory.classNameInlet input:@"NSURL"];
+    [factory.hotInlet input:[BSDBang bang]];
+    id output = [[factory.mainOutlet value]copy];
+    XCTAssertNotNil(output,@"Output should not be nil");
+    XCTAssertTrue([output isKindOfClass:[NSURL class]],@"Output should be NSURL");
+    
+    [factory.creationArgsInlet input:output];
+    [factory.selectorInlet input:@"initWithURL:"];
+    [factory.classNameInlet input:@"NSURLRequest"];
+    [factory.hotInlet input:[BSDBang bang]];
+    
+    id request = [[factory.mainOutlet value]copy];
+    XCTAssertNotNil(request,@"output should not be nil");
+    XCTAssertTrue([request isKindOfClass:[NSURLRequest class]],@"output should be NSURLRequest");
+    
+    UIWebView *webview = [[UIWebView alloc]init];
+    [webview loadRequest:request];
+}
+
 - (void)testCloudListDocs
 {
     XCTestExpectation *expectation = [self expectationWithDescription:@"cloud get doc list"];

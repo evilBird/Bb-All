@@ -25,6 +25,7 @@
         //Cold inlet input is an array containing two elements:1) the (NSNumber *) tag of the view to be which will be the alignment source, 2) the aligning (NSNumber*)edge (top = 0, right = 1, bottom = 2, left = 3) of the source view
         self.coldInlet = arguments;
     }
+    
 }
 
 - (void)calculateOutput

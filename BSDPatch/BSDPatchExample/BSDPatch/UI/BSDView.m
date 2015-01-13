@@ -9,6 +9,7 @@
 #import "BSDView.h"
 #import "BSDStringInlet.h"
 #import <objc/runtime.h>
+#import "BSDObjects.h"
 
 @implementation BSDView
 
@@ -147,6 +148,16 @@
     }
 }
 
+- (void)addConstaintWithArgs:(NSArray *)args
+{
+    NSString *type = args.firstObject;
+    if ([type isEqualToString:@"pin"]) {
+        UIView *view = self.viewInlet.value;
+        PinEdgeToSuperBlock block = args[1];
+        block(view);
+    }
+}
+
 - (void)doSelectorWithArray:(NSArray *)array
 {
     if (!array || array.count == 0) {
@@ -160,10 +171,16 @@
     }
     
     NSString *selectorName = [NSString stringWithString:first];
+    
     NSArray *args = nil;
     if (copy.count > 1) {
         [copy removeObject:first];
         args = [NSArray arrayWithArray:copy];
+    }
+    
+    if ([selectorName isEqualToString:@"constraint"]) {
+        [self addConstaintWithArgs:args];
+        return;
     }
     
     SEL selector = NSSelectorFromString(selectorName);

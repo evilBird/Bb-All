@@ -457,13 +457,15 @@
 - (void)openHelpPatchForBox:(BSDBox *)box
 {
     NSString *patchName = nil;
+    NSString *helpPatchName = nil;
     if ([box.object isKindOfClass:[BSDCompiledPatch class]]) {
         patchName = [box argString];
+        helpPatchName = [patchName stringByAppendingPathExtension:@"help"];
     }else{
         patchName = [box className];
+        helpPatchName = [@"Help" stringByAppendingPathExtension:patchName];
     }
     
-    NSString *helpPatchName = [patchName stringByAppendingPathExtension:@"help"];
     BSDCompiledPatch *helpPatch = [[BSDCompiledPatch alloc]initWithArguments:helpPatchName];
     [self.delegate showCanvasForCompiledPatch:helpPatch];
 }
@@ -487,7 +489,7 @@
 {
     NSMutableArray *result = nil;
     
-    if ([box isKindOfClass:[BSDCompiledPatch class]]) {
+    if ([box.object isKindOfClass:[BSDCompiledPatch class]]) {
         if (!result) {
             result = [NSMutableArray array];
         }
@@ -512,7 +514,7 @@
     }
     
     NSString *objectClass = NSStringFromClass([box.object class]);
-    NSString *helpPatchName = [objectClass stringByAppendingPathExtension:@"help"];
+    NSString *helpPatchName = [@"Help" stringByAppendingPathExtension:objectClass];
     id helpPatch = [[BSDPatchManager sharedInstance]getPatchNamed:helpPatchName];
     if (helpPatch) {
         if (!result) {
@@ -523,26 +525,6 @@
         [result addObject:@"cancel"];
     }
     
-    return result;
-    /*
-    if ([box.object isKindOfClass:[BSDCompiledPatch class]]) {
-        [result addObject:@"open"];
-        NSString *argString = box.argString;
-        NSString *testPatchName = [argString stringByAppendingPathExtension:@"test"];
-        NSString *helpPatchName = [argString stringByAppendingPathExtension:@"help"];
-        id help = [[BSDPatchManager sharedInstance]getPatchNamed:helpPatchName];
-        if (help != nil) {
-            [result addObject:@"help"];
-        }
-
-        id test = [[BSDPatchManager sharedInstance]getPatchNamed:testPatchName];
-        if (test != nil) {
-            [result addObject:@"test"];
-        }
-    }
-    
-    [result addObject:@"cancel"];
-     */
     return result;
     return nil;
 }

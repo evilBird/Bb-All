@@ -1,22 +1,21 @@
 //
-//  BSDPointer.m
+//  BSDClassMethod.m
 //  BlackBox.UI
 //
-//  Created by Travis Henspeter on 10/11/14.
-//  Copyright (c) 2014 birdSound LLC. All rights reserved.
+//  Created by Travis Henspeter on 1/12/15.
+//  Copyright (c) 2015 birdSound LLC. All rights reserved.
 //
 
-#import "BSDMethod.h"
-#import <objc/runtime.h>
+#import "BSDClassMethod.h"
 
-@interface BSDMethod ()
+@interface BSDClassMethod()
 
 @property (nonatomic,strong)id returnVal;
 
 @end
 
-@implementation BSDMethod
 
+@implementation BSDClassMethod
 - (instancetype)initWithArguments:(id)arguments
 {
     return [super initWithArguments:arguments];
@@ -24,13 +23,13 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"method";
+    self.name = @"cls method";
     
-    self.selectorInlet = [[BSDStringInlet alloc]initCold];
+    self.selectorInlet = [[BSDInlet alloc]initCold];
     self.selectorInlet.name = @"selector";
     [self addPort:self.selectorInlet];
     
-    self.argumentsInlet = [[BSDArrayInlet alloc]initCold];
+    self.argumentsInlet = [[BSDInlet alloc]initCold];
     self.argumentsInlet.name = @"arguments";
     [self addPort:self.argumentsInlet];
 }
@@ -44,19 +43,19 @@
 
 - (void)calculateOutput
 {
-    id pointer = self.coldInlet.value;
+    NSString *className = self.coldInlet.value;
+    
     NSString *selectorName = self.selectorInlet.value;
     NSArray *arguments = self.argumentsInlet.value;
     
-    if (!pointer || !selectorName) {
+    if (!className || !selectorName) {
         return;
     }
     
-    id output = [self doSelectorWithPointer:pointer selectorName:[NSString stringWithString:selectorName] arguments:[NSMutableArray arrayWithArray:arguments]];
+    id output =[self doSelectorWithClassName:className selectorName:[NSString stringWithString:selectorName] arguments:[NSMutableArray arrayWithArray:arguments]];
     
     if (output) {
-        self.returnVal = output;
-        [self.mainOutlet output:self.returnVal];
+        [self.mainOutlet output:output];
     }else{
         [self.mainOutlet output:[BSDBang bang]];
     }
@@ -64,18 +63,17 @@
     self.coldInlet.value = nil;
 }
 
-- (id)doSelectorWithPointer:(id)pointer selectorName:(NSString *)selectorName arguments:(NSArray *)arguments
+- (id)doSelectorWithClassName:(NSString *)className selectorName:(NSString *)selectorName arguments:(NSArray *)arguments
 {
     SEL aSelector = NSSelectorFromString(selectorName);
-    if (![pointer respondsToSelector:aSelector]) {
-        NSString *className = NSStringFromClass([pointer class]);
+    Class myClass = NSClassFromString(className);
+    if (![myClass respondsToSelector:aSelector]) {
         return [NSString stringWithFormat:@"\nBSDPointer ERROR:\nClass %@ does respond to selector %@\n",className,selectorName];
     }
-    const char *class = [NSStringFromClass([pointer class]) UTF8String];
-    id c = objc_getClass(class);
-    NSMethodSignature *methodSig = [c instanceMethodSignatureForSelector:aSelector];
+
+    NSMethodSignature *methodSig = [myClass methodSignatureForSelector:aSelector];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
-    [invocation setTarget:pointer];
+    [invocation setTarget:myClass];
     [invocation setSelector:aSelector];
     if (arguments) {
         
@@ -113,7 +111,7 @@
         [invocation getReturnValue:&returnVal];
         result = (__bridge NSObject *)returnVal;
     }
-        
+    
     return result;
 }
 

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "600B7BC4CA3A56C722A5B13E"
+               BlueprintIdentifier = "2ADCFF248450FED0B7D4D54D"
                BuildableName = "libPods-BlackBox.UI-PureLayout.a"
                BlueprintName = "Pods-BlackBox.UI-PureLayout"
                ReferencedContainer = "container:Pods.xcodeproj">
