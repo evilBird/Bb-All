@@ -41,7 +41,7 @@
 {
     BSDPinEdgeToSuper *obj = [[BSDPinEdgeToSuper alloc]init];
     [obj.hotInlet input:@(1)];
-    PinEdgeToSuperBlock block = [obj.mainOutlet.value copy];
+    InstallConstraintsOnViewBlock block = [obj.mainOutlet.value copy];
     XCTAssertNotNil(block,@"block should not be nil");
     block(nil,nil,nil);
 }

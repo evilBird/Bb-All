@@ -98,7 +98,7 @@
         Class superClass = class_getSuperclass(theClass);
         NSString *className = NSStringFromClass(theClass);
         NSString *superClassName = NSStringFromClass(superClass);
-        if ([superClassName isEqualToString:@"BSDObject"]||[superClassName isEqualToString:@"BSDView"] || [superClassName isEqualToString:@"BSDNumberObject"]||[superClassName isEqualToString:@"BSDGenerator"] || [superClassName isEqualToString:@"BSDLayer"] || [superClassName isEqualToString:@"BSDControl"] || [superClassName isEqualToString:@"BSDGPUImage"] || [superClassName isEqualToString:@"BSDConstraint"] || [superClassName isEqualToString:@"BSDJSObject"]) {
+        if ([superClassName isEqualToString:@"BSDObject"]||[superClassName isEqualToString:@"BSDView"] || [superClassName isEqualToString:@"BSDNumberObject"]||[superClassName isEqualToString:@"BSDGenerator"] || [superClassName isEqualToString:@"BSDLayer"] || [superClassName isEqualToString:@"BSDControl"] || [superClassName isEqualToString:@"BSDGPUImage"] || [superClassName isEqualToString:@"BSDConstraint"] || [superClassName isEqualToString:@"BSDJSObject"] || [superClassName isEqualToString:@"BSDConstraintObject"]) {
             
             if (!result) {
                 result = [NSMutableSet set];

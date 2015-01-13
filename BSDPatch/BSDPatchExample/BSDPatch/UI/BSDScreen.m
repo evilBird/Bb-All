@@ -8,6 +8,8 @@
 
 #import "BSDScreen.h"
 #import "NSValue+BSD.h"
+#import "PureLayout.h"
+
 @interface BSDScreen ()
 {
     UIInterfaceOrientation orientation;
@@ -53,7 +55,11 @@
 {
     NSValue *rect = [NSValue wrapRect:[[UIScreen mainScreen]bounds]];
     NSDictionary *newBounds = @{@"bounds":rect};
-    [self.setterInlet input:newBounds];
+    [self.viewInlet.value setBounds:rect.CGRectValue];
+    //[self.viewInlet.value layoutSubviews];
+    //[self.viewInlet.value layoutIfNeeded];
+    //[self.viewInlet.value setBackgroundColor:[UIColor redColor]];
+    
     NSDictionary *toSend = @{@"interfaceOrientationDidChange":@(orientation)};
     [self.getterOutlet output:toSend];
     [self.getterOutlet output:newBounds];

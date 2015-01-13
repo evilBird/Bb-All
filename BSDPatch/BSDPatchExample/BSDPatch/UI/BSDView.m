@@ -150,12 +150,20 @@
 
 - (void)addConstaintWithArgs:(NSArray *)args
 {
-    NSString *type = args.firstObject;
-    if ([type isEqualToString:@"pin"]) {
+    InstallConstraintsOnViewBlock constraintsBlock = args.firstObject;
+    UIView *view = self.viewInlet.value;
+    constraintsBlock(view);
+    /*
+    if ([type isEqualToString:kPinEdgeToSuperKey]) {
         UIView *view = self.viewInlet.value;
-        PinEdgeToSuperBlock block = args[1];
+        InstallConstraintsOnViewBlock block = args[1];
         block(view);
+        return;
     }
+    if ([type isEqualToString:kAlignAxisToSuperKey]) {
+        
+    }
+     */
 }
 
 - (void)doSelectorWithArray:(NSArray *)array
@@ -178,7 +186,7 @@
         args = [NSArray arrayWithArray:copy];
     }
     
-    if ([selectorName isEqualToString:@"constraint"]) {
+    if ([selectorName isEqualToString:kContraintsKey]) {
         [self addConstaintWithArgs:args];
         return;
     }

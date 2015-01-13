@@ -6,16 +6,16 @@
 //  Copyright (c) 2014 birdSound LLC. All rights reserved.
 //
 
-#import "BSDMethod.h"
+#import "BSDInstanceMethod.h"
 #import <objc/runtime.h>
 
-@interface BSDMethod ()
+@interface BSDInstanceMethod ()
 
 @property (nonatomic,strong)id returnVal;
 
 @end
 
-@implementation BSDMethod
+@implementation BSDInstanceMethod
 
 - (instancetype)initWithArguments:(id)arguments
 {

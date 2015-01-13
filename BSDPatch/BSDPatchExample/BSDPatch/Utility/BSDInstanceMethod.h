@@ -10,7 +10,7 @@
 #import "BSDStringInlet.h"
 #import "BSDArrayInlet.h"
 
-@interface BSDMethod : BSDObject
+@interface BSDInstanceMethod : BSDObject
 // hot inlet: takes a bang, performs selector with cold inlet value
 // cold inlet: takes a point to any object
 // selector inlet: takes a selector as NSString
