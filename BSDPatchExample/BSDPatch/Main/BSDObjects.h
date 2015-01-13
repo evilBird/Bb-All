@@ -136,3 +136,5 @@
 #import "BSDExpression.h"
 #import "BSDPinEdge.h"
 #import "BSDJSObject.h"
+#import "BSDClassMethod.h"
+#import "BSDPinEdgeToSuper.h"
