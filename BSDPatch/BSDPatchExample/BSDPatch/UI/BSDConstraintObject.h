@@ -20,7 +20,7 @@ typedef void (^InstallConstraintsOnViewBlock)(UIView *view);
 + (ALEdge)edgeForNumber:(NSNumber *)number;
 + (ALAxis)axisForNumber:(NSNumber *)number;
 + (ALDimension)dimensionForNumber:(NSNumber *)number;
-+ (NSLayoutRelation)layoutRelationForNumber:(NSNumber *)number;
+//+ (NSLayoutRelation)layoutRelationForNumber:(NSNumber *)number;
 + (UIView *)view:(UIView *)view siblingViewWithTag:(NSNumber *)number;
 + (InstallConstraintsOnViewBlock)removeConstraints;
 

@@ -124,6 +124,8 @@
 		F241578919CB85B0003E32CA /* BSDObjectLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = F241578819CB85B0003E32CA /* BSDObjectLookup.m */; };
 		F241578C19CB8EEF003E32CA /* BSDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = F241578B19CB8EEF003E32CA /* BSDNumber.m */; };
 		F2415F471A26D6880070C1FB /* mandelbrot.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F2415F461A26D6880070C1FB /* mandelbrot.fsh */; };
+		F24A394F1A6728EA001EE5FF /* BSDViewControllerRoot.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A394E1A6728EA001EE5FF /* BSDViewControllerRoot.m */; };
+		F24A39521A67331E001EE5FF /* BSDDisplayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A39511A67331E001EE5FF /* BSDDisplayManager.m */; };
 		F24A3B0519D0B9CF00FBA887 /* BSDType.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B0419D0B9CF00FBA887 /* BSDType.m */; };
 		F24A3B0819D0C11900FBA887 /* BSDAny2String.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B0719D0C11900FBA887 /* BSDAny2String.m */; };
 		F24A3B0B19D0CB0200FBA887 /* BSDSplitDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B0A19D0CB0200FBA887 /* BSDSplitDictionary.m */; };
@@ -161,6 +163,7 @@
 		F28C806E19E314DF001A578C /* BSD2WayPort.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C806D19E314DF001A578C /* BSD2WayPort.m */; };
 		F28C807119E3B1C7001A578C /* BSDPatchCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C807019E3B1C7001A578C /* BSDPatchCompiler.m */; };
 		F2946D8F1A2D566700FBEE13 /* BSDTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2946D8E1A2D566700FBEE13 /* BSDTableView.m */; };
+		F2976C3E1A65FEAA00FE6960 /* NSString+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = F2976C3D1A65FEAA00FE6960 /* NSString+BSD.m */; };
 		F2A5A5061A64BEF500459331 /* BSDConstraintObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A5A5051A64BEF500459331 /* BSDConstraintObject.m */; };
 		F2AAF7A019C7CB97004EFE87 /* BSDPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF79F19C7CB97004EFE87 /* BSDPrint.m */; };
 		F2AAF7A319C7DD16004EFE87 /* BSDRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A219C7DD16004EFE87 /* BSDRandom.m */; };
@@ -222,6 +225,7 @@
 		F2CFDF3A19DCFF5400A156DB /* toolbar_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2CFDF1519DCFF5400A156DB /* toolbar_add@2x.png */; };
 		F2CFDF3B19DCFF5400A156DB /* toolbar_add.png in Resources */ = {isa = PBXBuildFile; fileRef = F2CFDF1619DCFF5400A156DB /* toolbar_add.png */; };
 		F2D2E4111A42672C007B51CE /* MyCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = F2D2E4101A42672C007B51CE /* MyCloud.m */; };
+		F2DB32C21A65ADA000806498 /* NSObject+TypeConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = F2DB32C11A65ADA000806498 /* NSObject+TypeConversion.m */; };
 		F2E507C11A37F66A008D67D9 /* BSDCPUMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E507C01A37F66A008D67D9 /* BSDCPUMonitor.m */; };
 		F2EB85E419D34CA8007B8C3C /* BSDNumberInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85E319D34CA8007B8C3C /* BSDNumberInlet.m */; };
 		F2EB85E719D34EE8007B8C3C /* BSDStringInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85E619D34EE8007B8C3C /* BSDStringInlet.m */; };
@@ -507,6 +511,10 @@
 		F241578A19CB8EEF003E32CA /* BSDNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDNumber.h; sourceTree = "<group>"; };
 		F241578B19CB8EEF003E32CA /* BSDNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDNumber.m; sourceTree = "<group>"; };
 		F2415F461A26D6880070C1FB /* mandelbrot.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = mandelbrot.fsh; sourceTree = "<group>"; };
+		F24A394D1A6728EA001EE5FF /* BSDViewControllerRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDViewControllerRoot.h; sourceTree = "<group>"; };
+		F24A394E1A6728EA001EE5FF /* BSDViewControllerRoot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDViewControllerRoot.m; sourceTree = "<group>"; };
+		F24A39501A67331E001EE5FF /* BSDDisplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDDisplayManager.h; sourceTree = "<group>"; };
+		F24A39511A67331E001EE5FF /* BSDDisplayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDDisplayManager.m; sourceTree = "<group>"; };
 		F24A3B0319D0B9CF00FBA887 /* BSDType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDType.h; sourceTree = "<group>"; };
 		F24A3B0419D0B9CF00FBA887 /* BSDType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDType.m; sourceTree = "<group>"; };
 		F24A3B0619D0C11900FBA887 /* BSDAny2String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAny2String.h; sourceTree = "<group>"; };
@@ -575,6 +583,8 @@
 		F28C839C1A159C66007BB297 /* BlackBoxCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackBoxCategories.h; sourceTree = "<group>"; };
 		F2946D8D1A2D566700FBEE13 /* BSDTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTableView.h; sourceTree = "<group>"; };
 		F2946D8E1A2D566700FBEE13 /* BSDTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTableView.m; sourceTree = "<group>"; };
+		F2976C3C1A65FEAA00FE6960 /* NSString+BSD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+BSD.h"; sourceTree = "<group>"; };
+		F2976C3D1A65FEAA00FE6960 /* NSString+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+BSD.m"; sourceTree = "<group>"; };
 		F2A5A5041A64BEF500459331 /* BSDConstraintObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDConstraintObject.h; sourceTree = "<group>"; };
 		F2A5A5051A64BEF500459331 /* BSDConstraintObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDConstraintObject.m; sourceTree = "<group>"; };
 		F2AAF79E19C7CB97004EFE87 /* BSDPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPrint.h; sourceTree = "<group>"; };
@@ -660,6 +670,8 @@
 		F2CFDF1619DCFF5400A156DB /* toolbar_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_add.png; sourceTree = "<group>"; };
 		F2D2E40F1A42672C007B51CE /* MyCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCloud.h; sourceTree = "<group>"; };
 		F2D2E4101A42672C007B51CE /* MyCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCloud.m; sourceTree = "<group>"; };
+		F2DB32C01A65ADA000806498 /* NSObject+TypeConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TypeConversion.h"; sourceTree = "<group>"; };
+		F2DB32C11A65ADA000806498 /* NSObject+TypeConversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TypeConversion.m"; sourceTree = "<group>"; };
 		F2E507BF1A37F66A008D67D9 /* BSDCPUMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDCPUMonitor.h; sourceTree = "<group>"; };
 		F2E507C01A37F66A008D67D9 /* BSDCPUMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCPUMonitor.m; sourceTree = "<group>"; };
 		F2EB85E219D34CA8007B8C3C /* BSDNumberInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDNumberInlet.h; sourceTree = "<group>"; };
@@ -871,6 +883,10 @@
 			children = (
 				F21E525419C51BC300E51383 /* NSValue+BSD.h */,
 				F21E525519C51BC300E51383 /* NSValue+BSD.m */,
+				F2DB32C01A65ADA000806498 /* NSObject+TypeConversion.h */,
+				F2DB32C11A65ADA000806498 /* NSObject+TypeConversion.m */,
+				F2976C3C1A65FEAA00FE6960 /* NSString+BSD.h */,
+				F2976C3D1A65FEAA00FE6960 /* NSString+BSD.m */,
 			);
 			path = "Class Categories";
 			sourceTree = "<group>";
@@ -1209,6 +1225,8 @@
 				F286235A1A32426B005737EE /* BSDimages2Gif.m */,
 				F2A5A5041A64BEF500459331 /* BSDConstraintObject.h */,
 				F2A5A5051A64BEF500459331 /* BSDConstraintObject.m */,
+				F24A394D1A6728EA001EE5FF /* BSDViewControllerRoot.h */,
+				F24A394E1A6728EA001EE5FF /* BSDViewControllerRoot.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1404,6 +1422,8 @@
 				F2F5132219B8D97C00323096 /* BSDRootViewController.m */,
 				F202D2171A1BE6DC00AED9C7 /* BSDPatchManager.h */,
 				F202D2181A1BE6DC00AED9C7 /* BSDPatchManager.m */,
+				F24A39501A67331E001EE5FF /* BSDDisplayManager.h */,
+				F24A39511A67331E001EE5FF /* BSDDisplayManager.m */,
 				F202D21A1A1C1A9D00AED9C7 /* BSDDisplayViewController.h */,
 				F202D21B1A1C1A9D00AED9C7 /* BSDDisplayViewController.m */,
 				F2AAF7A419C7FB4B004EFE87 /* BSDCanvasViewController.h */,
@@ -1778,6 +1798,7 @@
 				F22FF24D1A648DD400C6EC52 /* BSDClassMethod.m in Sources */,
 				F24A3B0B19D0CB0200FBA887 /* BSDSplitDictionary.m in Sources */,
 				F2F5139219B927A700323096 /* BSDObjectDescription.m in Sources */,
+				F2DB32C21A65ADA000806498 /* NSObject+TypeConversion.m in Sources */,
 				F2EB860519D5034B007B8C3C /* BSDCollectionInlet.m in Sources */,
 				F2597D731A303ACD0015C057 /* BSDShader.m in Sources */,
 				F21E532819C51BC300E51383 /* BSDDistanceFrom2DPoint.m in Sources */,
@@ -1818,6 +1839,7 @@
 				F21E532919C51BC300E51383 /* BSDIntersect2Circles.m in Sources */,
 				F21E530F19C51BC300E51383 /* BSDSwap.m in Sources */,
 				F21E530819C51BC300E51383 /* BSDAddKey.m in Sources */,
+				F24A394F1A6728EA001EE5FF /* BSDViewControllerRoot.m in Sources */,
 				F21E50DD19C433ED00E51383 /* UIColor+HBVHarmonies.m in Sources */,
 				F21E533719C51BC300E51383 /* BSDClipHard.m in Sources */,
 				F21E533019C51BC300E51383 /* BSDRectSplit.m in Sources */,
@@ -1827,6 +1849,7 @@
 				F21E531D19C51BC300E51383 /* BSDReciprocal.m in Sources */,
 				F2CFDEB019DA1E7800A156DB /* BSDAnimation.m in Sources */,
 				F283A1FD19CA0709005CC98B /* BSDPatchOutlet.m in Sources */,
+				F2976C3E1A65FEAA00FE6960 /* NSString+BSD.m in Sources */,
 				F21E532719C51BC300E51383 /* BSDDistance2D.m in Sources */,
 				F21E531519C51BC300E51383 /* BSDObject.m in Sources */,
 				F21E531F19C51BC300E51383 /* BSDEqual.m in Sources */,
@@ -1896,6 +1919,7 @@
 				F21E4C5819C8FF4900D20D60 /* BSDGPS.m in Sources */,
 				F283A1FA19CA06DF005CC98B /* BSDPatchInlet.m in Sources */,
 				F21E532C19C51BC300E51383 /* BSDTan.m in Sources */,
+				F24A39521A67331E001EE5FF /* BSDDisplayManager.m in Sources */,
 				F2CFDEEB19DC8D8800A156DB /* BSDLoadBang.m in Sources */,
 				F21E530C19C51BC300E51383 /* BSDSelect.m in Sources */,
 				F21E532019C51BC300E51383 /* BSDEqualGreater.m in Sources */,
@@ -2032,7 +2056,7 @@
 				INFOPLIST_FILE = BlackBox.UI/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BlackBox.UI;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2050,7 +2074,7 @@
 				INFOPLIST_FILE = BlackBox.UI/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BlackBox.UI;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

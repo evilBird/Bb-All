@@ -7,6 +7,7 @@
 //
 
 #import "BSDMessage.h"
+#import "NSString+BSD.h"
 
 @interface BSDMultipleReturnFlag : NSObject
 @property (nonatomic,strong)NSString *command;
@@ -59,7 +60,9 @@ typedef id (^ArgHandler)(id);
     if (hot == nil) {
         return;
     }
-    id output = [self outputFromInput:hot];
+    id output = nil;
+    output = [self outputFromInput:hot];
+    
     if (!output) {
         return;
     }
@@ -224,6 +227,11 @@ typedef id (^ArgHandler)(id);
     if ([text isEqualToString:@" "]) {
         return @[text];
     }
+    
+    if ([text isStringLiteral]) {
+        return [text stringFromLiteral];
+    }
+    
     /*
     if ([[text substringToIndex:1] isEqualToString:@"\""] && [[text substringToIndex:text.length]isEqualToString:@"\""]) {
         NSString *s1 = [text stringByReplacingOccurrencesOfString:@"\"" withString:@""];
@@ -231,7 +239,8 @@ typedef id (^ArgHandler)(id);
         NSString *s2 = [s1 stringByReplacingOccurrencesOfString:@"\"" withString:@""];
         return @[s2];
     }
-    */
+     */
+    
     NSMutableArray *result = nil;
     NSArray *components = [text componentsSeparatedByString:@" "];
     for (NSString *aComponent in components) {

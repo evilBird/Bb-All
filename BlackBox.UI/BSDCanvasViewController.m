@@ -14,6 +14,7 @@
 #import "BSDDisplayViewController.h"
 #import "BSDNestedPatchTableViewController.h"
 #import "NSDictionary+BSDUtils.h"
+#import "BSDViewControllerRoot.h"
 
 @interface BSDCanvasViewController ()<UIScrollViewDelegate,UITableViewDelegate,BSDNestedPatchTableViewControllerDelegate,BSDDisplayViewControllerDelegate>
 {
@@ -680,6 +681,7 @@
             d.delegate = self;
             [d.view insertSubview:self.displayView belowSubview:d.closeDisplayButton];
             self.displayView.backgroundColor = [UIColor whiteColor];
+            
         }
     }else if ([segue.identifier isEqualToString:@"ShowCanvasForChildPatch"]){
         id dest = segue.destinationViewController;

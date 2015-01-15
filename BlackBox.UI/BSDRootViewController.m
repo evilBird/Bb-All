@@ -13,6 +13,7 @@
 #import <MessageUI/MessageUI.h>
 #import "BSDPatchManager.h"
 #import "MyCloud.h"
+#import "BSDDisplayManager.h"
 
 static BOOL kCloudIsReady = NO;
 
@@ -52,6 +53,7 @@ static BOOL kCloudIsReady = NO;
     if (!kInitialized) {
         kInitialized = YES;
         [self showInitialCanvas];
+        [BSDDisplayManager sharedInstance];
         NSLog(@"showing initial canvas");
     }
 }

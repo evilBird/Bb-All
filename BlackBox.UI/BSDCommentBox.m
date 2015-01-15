@@ -28,9 +28,9 @@
         _textField.autocorrectionType = UITextAutocorrectionTypeNo;
         _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _textField.keyboardType = UIKeyboardTypeDefault;
-        self.defaultColor = [UIColor whiteColor];
+        self.defaultColor = [UIColor clearColor];
 
-        self.selectedColor = [UIColor colorWithWhite:1 alpha:1];
+        self.selectedColor = [UIColor colorWithWhite:1 alpha:0.1];
         self.currentColor = self.defaultColor;
         self.backgroundColor = self.currentColor;
         self.layer.borderColor = self.selectedColor.CGColor;
@@ -47,10 +47,12 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    /*
     if ([text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].length > 0) {
         [textView endEditing:YES];
         return NO;
     }
+     */
     return YES;
 }
 
@@ -123,12 +125,19 @@
 - (CGSize)sizeForText:(NSString *)text
 {
     UITextView *textView = [UITextView new];
-    textView.frame = self.textField.frame;
+    CGRect frame = self.textField.frame;
+    frame.size.width = [self maxWidth];
+    textView.frame = frame;
     textView.font = self.textField.font;
     textView.text = text;
     textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [textView sizeToFit];
     return textView.frame.size;
+}
+
+- (CGFloat)maxWidth
+{
+    return 320.;
 }
 
 - (void)resizeToFitText:(NSString *)messageText

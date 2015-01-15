@@ -202,7 +202,8 @@
     NSInteger diff = message.length - quotesRemoved.length;
     if (diff == 2) {
         self.argString = message;
-        return quotesRemoved;
+        return message;
+        //return quotesRemoved;
     }
     
     NSMutableArray *result = [NSMutableArray array];

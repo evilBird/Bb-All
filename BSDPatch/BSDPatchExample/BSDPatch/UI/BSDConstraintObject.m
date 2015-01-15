@@ -141,6 +141,7 @@
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"align 2 super";
+    self.coldInlet.value = @(0);
 }
 
 - (void)calculateOutput

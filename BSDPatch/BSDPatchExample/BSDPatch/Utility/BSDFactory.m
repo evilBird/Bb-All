@@ -13,6 +13,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
+#import "NSObject+TypeConversion.h"
 
 @interface BSDFactory ()
 
@@ -91,8 +92,8 @@
     self.myInstance = nil;
     self.myInstance = instance;
     SEL aSelector = NSSelectorFromString(selectorName);
-    
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:aSelector]];
+    NSMethodSignature *methodSig = [c instanceMethodSignatureForSelector:aSelector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
     invocation.target = instance;
     invocation.selector = aSelector;
     
@@ -112,7 +113,12 @@
         }else{
             if ([creationArgs isKindOfClass:[NSValue class]]) {
                 NSValue *val = creationArgs;
-                [invocation setArgument:&val atIndex:2];
+                if ([NSObject methodSignature:methodSig argumentAtIndexReturnsRect:2]) {
+                    CGRect rectVal = [NSObject rectFromObjectArg:val];
+                    [invocation setArgument:&rectVal atIndex:2];
+                }else{
+                    [invocation setArgument:&val atIndex:2];
+                }
             }else{
                 [invocation setArgument:&creationArgs atIndex:2];
             }

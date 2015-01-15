@@ -653,7 +653,7 @@
     }else if ([type isEqualToString:@"BSDBangControlBox"]){
         return CGRectMake(100, 100, 60, 60);
     }else if ([type isEqualToString:@"BSDCommentBox"]){
-        return CGRectMake(100, 100, 200, 200);
+        return CGRectMake(100, 100, 320, 200);
     }else if ([type isEqualToString:@"BSDInletBox"]){
         return CGRectMake(100, 100, 80, 44);
     }else if ([type isEqualToString:@"BSDOutletBox"]){

@@ -33,20 +33,20 @@
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"color";
-    BSDNumberInlet *redInlet = [[BSDNumberInlet alloc]initHot];
+    BSDInlet *redInlet = [[BSDInlet alloc]initHot];
     redInlet.name = @"red";
     redInlet.delegate = self;
     [self addPort:redInlet];
     
-    BSDNumberInlet *greenInlet = [[BSDNumberInlet alloc]initHot];
+    BSDInlet *greenInlet = [[BSDInlet alloc]initCold];
     greenInlet.name = @"green";
     [self addPort:greenInlet];
     
-    BSDNumberInlet *blueInlet = [[BSDNumberInlet alloc]initHot];
+    BSDInlet *blueInlet = [[BSDInlet alloc]initCold];
     blueInlet.name = @"blue";
     [self addPort:blueInlet];
     
-    BSDNumberInlet *alphaInlet = [[BSDNumberInlet alloc]initHot];
+    BSDInlet *alphaInlet = [[BSDInlet alloc]initCold];
     alphaInlet.name = @"alpha";
     [self addPort:alphaInlet];
     
@@ -57,10 +57,10 @@
         blueInlet.value = args[2];
         alphaInlet.value = args[3];
     }else{
-        redInlet.value = @(1);
-        blueInlet.value = @(1);
-        greenInlet.value = @(1);
-        alphaInlet.value = @(1);
+        redInlet.value = @(1.);
+        blueInlet.value = @(1.);
+        greenInlet.value = @(1.);
+        alphaInlet.value = @(1.);
     }
 }
 
@@ -82,26 +82,23 @@
     }
 }
 
-- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
-{
-    [self calculateOutput];
-}
-
 - (void)calculateOutput
 {
-    self.mainOutlet.value = [self currentColor];
+    UIColor *output = nil;
+    output = [self currentColor];
+    [self.mainOutlet output:output];
 }
 
 - (UIColor *)currentColor
 {
-    double r = [[[self inletNamed:@"red"]value]doubleValue];
-    double g = [[[self inletNamed:@"green"]value]doubleValue];
-    double b = [[[self inletNamed:@"blue"]value]doubleValue];
-    double a = [[[self inletNamed:@"alpha"]value]doubleValue];
-    return [UIColor colorWithRed:r
-                           green:g
-                            blue:b
-                           alpha:a];
+    UIColor *color =[UIColor colorWithRed:[[(BSDInlet *)self.inlets[0] value] floatValue]
+                                    green:[[(BSDInlet *)self.inlets[1] value] floatValue]
+                                     blue:[[(BSDInlet *)self.inlets[2] value] floatValue]
+                                      alpha:[[(BSDInlet *)self.inlets[3] value] floatValue]
+                     ];
+    
+
+    return color;
 }
 
 @end

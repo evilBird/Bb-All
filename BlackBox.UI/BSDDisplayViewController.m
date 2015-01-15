@@ -8,12 +8,30 @@
 
 #import "BSDDisplayViewController.h"
 #import "BSDCanvasViewController.h"
+#import "BSDDisplayManager.h"
 
 @implementation BSDDisplayViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[BSDDisplayManager sharedInstance]addDisplayViewController:self];
+}
 
 - (IBAction)tapInCloseDisplayButton:(id)sender {
     
     [self.delegate hideDisplayViewController:self];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[BSDDisplayManager sharedInstance]removeDisplayViewController:self];
 }
 
 @end

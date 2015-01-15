@@ -11,6 +11,7 @@
 #import "BSDPatchManager.h"
 #import "MyCloud.h"
 #import "BSDObjects.h"
+#import "BSDMessageBox.h"
 
 @interface BlackBox_UITests : XCTestCase
 
@@ -37,13 +38,14 @@
     XCTAssert(YES, @"Pass");
 }
 
-- (void)testPinToSuper
+- (void)testStringFormatting
 {
-    BSDPinEdgeToSuper *obj = [[BSDPinEdgeToSuper alloc]init];
-    [obj.hotInlet input:@(1)];
-    InstallConstraintsOnViewBlock block = [obj.mainOutlet.value copy];
-    XCTAssertNotNil(block,@"block should not be nil");
-    block(nil,nil,nil);
+    BSDMessageBox *message = [[BSDMessageBox alloc]initWithFrame:CGRectZero];
+    [message initializeWithText:@"\"this is a string\""];
+    [[message.object hotInlet] input:[BSDBang bang]];
+    id output = [[message.object mainOutlet].value copy];
+    XCTAssertNotNil(output, @"output should not be nil");
+    XCTAssertTrue([output isKindOfClass:[NSString class]],@"output must be string type %@",NSStringFromClass([output class]));
 }
 
 - (void)testClassMethod

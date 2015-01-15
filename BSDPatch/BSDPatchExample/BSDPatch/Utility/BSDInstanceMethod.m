@@ -24,8 +24,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"method";
-    
+    self.name = @"i method";    
     self.selectorInlet = [[BSDStringInlet alloc]initCold];
     self.selectorInlet.name = @"selector";
     [self addPort:self.selectorInlet];

@@ -19,7 +19,7 @@
 
 - (BSDInlet *)makeRightInlet
 {
-    BSDInlet *inlet = [[BSDArrayInlet alloc]initCold];
+    BSDInlet *inlet = [[BSDStringInlet alloc]initCold];
     inlet.name = @"cold";
     inlet.objectId = self.objectId;
     inlet.delegate = self;
@@ -28,7 +28,7 @@
 
 - (BSDInlet *)makeLeftInlet
 {
-    BSDInlet *inlet = [[BSDStringInlet alloc]initHot];
+    BSDInlet *inlet = [[BSDArrayInlet alloc]initHot];
     inlet.name = @"hot";
     inlet.objectId = self.objectId;
     inlet.delegate = self;
@@ -42,18 +42,18 @@
 
 - (void)calculateOutput
 {
-    NSString *hot = self.hotInlet.value;
-    NSArray *cold = self.coldInlet.value;
+    NSArray *hot = self.hotInlet.value;
+    NSString *cold = self.coldInlet.value;
     
-    if (!hot || ![hot isKindOfClass:[NSString class]]) {
+    if (!hot || ![hot isKindOfClass:[NSArray class]]) {
         return;
     }
-    if (!cold || ![cold isKindOfClass:[NSArray class]]) {
+    if (!cold || ![cold isKindOfClass:[NSString class]]) {
         return;
     }
     
-    NSString *formatString = [NSString stringWithString:hot];
-    NSArray *args = cold.mutableCopy;
+    NSString *formatString = [NSString stringWithString:cold];
+    NSArray *args = hot.mutableCopy;
     NSPredicate *output = [self predicateWithFormatString:formatString arguments:args];
     [self.mainOutlet output:output];
 }

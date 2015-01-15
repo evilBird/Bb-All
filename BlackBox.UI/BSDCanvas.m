@@ -915,7 +915,7 @@
 
 - (BSDCommentBox *)newCommentBoxAtPoint:(CGPoint)point
 {
-    CGRect rect = CGRectMake(100, 100, 200, 200);
+    CGRect rect = CGRectMake(100, 100, 320, 200);
     BSDCommentBox *commentBox = [[BSDCommentBox alloc]initWithFrame:rect];
     commentBox.delegate = self;
     commentBox.center = point;
