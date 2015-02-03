@@ -17,6 +17,7 @@
         InstallConstraintsOnViewBlock block = [BSDConstraintObject removeConstraints];
         NSArray *output = @[kContraintsKey,[block copy]];
         [self.mainOutlet output:output];
+        NSLog(@"send remove constrstraints");
         return;
     }
 }
@@ -112,21 +113,24 @@
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"pin 2 super";
+    [self.coldInlet input:@(0)];
 }
 
 - (void)calculateOutput
 {
-    [super calculateOutput];
+    //[super calculateOutput];
     
     NSNumber *sideVal = self.hotInlet.value;
     NSNumber *insetVal = self.coldInlet.value;
     ALEdge edge = [BSDConstraintObject edgeForNumber:sideVal];
     CGFloat inset = [insetVal floatValue];
-    InstallConstraintsOnViewBlock block = ^(UIView *view){
+    InstallConstraintsOnViewBlock block = NULL;
+    block = ^(UIView *view){
         [view autoPinEdgeToSuperviewEdge:edge withInset:inset];
     };
     NSArray *output = @[kContraintsKey,[block copy]];
     [self.mainOutlet output:output];
+    NSLog(@"sent real constraints");
 }
 
 @end

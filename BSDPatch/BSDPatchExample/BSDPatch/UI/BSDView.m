@@ -10,6 +10,16 @@
 #import "BSDStringInlet.h"
 #import <objc/runtime.h>
 #import "BSDObjects.h"
+#import "NSInvocation+Bb.h"
+
+@interface BSDView ()
+
+{
+    //InstallConstraintsOnViewBlock installConstraintsOnView;
+    //BOOL kInstallConstraints;
+}
+
+@end
 
 @implementation BSDView
 
@@ -20,6 +30,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
+    //kInstallConstraints = NO;
     self.name = [self displayName];
     
     self.viewInlet = [[BSDInlet alloc]initHot];
@@ -141,7 +152,7 @@
         [layer addAnimation:animation forKey:animation.keyPath];
         [layer setValue:animation.toValue forKey:animation.keyPath];
     }else if ([a isKindOfClass:[CAKeyframeAnimation class]]){
-        CAKeyframeAnimation *animation = self.animationInlet.value;
+        CAKeyframeAnimation *animation = [self.animationInlet.value copy];
         UIView *myView = self.viewInlet.value;
         [myView.layer addAnimation:animation forKey:animation.keyPath];
         [myView.layer setValue:animation.values.lastObject forKey:animation.keyPath];
@@ -151,19 +162,8 @@
 - (void)addConstaintWithArgs:(NSArray *)args
 {
     InstallConstraintsOnViewBlock constraintsBlock = args.firstObject;
-    UIView *view = self.viewInlet.value;
+    UIView *view = self.view;
     constraintsBlock(view);
-    /*
-    if ([type isEqualToString:kPinEdgeToSuperKey]) {
-        UIView *view = self.viewInlet.value;
-        InstallConstraintsOnViewBlock block = args[1];
-        block(view);
-        return;
-    }
-    if ([type isEqualToString:kAlignAxisToSuperKey]) {
-        
-    }
-     */
 }
 
 - (void)doSelectorWithArray:(NSArray *)array
@@ -200,15 +200,15 @@
     
     Class c = [myView class];
     
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:selector]];
+    NSMethodSignature *methodSig = [c instanceMethodSignatureForSelector:selector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
     invocation.target = myView;
     invocation.selector = selector;
     
     if (args != nil) {
         for (NSUInteger idx = 0; idx < args.count; idx ++) {
-            NSInteger argIdx = 2+idx;
-            id myArg = args[idx];
-            [invocation setArgument:&myArg atIndex:argIdx];
+            id arg = args[idx];
+            [invocation setArgumentWithObject:arg atIndex:idx];
         }
     }
     

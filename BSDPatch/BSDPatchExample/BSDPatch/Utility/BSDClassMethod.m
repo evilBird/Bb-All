@@ -7,6 +7,7 @@
 //
 
 #import "BSDClassMethod.h"
+#import "NSInvocation+Bb.h"
 
 @interface BSDClassMethod()
 
@@ -51,6 +52,9 @@
     if (!className || !selectorName) {
         return;
     }
+    if (![arguments isKindOfClass:[NSArray class]]) {
+        arguments = [NSArray arrayWithObject:self.argumentsInlet.value];
+    }
     
     id output =[self doSelectorWithClassName:className selectorName:[NSString stringWithString:selectorName] arguments:[NSMutableArray arrayWithArray:arguments]];
     
@@ -79,8 +83,11 @@
         
         for (NSInteger idx = 0; idx < arguments.count; idx++) {
             id arg = arguments[idx];
-            NSInteger maxIdx = [methodSig numberOfArguments];
-            NSInteger argIdx = idx + 2;
+            [invocation setArgumentWithObject:arg atIndex:idx];
+            //NSInteger maxIdx = [methodSig numberOfArguments];
+            
+            //NSInteger argIdx = idx + 2;
+            /*
             if (argIdx < maxIdx) {
                 NSString *argType = [NSString stringWithUTF8String:[methodSig getArgumentTypeAtIndex:argIdx]];
                 NSLog(@"arg type: %@",argType);
@@ -100,6 +107,7 @@
                     [invocation setArgument:&a atIndex:(2+idx)];
                 }
             }
+             */
         }
     }
     
@@ -109,7 +117,8 @@
     if (![returnType isEqualToString:@"v"] && [returnType isEqualToString:@"@"]) {
         void *returnVal = nil;
         [invocation getReturnValue:&returnVal];
-        result = (__bridge NSObject *)returnVal;
+        result = [(__bridge NSObject *)returnVal copy];
+        //free(returnVal);
     }
     
     return result;

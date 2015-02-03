@@ -184,7 +184,7 @@
 {
     NSDictionary *changeInfo = notification.object;
     id val = changeInfo[@"value"];
-    if (val) {
+    if (val && ![val isKindOfClass:[BSDBang class]]) {
         self.textField.text = val;
         //self.textField.text = [self formatValue:val];
         [self resizeForText:self.textField.text];

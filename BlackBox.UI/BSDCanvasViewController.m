@@ -662,6 +662,7 @@
     }else{
         [self dismissViewControllerAnimated:YES completion:NULL];
     }
+    
     [[NSOperationQueue mainQueue]addOperationWithBlock:^{
         [self loadDescriptionWithName:patchName];
     }];
@@ -723,14 +724,25 @@
 
 - (IBAction)handleLogControlPan:(id)sender {
     
+    static CGFloat prevConst;
+    
     UIPanGestureRecognizer *pan = sender;
     if (pan.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [pan translationInView:pan.view];
         CGFloat constant = self.logViewHeight.constant;
         constant -= (translation.y);
-        if (constant < 100) {
-            constant = 100;
+        if (constant < 200) {
+            constant = 0;
+        }else{
+            constant = self.view.bounds.size.height;
         }
+        
+        if (constant == prevConst) {
+            return;
+        }
+        
+        prevConst = constant;
+        
         [UIView animateWithDuration:0.1
                          animations:^{
                              self.logViewHeight.constant = constant;

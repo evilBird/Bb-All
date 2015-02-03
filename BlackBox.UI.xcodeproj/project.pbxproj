@@ -20,6 +20,14 @@
 		F2079AD91A5E57CE00D9B608 /* BSDJSObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F2079AD71A5E57CE00D9B608 /* BSDJSObject.m */; };
 		F20D1A121A0B424500710F3A /* BSDSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = F20D1A111A0B424500710F3A /* BSDSortDescriptor.m */; };
 		F20D1A151A0B4D2200710F3A /* BSDPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = F20D1A141A0B4D2200710F3A /* BSDPredicate.m */; };
+		F21183611A79800D00B4F53F /* droplets.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183601A79800D00B4F53F /* droplets.png */; };
+		F211836A1A79AC6600B4F53F /* mandelbrot.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183631A79AC6600B4F53F /* mandelbrot.png */; };
+		F211836B1A79AC6600B4F53F /* phi.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183641A79AC6600B4F53F /* phi.png */; };
+		F211836C1A79AC6600B4F53F /* beach.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183651A79AC6600B4F53F /* beach.png */; };
+		F211836D1A79AC6600B4F53F /* shiba.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183661A79AC6600B4F53F /* shiba.png */; };
+		F211836E1A79AC6600B4F53F /* bird.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183671A79AC6600B4F53F /* bird.png */; };
+		F211836F1A79AC6600B4F53F /* city.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183681A79AC6600B4F53F /* city.png */; };
+		F21183701A79AC6600B4F53F /* frog.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183691A79AC6600B4F53F /* frog.png */; };
 		F21A5B5E19DF86BA00E6F21B /* BSDPatchDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */; };
 		F21A5B6119E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */; };
 		F21BAEC31A1AAD1500F20FDD /* BSDTextMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F21BAEC21A1AAD1500F20FDD /* BSDTextMessage.m */; };
@@ -164,6 +172,9 @@
 		F28C807119E3B1C7001A578C /* BSDPatchCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C807019E3B1C7001A578C /* BSDPatchCompiler.m */; };
 		F2946D8F1A2D566700FBEE13 /* BSDTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2946D8E1A2D566700FBEE13 /* BSDTableView.m */; };
 		F2976C3E1A65FEAA00FE6960 /* NSString+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = F2976C3D1A65FEAA00FE6960 /* NSString+BSD.m */; };
+		F29EBE861A7A0E6C0070C7BF /* NSInvocation+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F29EBE841A7A0E6C0070C7BF /* NSInvocation+Bb.m */; };
+		F29EBE891A7A0E9D0070C7BF /* NSString+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F29EBE881A7A0E9D0070C7BF /* NSString+Bb.m */; };
+		F29EBE8C1A7A0FDF0070C7BF /* NSObject+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F29EBE8B1A7A0FDF0070C7BF /* NSObject+Bb.m */; };
 		F2A5A5061A64BEF500459331 /* BSDConstraintObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A5A5051A64BEF500459331 /* BSDConstraintObject.m */; };
 		F2AAF7A019C7CB97004EFE87 /* BSDPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF79F19C7CB97004EFE87 /* BSDPrint.m */; };
 		F2AAF7A319C7DD16004EFE87 /* BSDRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A219C7DD16004EFE87 /* BSDRandom.m */; };
@@ -302,6 +313,14 @@
 		F20D1A111A0B424500710F3A /* BSDSortDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDSortDescriptor.m; sourceTree = "<group>"; };
 		F20D1A131A0B4D2200710F3A /* BSDPredicate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPredicate.h; sourceTree = "<group>"; };
 		F20D1A141A0B4D2200710F3A /* BSDPredicate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPredicate.m; sourceTree = "<group>"; };
+		F21183601A79800D00B4F53F /* droplets.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = droplets.png; sourceTree = "<group>"; };
+		F21183631A79AC6600B4F53F /* mandelbrot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mandelbrot.png; sourceTree = "<group>"; };
+		F21183641A79AC6600B4F53F /* phi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phi.png; sourceTree = "<group>"; };
+		F21183651A79AC6600B4F53F /* beach.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beach.png; sourceTree = "<group>"; };
+		F21183661A79AC6600B4F53F /* shiba.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shiba.png; sourceTree = "<group>"; };
+		F21183671A79AC6600B4F53F /* bird.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird.png; sourceTree = "<group>"; };
+		F21183681A79AC6600B4F53F /* city.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = city.png; sourceTree = "<group>"; };
+		F21183691A79AC6600B4F53F /* frog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frog.png; sourceTree = "<group>"; };
 		F21A5B5C19DF86BA00E6F21B /* BSDPatchDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchDescription.h; sourceTree = "<group>"; };
 		F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchDescription.m; sourceTree = "<group>"; };
 		F21A5B5F19E0AF4F00E6F21B /* BSDPatchDescriptionUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchDescriptionUtility.h; sourceTree = "<group>"; };
@@ -585,6 +604,12 @@
 		F2946D8E1A2D566700FBEE13 /* BSDTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTableView.m; sourceTree = "<group>"; };
 		F2976C3C1A65FEAA00FE6960 /* NSString+BSD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+BSD.h"; sourceTree = "<group>"; };
 		F2976C3D1A65FEAA00FE6960 /* NSString+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+BSD.m"; sourceTree = "<group>"; };
+		F29EBE841A7A0E6C0070C7BF /* NSInvocation+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Bb.m"; sourceTree = "<group>"; };
+		F29EBE851A7A0E6C0070C7BF /* NSInvocation+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Bb.h"; sourceTree = "<group>"; };
+		F29EBE871A7A0E9D0070C7BF /* NSString+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Bb.h"; sourceTree = "<group>"; };
+		F29EBE881A7A0E9D0070C7BF /* NSString+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Bb.m"; sourceTree = "<group>"; };
+		F29EBE8A1A7A0FDF0070C7BF /* NSObject+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Bb.h"; sourceTree = "<group>"; };
+		F29EBE8B1A7A0FDF0070C7BF /* NSObject+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Bb.m"; sourceTree = "<group>"; };
 		F2A5A5041A64BEF500459331 /* BSDConstraintObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDConstraintObject.h; sourceTree = "<group>"; };
 		F2A5A5051A64BEF500459331 /* BSDConstraintObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDConstraintObject.m; sourceTree = "<group>"; };
 		F2AAF79E19C7CB97004EFE87 /* BSDPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPrint.h; sourceTree = "<group>"; };
@@ -800,6 +825,13 @@
 			);
 			name = Javascript;
 			path = ../../..;
+			sourceTree = "<group>";
+		};
+		F21183621A79AC4F00B4F53F /* pics */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = pics;
 			sourceTree = "<group>";
 		};
 		F21E523219C51BC300E51383 /* BSDPatch */ = {
@@ -1193,6 +1225,12 @@
 				F21E52EA19C51BC300E51383 /* BSDVideoLayer.m */,
 				F21E52EB19C51BC300E51383 /* BSDView.h */,
 				F21E52EC19C51BC300E51383 /* BSDView.m */,
+				F29EBE8A1A7A0FDF0070C7BF /* NSObject+Bb.h */,
+				F29EBE8B1A7A0FDF0070C7BF /* NSObject+Bb.m */,
+				F29EBE871A7A0E9D0070C7BF /* NSString+Bb.h */,
+				F29EBE881A7A0E9D0070C7BF /* NSString+Bb.m */,
+				F29EBE851A7A0E6C0070C7BF /* NSInvocation+Bb.h */,
+				F29EBE841A7A0E6C0070C7BF /* NSInvocation+Bb.m */,
 				F2CFDEE619DBAA2500A156DB /* BSDScreen.h */,
 				F2CFDEE719DBAA2500A156DB /* BSDScreen.m */,
 				F21E52E319C51BC300E51383 /* BSDImageView.h */,
@@ -1482,6 +1520,15 @@
 				F28C839C1A159C66007BB297 /* BlackBoxCategories.h */,
 				F202D2141A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.h */,
 				F202D2151A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.m */,
+				F21183631A79AC6600B4F53F /* mandelbrot.png */,
+				F21183641A79AC6600B4F53F /* phi.png */,
+				F21183651A79AC6600B4F53F /* beach.png */,
+				F21183661A79AC6600B4F53F /* shiba.png */,
+				F21183671A79AC6600B4F53F /* bird.png */,
+				F21183681A79AC6600B4F53F /* city.png */,
+				F21183691A79AC6600B4F53F /* frog.png */,
+				F21183601A79800D00B4F53F /* droplets.png */,
+				F21183621A79AC4F00B4F53F /* pics */,
 				F2CFDECA19DB3D2C00A156DB /* Assets */,
 				F2F5132419B8D97C00323096 /* Main.storyboard */,
 				F2F5132719B8D97C00323096 /* Images.xcassets */,
@@ -1611,8 +1658,10 @@
 				F2CFDF3019DCFF5400A156DB /* toolbar_cut@3x.png in Resources */,
 				F2CFDF3319DCFF5400A156DB /* toolbar_copy@3x.png in Resources */,
 				F2CFDF3619DCFF5400A156DB /* toolbar_back@3x.png in Resources */,
+				F211836D1A79AC6600B4F53F /* shiba.png in Resources */,
 				F2CFDF3B19DCFF5400A156DB /* toolbar_add.png in Resources */,
 				F2CFDF2319DCFF5400A156DB /* toolbar_paste.png in Resources */,
+				F211836A1A79AC6600B4F53F /* mandelbrot.png in Resources */,
 				F27D1FF11A0C3ACB0057EDFC /* SavedPatches.plist in Resources */,
 				F2CFDF2D19DCFF5400A156DB /* toolbar_delete@3x.png in Resources */,
 				F2CFDF2B19DCFF5400A156DB /* toolbar_edit@2x.png in Resources */,
@@ -1624,14 +1673,19 @@
 				F2CFDF1D19DCFF5400A156DB /* toolbar_save.png in Resources */,
 				F2CFDF1719DCFF5400A156DB /* toolbar_view@3xpng.png in Resources */,
 				F2CFDF2A19DCFF5400A156DB /* toolbar_edit@3x.png in Resources */,
+				F211836F1A79AC6600B4F53F /* city.png in Resources */,
+				F211836E1A79AC6600B4F53F /* bird.png in Resources */,
 				F2CFDF2C19DCFF5400A156DB /* toolbar_edit.png in Resources */,
+				F21183701A79AC6600B4F53F /* frog.png in Resources */,
 				F2CFDF2219DCFF5400A156DB /* toolbar_paste@2x.png in Resources */,
 				F2CFDF2619DCFF5400A156DB /* toolbar_load.png in Resources */,
 				F2CFDF3219DCFF5400A156DB /* toolbar_cut.png in Resources */,
 				F2CFDF2E19DCFF5400A156DB /* toolbar_delete@2x.png in Resources */,
 				F2CFDF3519DCFF5400A156DB /* toolbar_copy.png in Resources */,
 				F2CFDF3919DCFF5400A156DB /* toolbar_add@3x.png in Resources */,
+				F211836C1A79AC6600B4F53F /* beach.png in Resources */,
 				F2CFDF1B19DCFF5400A156DB /* toolbar_save@3x.png in Resources */,
+				F211836B1A79AC6600B4F53F /* phi.png in Resources */,
 				F2CFDF1F19DCFF5400A156DB /* toolbar_patch@2x.png in Resources */,
 				F2CFDF2119DCFF5400A156DB /* toolbar_paste@3x.png in Resources */,
 				F2CFDF3A19DCFF5400A156DB /* toolbar_add@2x.png in Resources */,
@@ -1644,6 +1698,7 @@
 				F2CFDF1819DCFF5400A156DB /* toolbar_view@2x.png in Resources */,
 				F2CFDF2F19DCFF5400A156DB /* toolbar_delete.png in Resources */,
 				F28094821A26724E00C3AFA1 /* k1.fsh in Resources */,
+				F21183611A79800D00B4F53F /* droplets.png in Resources */,
 				F2F5132619B8D97C00323096 /* Main.storyboard in Resources */,
 				F2CFDF1A19DCFF5400A156DB /* toolbar_view @2x.png in Resources */,
 				F2CFDF2519DCFF5400A156DB /* toolbar_load@2x.png in Resources */,
@@ -1740,6 +1795,7 @@
 				F21E50D419C3F63200E51383 /* BSDBox.m in Sources */,
 				F21E531719C51BC300E51383 /* BSDAdd.m in Sources */,
 				F2CFDEB919DA521800A156DB /* BSDDictionaryAccum.m in Sources */,
+				F29EBE8C1A7A0FDF0070C7BF /* NSObject+Bb.m in Sources */,
 				F202D21F1A1C1CC200AED9C7 /* BSDComment.m in Sources */,
 				F2079AD91A5E57CE00D9B608 /* BSDJSObject.m in Sources */,
 				F204D60419F71E7200175B24 /* BSDHSlider.m in Sources */,
@@ -1882,9 +1938,11 @@
 				F2AAF7A019C7CB97004EFE87 /* BSDPrint.m in Sources */,
 				F21E532E19C51BC300E51383 /* BSDPoint3D.m in Sources */,
 				F2CFDEBC19DA56B200A156DB /* BSDFormatRequest.m in Sources */,
+				F29EBE891A7A0E9D0070C7BF /* NSString+Bb.m in Sources */,
 				F2EB860819D54813007B8C3C /* BSDAffineTransform.m in Sources */,
 				F21E52FF19C51BC300E51383 /* BSDArrayPrepend.m in Sources */,
 				F2CFDEE319DB46DC00A156DB /* UIImage+Resize.m in Sources */,
+				F29EBE861A7A0E6C0070C7BF /* NSInvocation+Bb.m in Sources */,
 				F2F5132019B8D97C00323096 /* AppDelegate.m in Sources */,
 				F20D1A121A0B424500710F3A /* BSDSortDescriptor.m in Sources */,
 				F241578C19CB8EEF003E32CA /* BSDNumber.m in Sources */,

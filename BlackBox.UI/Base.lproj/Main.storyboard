@@ -125,14 +125,14 @@
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" minimumZoomScale="0.5" maximumZoomScale="1.25" translatesAutoresizingMaskIntoConstraints="NO" id="H07-8w-4YK">
-                                <rect key="frame" x="0.0" y="60" width="600" height="366"/>
+                                <rect key="frame" x="0.0" y="60" width="600" height="466"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="delegate" destination="rPs-ph-CJ4" id="7iZ-nL-zso"/>
                                 </connections>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wAY-in-ygd" userLabel="Log Controls">
-                                <rect key="frame" x="0.0" y="426" width="600" height="30"/>
+                                <rect key="frame" x="0.0" y="526" width="600" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDm-2F-0aB">
                                         <rect key="frame" x="538" y="0.0" width="46" height="30"/>
@@ -159,10 +159,9 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5dC-ia-FcY" userLabel="Log View" customClass="BSDLogView">
-                                <rect key="frame" x="0.0" y="456" width="600" height="100"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="JEZ-pF-UG3"/>
+                                    <constraint firstAttribute="height" id="JEZ-pF-UG3"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -262,7 +261,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Nfo-lD-4p8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="qmH-Te-XrP">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                        <rect key="frame" x="0.0" y="44" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ehh-BT-zoc" customClass="BSDCanvasToolbarView">
@@ -273,14 +272,14 @@
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" minimumZoomScale="0.5" maximumZoomScale="1.25" translatesAutoresizingMaskIntoConstraints="NO" id="wcz-ud-BoZ">
-                                <rect key="frame" x="0.0" y="60" width="600" height="366"/>
+                                <rect key="frame" x="0.0" y="60" width="600" height="410"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="delegate" destination="VAs-ef-8pA" id="RHX-GN-lEa"/>
                                 </connections>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRN-uV-3mR" userLabel="Log Controls">
-                                <rect key="frame" x="0.0" y="426" width="600" height="30"/>
+                                <rect key="frame" x="0.0" y="470" width="600" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DGD-Bv-C4T">
                                         <rect key="frame" x="534" y="0.0" width="46" height="30"/>
@@ -308,7 +307,7 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1xr-5d-7rV" userLabel="Log View" customClass="BSDLogView">
-                                <rect key="frame" x="0.0" y="456" width="600" height="100"/>
+                                <rect key="frame" x="0.0" y="500" width="600" height="100"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="akt-qA-LeF"/>
@@ -364,6 +363,6 @@
         <image name="toolbar_view .png" width="21" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="eTJ-qd-Ck2"/>
+        <segue reference="2B7-Xt-HVZ"/>
     </inferredMetricsTieBreakers>
 </document>

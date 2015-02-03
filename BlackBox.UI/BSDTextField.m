@@ -799,8 +799,11 @@
     
     predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] %@",word];
     filteredPatchList = [patchList filteredArrayUsingPredicate:predicate];
-    if (filteredPatchList && filteredPatchList.count) {
-        return [self trimPatchNameSuffix:filteredPatchList.firstObject];
+    NSSortDescriptor *lengthSort = [NSSortDescriptor sortDescriptorWithKey:@"length" ascending:YES];
+    NSArray *sorted = [filteredPatchList sortedArrayUsingDescriptors:@[lengthSort]];
+    
+    if (sorted && sorted.count) {
+        return [self trimPatchNameSuffix:sorted.firstObject];
     }
     
     return nil;

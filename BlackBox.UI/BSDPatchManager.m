@@ -14,6 +14,12 @@ static NSString *kUpdateHistoryKey = @"com.birdSound.bb.updateHistoryDictionary"
 
 static NSString *kLibName = @"bb_stdlib";
 
+@interface BSDPatchManager ()
+
+- (BOOL)stdLibIsInstalled;
+
+@end
+
 @implementation BSDPatchManager
 
 + (BSDPatchManager *)sharedInstance
@@ -81,6 +87,10 @@ static NSString *kLibName = @"bb_stdlib";
 - (void)savePatchDescription:(NSString *)patchDescription withName:(NSString *)name
 {
     NSDictionary *saved = [self savedPatches];
+    if (!saved) {
+        saved = [[NSDictionary alloc]init];
+    }
+    
     NSMutableDictionary *copy = saved.mutableCopy;
     [copy addObject:patchDescription atKeyPath:name];
     saved = copy;
@@ -136,6 +146,16 @@ static NSString *kLibName = @"bb_stdlib";
     
     return nil;
 
+}
+
+- (void)createStdLib
+{
+    
+}
+
+- (BOOL)stdLibIsInstalled
+{
+    return ([self savedPatches] != nil);
 }
 
 - (void)syncWithCloud

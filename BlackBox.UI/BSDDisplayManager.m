@@ -125,7 +125,9 @@ typedef void (^ManageDisplayBlock)(void);
         }
         
         if (!presenter.presentedViewController) {
-            [presenter presentViewController:viewController animated:YES completion:NULL];
+            [presenter presentViewController:viewController animated:YES completion:^{
+                [viewController.view layoutIfNeeded];
+            }];
         }
     };
 }
