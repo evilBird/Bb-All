@@ -103,7 +103,7 @@
 - (void)setupWithArguments:(id)arguments
 {
     [super setupWithArguments:arguments];
-    self.name = @"-";
+    self.name = @"*";
 }
 
 - (BbCalculateOutputBlock)calculateOutputForOutletAtIndex:(NSInteger)index

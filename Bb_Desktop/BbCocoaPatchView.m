@@ -14,6 +14,7 @@
 #import "BbCocoaObjectView.h"
 #import "BbObject+EntityParent.h"
 #import "BbPatch.h"
+#import "NSString+Bb.h"
 
 @implementation BbCocoaPatchView
 
@@ -30,7 +31,7 @@
     BbObjectViewConfiguration *config = [BbObjectViewConfiguration new];
     config.inlets = object.inlets.count;
     config.outlets = object.outlets.count;
-    config.text = object.className;
+    config.text = [NSString displayTextName:object.name args:description.BbObjectArgs];
     config.entityViewType = @"object";
     NSValue *centerValue = description.UICenter;
     CGPoint center;
@@ -43,8 +44,9 @@
 
 - (void)commonInit
 {
-    
-    self.entity = (BbEntity *)[[BbPatch alloc]initWithArguments:nil];
+    if (self.entity == nil) {
+        self.entity = (BbEntity *)[[BbPatch alloc]initWithArguments:nil];
+    }
 }
 
 - (NSColor *)defaultColor

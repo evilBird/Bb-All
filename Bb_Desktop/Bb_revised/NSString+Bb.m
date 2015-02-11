@@ -39,4 +39,48 @@ void printInts(int n,...)
     return nil;
 }
 
++ (NSString *)displayTextName:(NSString *)name args:(id)args
+{
+    if (!name) {
+        return nil;
+    }
+    
+    NSMutableString *result = [[NSMutableString alloc]init];
+    [result appendString:name];
+    if (!args) {
+        return result;
+    }
+    [result appendString:@" "];
+    [result appendString:[NSString stringWithArgs:args]];
+    return result;
+}
+
++ (NSString *)stringWithArgs:(id)args
+{
+    if ([args isKindOfClass:[NSArray class]]) {
+        return [NSString stringWithArray:args];
+    }else{
+        return [NSString stringWithFormat:@"%@",args];
+    }
+}
+
++ (NSString *)stringWithArray:(NSArray *)array
+{
+    if (!array) {
+        return @"";
+    }
+    
+    NSMutableString *result = [[NSMutableString alloc]init];
+    NSUInteger index = 0;
+    for (id arg in array) {
+        if (index > 0) {
+            [result appendString:@" "];
+        }
+        
+        [result appendFormat:@"%@",arg];
+    }
+    
+    return result;
+}
+
 @end
