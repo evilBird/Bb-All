@@ -10,8 +10,6 @@
 
 @interface BbPatch : BbObject
 
-- (void)addChildObject:(BbObject *)childObject;
-- (void)removeChildObject:(BbObject *)childObject;
 - (void)addChildObjectWithText:(NSString *)text;
 
 @end

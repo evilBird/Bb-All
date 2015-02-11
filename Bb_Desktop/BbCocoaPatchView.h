@@ -7,20 +7,25 @@
 //
 
 #import "BbCocoaEntityView.h"
-@class BbCocoaPortView,BbCocoaObjectView;
+@class BbCocoaPortView,BbCocoaObjectView,BbObject;
+
+typedef NSArray* (^BbCocoaPatchGetConnectionArray)(void);
+
 @interface BbCocoaPatchView : BbCocoaEntityView {
     
     CGPoint                kPreviousLoc;
     BbCocoaObjectView      *kSelectedObjectView;
-    BbCocoaPortView        *kSelectedPortView;
+    BbCocoaPortView        *kSelectedPortViewSender;
+    BbCocoaPortView        *kSelectedPortViewReceiver;
     id                     kInitView;
 }
 
+// a connection is a vector of the form: @[x1,y1,x2,y2]
 @property (nonatomic,strong)NSMutableSet *connections;
 // a connection is a vector of the form: @[x1,y1,x2,y2]
 @property (nonatomic,strong)NSArray *drawThisConnection;
-@property (nonatomic,strong)NSMutableSet *selectedPortViews;
+//@property (nonatomic,strong)NSMutableSet *selectedPortViews;
 
-- (void)addObjectAndViewWithText:(NSString *)text;
+- (BbObject *)addObjectAndViewWithText:(NSString *)text;
 
 @end

@@ -11,8 +11,11 @@
 #import "BbObject+Decoder.h"
 #import "BbCocoaObjectView.h"
 #import "BbCocoaPatchView.h"
-
+#import "BbUI.h"
 @interface ViewController ()
+{
+    CGPoint kFocusPoint;
+}
 
 @end
 
@@ -20,15 +23,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self testView];
     // Do any additional setup after loading the view.
 }
+
+- (void)viewDidAppear
+{
+    [super viewDidAppear];
+    kFocusPoint = [NSView centerForFrame:self.view.bounds];
+    [self testView];
+}
+
 - (void)testView
 {
-    NSString *toParse = [NSString stringWithFormat:@"#X obj 200 200 BbMultiply 8;\n"];
+    NSString *mult_desc = [NSString stringWithFormat:@"#X obj 400 400 BbMultiply 8;\n"];
     BbCocoaPatchView *patchView = (BbCocoaPatchView *)self.view;
-    [patchView addObjectAndViewWithText:toParse];
-    [self.view setNeedsLayout:YES];
+    BbObject *mult = [patchView addObjectAndViewWithText:mult_desc];
+    NSString *add_desc = [NSString stringWithFormat:@"X obj 300 300 BbAdd 4;\n"];
+    BbObject *add = [patchView addObjectAndViewWithText:add_desc];
+    [patchView refreshEntityView];
 }
 
 - (void)setRepresentedObject:(id)representedObject {

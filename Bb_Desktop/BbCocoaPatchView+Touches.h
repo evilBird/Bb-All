@@ -10,4 +10,6 @@
 
 @interface BbCocoaPatchView (Touches)
 
+- (void)mouseEntered:(NSEvent *)theEvent;
+
 @end

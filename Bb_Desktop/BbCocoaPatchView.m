@@ -19,13 +19,13 @@
 
 @implementation BbCocoaPatchView
 
-- (void)addObjectAndViewWithText:(NSString *)text
+- (BbObject *)addObjectAndViewWithText:(NSString *)text
 {
     BbObjectDescription *desc = (BbObjectDescription *)[BbBasicParser descriptionWithText:text];
-    [self addObjectAndViewWithDescription:desc];
+    return [self addObjectAndViewWithDescription:desc];
 }
 
-- (void)addObjectAndViewWithDescription:(BbObjectDescription *)description
+- (BbObject *)addObjectAndViewWithDescription:(BbObjectDescription *)description
 {
     BbObject *object = [BbObject objectWithDescription:description];
     BbObjectViewConfiguration *config = [BbObjectViewConfiguration new];
@@ -33,7 +33,6 @@
     config.outlets = object.outlets.count;
     config.text = [NSString displayTextName:object.name args:description.BbObjectArgs];
     config.entityViewType = description.UIType;
-    //config.entityViewType = @"object";
     NSValue *centerValue = description.UICenter;
     CGPoint center;
     [centerValue getValue:&center];
@@ -41,7 +40,6 @@
     BbCocoaObjectView *view = [BbCocoaObjectView viewWithConfiguration:config parentView:self];
     object.view = (id<BbEntityView>)view;
     view.entity = object;
-    
     for (NSUInteger i = 0; i<object.inlets.count; i++) {
         BbCocoaPortView *portview = view.inletViews[i];
         BbInlet *inlet = object.inlets[i];
@@ -57,6 +55,8 @@
     }
     
     [(BbPatch *)self.entity addChildObject:object];
+    
+    return object;
 }
 
 - (void)commonInit
@@ -96,9 +96,44 @@
     return self;
 }
 
+- (NSBezierPath *)connectionPathFromArray:(NSArray *)array
+{
+    if (!array || array.count != 4) {
+        return nil;
+    }
+    
+    CGFloat x1,y1,x2,y2;
+    x1 = [array[0] doubleValue];
+    y1 = [array[1] doubleValue];
+    x2 = [array[2] doubleValue];
+    y2 = [array[3] doubleValue];
+    
+    CGPoint point = CGPointMake(x1, y1);
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path moveToPoint:point];
+    point.x = x2;
+    point.y = y2;
+    [path lineToPoint:point];
+    
+    [path setLineWidth:4];
+    [[NSColor blackColor]setStroke];
+    
+    return path;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     [super drawRect:dirtyRect];
+    
+    NSMutableArray *connections = self.connections.allObjects.mutableCopy;
+    if (connections) {
+        NSLog(@"%@ connections",@(connections.count));
+        for (BbCocoaPatchGetConnectionArray block in connections) {
+            NSBezierPath *connectionPath = [self connectionPathFromArray:block()];
+            [connectionPath stroke];
+        }
+    }
+    
     if (!self.drawThisConnection || self.drawThisConnection.count != 4) {
         return;
     }
@@ -123,6 +158,7 @@
     [path stroke];
     
     self.drawThisConnection = nil;
+    
 }
 
 @end

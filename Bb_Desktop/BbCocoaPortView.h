@@ -15,4 +15,8 @@ static CGFloat kMinHorizontalSpacerSize = 10;
 
 @interface BbCocoaPortView : BbCocoaEntityView
 
+@property (nonatomic,strong)NSTrackingArea *trackingArea;
+
+- (NSDictionary *)userInfo;
+
 @end

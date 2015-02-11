@@ -58,10 +58,11 @@
 {
     CGRect oldFrame = self.frame;
     CGPoint oldCenter = [NSView centerForFrame:oldFrame];
-    CGFloat dx = oldCenter.x - center.x;
-    CGFloat dy = oldCenter.y - center.y;
+    CGFloat dx = center.x - oldCenter.x;
+    CGFloat dy = center.y - oldCenter.y;
     CGRect newFrame = CGRectOffset(oldFrame, dx, dy);
     self.frame = newFrame;
+    [self refreshEntityView];
 }
 
 - (CGPoint)center

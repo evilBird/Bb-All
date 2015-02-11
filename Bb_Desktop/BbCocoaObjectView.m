@@ -115,6 +115,16 @@
     return [NSColor colorWithWhite:0.3 alpha:1];
 }
 
+- (void)mouseEntered:(NSEvent *)theEvent
+{
+    
+}
+
+- (void)mouseExited:(NSEvent *)theEvent
+{
+    
+}
+
 #pragma constructors
 
 + (instancetype)viewWithConfiguration:(BbObjectViewConfiguration *)config

@@ -25,6 +25,7 @@
 - (void)setFrame:(CGRect)frame;
 
 - (CGPoint)center;
+- (void)setCenter:(CGPoint)center;
 
 - (BOOL)selected;
 - (void)setSelected:(BOOL)selected;

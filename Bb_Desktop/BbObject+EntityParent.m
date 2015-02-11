@@ -42,15 +42,62 @@
 
 - (NSUInteger)indexInParent:(BbEntity *)child
 {
-    if ([child isMemberOfClass:[BbPort class]]) {
+    if ([child isKindOfClass:[BbPort class]]) {
         return [self indexForPort:(BbPort *)child];
     }
     
-    if ([child isMemberOfClass:[BbObject class]]) {
+    if ([child isKindOfClass:[BbObject class]]) {
         return [self indexForObject:(BbObject *)child];
     }
     
     return -1;
+}
+
+- (void)addChildObject:(BbObject *)childObject
+{
+    if (!childObject || [self.childObjects_ containsObject:childObject]) {
+        return;
+    }
+    
+    if (!self.childObjects_) {
+        self.childObjects_ = [NSMutableArray array];
+    }
+    
+    childObject.parent = self;
+    [self.childObjects_ addObject:childObject];
+    
+    if (self.view) {
+        [self.view addSubview:childObject.view];
+    }
+}
+
+- (void)removeChildObject:(BbObject *)childObject
+{
+    if (!childObject || !self.childObjects_ || ![self.childObjects_ containsObject:childObject]) {
+        return;
+    }
+    
+    childObject.parent = nil;
+    [self.childObjects_ removeObject:childObject];
+    
+    if (self.childObjects_.count < 1) {
+        self.childObjects_ = nil;
+    }
+    
+    if (childObject.view) {
+        [childObject.view removeFromSuperview];
+    }
+    
+    [childObject tearDown];
+}
+
+- (NSArray *)childObjects
+{
+    if (self.childObjects_ && self.childObjects_.count > 0) {
+        return [NSArray arrayWithArray:self.childObjects_];
+    }
+    
+    return nil;
 }
 
 @end

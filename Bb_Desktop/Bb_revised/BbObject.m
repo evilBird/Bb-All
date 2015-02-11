@@ -239,6 +239,14 @@
         [outlet tearDown];
     }
     
+    for (BbObject *childObject in self.childObjects_) {
+        [self removeChildObject:childObject];
+        [childObject tearDown];
+    }
+    
+    self.childObjects_ = nil;
+    self.childObjects = nil;
+    
     self.outlets_ = nil;
     self.parent = nil;
     self.view = nil;

@@ -14,5 +14,8 @@
 
 - (NSArray *)allowedTypesForPort:(BbPort *)port;
 - (NSInteger)indexForPort:(BbPort *)port;
+- (NSUInteger)indexInParent:(BbEntity *)child;
+- (void)addChildObject:(BbObject *)childObject;
+- (void)removeChildObject:(BbObject *)childObject;
 
 @end
