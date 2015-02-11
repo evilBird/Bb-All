@@ -10,6 +10,7 @@
 #import "NSView+Bb.h"
 #import "BbObject.h"
 #import "NSString+Bb.h"
+#import "BbCocoaPatchView.h"
 
 @interface BbCocoaPortView ()
 
@@ -19,44 +20,18 @@
 
 #pragma mark - Public Methods
 
-- (void)commonInit
+- (CGPoint)center
 {
-    [super commonInit];
-    [self updateTrackingAreas];
-}
-
-- (void)setFrame:(CGRect)frame
-{
-    [super setFrame:frame];
-}
-
-- (void)mouseEntered:(NSEvent *)theEvent
-{
-    
-}
-
-- (void)mouseExited:(NSEvent *)theEvent
-{
-    
-}
-
-- (void)setTrackingArea:(NSTrackingArea *)trackingArea
-{
-    if (_trackingArea) {
-        [self removeTrackingArea:_trackingArea];
-        _trackingArea = nil;
+    BbEntity *port = self.entity;
+    BbEntity *parent =  port.parent;
+    BbEntity *grandParent = parent.parent;
+    if (!grandParent) {
+        return [NSView centerForFrame:self.frame];
+    }else{
+        CGRect p_frame = [(NSView *)[parent view] convertRect:self.bounds fromView:self];
+        CGRect gp_frame = [(NSView *)[grandParent view] convertRect:p_frame fromView:(NSView *)[parent view]];
+        return [NSView centerForFrame:gp_frame];
     }
-    
-    _trackingArea = trackingArea;
-}
-
-- (void)updateTrackingAreas
-{
-    CGRect bounds = self.bounds;
-    NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:bounds
-                                                                options: (NSTrackingMouseEnteredAndExited |  NSTrackingActiveAlways | NSTrackingActiveWhenFirstResponder | NSTrackingAssumeInside | NSTrackingInVisibleRect | NSTrackingMouseMoved)
-                                                                  owner:self userInfo:[self userInfo]];
-    self.trackingArea = trackingArea;
 }
 
 - (NSDictionary *)userInfo
@@ -69,7 +44,6 @@
     BbEntity *parent =  port.parent;
     BbEntity *grandParent = parent.parent;
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
-    CGPoint center = self.center;
     NSUInteger portIndex,parentIndex;
     
     if ([port isKindOfClass:[BbInlet class]]) {
@@ -108,15 +82,16 @@
         result[@"parent_id"] = @(-1);
     }
 
+    CGPoint center = [self center];
     if (grandParent) {
         parentIndex = [grandParent indexInParent:parent];
-        NSView *gp = (NSView *)grandParent.view;
-        center = [self convertPoint:center toView:gp];
+        center = [self convertPoint:center toView:(NSView *)[grandParent view]];
         result[@"parent_index"] = @(parentIndex);
         result[@"patch_id"] = @(grandParent.objectId);
     }else{
         result[@"parent_index"] = @(-1);
         result[@"patch_id"] = @(-1);
+        NSLog(@"using non-converted center point");
     }
     
     result[@"center"] = @[@([NSView roundFloat:center.x]),@([NSView roundFloat:center.y])];

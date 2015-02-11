@@ -10,6 +10,14 @@
 
 @interface BbPatch : BbObject
 
-- (void)addChildObjectWithText:(NSString *)text;
+- (void)connectObject:(NSUInteger)senderObjectIndex
+                 port:(NSUInteger)senderPortIndex
+             toObject:(NSUInteger)receiverObjectIndex
+                 port:(NSUInteger)receiverPortIndex;
+
+- (void)connectSender:(BbObject *)sender
+               outlet:(BbOutlet *)outlet
+           toReceiver:(BbObject *)receiver
+                inlet:(BbInlet *)inlet;
 
 @end

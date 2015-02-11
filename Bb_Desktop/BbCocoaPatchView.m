@@ -127,7 +127,6 @@
     
     NSMutableArray *connections = self.connections.allObjects.mutableCopy;
     if (connections) {
-        NSLog(@"%@ connections",@(connections.count));
         for (BbCocoaPatchGetConnectionArray block in connections) {
             NSBezierPath *connectionPath = [self connectionPathFromArray:block()];
             [connectionPath stroke];
@@ -139,22 +138,7 @@
     }
     
     NSMutableArray *a = self.drawThisConnection.mutableCopy;
-    
-    CGFloat x1,y1,x2,y2;
-    x1 = [a[0] doubleValue];
-    y1 = [a[1] doubleValue];
-    x2 = [a[2] doubleValue];
-    y2 = [a[3] doubleValue];
-    
-    CGPoint point = CGPointMake(x1, y1);
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    [path moveToPoint:point];
-    point.x = x2;
-    point.y = y2;
-    [path lineToPoint:point];
-    
-    [path setLineWidth:4];
-    [[NSColor blackColor]setStroke];
+    NSBezierPath *path = [self connectionPathFromArray:a];
     [path stroke];
     
     self.drawThisConnection = nil;

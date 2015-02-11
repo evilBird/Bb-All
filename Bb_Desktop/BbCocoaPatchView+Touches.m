@@ -11,6 +11,7 @@
 #import "BbCocoaPortView.h"
 #import "BbCocoaEntityView.h"
 #import "BbObject.h"
+#import "BbPatch.h"
 
 typedef NS_ENUM(NSUInteger, BbViewType){
     BbViewType_Port,
@@ -87,17 +88,9 @@ typedef NS_ENUM(NSUInteger, BbViewType){
         NSLog(@"click in inlet,returning");
         return;
     }
-    
-   // if (!self.selectedPortViews) {
-     //   self.selectedPortViews = [[NSMutableSet alloc]init];
-   // }
-    
     kSelectedPortViewSender = portView;
     [kSelectedPortViewSender setSelected:YES];
-    //[self.selectedPortViews addObject:kSelectedPortViewSender];
     kPreviousLoc = theEvent.locationInWindow;
-    
-    NSLog(@"port info: %@",[portView userInfo]);
 }
 
 - (void)singleClickDown:(NSEvent *)theEvent inObjectView:(BbCocoaObjectView *)objectView
@@ -257,15 +250,17 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     }
     
     id newView = [self hitTest:theEvent.locationInWindow];
-    
     if ([BbCocoaPatchView viewType:newView] == BbViewType_Port) {
         BbCocoaPortView *receiver = (BbCocoaPortView *)[self hitTest:theEvent.locationInWindow];
-        [receiver setSelected:YES];
-        kSelectedPortViewReceiver = receiver;
+        if ([receiver.entity isKindOfClass:[BbInlet class]]) {
+            [receiver setSelected:YES];
+            kSelectedPortViewReceiver = receiver;
+        }
     }
     
-    CGPoint oldCenter = portView.center;
-    CGPoint point = [portView convertPoint:oldCenter toView:self];
+    CGRect bounds = portView.bounds;
+    CGRect senderBounds = [self convertRect:bounds fromView:portView];
+    CGPoint point = CGPointMake(CGRectGetMidX(senderBounds), CGRectGetMidY(senderBounds));//[portView convertPoint:oldCenter toView:self];
     
     CGFloat x1,y1,x2,y2;
     x1 = point.x;
@@ -283,41 +278,6 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     NSLog(@"mouse moved");
 }
 
-#pragma mark - mouse entered
-
-- (void)mouseEntered:(NSEvent *)theEvent
-{
-    NSLog(@"mouse entered");
-    id theView = [self hitTest:theEvent.locationInWindow];
-    BbViewType newViewType = [BbCocoaPatchView viewType:theView];
-    BbViewType initViewType = [BbCocoaPatchView viewType:kInitView];
-    if (newViewType == initViewType == BbViewType_Port) {
-        BbEntity *newEntity = [(BbCocoaPortView *)theView entity];
-        BbEntity *initEntity = [(BbCocoaPortView *)kInitView entity];
-        if ([newEntity isKindOfClass:[BbInlet class]]&&[initEntity isKindOfClass:[BbOutlet class]]) {
-            [self mouseEntered:theEvent portView:theView];
-        }
-    }
-}
-
-- (void)mouseEntered:(NSEvent *)theEvent portView:(BbCocoaPortView *)portView
-{
-    portView.selected = YES;
-    NSLog(@"mouse entered portview");
-    kPreviousLoc = theEvent.locationInWindow;
-}
-
-#pragma mark - mouse exited
-
-- (void)mouseExited:(NSEvent *)theEvent
-{
-    NSLog(@"mouse exited");
-}
-
-- (void)mouseExited:(NSEvent *)theEvent portView:(BbCocoaPortView *)portView
-{
-    
-}
 
 #pragma mark - mouse up
 
@@ -376,6 +336,8 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     kSelectedObjectView = nil;
     kPreviousLoc = CGPointZero;
     kInitView = nil;
+    kSelectedPortViewSender = nil;
+    kSelectedPortViewReceiver = nil;
     self.drawThisConnection = nil;
     [self setNeedsDisplay:YES];
 }
@@ -386,7 +348,18 @@ typedef NS_ENUM(NSUInteger, BbViewType){
         NSDictionary *senderInfo = [kSelectedPortViewSender userInfo];
         NSDictionary *receiverInfo = [kSelectedPortViewReceiver userInfo];
         if (senderInfo && receiverInfo) {
+            NSUInteger senderPortIndex = [senderInfo[@"port_index"]unsignedIntegerValue];
+            NSUInteger senderParentIndex = [senderInfo[@"parent_index"]unsignedIntegerValue];
+            NSUInteger receiverPortIndex = [receiverInfo[@"port_index"]unsignedIntegerValue];
+            NSUInteger receiverParentIndex = [receiverInfo[@"parent_index"]unsignedIntegerValue];
+            BbPatch *patch = (BbPatch *)self.entity;
+            [patch connectObject:senderParentIndex
+                            port:senderPortIndex
+                        toObject:receiverParentIndex
+                            port:receiverPortIndex];
+            
             NSLog(@"#X connect %@ %@ %@ %@;\n",senderInfo[@"parent_index"],senderInfo[@"port_index"],receiverInfo[@"parent_index"],receiverInfo[@"port_index"]);
+            
             BbCocoaPatchGetConnectionArray block = [self connectionBlockSender:kSelectedPortViewSender receiver:kSelectedPortViewReceiver];
             if (!self.connections) {
                 self.connections = [[NSMutableSet alloc]init];
@@ -402,15 +375,19 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     kSelectedPortViewReceiver = nil;
     kPreviousLoc = CGPointZero;
     kInitView = nil;
+    self.drawThisConnection = nil;
+    [self setNeedsDisplay:YES];
 }
 
 - (BbCocoaPatchGetConnectionArray)connectionBlockSender:(BbCocoaPortView *)sender receiver:(BbCocoaPortView *)receiver
 {
+    __weak BbCocoaPatchView *weakself = self;
     BbCocoaPatchGetConnectionArray connectionBlock = ^ NSArray *{
-        NSDictionary *senderInfo = [sender userInfo];
-        NSDictionary *receiverInfo = [receiver userInfo];
-        NSArray *senderPoint = senderInfo[@"center"];
-        NSArray *receiverPoint = receiverInfo[@"center"];
+        
+        CGRect senderRect = [weakself convertRect:sender.bounds fromView:sender];
+        CGRect receiverRect = [weakself convertRect:receiver.bounds fromView:receiver];
+        NSArray *senderPoint = @[@(CGRectGetMidX(senderRect)),@(CGRectGetMidY(senderRect))];
+        NSArray *receiverPoint = @[@(CGRectGetMidX(receiverRect)),@(CGRectGetMidY(receiverRect))];
         NSArray *result = nil;
         if (senderPoint && receiverPoint) {
             NSMutableArray *temp = [NSMutableArray array];
@@ -418,7 +395,6 @@ typedef NS_ENUM(NSUInteger, BbViewType){
             [temp addObjectsFromArray:receiverPoint];
             result = [NSArray arrayWithArray:temp];
         }
-        
         return result;
     };
     

@@ -26,11 +26,34 @@
     }
 }
 
-- (void)addChildObjectWithText:(NSString *)text
+- (void)connectObject:(NSUInteger)senderObjectIndex
+                 port:(NSUInteger)senderPortIndex
+             toObject:(NSUInteger)receiverObjectIndex
+                 port:(NSUInteger)receiverPortIndex
 {
-    
+    BbObject *sender = self.childObjects[senderObjectIndex];
+    BbObject *receiver = self.childObjects[receiverObjectIndex];
+    [self connectSender:sender
+                 outlet:sender.outlets[senderPortIndex]
+             toReceiver:receiver
+                  inlet:receiver.inlets[receiverPortIndex]];
 }
 
-
+- (void)connectSender:(BbObject *)sender
+               outlet:(BbOutlet *)outlet
+           toReceiver:(BbObject *)receiver
+                inlet:(BbInlet *)inlet
+{
+    [outlet connectToInlet:inlet];
+    
+    BbOutlet *receiverOutlet = receiver.outlets.firstObject;
+    BbInlet *senderInlet = sender.inlets.firstObject;
+    
+    receiverOutlet.outputBlock = ^(id value){
+        NSLog(@"value = %@",value);
+    };
+    
+    [senderInlet input:@(10)];
+}
 
 @end
