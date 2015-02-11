@@ -30,6 +30,10 @@
 
 + (instancetype)newObjectClassName:(NSString *)className arguments:(id)arguments
 {
+    //if ([className isEqualToString:@"placeholder"]) {
+      //  return nil;
+    //}
+    
     const char *class = [className UTF8String];
     id c = objc_getClass(class);
     id instance = [c alloc];

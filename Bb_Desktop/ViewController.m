@@ -25,7 +25,7 @@
 }
 - (void)testView
 {
-    NSString *toParse = [NSString stringWithFormat:@"#X obj 400 400 BbMultiply 8;\n"];
+    NSString *toParse = [NSString stringWithFormat:@"#X obj 200 200 BbMultiply 8;\n"];
     BbCocoaPatchView *patchView = (BbCocoaPatchView *)self.view;
     [patchView addObjectAndViewWithText:toParse];
     [self.view setNeedsLayout:YES];

@@ -203,7 +203,7 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     BbViewType viewType = [BbCocoaPatchView viewType:kInitView];
     switch (viewType) {
         case BbViewType_Port:
-            [self mouseDragged:theEvent fromPortView:kInitView];
+            [self mouseDragged:theEvent fromPortView:kInitView toView:[self hitTest:theEvent.locationInWindow]];
             break;
         case BbViewType_Object:
             [self mouseDragged:theEvent fromObjectView:kInitView];
@@ -242,30 +242,37 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     kPreviousLoc = loc;
 }
 
-- (void)mouseDragged:(NSEvent *)theEvent fromPortView:(BbCocoaPortView *)portView
+- (void)mouseDragged:(NSEvent *)theEvent fromPortView:(BbCocoaPortView *)portView toView:(id)view
 {
-    //NSLog(@"mouse dragged from port view");
+    BbViewType viewType = [BbCocoaPatchView viewType:view];
+    BbCocoaPortView *receiver = nil;
+    CGPoint oldCenter = portView.center;
+    CGPoint point = [portView convertPoint:oldCenter toView:self];
+    if (viewType == BbViewType_Port) {
+        receiver = (BbCocoaPortView *)view;
+        receiver.selected = YES;
+        if (receiver) {
+            [self.selectedPortViews addObject:receiver];
+        }
+    }
+    
+    CGFloat x1,y1,x2,y2;
+    x1 = point.x;
+    y1 = point.y;
+    x2 = theEvent.locationInWindow.x;
+    y2 = theEvent.locationInWindow.y;
+    self.drawThisConnection = @[@(x1),@(y1),@(x2),@(y2)];
+    [self setNeedsDisplay:YES];
 }
 
 #pragma mark - mouse moved
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-    /*
-    CGPoint loc = theEvent.locationInWindow;
-    id theView = [self hitTest:loc];
-    if (kSelectedObjectView) {
-        NSPoint loc = theEvent.locationInWindow;
-        CGFloat dx = loc.x - kPreviousLoc.x;
-        CGFloat dy = loc.y - kPreviousLoc.y;
-        CGRect oldFrame = kSelectedObjectView.frame;
-        CGRect newFrame = CGRectOffset(oldFrame, dx, dy);
-        kSelectedObjectView.frame = newFrame;
-        kPreviousLoc = loc;
-    }
-     */
     NSLog(@"mouse moved");
 }
+
+#pragma mark - mouse up
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
@@ -279,6 +286,8 @@ typedef NS_ENUM(NSUInteger, BbViewType){
             [self doubleClickUp:theEvent inView:theView];
             break;
         default:
+            [self singleClickUp:theEvent inView:theView];
+            [self singleClickUp:theEvent inPortView:kSelectedPortView];
             break;
     }
 }
@@ -310,6 +319,8 @@ typedef NS_ENUM(NSUInteger, BbViewType){
 - (void)singleClickUp:(NSEvent *)theEvent inPatchView:(BbCocoaPatchView *)patchView
 {
     kInitView = nil;
+    self.drawThisConnection = nil;
+    [self setNeedsDisplay:YES];
 }
 
 - (void)singleClickUp:(NSEvent *)theEvent inObjectView:(BbCocoaObjectView *)objectView
@@ -318,6 +329,8 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     kSelectedObjectView = nil;
     kPreviousLoc = CGPointZero;
     kInitView = nil;
+    self.drawThisConnection = nil;
+    [self setNeedsDisplay:YES];
 }
 
 - (void)singleClickUp:(NSEvent *)theEvent inPortView:(BbCocoaPortView *)portView
@@ -339,7 +352,12 @@ typedef NS_ENUM(NSUInteger, BbViewType){
 
 - (void)doubleClickUp:(NSEvent *)theEvent inView:(id)theView
 {
-    
+    BbViewType viewType = [BbCocoaPatchView viewType:theView];
+    if (viewType == BbViewType_Patch) {
+        CGPoint point = theEvent.locationInWindow;
+        NSString *textDescription = [NSString stringWithFormat:@"#X BbObject %.f %.f BbObject;\n",point.x,point.y];
+        [self addObjectAndViewWithText:textDescription];
+    }
 }
 
 - (void)rightClickUp:(NSEvent *)theEvent inView:(id)theView

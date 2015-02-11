@@ -19,7 +19,6 @@
 
 @implementation BbCocoaPatchView
 
-
 - (void)addObjectAndViewWithText:(NSString *)text
 {
     BbObjectDescription *desc = (BbObjectDescription *)[BbBasicParser descriptionWithText:text];
@@ -33,13 +32,15 @@
     config.inlets = object.inlets.count;
     config.outlets = object.outlets.count;
     config.text = [NSString displayTextName:object.name args:description.BbObjectArgs];
-    config.entityViewType = @"object";
+    config.entityViewType = description.UIType;
+    //config.entityViewType = @"object";
     NSValue *centerValue = description.UICenter;
     CGPoint center;
     [centerValue getValue:&center];
     config.center = center;
     BbCocoaObjectView *view = [BbCocoaObjectView viewWithConfiguration:config parentView:self];
     object.view = (id<BbEntityView>)view;
+    view.entity = object;
     
     for (NSUInteger i = 0; i<object.inlets.count; i++) {
         BbCocoaPortView *portview = view.inletViews[i];
@@ -75,7 +76,6 @@
     return [NSColor colorWithWhite:0.9 alpha:1];
 }
 
-
 - (instancetype)initWithCoder:(NSCoder *)coder 
 {
     self= [super initWithCoder:coder];
@@ -94,6 +94,35 @@
     }
     
     return self;
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    [super drawRect:dirtyRect];
+    if (!self.drawThisConnection || self.drawThisConnection.count != 4) {
+        return;
+    }
+    
+    NSMutableArray *a = self.drawThisConnection.mutableCopy;
+    
+    CGFloat x1,y1,x2,y2;
+    x1 = [a[0] doubleValue];
+    y1 = [a[1] doubleValue];
+    x2 = [a[2] doubleValue];
+    y2 = [a[3] doubleValue];
+    
+    CGPoint point = CGPointMake(x1, y1);
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path moveToPoint:point];
+    point.x = x2;
+    point.y = y2;
+    [path lineToPoint:point];
+    
+    [path setLineWidth:4];
+    [[NSColor blackColor]setStroke];
+    [path stroke];
+    
+    self.drawThisConnection = nil;
 }
 
 @end

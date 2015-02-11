@@ -10,7 +10,27 @@
 #import "BbCocoaPortView.h"
 #import "BbCocoaObjectView+Autolayout.h"
 
+@interface BbObjectViewConfiguration ()
+{
+    BOOL kIsPlaceholder;
+}
+
+@end
+
+
+
 @implementation BbObjectViewConfiguration
+
+
+- (void)setEntityViewType:(NSString *)entityViewType
+{
+    _entityViewType = entityViewType;
+    if ([entityViewType isEqualToString:@"placeholder"]) {
+        kIsPlaceholder = YES;
+    }else{
+        kIsPlaceholder = NO;
+    }
+}
 
 + (NSDictionary *)textAttributes
 {
@@ -48,6 +68,9 @@
 - (void)commonInit
 {
     [super commonInit];
+    if (!self.configuration) {
+        return;
+    }
     self.inletViews_ = [self portViewsWithCount:self.configuration.inlets].mutableCopy;
     self.outletViews_ = [self portViewsWithCount:self.configuration.outlets].mutableCopy;
     self.inletSpacers = [self spacerViewsForPortViews:self.inletViews_].mutableCopy;
@@ -61,9 +84,11 @@
                                              outlets:self.configuration.outlets
                                                 text:self.configuration.text]
             height:kPortViewHeightConstraint * 2 + kMinVerticalSpacerSize];
-    [self layoutPortviews:self.inletViews spacers:self.inletSpacers isTopRow:YES];
-    [self layoutPortviews:self.outletViews spacers:self.outletSpacers isTopRow:NO];
-    [self setCenter:[self convertPoint:self.configuration.center fromView:self.superview]];
+    if (self.configuration) {
+        [self layoutPortviews:self.inletViews spacers:self.inletSpacers isTopRow:YES];
+        [self layoutPortviews:self.outletViews spacers:self.outletSpacers isTopRow:NO];
+        [self setCenter:[self convertPoint:self.configuration.center fromView:self.superview]];
+    }
     [self refreshEntityView];
 }
 
@@ -88,14 +113,6 @@
 - (NSColor *)selectedColor
 {
     return [NSColor colorWithWhite:0.3 alpha:1];
-}
-
-- (void)setCenter:(CGPoint)center
-{
-    [super setCenter:center];
-    
-    //[self setHorizontalCenter:center.x];
-    //[self setVerticalCenter:center.y];
 }
 
 #pragma constructors
