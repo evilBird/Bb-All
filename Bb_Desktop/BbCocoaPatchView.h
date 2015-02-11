@@ -13,6 +13,7 @@
     CGPoint                kPreviousLoc;
     BbCocoaObjectView      *kSelectedObjectView;
     BbCocoaPortView        *kSelectedPortView;
+    id                     kInitView;
 }
 
 @property (nonatomic,strong)NSMutableSet *selectedPortViews;

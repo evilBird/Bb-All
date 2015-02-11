@@ -15,6 +15,7 @@
 #import "BbObject+EntityParent.h"
 #import "BbPatch.h"
 #import "NSString+Bb.h"
+#import "BbCocoaPortView.h"
 
 @implementation BbCocoaPatchView
 
@@ -37,8 +38,23 @@
     CGPoint center;
     [centerValue getValue:&center];
     config.center = center;
-    id<BbEntityView> view = [BbCocoaObjectView viewWithConfiguration:config parentView:self];
-    object.view = view;
+    BbCocoaObjectView *view = [BbCocoaObjectView viewWithConfiguration:config parentView:self];
+    object.view = (id<BbEntityView>)view;
+    
+    for (NSUInteger i = 0; i<object.inlets.count; i++) {
+        BbCocoaPortView *portview = view.inletViews[i];
+        BbInlet *inlet = object.inlets[i];
+        [portview setEntity:inlet];
+        inlet.view = portview;
+    }
+    
+    for (NSUInteger i = 0; i<object.outlets.count; i++) {
+        BbCocoaPortView *portview = view.outletViews[i];
+        BbOutlet *outlet = object.outlets[i];
+        [portview setEntity:outlet];
+        outlet.view = portview;
+    }
+    
     [(BbPatch *)self.entity addChildObject:object];
 }
 
