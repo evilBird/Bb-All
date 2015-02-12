@@ -68,6 +68,7 @@
 - (void)commonInit
 {
     [super commonInit];
+    
     if (!self.configuration) {
         return;
     }
@@ -87,9 +88,10 @@
     if (self.configuration) {
         [self layoutPortviews:self.inletViews spacers:self.inletSpacers isTopRow:YES];
         [self layoutPortviews:self.outletViews spacers:self.outletSpacers isTopRow:NO];
-        [self setCenter:[self convertPoint:self.configuration.center fromView:self.superview]];
     }
+    
     [self refreshEntityView];
+    [self setCenter:self.configuration.center];
 }
 
 #pragma accessors
@@ -115,22 +117,14 @@
     return [NSColor colorWithWhite:0.3 alpha:1];
 }
 
-- (void)mouseEntered:(NSEvent *)theEvent
-{
-    
-}
-
-- (void)mouseExited:(NSEvent *)theEvent
-{
-    
-}
 
 #pragma constructors
 
 + (instancetype)viewWithConfiguration:(BbObjectViewConfiguration *)config
                            parentView:(BbCocoaEntityView *)parentView
 {
-    BbCocoaObjectView *objectView = [[BbCocoaObjectView alloc]initWithFrame:CGRectMake(0, 0, 100, 50)                                                            parentView:parentView
+    CGRect frame = [NSView rect:CGRectMake(0, 0, 100, 50) withCenter:config.center];
+    BbCocoaObjectView *objectView = [[BbCocoaObjectView alloc]initWithFrame:frame                                                            parentView:parentView
                                                                      config:config];
     return objectView;
 }

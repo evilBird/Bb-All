@@ -12,6 +12,7 @@
 #import "BbCocoaEntityView.h"
 #import "BbObject.h"
 #import "BbPatch.h"
+#import "BbCocoaPlaceholderObjectView.h"
 
 typedef NS_ENUM(NSUInteger, BbViewType){
     BbViewType_Port,
@@ -28,7 +29,7 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     BbViewType viewType;
     if ([view isKindOfClass:[BbCocoaPortView class]]) {
         viewType = BbViewType_Port;
-    }else if ([view isMemberOfClass:[BbCocoaObjectView class]]){
+    }else if ([view isKindOfClass:[BbCocoaObjectView class]]||[view isKindOfClass:[BbCocoaPlaceholderObjectView class]]){
         viewType = BbViewType_Object;
     }else if ([view isKindOfClass:[BbCocoaPatchView class]]){
         viewType = BbViewType_Patch;
@@ -297,6 +298,11 @@ typedef NS_ENUM(NSUInteger, BbViewType){
             [self singleClickUp:theEvent inPortView:kSelectedPortViewSender];
             break;
     }
+    
+    kSelectedObjectView = nil;
+    kSelectedPortViewSender = nil;
+    kSelectedPortViewReceiver = nil;
+    kInitView = nil;
 }
 
 - (void)singleClickUp:(NSEvent *)theEvent inView:(id)theView
@@ -407,7 +413,12 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     if (viewType == BbViewType_Patch) {
         CGPoint point = theEvent.locationInWindow;
         NSString *textDescription = [NSString stringWithFormat:@"#X BbObject %.f %.f BbObject;\n",point.x,point.y];
-        [self addObjectAndViewWithText:textDescription];
+        [self addPlaceholderObject];
+        kInitView = nil;
+        kSelectedObjectView = nil;
+        kSelectedPortViewSender = nil;
+        kSelectedPortViewReceiver = nil;
+        [self setNeedsDisplay:YES];
     }
 }
 

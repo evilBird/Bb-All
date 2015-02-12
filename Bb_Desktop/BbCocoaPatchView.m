@@ -16,8 +16,18 @@
 #import "BbPatch.h"
 #import "NSString+Bb.h"
 #import "BbCocoaPortView.h"
+#import "BbCocoaPlaceholderObjectView.h"
 
 @implementation BbCocoaPatchView
+
+- (void)addPlaceholderObject
+{
+    CGRect frame = CGRectMake(200, 200, 100, 40);
+    
+    BbCocoaPlaceholderObjectView *placeholder = [[BbCocoaPlaceholderObjectView alloc]initWithFrame:frame];
+    [self addSubview:placeholder];
+    [placeholder.textField becomeFirstResponder];
+}
 
 - (BbObject *)addObjectAndViewWithText:(NSString *)text
 {
@@ -40,6 +50,7 @@
     BbCocoaObjectView *view = [BbCocoaObjectView viewWithConfiguration:config parentView:self];
     object.view = (id<BbEntityView>)view;
     view.entity = object;
+    
     for (NSUInteger i = 0; i<object.inlets.count; i++) {
         BbCocoaPortView *portview = view.inletViews[i];
         BbInlet *inlet = object.inlets[i];
@@ -55,7 +66,6 @@
     }
     
     [(BbPatch *)self.entity addChildObject:object];
-    
     return object;
 }
 

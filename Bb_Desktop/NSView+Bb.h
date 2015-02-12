@@ -11,6 +11,7 @@
 @interface NSView (Bb)
 
 + (CGPoint)centerForFrame:(CGRect)frame;
++ (CGRect)rect:(CGRect)rect withCenter:(CGPoint)center;
 + (CGFloat)roundFloat:(CGFloat)aFloat;
 - (NSLayoutConstraint *)horizontalCenterConstraint:(CGFloat)horizontalCenter;
 - (NSLayoutConstraint *)verticalCenterConstraint:(CGFloat)verticalCenter;

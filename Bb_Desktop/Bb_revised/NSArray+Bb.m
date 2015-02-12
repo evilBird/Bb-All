@@ -86,6 +86,8 @@
     
     if ([self.firstObject isKindOfClass:[NSNumber class]]) {
         return [self.firstObject copy];
+    }else if ([self.firstObject isKindOfClass:[NSString class]]){
+        return [(NSString *)self.firstObject toNumber];
     }
     
     return nil;

@@ -34,6 +34,7 @@
 - (void)setFrame:(CGRect)frame;
 - (CGPoint)center;
 - (void)setCenter:(CGPoint)center;
+- (void)setCenter:(CGPoint)center inView:(id<BbEntityView>)view;
 - (BOOL)selected;
 - (void)setSelected:(BOOL)selected;
 - (void)addSubview:(id<BbEntityView>)subview;

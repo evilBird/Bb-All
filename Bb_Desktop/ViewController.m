@@ -40,7 +40,7 @@
     [patchView addObjectAndViewWithText:mult_desc];
     NSString *add_desc = [NSString stringWithFormat:@"X obj 300 300 BbAdd 4;\n"];
     [patchView addObjectAndViewWithText:add_desc];
-    [patchView refreshEntityView];
+    //[patchView refreshEntityView];
 }
 
 - (void)setRepresentedObject:(id)representedObject {

@@ -19,7 +19,7 @@ typedef NS_ENUM(NSUInteger, PortElementScope)
 
 @interface BbPortElement : BbEntity
 
-@property (nonatomic,weak)  id value;
+@property (nonatomic,strong)  id value;
 @property (nonatomic) PortElementScope scope;
 
 - (instancetype)initWithScope:(PortElementScope)scope;

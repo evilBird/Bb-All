@@ -27,5 +27,6 @@ typedef NSArray* (^BbCocoaPatchGetConnectionArray)(void);
 //@property (nonatomic,strong)NSMutableSet *selectedPortViews;
 
 - (BbObject *)addObjectAndViewWithText:(NSString *)text;
+- (void)addPlaceholderObject;
 
 @end

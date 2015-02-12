@@ -20,6 +20,14 @@
     return (CGFloat)(NSInteger)(aFloat + 0.5);
 }
 
++ (CGRect)rect:(CGRect)rect withCenter:(CGPoint)center
+{
+    CGPoint currentCenter = [NSView centerForFrame:rect];
+    CGFloat dx = currentCenter.x - center.x;
+    CGFloat dy = currentCenter.y - center.y;
+    return CGRectOffset(rect, dx, dy);
+}
+
 - (NSLayoutConstraint *)horizontalCenterConstraint:(CGFloat)horizontalCenter
 {
     if (!self.superview) {

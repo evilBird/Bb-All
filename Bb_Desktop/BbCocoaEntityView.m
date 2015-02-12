@@ -60,9 +60,22 @@
     CGPoint oldCenter = [NSView centerForFrame:oldFrame];
     CGFloat dx = center.x - oldCenter.x;
     CGFloat dy = center.y - oldCenter.y;
-    CGRect newFrame = CGRectOffset(oldFrame, dx, dy);
+    CGRect newFrame = CGRectOffset(self.frame, dx, dy);
     self.frame = newFrame;
     [self refreshEntityView];
+}
+
+- (void)setCenter:(CGPoint)center inView:(id<BbEntityView>)view
+{
+    NSView *toCenter = (NSView *)view;
+    NSView *selfView = (NSView *)self;
+    CGRect frame = [selfView convertRect:toCenter.bounds fromView:toCenter];
+    CGPoint oldCenter = [NSView centerForFrame:frame];
+    CGFloat dx = oldCenter.x - center.x;
+    CGFloat dy = oldCenter.y - center.y;
+    CGRect newFrame = CGRectOffset(toCenter.frame, dx, dy);
+    toCenter.frame = newFrame;
+    [view refreshEntityView];
 }
 
 - (CGPoint)center

@@ -27,6 +27,14 @@
     return self;
 }
 
+- (void)setValue:(id)value
+{
+    _value = value;
+    if (self.scope == PortElementScopeInput){
+        
+    }
+}
+
 - (void)observePortElement:(BbPortElement *)element
 {
     if (element.scope == PortElementScopeInput) {
@@ -202,9 +210,7 @@
 
 - (void)input:(id)value
 {
-    BbValidateTypeBlock validateType = [self getValidateTypeBlock];
-    //self.inputElement.value = value;
-    self.inputElement.value = validateType([value copy]);
+    self.inputElement.value = value;
 }
 
 @end
