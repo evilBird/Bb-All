@@ -12,9 +12,10 @@
 
 @implementation BbNumberObject
 
-- (NSArray *)allowedTypesForPort:(BbPort *)port
+- (NSSet *)allowedTypesForPort:(BbPort *)port
 {
-    return @[NSStringFromClass([@(0) class])];
+    NSArray *types = @[@(BbValueType_Number)];
+    return [NSSet setWithArray:types];
 }
 
 @end

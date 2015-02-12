@@ -8,10 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+@class BbBang;
 @interface NSString (Bb)
 
 + (NSString *)encodeType:(char *)encodedType;
 + (NSString *)stringWithFormat:(NSString *)formatString args:(NSArray *)args;
 + (NSString *)displayTextName:(NSString *)name args:(id)args;
 + (NSString *)stringWithArray:(NSArray *)array;
+
+- (NSSet *)supportedConversions;
+- (NSNumber *)toNumber;
+- (NSArray *)toArray;
+- (NSArray *)delimitedArray:(NSString *)delimiter;
+- (BbBang *)toBang;
+
 @end

@@ -13,7 +13,7 @@
 
 #pragma mark - BbEntityParent Methods
 
-- (NSArray *)allowedTypesForPort:(BbPort *)port
+- (NSSet *)allowedTypesForPort:(BbPort *)port
 {
     return nil;
 }

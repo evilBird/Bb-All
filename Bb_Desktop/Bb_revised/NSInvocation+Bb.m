@@ -9,6 +9,7 @@
 #import "NSInvocation+Bb.h"
 #import "NSString+Bb.h"
 #import "NSObject+Bb.h"
+#import "BbBase.h"
 #import "BbUI.h"
 
 #if TARGET_OS_IPHONE
@@ -22,6 +23,42 @@
 #endif
 
 @implementation NSInvocation (Bb)
+
++ (id)doInstanceMethodTarget:(id)target selectorName:(NSString *)selectorName args:(NSArray *)args
+{
+    if (!target || !selectorName) {
+        return nil;
+    }
+    
+    SEL theSelector = NSSelectorFromString(selectorName);
+    if (![target respondsToSelector:theSelector]) {
+        return nil;
+    }
+    
+    Class c = [target class];
+    
+    NSMethodSignature *methodSig = [c instanceMethodSignatureForSelector:theSelector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
+    invocation.target = target;
+    invocation.selector = theSelector;
+    
+    if (args) {
+        for (NSUInteger i = 0; i < args.count; i++) {
+            [invocation setArgumentWithObject:args[i] atIndex:i];
+        }
+    }
+    
+    id result = nil;
+    [invocation invoke];
+    NSString *returnType = [NSString stringWithUTF8String:[methodSig methodReturnType]];
+    if ([returnType isEqualToString:@"@"]) {
+        void *returnVal = nil;
+        [invocation getReturnValue:&returnVal];
+        result = (__bridge NSObject *)returnVal;
+    }
+    
+    return result;
+}
 
 - (void)setArgumentWithObject:(id)object atIndex:(NSUInteger)index
 {

@@ -90,7 +90,7 @@
 
 @interface BbPort ()
 
-@property (nonatomic,strong)NSArray *allowedTypes;
+@property (nonatomic,strong)NSSet *allowedTypes;
 
 @end
 
@@ -135,12 +135,13 @@
     __weak BbPort *weakself = self;
     BbValidateTypeBlock result = ^(id value){
         
-        id returnVal = nil;
-        NSString *classString = NSStringFromClass([value class]);
-        if (!weakself.allowedTypes || [weakself.allowedTypes containsObject:classString]) {
-            returnVal = value;
+        if (!weakself.allowedTypes) {
+            return [value copy];
+        }else if ([weakself.allowedTypes containsObject:@([[value copy] BbValueType])]){
+            return [value copy];
         }
-        return returnVal;
+        id convertedValue = [[value copy] convertToCompatibleTypeFromSet:weakself.allowedTypes];
+        return convertedValue;
     };
     
     return result;
@@ -201,7 +202,9 @@
 
 - (void)input:(id)value
 {
-    self.inputElement.value = value;
+    BbValidateTypeBlock validateType = [self getValidateTypeBlock];
+    //self.inputElement.value = value;
+    self.inputElement.value = validateType([value copy]);
 }
 
 @end

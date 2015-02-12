@@ -59,7 +59,7 @@
     if (parent) {
         portIndex = [parent indexInParent:port];
         result[@"port_index"] = @(portIndex);
-        NSArray *types = [parent allowedTypesForPort:(BbPort *)port];
+        NSSet *types = [parent allowedTypesForPort:(BbPort *)port];
         if (types) {
             result[@"allowed_types"] = types;
         }else{

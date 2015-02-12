@@ -11,14 +11,10 @@
 
 @implementation BbStringObject : BbObject
 
-- (NSArray *)allowedTypesForPort:(BbPort *)port
+- (NSSet *)allowedTypesForPort:(BbPort *)port
 {
-    //NSString *string = [NSString string];
-    //NSString *mutableString = [NSMutableString string];
-    NSAttributedString *attrString = [[NSAttributedString alloc]init];
-    //return [NSArray typeArrayWithObjects:@[string,attrString,mutableString]];
-    return [NSArray typeArrayWithObjects:@[[NSString string],attrString,[NSMutableString string]]];
-
+    NSArray *types = @[@(BbValueType_String)];
+    return [NSSet setWithArray:types];
 }
 
 @end
@@ -32,12 +28,13 @@
     [self addPort:[BbOutlet newOutletNamed:kBbPortDefaultNameForMainOutlet]];
 }
 
-- (NSArray *)allowedTypesForPort:(BbPort *)port
+- (NSSet *)allowedTypesForPort:(BbPort *)port
 {
     if ([port isKindOfClass:[BbInlet class]]) {
         return [super allowedTypesForPort:port];
     }else{
-        return [NSArray typeArrayWithObjects:@[@(0)]];
+        NSArray *types = @[@(BbValueType_Number)];
+        return [NSSet setWithArray:types];
     }
 }
 
@@ -93,12 +90,13 @@
     self.name = @"str components";
 }
 
-- (NSArray *)allowedTypesForPort:(BbPort *)port
+- (NSSet *)allowedTypesForPort:(BbPort *)port
 {
     if ([port isKindOfClass:[BbInlet class]]) {
         return [super allowedTypesForPort:port];
     }else{
-        return [NSArray typeArrayWithObjects:@[[NSArray array],[NSMutableArray array]]];
+        NSArray *types = @[@(BbValueType_Array)];
+        return [NSSet setWithArray:types];
     }
 }
 

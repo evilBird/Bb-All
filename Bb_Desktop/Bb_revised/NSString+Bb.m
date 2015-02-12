@@ -8,6 +8,7 @@
 
 #import "NSString+Bb.h"
 #import <objc/runtime.h>
+#import "BbBase.h"
 
 void printInts_v(int n, va_list ap)
 {
@@ -28,6 +29,43 @@ void printInts(int n,...)
 }
 
 @implementation NSString (Bb)
+
+#pragma mark - conversions
+
+- (NSSet *)supportedConversions
+{
+    NSArray *conversions = @[@(BbValueType_Array),@(BbValueType_Number),@(BbValueType_Bang)];
+    return [NSSet setWithArray:conversions];
+}
+
+- (NSNumber *)toNumber
+{
+    return @([self floatValue]);
+}
+
+- (NSArray *)toArray
+{
+    return @[self];
+}
+
+- (NSArray *)delimitedArray:(NSString *)delimiter
+{
+    NSArray *components = nil;
+    if (!delimiter) {
+        components = [self componentsSeparatedByString:@" "];
+    }else{
+        components = [self componentsSeparatedByString:delimiter];
+    }
+    
+    return components.mutableCopy;
+}
+
+- (BbBang *)toBang
+{
+    return [BbBang bang];
+}
+
+#pragma mark - class methods
 
 + (NSString*)encodeType:(char *)encodedType
 {

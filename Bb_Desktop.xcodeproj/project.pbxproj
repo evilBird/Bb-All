@@ -37,6 +37,8 @@
 		F2709D9D1A89B2B0004BF4FF /* BbObject+Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2709D8E1A89B2B0004BF4FF /* BbObject+Tests.m */; };
 		F2709D9E1A89B2B0004BF4FF /* BbBasicMathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2709D901A89B2B0004BF4FF /* BbBasicMathTests.m */; };
 		F2709DA11A89B4D2004BF4FF /* BbBasicMath.m in Sources */ = {isa = PBXBuildFile; fileRef = F2709D9F1A89B4D2004BF4FF /* BbBasicMath.m */; };
+		F29DE43B1A8C1B5A00C01E75 /* NSNumber+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F29DE43A1A8C1B5A00C01E75 /* NSNumber+Bb.m */; };
+		F29DE43E1A8C203900C01E75 /* NSDictionary+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F29DE43D1A8C203900C01E75 /* NSDictionary+Bb.m */; };
 		F2D6AA141A8AAD5A00F6B720 /* BbObject+CocoaView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2D6AA131A8AAD5A00F6B720 /* BbObject+CocoaView.m */; };
 		F2F6E1411A8A7228000959AB /* BbObject+Decoder.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F6E1401A8A7228000959AB /* BbObject+Decoder.m */; };
 		F2F6E1471A8A7907000959AB /* BbObject+Encoder.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F6E1461A8A7907000959AB /* BbObject+Encoder.m */; };
@@ -120,6 +122,10 @@
 		F2709D901A89B2B0004BF4FF /* BbBasicMathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BbBasicMathTests.m; path = Bb_revised/BbBasicMathTests.m; sourceTree = "<group>"; };
 		F2709D9F1A89B4D2004BF4FF /* BbBasicMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbBasicMath.m; sourceTree = "<group>"; };
 		F2709DA01A89B4D2004BF4FF /* BbBasicMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbBasicMath.h; sourceTree = "<group>"; };
+		F29DE4391A8C1B5A00C01E75 /* NSNumber+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+Bb.h"; sourceTree = "<group>"; };
+		F29DE43A1A8C1B5A00C01E75 /* NSNumber+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+Bb.m"; sourceTree = "<group>"; };
+		F29DE43C1A8C203900C01E75 /* NSDictionary+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Bb.h"; sourceTree = "<group>"; };
+		F29DE43D1A8C203900C01E75 /* NSDictionary+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Bb.m"; sourceTree = "<group>"; };
 		F2D6AA121A8AAD5A00F6B720 /* BbObject+CocoaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbObject+CocoaView.h"; sourceTree = "<group>"; };
 		F2D6AA131A8AAD5A00F6B720 /* BbObject+CocoaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbObject+CocoaView.m"; sourceTree = "<group>"; };
 		F2F6E13F1A8A7228000959AB /* BbObject+Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbObject+Decoder.h"; sourceTree = "<group>"; };
@@ -310,6 +316,8 @@
 		F2F6E14D1A8A87E7000959AB /* Foundation Categories */ = {
 			isa = PBXGroup;
 			children = (
+				F29DE43C1A8C203900C01E75 /* NSDictionary+Bb.h */,
+				F29DE43D1A8C203900C01E75 /* NSDictionary+Bb.m */,
 				F2709D801A89B2B0004BF4FF /* NSArray+Bb.h */,
 				F2709D811A89B2B0004BF4FF /* NSArray+Bb.m */,
 				F2709D7D1A89B2B0004BF4FF /* NSScanner+Bb.h */,
@@ -320,6 +328,8 @@
 				F2709D891A89B2B0004BF4FF /* NSObject+Bb.m */,
 				F2709D8A1A89B2B0004BF4FF /* NSInvocation+Bb.h */,
 				F2709D871A89B2B0004BF4FF /* NSInvocation+Bb.m */,
+				F29DE4391A8C1B5A00C01E75 /* NSNumber+Bb.h */,
+				F29DE43A1A8C1B5A00C01E75 /* NSNumber+Bb.m */,
 			);
 			name = "Foundation Categories";
 			sourceTree = "<group>";
@@ -468,6 +478,7 @@
 				F2709D911A89B2B0004BF4FF /* BbEncoders.m in Sources */,
 				F2F6E1471A8A7907000959AB /* BbObject+Encoder.m in Sources */,
 				F2709D991A89B2B0004BF4FF /* NSString+Bb.m in Sources */,
+				F29DE43B1A8C1B5A00C01E75 /* NSNumber+Bb.m in Sources */,
 				F2709D941A89B2B0004BF4FF /* BbParsers.m in Sources */,
 				F2F6E1531A8A88BC000959AB /* BbCocoaEntityView.m in Sources */,
 				F2709D261A896342004BF4FF /* ObjectView.m in Sources */,
@@ -487,6 +498,7 @@
 				F2709D2C1A8985B5004BF4FF /* ObjectView+CocoaLayout.m in Sources */,
 				F2381CC01A8AB83A00B7D2A4 /* BbObject+EntityParent.m in Sources */,
 				F2F6E1561A8A88ED000959AB /* BbiOSEntityView.m in Sources */,
+				F29DE43E1A8C203900C01E75 /* NSDictionary+Bb.m in Sources */,
 				F2709CFE1A894D08004BF4FF /* main.m in Sources */,
 				F2381CC31A8AC64100B7D2A4 /* BbCocoaObjectView+Autolayout.m in Sources */,
 				F2709D921A89B2B0004BF4FF /* BbBase.m in Sources */,

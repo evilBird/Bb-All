@@ -11,5 +11,7 @@
 @interface NSInvocation (Bb)
 
 - (void)setArgumentWithObject:(id)object atIndex:(NSUInteger)index;
-
++ (id)doInstanceMethodTarget:(id)target
+                selectorName:(NSString *)selectorName
+                        args:(NSArray *)args;
 @end

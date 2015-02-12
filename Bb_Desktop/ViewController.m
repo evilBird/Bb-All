@@ -37,9 +37,9 @@
 {
     NSString *mult_desc = [NSString stringWithFormat:@"#X obj 400 400 BbMultiply 8;\n"];
     BbCocoaPatchView *patchView = (BbCocoaPatchView *)self.view;
-    BbObject *mult = [patchView addObjectAndViewWithText:mult_desc];
+    [patchView addObjectAndViewWithText:mult_desc];
     NSString *add_desc = [NSString stringWithFormat:@"X obj 300 300 BbAdd 4;\n"];
-    BbObject *add = [patchView addObjectAndViewWithText:add_desc];
+    [patchView addObjectAndViewWithText:add_desc];
     [patchView refreshEntityView];
 }
 

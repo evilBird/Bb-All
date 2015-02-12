@@ -7,9 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class BbBang;
 @interface NSArray (Bb)
 
 + (NSArray *)typeArrayWithObjects:(NSArray *)objects;
+- (NSSet *)supportedConversions;
+- (NSDictionary *)toDictionary;
+- (NSNumber *)toNumber;
+- (NSString *)toString;
+- (BbBang *)toBang;
 
 @end

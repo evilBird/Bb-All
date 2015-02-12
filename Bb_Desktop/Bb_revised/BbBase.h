@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "BbUI.h"
 #import "BbConstants.h"
+#import "NSObject+Bb.h"
 
 @class BbPort;
 
 @protocol BbEntityParent <NSObject>
 @optional
 
-- (NSArray *)allowedTypesForPort:(BbPort *)port;
+- (NSSet *)allowedTypesForPort:(BbPort *)port;
 - (NSUInteger)indexForPort:(BbPort *)port;
 - (NSUInteger)indexInParent:(BbEntity *)child;
 - (BbEntity *)rootEntity;

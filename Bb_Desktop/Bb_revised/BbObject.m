@@ -8,6 +8,7 @@
 
 #import "BbObject.h"
 #import "NSString+Bb.h"
+#import "NSObject+Bb.h"
 #import "NSInvocation+Bb.h"
 #import <objc/runtime.h>
 #import "BbObject+Tests.h"
@@ -56,7 +57,13 @@
 {
     [self commonInit];
     if (args) {
-        [self.inlets[1] input:args];
+        NSSet *types = [self allowedTypesForPort:self.inlets[1]];
+        BbValueType argType = [[args copy] BbValueType];
+        if (types && ![types containsObject:@(argType)]) {
+            [self.inlets[1] input:[args convertToCompatibleTypeFromSet:types]];
+        }else{
+            [self.inlets[1] input:args];
+        }
     }
 }
 
