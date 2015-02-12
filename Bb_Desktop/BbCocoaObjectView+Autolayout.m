@@ -282,10 +282,6 @@
     return portViews;
 }
 
-- (void)setCenterPoint:(CGPoint)centerPoint
-{
-    
-}
 
 - (void)setHorizontalCenter:(CGFloat)horizontalCenter
 {

@@ -15,7 +15,6 @@
 - (void)layoutPortviews:(NSArray *)portViews spacers:(NSArray *)spacers isTopRow:(BOOL)isTopRow;
 - (void)setHorizontalCenter:(CGFloat)horizontalCenter;
 - (void)setVerticalCenter:(CGFloat)verticalCenter;
-- (void)setCenterPoint:(CGPoint)centerPoint;
 - (void)setWidth:(CGFloat)width height:(CGFloat)height;
 
 
