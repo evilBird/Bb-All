@@ -11,15 +11,18 @@
 @interface BbCocoaObjectView (Autolayout)
 
 - (NSArray *)spacerViewsForPortViews:(NSArray *)portViews;
-- (NSArray *)portViewsWithCount:(NSUInteger)count;
+- (NSArray *)addPortViewsCount:(NSUInteger)count;
 - (void)layoutPortviews:(NSArray *)portViews spacers:(NSArray *)spacers isTopRow:(BOOL)isTopRow;
 - (void)setHorizontalCenter:(CGFloat)horizontalCenter;
 - (void)setVerticalCenter:(CGFloat)verticalCenter;
 - (void)setWidth:(CGFloat)width height:(CGFloat)height;
 
 
+- (void)layoutInletViews:(NSArray *)inletViews;
+- (void)layoutOutletViews:(NSArray *)outletViews;
+
 + (NSPoint)position:(NSPoint)position forView:(NSView *)view inSuperview:(NSView *)superview;
-+ (NSSize)spacerSizeForConfig:(BbObjectViewConfiguration *)config;
++ (NSSize)spacerSizeForConfig:(BbViewDescription *)config;
 + (NSSize)portSize;
 + (NSSize)frameSizeForInlets:(NSUInteger)inlets outlets:(NSUInteger)outlets text:(NSString *)text;
 + (CGFloat)widthForInlets:(NSUInteger)inlets outlets:(NSUInteger)outlets;

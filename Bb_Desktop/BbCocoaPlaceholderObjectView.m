@@ -19,13 +19,12 @@
     self.textField.translatesAutoresizingMaskIntoConstraints = NO;
     self.textField.textColor = [NSColor whiteColor];
     self.textField.placeholderString = @"placeholder";
-    NSDictionary *textAttributes = [BbObjectViewConfiguration textAttributes];
+    NSDictionary *textAttributes = [BbViewDescription textAttributes];
     self.textField.font = [textAttributes valueForKey:NSFontAttributeName];
     self.textField.delegate = self;
     self.textField.backgroundColor = self.defaultColor;
     self.textField.bordered = NO;
     [self addSubview:(id<BbEntityView>)_textField];
-    [self setupConstraints];
 }
 
 - (NSColor *)defaultColor
@@ -41,42 +40,6 @@
 - (void)setupConstraints
 {
     [super setupConstraints];
-    NSArray *constraints = nil;
-    NSDictionary *views = NSDictionaryOfVariableBindings(_textField,self);
-    NSDictionary *metrics = @{@"yinset":@(4),
-                              @"xinset":@(4),
-                              @"width":@(100),
-                              @"height":@(50),
-                              @"text_ht":@(30),
-                              @"text_width":@(70)};
-    
-    constraints = [NSLayoutConstraint
-                   constraintsWithVisualFormat:@"H:[_textField(text_width)]"
-                   options:NSLayoutFormatAlignAllCenterX
-                   metrics:metrics
-                   views:views];
-    [self addConstraints:constraints];
-    
-    constraints = [NSLayoutConstraint
-                   constraintsWithVisualFormat:@"V:[_textField(text_ht)]"
-                   options:NSLayoutFormatAlignAllCenterY
-                   metrics:metrics
-                   views:views];
-    [self addConstraints:constraints];
-    
-    constraints = [NSLayoutConstraint
-                   constraintsWithVisualFormat:@"V:[self(height)]"
-                   options:0
-                   metrics:metrics
-                   views:views];
-    [self addConstraints:constraints];
-    
-    constraints = [NSLayoutConstraint
-                   constraintsWithVisualFormat:@"H:[self(width)]"
-                   options:0
-                   metrics:metrics
-                   views:views];
-    [self addConstraints:constraints];
 }
 
 // These delegate and notification methods are sent from NSControl subclasses that allow text editing such as NSTextField and NSMatrix.  The classes that need to send these have delegates.  NSControl does not.

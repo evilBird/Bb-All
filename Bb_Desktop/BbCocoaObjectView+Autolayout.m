@@ -9,8 +9,43 @@
 #import "BbCocoaObjectView+Autolayout.h"
 #import "BbCocoaPortView.h"
 #import "NSView+Bb.h"
+#import "PureLayout.h"
 
 @implementation BbCocoaObjectView (Autolayout)
+
+- (void)layoutInletViews:(NSArray *)inletViews
+{
+    if (!inletViews) {
+        return;
+    }
+}
+
+- (void)layoutOutletViews:(NSArray *)outletViews
+{
+    if (!outletViews) {
+        return;
+    }
+}
+
+- (NSArray *)addPortViewsCount:(NSUInteger)count
+{
+    if (count == 0) {
+        return nil;
+    }
+    
+    NSMutableArray *portViews = [NSMutableArray arrayWithCapacity:count];
+    for (NSUInteger i = 0; i<count;i++)
+    {
+        BbCocoaPortView *portView = [BbCocoaPortView new];
+        if (portView != nil){
+            [portViews addObject:portView];
+            [self addSubview:portView];
+        }
+    }
+    
+    return portViews;
+}
+
 
 - (void)setWidth:(CGFloat)width height:(CGFloat)height
 {
@@ -47,7 +82,6 @@
     for (BbCocoaPortView *portView in portViews){
         
         if (portView) {
-            portView.parentView = self;
             NSArray *constraints = nil;
             NSDictionary *views = NSDictionaryOfVariableBindings(portView);
             NSDictionary *metrics = @{@"width":@(kPortViewWidthConstraint),
@@ -264,24 +298,6 @@
     return spacerViews;
 }
 
-- (NSArray *)portViewsWithCount:(NSUInteger)count
-{
-    if (count == 0) {
-        return nil;
-    }
-    
-    NSMutableArray *portViews = [NSMutableArray arrayWithCapacity:count];
-    for (NSUInteger i = 0; i<count;i++)
-    {
-        BbCocoaPortView *portView = [BbCocoaPortView new];
-        if (portView != nil){
-            [portViews addObject:portView];
-        }
-    }
-    
-    return portViews;
-}
-
 
 - (void)setHorizontalCenter:(CGFloat)horizontalCenter
 {
@@ -299,7 +315,7 @@
     return [view convertPoint:position fromView:superview];
 }
 
-+ (NSSize)spacerSizeForConfig:(BbObjectViewConfiguration *)config
++ (NSSize)spacerSizeForConfig:(BbViewDescription *)config
 {
     CGFloat logicalSpacerWidthTop,logicalSpacerWidthBottom = 0.0;
     
@@ -355,7 +371,7 @@
 + (CGFloat)widthForInlets:(NSUInteger)inlets outlets:(NSUInteger)outlets text:(NSString *)text
 {
     CGFloat portBasedWidth = [BbCocoaObjectView widthForInlets:inlets outlets:outlets];
-    CGSize textBasedSize = [text sizeWithAttributes:[BbObjectViewConfiguration textAttributes]];
+    CGSize textBasedSize = [text sizeWithAttributes:[BbViewDescription textAttributes]];
     CGFloat textBasedWidth = [BbCocoaObjectView roundFloat:(textBasedSize.width + kPortViewWidthConstraint + 2)];
     
     if (portBasedWidth > textBasedWidth) {

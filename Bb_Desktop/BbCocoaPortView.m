@@ -34,6 +34,14 @@
     }
 }
 
+- (NSSize)intrinsicContentSize
+{
+    CGSize size;
+    size.width = kPortViewWidthConstraint;
+    size.height = kPortViewHeightConstraint;
+    return NSSizeFromCGSize(size);
+}
+
 - (NSDictionary *)userInfo
 {
     if (!self.entity) {

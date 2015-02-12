@@ -38,7 +38,7 @@
 - (BbObject *)addObjectAndViewWithDescription:(BbObjectDescription *)description
 {
     BbObject *object = [BbObject objectWithDescription:description];
-    BbObjectViewConfiguration *config = [BbObjectViewConfiguration new];
+    BbViewDescription *config = [BbViewDescription new];
     config.inlets = object.inlets.count;
     config.outlets = object.outlets.count;
     config.text = [NSString displayTextName:object.name args:description.BbObjectArgs];
@@ -47,7 +47,7 @@
     CGPoint center;
     [centerValue getValue:&center];
     config.center = center;
-    BbCocoaObjectView *view = [BbCocoaObjectView viewWithConfiguration:config parentView:self];
+    BbCocoaObjectView *view = [BbCocoaObjectView viewWithDescription:config inParent:self];
     object.view = (id<BbEntityView>)view;
     view.entity = object;
     

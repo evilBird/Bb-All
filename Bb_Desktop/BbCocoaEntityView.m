@@ -19,12 +19,29 @@
 - (void)commonInit
 {
     kSelected = NO;
-    self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
-- (void)setupConstraints {}
+- (void)commonInitDescription:(id)viewDescription
+{
+    kSelected = NO;
+}
 
+- (void)setupConstraints
+{
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+}
+- (void)setupConstraintsParent:(id)parent
+{
+    if (parent) {
+        return;
+    }
+    
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    [(NSView *)parent addSubview:self];
+    
+}
 
+/*
 - (void)setParentView:(BbCocoaEntityView *)parentView
 {
     _parentView = parentView;
@@ -32,6 +49,8 @@
     [self setupConstraints];
     [self refreshEntityView];
 }
+*/
+
 
 #pragma mark - Overrides
 - (NSColor *)defaultColor
@@ -46,17 +65,9 @@
 
 #pragma mark BbEntityView Methods
 
-- (CGRect)frame
-{
-    return [super frame];
-}
-- (void)setFrame:(CGRect)frame
-{
-    [super setFrame:frame];
-}
-
 - (void)setCenter:(CGPoint)center
 {
+    /*
     CGRect oldFrame = self.frame;
     CGPoint oldCenter = [NSView centerForFrame:oldFrame];
     CGFloat dx = center.x - oldCenter.x;
@@ -64,10 +75,12 @@
     CGRect newFrame = CGRectOffset(self.frame, dx, dy);
     self.frame = newFrame;
     [self refreshEntityView];
+     */
 }
 
 - (void)setCenter:(CGPoint)center inView:(id<BbEntityView>)view
 {
+    /*
     NSView *toCenter = (NSView *)view;
     NSView *selfView = (NSView *)self;
     CGRect frame = [selfView convertRect:toCenter.bounds fromView:toCenter];
@@ -77,6 +90,7 @@
     CGRect newFrame = CGRectOffset(toCenter.frame, dx, dy);
     toCenter.frame = newFrame;
     [view refreshEntityView];
+     */
 }
 
 - (CGPoint)center
@@ -87,10 +101,6 @@
 - (void)addSubview:(id<BbEntityView>)subview
 {
     [super addSubview:(NSView *)subview];
-}
-- (void)removeFromSuperview
-{
-    [super removeFromSuperview];
 }
 
 - (BOOL)selected
@@ -113,21 +123,27 @@
 }
 
 #pragma constructors
-- (instancetype)initWithFrame:(NSRect)frameRect
+
+- (instancetype)initWithDescription:(id)viewDescription
+                           inParent:(id)parentView
 {
-    self = [super initWithFrame:frameRect];
+    self = [super initWithFrame:CGRectZero];
     if (self) {
-        [self commonInit];
+        
+        [self commonInitDescription:viewDescription];
+        [self setupConstraintsParent:parentView];
+        [self refreshEntityView];
     }
     
     return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder
+- (instancetype)initWithDescription:(id)viewDescription
 {
-    self = [super initWithCoder:coder];;
+    self = [super initWithFrame:CGRectZero];
     if (self) {
-        [self commonInit];
+     
+        [self commonInitDescription:viewDescription];
     }
     return self;
 }

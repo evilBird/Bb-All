@@ -8,7 +8,10 @@
 
 #import "BbCocoaEntityView.h"
 
-@interface BbObjectViewConfiguration : NSObject
+static CGFloat kDefaultCocoaObjectViewWidth = 100;
+static CGFloat kDefaultCocoaObjectViewHeight = 62;
+
+@interface BbViewDescription : NSObject
 
 @property (nonatomic,strong)    NSString        *entityViewType;
 @property (nonatomic,strong)    NSString        *text;
@@ -22,18 +25,13 @@
 
 @interface BbCocoaObjectView : BbCocoaEntityView
 
-+ (instancetype)viewWithConfiguration:(BbObjectViewConfiguration *)config
-                               parentView:(BbCocoaEntityView *)parentView;
 
-- (instancetype)initWithFrame:(NSRect)frameRect
-                   parentView:(BbCocoaEntityView *)parentView
-                       config:(BbObjectViewConfiguration *)config;
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-                   parentView:(BbCocoaEntityView *)parentView
-                       config:(BbObjectViewConfiguration *)config;
++ (instancetype)viewWithDescription:(BbViewDescription *)viewDescription
+                           inParent:(id)parentView;
 
-@property (nonatomic,strong)        BbObjectViewConfiguration       *configuration;
+
+@property (nonatomic,strong)        BbViewDescription               *viewDescription;
 @property (nonatomic,readonly)      NSArray                         *inletViews;
 @property (nonatomic,readonly)      NSArray                         *outletViews;
 @property (nonatomic,strong)        NSLayoutConstraint              *centerXConstraint;
