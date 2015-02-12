@@ -24,10 +24,11 @@
 
 - (void)setupConstraints {}
 
+
 - (void)setParentView:(BbCocoaEntityView *)parentView
 {
     _parentView = parentView;
-    [parentView addSubview:self];
+    [_parentView addSubview:self];
     [self setupConstraints];
     [self refreshEntityView];
 }

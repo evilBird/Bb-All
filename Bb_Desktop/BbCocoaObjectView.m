@@ -123,8 +123,7 @@
 + (instancetype)viewWithConfiguration:(BbObjectViewConfiguration *)config
                            parentView:(BbCocoaEntityView *)parentView
 {
-    CGRect frame = [NSView rect:CGRectMake(0, 0, 100, 50) withCenter:config.center];
-    BbCocoaObjectView *objectView = [[BbCocoaObjectView alloc]initWithFrame:frame                                                            parentView:parentView
+    BbCocoaObjectView *objectView = [[BbCocoaObjectView alloc]initWithFrame:CGRectMake(0, 0, 100, 62)                                                            parentView:parentView
                                                                      config:config];
     return objectView;
 }
