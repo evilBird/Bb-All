@@ -76,6 +76,10 @@
     if (!self.entity) {
         self.entity = (BbEntity *)[[BbPatch alloc]initWithArguments:nil];
     }
+    
+    if (!self.viewDescription) {
+        self.normalizedPosition = NSPointFromCGPoint(CGPointMake(50, 50));
+    }
 }
 
 - (void)setupConstraintsInParentView:(id)parent

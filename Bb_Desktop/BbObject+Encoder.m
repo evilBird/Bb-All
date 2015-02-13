@@ -9,7 +9,8 @@
 #import "BbObject+Encoder.h"
 #import "BbParsers.h"
 #import "BbObject+Tests.h"
-
+#import "NSView+Bb.h"
+#import "BbCocoaEntityView.h"
 
 @implementation BbObject (Encoder)
 
@@ -28,15 +29,12 @@
     BbObjectDescription *desc = [BbObjectDescription new];
     desc.BbObjectType = [self className];
     desc.BbObjectArgs = [self creationArguments].mutableCopy;
-
+    desc.UIType = [[self class] UIType];
     if (self.view) {
-        CGSize size = [self.view frame].size;
-        desc.UISize = [NSValue valueWithSize:size];
-        CGPoint center = [self.view center];
-        desc.UICenter = [NSValue valueWithPoint:center];
+        NSPoint center = [self.view normalizedPosition];
         desc.UIPosition = @[@(center.x),@(center.y)];
     }else{
-        desc.UIPosition = @[@(0),@(0)];
+        desc.UIPosition = @[@(50),@(50)];
     }
     
     return desc;

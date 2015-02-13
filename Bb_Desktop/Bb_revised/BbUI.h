@@ -27,6 +27,8 @@
 - (CGPoint)center;
 - (void)setCenter:(CGPoint)center;
 
+- (NSPoint)normalizedPosition;
+
 - (BOOL)selected;
 - (void)setSelected:(BOOL)selected;
 

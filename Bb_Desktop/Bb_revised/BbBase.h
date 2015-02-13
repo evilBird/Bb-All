@@ -19,7 +19,15 @@
 - (NSSet *)allowedTypesForPort:(BbPort *)port;
 - (NSUInteger)indexForPort:(BbPort *)port;
 - (NSUInteger)indexInParent:(BbEntity *)child;
+
+
 - (BbEntity *)rootEntity;
+- (NSUInteger)countAncestors;
+- (BOOL)hasUI;
+- (BOOL)needsUI;
+- (BOOL)wantsUI;
+
+- (NSArray *)UIPosition;
 
 @end
 

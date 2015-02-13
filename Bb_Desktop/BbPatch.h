@@ -7,6 +7,7 @@
 //
 
 #import "BbObject+EntityParent.h"
+#import "BbObject+Encoder.h"
 
 @interface BbPatch : BbObject
 
@@ -19,5 +20,11 @@
                outlet:(BbOutlet *)outlet
            toReceiver:(BbObject *)receiver
                 inlet:(BbInlet *)inlet;
+
+- (void)connectOutlet:(BbOutlet *)outlet
+              toInlet:(BbInlet *)inlet;
+
+- (NSString *)textDescription;
+- (NSArray *)UISize;
 
 @end

@@ -11,5 +11,21 @@
 
 #import "BbStrings.h"
 #import "BbBasicMath.h"
+#import "BbPatch.h"
+
+@interface BbKeyCommandGenerator:BbObject
+
+@end
+
+@implementation BbKeyCommandGenerator
+
+- (void)setupWithArguments:(id)arguments
+{
+    
+}
+
+
+@end
+
 
 #endif

@@ -13,6 +13,7 @@
 #import <objc/runtime.h>
 #import "BbObject+Tests.h"
 #import "BbObject+EntityParent.h"
+#import "NSMutableString+Bb.h"
 
 #pragma mark - BbObject implementation
 
@@ -146,9 +147,72 @@
     return result;
 }
 
+- (NSUInteger)countAncestors
+{
+    if (self.parent != nil) {
+        return ([self.parent countAncestors]+1);
+    }else{
+        return 0;
+    }
+}
+
+- (BOOL)hasUI
+{
+    return (self.view != nil);
+}
+
+- (BOOL)wantsUI
+{
+    return [self.parent hasUI];
+}
+
+- (BOOL)needsUI
+{
+    return (![self hasUI] && [self wantsUI]);
+}
+
+- (NSArray *)UIPosition
+{
+    if (![self hasUI]) {
+        return @[@(50),@(50)];
+    }else{
+        return @[@([self.view normalizedPosition].x),@([self.view normalizedPosition].y)];
+    }
+}
+
+- (NSArray *)UISize
+{
+    return nil;
+}
+
+- (NSString *)textDescription
+{
+    NSMutableString *myDescription = [NSMutableString
+                                      descBbObject:NSStringFromClass([self class])
+                                      ancestors:[self countAncestors]
+                                      position:[self UIPosition]
+                                      size:[self UISize]
+                                      args:[self creationArguments]];
+    
+    if (self.childObjects && self.childObjects.count) {
+        
+        for (BbObject *child in self.childObjects) {
+            
+            [myDescription appendObject:[child textDescription]];
+        }
+    }
+    
+    return myDescription;
+}
+
 + (NSString *)UIType
 {
     return @"obj";
+}
+
++ (NSString *)stackInstruction
+{
+    return @"#X";
 }
 
 #pragma ports

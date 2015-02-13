@@ -147,16 +147,13 @@
     NSString *result = nil;
     BOOL didScanChar = YES;
     BOOL didScanSpace = NO;
-    //BOOL didScanSemicolon = NO;
     NSCharacterSet *chars = [NSCharacterSet alphanumericCharacterSet];
     NSCharacterSet *ws = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-    //NSCharacterSet *cr = [NSCharacterSet characterSetWithCharactersInString:@";"];
     BOOL done = NO;
     while (!done) {
         
         didScanChar = [classScanner scanCharactersFromSet:chars intoString:&result];
         didScanSpace = [classScanner scanCharactersFromSet:ws intoString:NULL];
-        //didScanSemicolon = [classScanner scanCharactersFromSet:cr intoString:NULL];
         
         if (didScanSpace && result!=nil) {
             done = YES;

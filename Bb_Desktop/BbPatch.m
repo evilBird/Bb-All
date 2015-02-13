@@ -7,6 +7,9 @@
 //
 
 #import "BbPatch.h"
+#import "NSMutableString+Bb.h"
+#import "BbCocoaEntityView.h"
+
 
 @implementation BbPatch
 
@@ -37,6 +40,7 @@
                  outlet:sender.outlets[senderPortIndex]
              toReceiver:receiver
                   inlet:receiver.inlets[receiverPortIndex]];
+    
 }
 
 - (void)connectSender:(BbObject *)sender
@@ -45,11 +49,46 @@
                 inlet:(BbInlet *)inlet
 {
     [outlet connectToInlet:inlet];
+}
+
+- (void)connectOutlet:(BbOutlet *)outlet
+              toInlet:(BbInlet *)inlet
+{
+    [outlet connectToInlet:inlet];
+}
+
+- (NSString *)textDescription
+{
+    NSMutableString *desc = [NSMutableString newDescription];
+    [desc appendObject:[super textDescription]];
+    [desc appendThenSpace:@"#C"];
+    [desc appendThenSpace:@"restore"];
+    [desc appendThenSpace:self.creationArguments];
+    [desc semiColon];
+    [desc lineBreak];
     
-    BbOutlet *receiverOutlet = receiver.outlets.firstObject;
-    receiverOutlet.outputBlock = ^(id value){
-        NSLog(@"\n%@ value = %@",receiver.name,value);
-    };
+    return desc;
+}
+
+- (NSArray *)UISize
+{
+    if (!self.view) {
+        return nil;
+    }
+    
+    CGSize size;
+    size = [(NSView *)self.view intrinsicContentSize];
+    return @[@(size.width),@(size.height)];
+}
+
++ (NSString *)UIType
+{
+    return @"canvas";
+}
+
++ (NSString *)stackInstruction
+{
+    return @"#N";
 }
 
 @end

@@ -13,6 +13,5 @@
 @interface BbObject (Encoder)
 
 - (BbDescription *)encodeDescription;
-- (NSString *)UIType;
 
 @end

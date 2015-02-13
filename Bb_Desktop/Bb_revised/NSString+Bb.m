@@ -116,6 +116,8 @@ void printInts(int n,...)
         }
         
         [result appendFormat:@"%@",arg];
+        
+        index ++;
     }
     
     return result;

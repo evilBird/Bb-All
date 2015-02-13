@@ -28,6 +28,7 @@ typedef id (^BbCalculateOutputBlock)(id hotValue, NSArray *inlets);
 @property (nonatomic)           BbOutlet            *mainOutlet;
 
 + (NSString *)UIType;
++ (NSString *)stackInstruction;
 
 - (instancetype)initWithArguments:(id)arguments;
 - (void)setupWithArguments:(id)arguments;
@@ -35,6 +36,14 @@ typedef id (^BbCalculateOutputBlock)(id hotValue, NSArray *inlets);
 - (void)addPort:(BbPort *)port;
 - (id)outputForOutlet:(BbOutlet *)outlet withChangeInHotInlet:(BbInlet *)hotInlet;
 - (BbCalculateOutputBlock)calculateOutputForOutletAtIndex:(NSInteger)index;
+
+- (NSString *)textDescription;
+- (NSUInteger)countAncestors;
+- (BOOL)hasUI;
+- (BOOL)needsUI;
+- (BOOL)wantsUI;
+- (NSArray *)UIPosition;
+- (NSArray *)UISize;
 
 @end
 
