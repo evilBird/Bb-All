@@ -90,6 +90,31 @@
     return result;
 }
 
++ (NSArray *)scanUIPosition:(NSScanner **)scanner
+{
+    NSScanner *centerScanner = *scanner;
+    NSArray *result = nil;
+    BOOL didScan = YES;
+    double vals[2];
+    NSUInteger count = 0;
+    NSCharacterSet *numbers = [NSCharacterSet decimalDigitCharacterSet];
+    while (didScan && count < 2) {
+        NSString *numberString = nil;
+        didScan = [centerScanner scanCharactersFromSet:numbers intoString:&numberString];
+        if (didScan && numberString) {
+            vals[count] = numberString.integerValue;
+            count++;
+        }
+    }
+    
+    if (count == 2) {
+        result = @[@(vals[0]),@(vals[1])];
+    }
+    
+    return result;
+}
+
+
 + (NSValue *)scanUISize:(NSScanner **)scanner
 {
     NSScanner *sizeScanner = *scanner;

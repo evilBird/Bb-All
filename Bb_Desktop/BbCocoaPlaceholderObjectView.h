@@ -8,7 +8,7 @@
 
 #import "BbCocoaEntityView.h"
 
-@interface BbCocoaPlaceholderObjectView : BbCocoaEntityView <NSTextFieldDelegate>
+@interface BbCocoaPlaceholderObjectView : BbCocoaEntityView <NSTextFieldDelegate,NSTextDelegate>
 
 @property (nonatomic,strong)NSTextField *textField;
 

@@ -9,45 +9,15 @@
 #import "BbCocoaObjectView.h"
 #import "BbCocoaPortView.h"
 #import "BbCocoaObjectView+Autolayout.h"
-
-@interface BbViewDescription ()
-{
-    
-}
-
-@end
-
-@implementation BbViewDescription
-
-+ (NSDictionary *)textAttributes
-{
-    NSFont *font = [NSFont fontWithName:@"Courier" size:[NSFont systemFontSize]];
-    NSColor *color = [NSColor whiteColor];
-    NSDictionary *textAttributes = @{NSFontAttributeName:font,
-                                     NSForegroundColorAttributeName:color,
-                                     NSParagraphStyleAttributeName:[BbViewDescription paragraphStyle]
-                                     };
-    return textAttributes;
-}
-
-+ (NSParagraphStyle *)paragraphStyle
-{
-    NSMutableParagraphStyle *result = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
-    result.alignment = NSCenterTextAlignment;
-    return result;
-}
-
-@end
+#import "BbObject.h"
 
 @interface BbCocoaObjectView ()
 
-- (CGFloat)contentWidthFromViewDescription:(BbViewDescription *)configuration;
-- (CGFloat)contentHeightFromViewDescription:(BbViewDescription *)configuration;
+- (CGFloat)contentWidthFromViewDescription:(BbCocoaEntityViewDescription *)configuration;
+- (CGFloat)contentHeightFromViewDescription:(BbCocoaEntityViewDescription *)configuration;
 
 @property (nonatomic,strong)NSMutableArray *inletViews_;
 @property (nonatomic,strong)NSMutableArray *outletViews_;
-@property (nonatomic,strong)NSMutableArray *inletSpacers;
-@property (nonatomic,strong)NSMutableArray *outletSpacers;
 
 @end
 
@@ -56,46 +26,21 @@
 #pragma mark - Public Methods
 
 
-
-- (void)commonInit
+- (void)commonInitEntity:(BbEntity *)entity viewDescription:(id)viewDescription
 {
-    [super commonInit];
-    if (!self.viewDescription) {
-        return;
-    }
-    
-    if (self.viewDescription.inlets > 0) {
-        self.inletViews_ = [self addPortViewsCount:self.viewDescription.inlets].mutableCopy;
-    }
-    
-    if (self.viewDescription.outlets > 0) {
-        self.outletViews_ = [self addPortViewsCount:self.viewDescription.outlets].mutableCopy;
-    }
-}
-
-
-- (void)commonInitDescription:(id)viewDescription
-{
-    [super commonInitDescription:viewDescription];
-    if (!viewDescription) {
-        return;
-    }
+    [super commonInitEntity:entity viewDescription:viewDescription];
     self.viewDescription = viewDescription;
-    self.inletViews_ = [self addPortViewsCount:self.viewDescription.inlets].mutableCopy;
-    self.outletViews_ = [self addPortViewsCount:self.viewDescription.outlets].mutableCopy;
+    self.normalizedPosition = self.viewDescription.normalizedPosition;
+    BbObject *myEntity = (BbObject *)entity;
+    self.inletViews_ = [self addViewsForBbPortEntities:myEntity.inlets].mutableCopy;
+    self.outletViews_ = [self addViewsForBbPortEntities:myEntity.outlets].mutableCopy;
 }
 
-- (void)setupConstraintsParent:(NSView *)parent
+- (void)setupConstraintsInParentView:(NSView *)parent
 {
-    [super setupConstraintsParent:parent];
-}
-
-- (void)setupConstraints
-{
-    [super setupConstraints];
-    if (!self.superview) {
-        return;
-    }
+    [super setupConstraintsInParentView:parent];
+    [self layoutInletViews:self.inletViews];
+    [self layoutOutletViews:self.outletViews];
 }
 
 - (NSSize)intrinsicContentSize
@@ -106,29 +51,37 @@
     return NSSizeFromCGSize(size);
 }
 
-- (CGFloat)contentWidthFromViewDescription:(BbViewDescription *)viewDescription
+- (CGFloat)contentWidthFromViewDescription:(BbCocoaEntityViewDescription *)viewDescription
 {
     if (!viewDescription) {
         return kDefaultCocoaObjectViewWidth;
     }
     
-    CGFloat contentWidth = [BbCocoaObjectView widthForInlets:viewDescription.inlets
-                                                     outlets:viewDescription.outlets
-                                                        text:viewDescription.text];
-    if (contentWidth > kDefaultCocoaObjectViewWidth) {
-        return contentWidth;
-    }else{
-        return kDefaultCocoaObjectViewWidth;
+    CGFloat contentWidth = kDefaultCocoaObjectViewWidth;
+    
+    if (viewDescription) {
+        NSDictionary *textAttributes = [BbCocoaEntityViewDescription textAttributes];
+        contentWidth = [self intrinsicWidthForObjectWithInlets:viewDescription.inlets
+                                                       outlets:viewDescription.outlets
+                                                 portViewWidth:kPortViewWidthConstraint
+                                                 displayedText:viewDescription.text
+                                       displayedTextAttributes:textAttributes
+                                                minPortSpacing:kMinHorizontalSpacerSize
+                                                  defaultWidth:kDefaultCocoaObjectViewWidth];
     }
+    
+    return contentWidth;
 }
 
-- (CGFloat)contentHeightFromViewDescription:(BbViewDescription *)viewDescription
+- (CGFloat)contentHeightFromViewDescription:(BbCocoaEntityViewDescription *)viewDescription
 {
-    if (!viewDescription) {
-        return kDefaultCocoaObjectViewHeight;
-    }
+    CGFloat contentHeight = kPortViewHeightConstraint * 2.0 + kMinVerticalSpacerSize;
+    return [NSView roundFloat:contentHeight];
+}
+
+- (void)setCenter:(CGPoint)center
+{
     
-    return kDefaultCocoaObjectViewHeight;
 }
 
 #pragma accessors
@@ -154,17 +107,7 @@
     return [NSColor colorWithWhite:0.3 alpha:1];
 }
 
-
-#pragma constructors
-
-+ (instancetype)viewWithDescription:(BbViewDescription *)viewDescription
-                           inParent:(BbCocoaEntityView *)parentView
-{
-    BbCocoaObjectView *objectView = [[BbCocoaObjectView alloc]initWithDescription:viewDescription
-                                                                         inParent:parentView];
-    return objectView;
-}
-
+#pragma drawing
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
@@ -174,7 +117,7 @@
                                    kPortViewHeightConstraint + 2);
     
     NSString *textToDraw = self.viewDescription.text;
-    [textToDraw drawInRect:insetRect withAttributes:[BbViewDescription textAttributes]];
+    [textToDraw drawInRect:insetRect withAttributes:[BbCocoaEntityViewDescription textAttributes]];
 }
 
 

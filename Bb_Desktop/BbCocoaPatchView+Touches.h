@@ -7,7 +7,12 @@
 //
 
 #import "BbCocoaPatchView.h"
-
+@class BbCocoaEntityView;
 @interface BbCocoaPatchView (Touches)
+
+- (void)moveEntityView:(BbCocoaEntityView *)entityView toPoint:(NSPoint)point;
+
+- (NSPoint)normalizePoint:(NSPoint)point;
+- (NSPoint)scaleNormalizedPoint:(NSPoint)point;
 
 @end

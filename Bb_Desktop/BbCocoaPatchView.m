@@ -17,63 +17,73 @@
 #import "NSString+Bb.h"
 #import "BbCocoaPortView.h"
 #import "BbCocoaPlaceholderObjectView.h"
+#import "PureLayout.h"
+#import "BbCocoaEntityView.h"
 
 @implementation BbCocoaPatchView
 
-- (void)addPlaceholderObject
+- (id) addPlaceholderAtPoint:(CGPoint)point
 {
-    CGRect frame = CGRectMake(200, 200, 100, 40);
+    BbCocoaEntityViewDescription *placeholderDescription = [BbCocoaEntityViewDescription placeholderEntityViewDescription];
+    placeholderDescription.normalizedPosition = [self normalizePoint:point];
+    BbCocoaPlaceholderObjectView *placeholder = [[BbCocoaPlaceholderObjectView alloc]initWithEntity:nil
+                                                                                    viewDescription:placeholderDescription
+                                                                                           inParent:self];
+    [self moveEntityView:placeholder toPoint:point];
     
-    BbCocoaPlaceholderObjectView *placeholder = [[BbCocoaPlaceholderObjectView alloc]initWithFrame:frame];
-    [self addSubview:placeholder];
-    [placeholder.textField becomeFirstResponder];
+    return placeholder;
 }
 
-- (BbObject *)addObjectAndViewWithText:(NSString *)text
+- (BbObject *)addObjectWithText:(NSString *)text
 {
-    BbObjectDescription *desc = (BbObjectDescription *)[BbBasicParser descriptionWithText:text];
-    return [self addObjectAndViewWithDescription:desc];
-}
-
-- (BbObject *)addObjectAndViewWithDescription:(BbObjectDescription *)description
-{
-    BbObject *object = [BbObject objectWithDescription:description];
-    BbViewDescription *config = [BbViewDescription new];
-    config.inlets = object.inlets.count;
-    config.outlets = object.outlets.count;
-    config.text = [NSString displayTextName:object.name args:description.BbObjectArgs];
-    config.entityViewType = description.UIType;
-    NSValue *centerValue = description.UICenter;
-    CGPoint center;
-    [centerValue getValue:&center];
-    config.center = center;
-    BbCocoaObjectView *view = [BbCocoaObjectView viewWithDescription:config inParent:self];
-    object.view = (id<BbEntityView>)view;
-    view.entity = object;
-    
-    for (NSUInteger i = 0; i<object.inlets.count; i++) {
-        BbCocoaPortView *portview = view.inletViews[i];
-        BbInlet *inlet = object.inlets[i];
-        [portview setEntity:inlet];
-        inlet.view = portview;
+    BbObjectDescription *objDesc = (BbObjectDescription *)[BbBasicParser descriptionWithText:text];
+    BbObject *object = [BbObject objectWithDescription:objDesc];
+    if (!object) {
+        return nil;
     }
     
-    for (NSUInteger i = 0; i<object.outlets.count; i++) {
-        BbCocoaPortView *portview = view.outletViews[i];
-        BbOutlet *outlet = object.outlets[i];
-        [portview setEntity:outlet];
-        outlet.view = portview;
-    }
+    [self.patch addChildObject:object];
+    BbCocoaEntityViewDescription *viewDesc = [[BbCocoaEntityViewDescription alloc]init];
+    viewDesc.text = [NSString displayTextName:object.name args:objDesc.BbObjectArgs];
+    viewDesc.entityViewType = objDesc.UIType;
+    viewDesc.inlets = object.inlets.count;
+    viewDesc.outlets = object.outlets.count;
+    NSPoint normCenter;
+    CGFloat normX = [objDesc.UIPosition.firstObject doubleValue];
+    CGFloat normY = [objDesc.UIPosition.lastObject doubleValue];
+    normCenter.x = normX;
+    normCenter.y = normY;
+    viewDesc.normalizedPosition = normCenter;
     
-    [(BbPatch *)self.entity addChildObject:object];
+    BbCocoaObjectView *view = [[BbCocoaObjectView alloc]initWithEntity:object
+                                                       viewDescription:viewDesc
+                                                              inParent:self];
+    
+    NSPoint viewPosition = [self scaleNormalizedPoint:view.normalizedPosition];
+    [self moveEntityView:view toPoint:viewPosition];
     return object;
 }
 
-- (void)commonInit
+- (void)commonInitEntity:(BbEntity *)entity viewDescription:(id)viewDescription
 {
-    if (self.entity == nil) {
+    [super commonInitEntity:entity viewDescription:viewDescription];
+    if (!self.entity) {
         self.entity = (BbEntity *)[[BbPatch alloc]initWithArguments:nil];
     }
+}
+
+- (void)setupConstraintsInParentView:(id)parent
+{
+    [super setupConstraintsInParentView:parent];
+    if (self.superview) {
+        [self autoPinEdgesToSuperviewEdgesWithInsets:NSEdgeInsetsZero];
+        [self refresh];
+    }
+}
+
+- (BbPatch *)patch
+{
+    return (BbPatch *)self.entity;
 }
 
 - (NSColor *)defaultColor
@@ -86,24 +96,9 @@
     return [NSColor colorWithWhite:0.9 alpha:1];
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder 
+- (NSSize)intrinsicContentSize
 {
-    self= [super initWithCoder:coder];
-    if (self) {
-        [self commonInit];
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithFrame:(NSRect)frameRect
-{
-    self = [super initWithFrame:frameRect];
-    if (self) {
-        [self commonInit];
-    }
-    
-    return self;
+    return NSSizeFromCGSize(self.superview.bounds.size);
 }
 
 - (NSBezierPath *)connectionPathFromArray:(NSArray *)array

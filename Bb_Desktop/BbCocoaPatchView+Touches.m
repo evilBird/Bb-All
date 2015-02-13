@@ -224,21 +224,53 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     NSLog(@"mouse dragged from patch view");
 }
 
+- (NSPoint)normalizePoint:(NSPoint)point
+{
+    CGFloat x,y;
+    x = (point.x * 100.0)/self.intrinsicContentSize.width;
+    y = (point.y * 100.0)/self.intrinsicContentSize.height;
+    CGPoint normPoint = CGPointMake([NSView roundFloat:x], [NSView roundFloat:y]);
+    return NSPointFromCGPoint(normPoint);
+}
+
+- (NSPoint)scaleNormalizedPoint:(NSPoint)point
+{
+    CGFloat x,y;
+    x = point.x * 0.01 * self.intrinsicContentSize.width;
+    y = point.y * 0.01 * self.intrinsicContentSize.height;
+    CGPoint scaledPoint = CGPointMake([NSView roundFloat:x], [NSView roundFloat:y]);
+    return NSPointFromCGPoint(scaledPoint);
+}
+
+- (NSPoint)myCenter
+{
+    CGFloat x,y;
+    x = self.intrinsicContentSize.width/2.0;
+    y = self.intrinsicContentSize.height/2.0;
+    CGPoint myCenter = CGPointMake([NSView roundFloat:x], [NSView roundFloat:y]);
+    return NSPointFromCGPoint(myCenter);
+}
+
 - (void)mouseDragged:(NSEvent *)theEvent fromObjectView:(BbCocoaObjectView *)objectView
 {
-    NSPoint loc = theEvent.locationInWindow;
-    CGFloat dx = loc.x - kPreviousLoc.x;
-    CGFloat dy = loc.y - kPreviousLoc.y;
-    CGPoint oldCenter = [objectView center];
-    CGPoint newCenter = oldCenter;
-    newCenter.x += dx;
-    newCenter.y += dy;
-    CGRect oldFrame = objectView.frame;
-    CGRect newFrame = CGRectOffset(oldFrame, dx, dy);
-    objectView.frame = newFrame;
-    [objectView setCenter:newCenter];
-    kPreviousLoc = loc;
+    [self moveEntityView:objectView toPoint:theEvent.locationInWindow];
+}
+
+- (void)moveEntityView:(BbCocoaEntityView *)entityView toPoint:(NSPoint)point
+{
+    CGFloat dx,dy;
+    NSPoint myCenter = [self myCenter];
+    dx = point.x - myCenter.x;
+    dy = point.y - myCenter.y;
+    [entityView.centerXConstraint autoRemove];
+    [entityView.centerYConstraint autoRemove];
+    entityView.centerXConstraint = [entityView autoAlignAxis:ALAxisVertical toSameAxisOfView:self withOffset:[NSView roundFloat:dx]];
+    entityView.centerYConstraint = [entityView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self withOffset:-[NSView roundFloat:dy]];
+    [entityView.centerXConstraint autoInstall];
+    [entityView.centerYConstraint autoInstall];
+    entityView.normalizedPosition = [self normalizePoint:point];
     [self setNeedsDisplay:YES];
+    [self layoutSubtreeIfNeeded];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent fromPortView:(BbCocoaPortView *)portView
@@ -411,14 +443,14 @@ typedef NS_ENUM(NSUInteger, BbViewType){
 {
     BbViewType viewType = [BbCocoaPatchView viewType:theView];
     if (viewType == BbViewType_Patch) {
-        CGPoint point = theEvent.locationInWindow;
-        NSString *textDescription = [NSString stringWithFormat:@"#X BbObject %.f %.f BbObject;\n",point.x,point.y];
-        [self addPlaceholderObject];
         kInitView = nil;
         kSelectedObjectView = nil;
         kSelectedPortViewSender = nil;
         kSelectedPortViewReceiver = nil;
         [self setNeedsDisplay:YES];
+        
+        [self addPlaceholderAtPoint:theEvent.locationInWindow];
+
     }
 }
 

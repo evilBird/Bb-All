@@ -14,6 +14,7 @@
 + (NSString *)scanStackInstruction:(NSScanner **)scanner;
 + (NSString *)scanUIType:(NSScanner **)scanner;
 + (NSValue *)scanUICenter:(NSScanner **)scanner;
++ (NSArray *)scanUIPosition:(NSScanner **)scanner;
 + (NSValue *)scanUISize:(NSScanner **)scanner;
 + (NSString *)scanObjectType:(NSScanner **)scanner;
 + (NSArray *)scanObjectArgs:(NSScanner **)scanner;

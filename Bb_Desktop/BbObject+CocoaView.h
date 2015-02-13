@@ -10,8 +10,8 @@
 
 @interface BbObject (CocoaView)
 
-+ (BbObject *)objectAndViewWithText:(NSString *)text;
+//+ (BbObject *)objectAndViewWithText:(NSString *)text;
 
-- (void)setView:(id<BbEntityView>)view;
+//- (void)setView:(id<BbEntityView>)view;
 
 @end

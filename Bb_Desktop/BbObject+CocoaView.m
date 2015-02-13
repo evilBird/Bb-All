@@ -13,7 +13,7 @@
 #import "BbUI.h"
 
 @implementation BbObject (CocoaView)
-
+/*
 + (instancetype)objectAndViewWithText:(NSString *)text
 {
     BbObjectDescription *desc = (BbObjectDescription *)[BbBasicParser descriptionWithText:text];
@@ -32,15 +32,14 @@
     CGPoint center;
     [centerValue getValue:&center];
     config.center = center;
-    id<BbEntityView> view = [BbCocoaObjectView viewWithDescription:config inParent:nil];
-    object.view = view;
+    //id<BbEntityView> view = [BbCocoaObjectView viewWithDescription:config inParent:nil];
+    //object.view = view;
     return object;
 }
 
 - (void)setView:(id<BbEntityView>)view
 {
     [super setView:view];
-    [view setEntity:self];
 }
-
+*/
 @end

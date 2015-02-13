@@ -117,4 +117,13 @@
     return [NSColor colorWithWhite:0.7 alpha:1];
 }
 
+
+- (void)drawRect:(NSRect)dirtyRect {
+    [super drawRect:dirtyRect];
+    NSBezierPath *outlinePath = [NSBezierPath bezierPathWithRect:self.bounds];
+    [outlinePath setLineWidth:1.0];
+    [[NSColor blackColor]setStroke];
+    [outlinePath stroke];
+}
+
 @end

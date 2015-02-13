@@ -12,39 +12,40 @@
 #import <Cocoa/Cocoa.h>
 #import "NSView+Bb.h"
 #import "BbUI.h"
+#import "PureLayout.h"
+#import "BbCocoaEntityViewDescription.h"
 
 @interface BbCocoaEntityView : NSView <BbEntityView> {
     BOOL kSelected;
+    CGPoint kCenter;
 }
 
 @property (nonatomic,weak)          BbEntity                        *entity;
-//@property (nonatomic,weak)          BbCocoaEntityView               *parentView;
+@property (nonatomic,strong)        BbCocoaEntityViewDescription    *viewDescription;
+@property (nonatomic)               NSPoint                         normalizedPosition;
 @property (nonatomic,readonly)      NSColor                         *defaultColor;
 @property (nonatomic,readonly)      NSColor                         *selectedColor;
+@property (nonatomic,strong)        NSLayoutConstraint              *centerXConstraint;
+@property (nonatomic,strong)        NSLayoutConstraint              *centerYConstraint;
+
+#pragma - designated initializer
+- (instancetype)initWithEntity:(BbEntity *)entity
+               viewDescription:(id)viewDescription
+                      inParent:(id)parentView;
 
 
-//Pragma designated initializer
-- (instancetype)initWithDescription:(id)viewDescription
-                           inParent:(id)parentView;
+//Override to customize initialization
+- (void)commonInitEntity:(BbEntity *)entity
+         viewDescription:(id)viewDescription;
 
-- (instancetype)initWithDescription:(id)viewDescription;
-
-//When a subclass is initialized, common init is called
-- (void)commonInit;
-- (void)commonInitDescription:(id)viewDescription;
-
-//Then the parent view is set, which adds the subclass to the view heirarchy
-//- (void)setParentView:(BbCocoaEntityView *)parentView;
-//Then once the sublcass is part of the view heirarchy, setupConstraints is called
-- (void)setupConstraints;
-- (void)setupConstraintsParent:(id)parent;
-//Finally once the subclass is in the view heirarchy and its constraints are set, refreshEntityView calls setNeedsLayout followed by setNeedsDisplay
-- (void)refreshEntityView;
+//Override to customize constraints
+//Returns without installing constraints if parent view is nil
+- (void)setupConstraintsInParentView:(id)parent;
+- (void)refresh;
+- (void)setEntity:(BbEntity *)entity;
 
 #pragma BbEntityView Methods
 
-- (BbEntity *)entity;
-- (CGRect)frame;
 - (CGPoint)center;
 - (void)setCenter:(CGPoint)center;
 - (BOOL)selected;
