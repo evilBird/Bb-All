@@ -21,6 +21,7 @@
 {
     kSelected = NO;
     self.entity = entity;
+    self.viewDescription = viewDescription;
 }
 
 - (void)setupConstraintsInParentView:(id)parent
@@ -93,7 +94,7 @@
 
 #pragma constructors
 
-- (instancetype)initWithEntity:(BbEntity *)entity
+- (instancetype)initWithEntity:(id)entity
                viewDescription:(id)viewDescription
                       inParent:(id)parentView
 {

@@ -20,6 +20,24 @@
 
 @end
 
+@implementation BbNumber
+
+- (void)setupWithArguments:(id)arguments
+{
+    [self addPort:[BbInlet newHotInletNamed:kBbPortDefaultNameForHotInlet]];
+    [self addPort:[BbOutlet newOutletNamed:kBbPortDefaultNameForMainOutlet]];
+    self.name = @"number";
+}
+
+- (BbCalculateOutputBlock)calculateOutputForOutletAtIndex:(NSInteger)index
+{
+    return ^(id hotValue, NSArray *inlets){
+        return hotValue;
+    };
+}
+
+@end
+
 @implementation BbAdd
 
 - (void)setupWithArguments:(id)arguments

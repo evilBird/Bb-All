@@ -29,7 +29,7 @@
 @property (nonatomic,strong)        NSLayoutConstraint              *centerYConstraint;
 
 #pragma - designated initializer
-- (instancetype)initWithEntity:(BbEntity *)entity
+- (instancetype)initWithEntity:(id)entity
                viewDescription:(id)viewDescription
                       inParent:(id)parentView;
 

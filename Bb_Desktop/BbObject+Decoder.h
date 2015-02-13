@@ -14,5 +14,7 @@
 + (instancetype)newObjectClassName:(NSString *)className arguments:(id)arguments;
 + (BbObject *)objectWithDescription:(BbObjectDescription *)description;
 + (BbObject *)objectFromText:(NSString *)text;
++ (NSArray *)BbStandardLibraryClassNames;
++ (NSString *)lookUpClassWithText:(NSString *)text;
 
 @end

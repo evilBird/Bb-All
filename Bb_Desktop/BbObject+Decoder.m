@@ -11,7 +11,7 @@
 #import <Objc/runtime.h>
 #import "NSInvocation+Bb.h"
 #import "BbConstants.h"
-#import "BbBasicMath.h"
+#import "BbStandardLib.h"
 
 @implementation BbObject (Decoder)
 
@@ -28,12 +28,50 @@
     return [BbObject objectWithDescription:desc];
 }
 
++ (NSString *)lookUpClassWithText:(NSString *)text
+{
+    NSArray *libClasses = [BbObject BbStandardLibraryClassNames];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] %@",text];
+    NSArray *filtered = [libClasses filteredArrayUsingPredicate:predicate];
+    NSSortDescriptor *lengthSort = [NSSortDescriptor sortDescriptorWithKey:@"length" ascending:YES];
+    NSArray *sorted = [filtered sortedArrayUsingDescriptors:@[lengthSort]];
+    NSString *first = sorted.firstObject;
+    return first;
+}
+
++ (NSArray *)listClassesWithPrefix:(NSString *)prefix
+{
+    unsigned numClasses;
+    Class * classes = NULL;
+    numClasses = objc_getClassList(NULL, 0);
+    classes = objc_copyClassList(&numClasses);
+    NSMutableArray *classNames = nil;
+    for (NSUInteger i = 0; i < numClasses; i++) {
+        NSString *class = [NSString stringWithUTF8String:class_getName(classes[i])];
+        if (prefix){
+            if ([class hasPrefix:prefix]) {
+                if (!classNames) {
+                    classNames = [NSMutableArray array];
+                }
+                [classNames addObject:class];
+            }
+        }else{
+            if (!classNames) {
+                classNames = [NSMutableArray array];
+            }
+            [classNames addObject:class];
+        }
+    }
+    return classNames;
+}
+
++ (NSArray *)BbStandardLibraryClassNames
+{
+    return [BbObject listClassesWithPrefix:@"Bb"];
+}
+
 + (instancetype)newObjectClassName:(NSString *)className arguments:(id)arguments
 {
-    //if ([className isEqualToString:@"placeholder"]) {
-      //  return nil;
-    //}
-    
     const char *class = [className UTF8String];
     id c = objc_getClass(class);
     id instance = [c alloc];

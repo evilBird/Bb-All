@@ -10,6 +10,11 @@
 
 @interface BbCocoaPlaceholderObjectView : BbCocoaEntityView <NSTextFieldDelegate,NSTextDelegate>
 
-@property (nonatomic,strong)NSTextField *textField;
+@property (nonatomic,strong)    NSTextField                                 *textField;
+@property (nonatomic,weak)      id<BbPlaceholderViewDelegate>               delegate;
+
+- (instancetype)initWithDelegate:(id<BbPlaceholderViewDelegate>)delegate
+                 viewDescription:(id)viewDescription
+                        inParent:(id)parentView;
 
 @end

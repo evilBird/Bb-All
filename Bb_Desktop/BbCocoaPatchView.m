@@ -26,11 +26,9 @@
 {
     BbCocoaEntityViewDescription *placeholderDescription = [BbCocoaEntityViewDescription placeholderEntityViewDescription];
     placeholderDescription.normalizedPosition = [self normalizePoint:point];
-    BbCocoaPlaceholderObjectView *placeholder = [[BbCocoaPlaceholderObjectView alloc]initWithEntity:nil
-                                                                                    viewDescription:placeholderDescription
-                                                                                           inParent:self];
+    BbCocoaPlaceholderObjectView *placeholder = [[BbCocoaPlaceholderObjectView alloc]initWithDelegate:self
+                                                                                      viewDescription:placeholderDescription inParent:self];
     [self moveEntityView:placeholder toPoint:point];
-    
     return placeholder;
 }
 
@@ -100,6 +98,55 @@
 {
     return NSSizeFromCGSize(self.superview.bounds.size);
 }
+
+#pragma mark - BbPlaceholderViewDelegate
+
+- (void)placeholder:(id)sender enteredText:(NSString *)text
+{
+    NSString *textDesc = [self textDescriptionWithText:text
+                                   fromPlaceholderView:sender];
+    if (textDesc) {
+        [self swapPlaceholderView:sender withObjectCreatedFromText:textDesc];
+    }
+}
+
+- (NSString *)textDescriptionWithText:(NSString *)text fromPlaceholderView:(BbCocoaPlaceholderObjectView *)p
+{
+    if (!text) {
+        return nil;
+    }
+    
+    NSArray *components = [text componentsSeparatedByString:@" "];
+    NSString *className = [BbObject lookUpClassWithText:components.firstObject];
+    if (!className) {
+        return nil;
+    }
+    
+    NSMutableString *textDesc = [[NSMutableString alloc]initWithFormat:@"#X obj %.f %.f ",p.normalizedPosition.x,p.normalizedPosition.y];
+    [textDesc appendString:className];
+    
+    if (components.count > 1)
+    {
+        NSMutableArray *componentsCopy = components.mutableCopy;
+        [componentsCopy removeObjectAtIndex:0];
+        NSString *argsString = [NSString stringWithArray:componentsCopy];
+        [textDesc appendString:@" "];
+        [textDesc appendString:argsString];
+    }
+    
+    [textDesc appendString:@";\n"];
+    NSString *result = [NSString stringWithString:textDesc];
+    return result;
+}
+
+- (void)swapPlaceholderView:(BbCocoaPlaceholderObjectView *)placeholderView
+  withObjectCreatedFromText:(NSString *)text
+{
+    [placeholderView removeFromSuperviewWithoutNeedingDisplay];
+    [self addObjectWithText:text];
+}
+
+#pragma mark - drawing methods
 
 - (NSBezierPath *)connectionPathFromArray:(NSArray *)array
 {

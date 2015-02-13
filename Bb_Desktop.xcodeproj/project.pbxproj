@@ -139,6 +139,7 @@
 		F29DE43D1A8C203900C01E75 /* NSDictionary+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Bb.m"; sourceTree = "<group>"; };
 		F29DE43F1A8C3C3800C01E75 /* BbCocoaPlaceholderObjectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbCocoaPlaceholderObjectView.h; sourceTree = "<group>"; };
 		F29DE4401A8C3C3800C01E75 /* BbCocoaPlaceholderObjectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbCocoaPlaceholderObjectView.m; sourceTree = "<group>"; };
+		F29EDAA41A8D80E500A828B0 /* BbStandardLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbStandardLib.h; sourceTree = "<group>"; };
 		F2D6AA121A8AAD5A00F6B720 /* BbObject+CocoaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbObject+CocoaView.h"; sourceTree = "<group>"; };
 		F2D6AA131A8AAD5A00F6B720 /* BbObject+CocoaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbObject+CocoaView.m"; sourceTree = "<group>"; };
 		F2F6E13F1A8A7228000959AB /* BbObject+Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbObject+Decoder.h"; sourceTree = "<group>"; };
@@ -359,6 +360,7 @@
 		F2F6E14E1A8A87FB000959AB /* Object Library */ = {
 			isa = PBXGroup;
 			children = (
+				F29EDAA41A8D80E500A828B0 /* BbStandardLib.h */,
 				F2709D7E1A89B2B0004BF4FF /* BbStrings.h */,
 				F2709D7F1A89B2B0004BF4FF /* BbStrings.m */,
 				F2709DA01A89B4D2004BF4FF /* BbBasicMath.h */,

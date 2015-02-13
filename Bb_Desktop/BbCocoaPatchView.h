@@ -11,8 +11,8 @@
 
 typedef NSArray* (^BbCocoaPatchGetConnectionArray)(void);
 
-@interface BbCocoaPatchView : BbCocoaEntityView {
-    
+@interface BbCocoaPatchView : BbCocoaEntityView <BbPlaceholderViewDelegate>
+{
     CGPoint                kPreviousLoc;
     BbCocoaObjectView      *kSelectedObjectView;
     BbCocoaPortView        *kSelectedPortViewSender;
@@ -27,7 +27,7 @@ typedef NSArray* (^BbCocoaPatchGetConnectionArray)(void);
 
 @property (nonatomic,readonly)BbPatch *patch;
 
-- (BbObject *) addObjectWithText:(NSString *)text;
-- (id) addPlaceholderAtPoint:(CGPoint)point;
+- (BbObject *)addObjectWithText:(NSString *)text;
+- (id)addPlaceholderAtPoint:(CGPoint)point;
 
 @end

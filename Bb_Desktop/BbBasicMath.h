@@ -11,6 +11,9 @@
 @interface BbNumberObject : BbObject
 @end
 
+@interface BbNumber : BbNumberObject
+@end
+
 @interface BbAdd: BbNumberObject
 @end
 
