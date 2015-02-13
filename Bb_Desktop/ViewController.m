@@ -32,21 +32,6 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)viewDidAppear
-{
-    [super viewDidAppear];
-    kFocusPoint = [NSView centerForFrame:self.view.bounds];
-    [self testView];
-}
-
-- (void)testView
-{
-    NSString *mult_desc = [NSString stringWithFormat:@"#X obj 50 50 BbMultiply 8;\n"];
-    [self.patchView addObjectWithText:mult_desc];
-    NSString *add_desc = [NSString stringWithFormat:@"X obj 25 25 BbAdd 4;\n"];
-    [self.patchView addObjectWithText:add_desc];
-}
-
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
     // Update the view, if already loaded.

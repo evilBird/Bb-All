@@ -54,7 +54,7 @@
     NSScanner *UITypeScanner = *scanner;
     NSString *result = nil;
     BOOL didScan = NO;
-    NSArray *UITypes = @[@"canvas",@"obj",@"text",@"msg",@"inlet",@"outlet",@"connect"];
+    NSArray *UITypes = @[@"canvas",@"obj",@"text",@"msg",@"inlet",@"outlet",@"connect",@"hsl"];
     for (NSString *UIType in UITypes) {
         didScan = [UITypeScanner scanString:UIType intoString:&result];
         if (didScan) {
@@ -147,13 +147,16 @@
     NSString *result = nil;
     BOOL didScanChar = YES;
     BOOL didScanSpace = NO;
+    //BOOL didScanSemicolon = NO;
     NSCharacterSet *chars = [NSCharacterSet alphanumericCharacterSet];
     NSCharacterSet *ws = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    //NSCharacterSet *cr = [NSCharacterSet characterSetWithCharactersInString:@";"];
     BOOL done = NO;
     while (!done) {
         
         didScanChar = [classScanner scanCharactersFromSet:chars intoString:&result];
         didScanSpace = [classScanner scanCharactersFromSet:ws intoString:NULL];
+        //didScanSemicolon = [classScanner scanCharactersFromSet:cr intoString:NULL];
         
         if (didScanSpace && result!=nil) {
             done = YES;

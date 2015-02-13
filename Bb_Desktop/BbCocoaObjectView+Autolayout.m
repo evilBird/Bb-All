@@ -47,15 +47,12 @@
     CGFloat widthForOutletSpacers = (CGFloat)outletSpacers * minPortSpacing;
     CGFloat requiredBottomWidth = totalWidthForOutlets + widthForOutletSpacers;
     widthRequiredByPorts = [self maxOfValue1:requiredTopWidth value2:requiredBottomWidth];
-    CGFloat textWidth = [displayedText sizeWithAttributes:displayedTextAttributes].width;
+    CGFloat textWidthRaw = [displayedText sizeWithAttributes:displayedTextAttributes].width;
+    CGFloat textWidth = pow(textWidthRaw, 1.1);
     CGFloat textInsetsWidth = portViewWidth;
     widthRequiredByText = textWidth + textInsetsWidth;
     requiredWidth = [self maxOfValue1:widthRequiredByPorts value2:widthRequiredByText];
     result = [self minOfValue1:defaultWidth value2:requiredWidth];
-    
-    if (result!=defaultWidth) {
-        [self invalidateIntrinsicContentSize];
-    }
     
     return [self roundFloat:result];
 }

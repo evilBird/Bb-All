@@ -14,6 +14,7 @@ typedef NSArray* (^BbCocoaPatchGetConnectionArray)(void);
 @interface BbCocoaPatchView : BbCocoaEntityView <BbPlaceholderViewDelegate>
 {
     CGPoint                kPreviousLoc;
+    NSSize                  kInitOffset;
     BbCocoaObjectView      *kSelectedObjectView;
     BbCocoaPortView        *kSelectedPortViewSender;
     BbCocoaPortView        *kSelectedPortViewReceiver;

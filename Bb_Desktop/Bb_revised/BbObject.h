@@ -27,6 +27,8 @@ typedef id (^BbCalculateOutputBlock)(id hotValue, NSArray *inlets);
 @property (nonatomic)           BbInlet             *coldInlet;
 @property (nonatomic)           BbOutlet            *mainOutlet;
 
++ (NSString *)UIType;
+
 - (instancetype)initWithArguments:(id)arguments;
 - (void)setupWithArguments:(id)arguments;
 - (void)commonInitArgs:(id)args;

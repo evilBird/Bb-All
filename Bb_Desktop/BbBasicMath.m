@@ -8,7 +8,7 @@
 
 #import "BbBasicMath.h"
 #import "BbTests.h"
-
+#import <Cocoa/Cocoa.h>
 
 @implementation BbNumberObject
 
@@ -20,13 +20,24 @@
 
 @end
 
-@implementation BbNumber
+@implementation BbNumberSlider
 
 - (void)setupWithArguments:(id)arguments
 {
     [self addPort:[BbInlet newHotInletNamed:kBbPortDefaultNameForHotInlet]];
     [self addPort:[BbOutlet newOutletNamed:kBbPortDefaultNameForMainOutlet]];
     self.name = @"number";
+}
+
++ (NSString *)UIType
+{
+    return @"hsl";
+}
+
+- (void)sliderValueDidChange:(id)sender
+{
+    double value = [(NSSlider *)sender doubleValue];
+    [self.hotInlet input:@(value)];
 }
 
 - (BbCalculateOutputBlock)calculateOutputForOutletAtIndex:(NSInteger)index

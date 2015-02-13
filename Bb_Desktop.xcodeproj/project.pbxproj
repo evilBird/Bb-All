@@ -43,6 +43,7 @@
 		F29DE43B1A8C1B5A00C01E75 /* NSNumber+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F29DE43A1A8C1B5A00C01E75 /* NSNumber+Bb.m */; };
 		F29DE43E1A8C203900C01E75 /* NSDictionary+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F29DE43D1A8C203900C01E75 /* NSDictionary+Bb.m */; };
 		F29DE4411A8C3C3800C01E75 /* BbCocoaPlaceholderObjectView.m in Sources */ = {isa = PBXBuildFile; fileRef = F29DE4401A8C3C3800C01E75 /* BbCocoaPlaceholderObjectView.m */; };
+		F29EDAA71A8D974300A828B0 /* BbCocoaHSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F29EDAA61A8D974300A828B0 /* BbCocoaHSliderView.m */; };
 		F2D6AA141A8AAD5A00F6B720 /* BbObject+CocoaView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2D6AA131A8AAD5A00F6B720 /* BbObject+CocoaView.m */; };
 		F2F6E1411A8A7228000959AB /* BbObject+Decoder.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F6E1401A8A7228000959AB /* BbObject+Decoder.m */; };
 		F2F6E1471A8A7907000959AB /* BbObject+Encoder.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F6E1461A8A7907000959AB /* BbObject+Encoder.m */; };
@@ -140,6 +141,8 @@
 		F29DE43F1A8C3C3800C01E75 /* BbCocoaPlaceholderObjectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbCocoaPlaceholderObjectView.h; sourceTree = "<group>"; };
 		F29DE4401A8C3C3800C01E75 /* BbCocoaPlaceholderObjectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbCocoaPlaceholderObjectView.m; sourceTree = "<group>"; };
 		F29EDAA41A8D80E500A828B0 /* BbStandardLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbStandardLib.h; sourceTree = "<group>"; };
+		F29EDAA51A8D974300A828B0 /* BbCocoaHSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbCocoaHSliderView.h; sourceTree = "<group>"; };
+		F29EDAA61A8D974300A828B0 /* BbCocoaHSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbCocoaHSliderView.m; sourceTree = "<group>"; };
 		F2D6AA121A8AAD5A00F6B720 /* BbObject+CocoaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbObject+CocoaView.h"; sourceTree = "<group>"; };
 		F2D6AA131A8AAD5A00F6B720 /* BbObject+CocoaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbObject+CocoaView.m"; sourceTree = "<group>"; };
 		F2F6E13F1A8A7228000959AB /* BbObject+Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbObject+Decoder.h"; sourceTree = "<group>"; };
@@ -291,6 +294,8 @@
 				F2F6E1641A8A934B000959AB /* BbCocoaObjectView.m */,
 				F29DE43F1A8C3C3800C01E75 /* BbCocoaPlaceholderObjectView.h */,
 				F29DE4401A8C3C3800C01E75 /* BbCocoaPlaceholderObjectView.m */,
+				F29EDAA51A8D974300A828B0 /* BbCocoaHSliderView.h */,
+				F29EDAA61A8D974300A828B0 /* BbCocoaHSliderView.m */,
 				F23925E11A8D526E00EB7BCB /* BbCocoaTextField.h */,
 				F23925E21A8D526E00EB7BCB /* BbCocoaTextField.m */,
 				F2381CC11A8AC64100B7D2A4 /* BbCocoaObjectView+Autolayout.h */,
@@ -552,6 +557,7 @@
 				F2709DA11A89B4D2004BF4FF /* BbBasicMath.m in Sources */,
 				F2F6E1621A8A9324000959AB /* BbCocoaPatchView.m in Sources */,
 				F2709D9A1A89B2B0004BF4FF /* BbPorts.m in Sources */,
+				F29EDAA71A8D974300A828B0 /* BbCocoaHSliderView.m in Sources */,
 				F2709D911A89B2B0004BF4FF /* BbEncoders.m in Sources */,
 				F2F6E1471A8A7907000959AB /* BbObject+Encoder.m in Sources */,
 				F2709D991A89B2B0004BF4FF /* NSString+Bb.m in Sources */,

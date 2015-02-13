@@ -70,6 +70,12 @@
                                                   defaultWidth:kDefaultCocoaObjectViewWidth];
     }
     
+    static CGFloat prevContentWidth;
+    if (contentWidth != prevContentWidth) {
+        [self invalidateIntrinsicContentSize];
+        prevContentWidth = contentWidth;
+    }
+    
     return contentWidth;
 }
 

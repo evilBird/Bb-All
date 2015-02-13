@@ -57,14 +57,14 @@ static CGFloat kMinWidth = 100.0;
         return kMinWidth;
     }
     NSString *text = [NSString stringWithString:self.textField.stringValue];
-    CGFloat textWidth = [text sizeWithAttributes:[BbCocoaEntityViewDescription textAttributes]].width;
+    CGFloat textWidthRaw = [text sizeWithAttributes:[BbCocoaEntityViewDescription textAttributes]].width;
+    CGFloat textWidth = pow(textWidthRaw, 1.1);
+    
     CGFloat textInsetsWidth = kPortViewWidthConstraint;
     CGFloat widthRequiredByText = textWidth + textInsetsWidth;
     if (widthRequiredByText >= kMinWidth) {
-        NSLog(@"returned text width %f",widthRequiredByText);
         return [NSView roundFloat:widthRequiredByText];
     }else{
-        NSLog(@"returned min width");
         return kMinWidth;
     }
 }

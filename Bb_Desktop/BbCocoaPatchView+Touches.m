@@ -97,6 +97,9 @@ typedef NS_ENUM(NSUInteger, BbViewType){
 - (void)singleClickDown:(NSEvent *)theEvent inObjectView:(BbCocoaObjectView *)objectView
 {
     kSelectedObjectView = objectView;
+    NSPoint objectCenter = [self scaleNormalizedPoint:objectView.normalizedPosition];
+    kInitOffset.width = (theEvent.locationInWindow.x - objectCenter.x);
+    kInitOffset.height = (theEvent.locationInWindow.y - objectCenter.y);
     [kSelectedObjectView setSelected:YES];
     kPreviousLoc = theEvent.locationInWindow;
 }
@@ -242,6 +245,14 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     return NSPointFromCGPoint(scaledPoint);
 }
 
+- (NSPoint)offsetScaledPoint:(NSPoint)point
+{
+    NSPoint p = point;
+    p.x -= kInitOffset.width;
+    p.y -= kInitOffset.height;
+    return p;
+}
+
 - (NSPoint)myCenter
 {
     CGFloat x,y;
@@ -253,7 +264,9 @@ typedef NS_ENUM(NSUInteger, BbViewType){
 
 - (void)mouseDragged:(NSEvent *)theEvent fromObjectView:(BbCocoaObjectView *)objectView
 {
-    [self moveEntityView:objectView toPoint:theEvent.locationInWindow];
+    [self moveEntityView:objectView toPoint:[self offsetScaledPoint:theEvent.locationInWindow]];
+
+    //[self moveEntityView:objectView toPoint:theEvent.locationInWindow];
 }
 
 - (void)moveEntityView:(BbCocoaEntityView *)entityView toPoint:(NSPoint)point
@@ -331,8 +344,11 @@ typedef NS_ENUM(NSUInteger, BbViewType){
             break;
     }
     
+    [kSelectedObjectView setSelected:NO];
     kSelectedObjectView = nil;
+    [kSelectedPortViewSender setSelected:NO];
     kSelectedPortViewSender = nil;
+    [kSelectedPortViewReceiver setSelected:NO];
     kSelectedPortViewReceiver = nil;
     kInitView = nil;
 }

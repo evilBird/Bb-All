@@ -146,6 +146,11 @@
     return result;
 }
 
++ (NSString *)UIType
+{
+    return @"obj";
+}
+
 #pragma ports
 
 - (void)addPort:(BbPort *)port

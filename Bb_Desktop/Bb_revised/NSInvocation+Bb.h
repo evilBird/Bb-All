@@ -14,4 +14,7 @@
 + (id)doInstanceMethodTarget:(id)target
                 selectorName:(NSString *)selectorName
                         args:(NSArray *)args;
++ (id)doClassMethod:(NSString *)className
+       selectorName:(NSString *)selectorName
+               args:(NSArray *)args;
 @end

@@ -19,6 +19,8 @@
 #import "BbCocoaPlaceholderObjectView.h"
 #import "PureLayout.h"
 #import "BbCocoaEntityView.h"
+#import "NSInvocation+Bb.h"
+#import "BbCocoaHSliderView.h"
 
 @implementation BbCocoaPatchView
 
@@ -52,11 +54,17 @@
     normCenter.x = normX;
     normCenter.y = normY;
     viewDesc.normalizedPosition = normCenter;
-    
-    BbCocoaObjectView *view = [[BbCocoaObjectView alloc]initWithEntity:object
-                                                       viewDescription:viewDesc
-                                                              inParent:self];
-    
+    BbCocoaObjectView *view = nil;
+    if ([viewDesc.entityViewType isEqualToString:@"hsl"]){
+        view = [[BbCocoaHSliderView alloc]initWithEntity:object
+                                         viewDescription:viewDesc
+                                                inParent:self];
+    }else{
+        view = [[BbCocoaObjectView alloc]initWithEntity:object
+                                        viewDescription:viewDesc
+                                               inParent:self];
+    }
+
     NSPoint viewPosition = [self scaleNormalizedPoint:view.normalizedPosition];
     [self moveEntityView:view toPoint:viewPosition];
     return object;
@@ -122,8 +130,17 @@
         return nil;
     }
     
-    NSMutableString *textDesc = [[NSMutableString alloc]initWithFormat:@"#X obj %.f %.f ",p.normalizedPosition.x,p.normalizedPosition.y];
+    NSMutableString *textDesc = [[NSMutableString alloc]initWithString:@"#X"];
+    [textDesc appendString:@" "];
+    NSString *UIType = [NSInvocation doClassMethod:className
+                                      selectorName:@"UIType"
+                                              args:nil];
+    [textDesc appendString:UIType];
+    [textDesc appendString:@" "];
+    [textDesc appendFormat:@"%.f %.f",p.normalizedPosition.x,p.normalizedPosition.y];
+    [textDesc appendString:@" "];
     [textDesc appendString:className];
+    [textDesc appendString:@" "];
     
     if (components.count > 1)
     {
