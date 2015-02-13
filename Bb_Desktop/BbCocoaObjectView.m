@@ -9,55 +9,15 @@
 #import "BbCocoaObjectView.h"
 #import "BbCocoaPortView.h"
 #import "BbCocoaObjectView+Autolayout.h"
-
-@interface BbObjectViewConfiguration ()
-{
-    BOOL kIsPlaceholder;
-}
-
-@end
-
-
-
-@implementation BbObjectViewConfiguration
-
-
-- (void)setEntityViewType:(NSString *)entityViewType
-{
-    _entityViewType = entityViewType;
-    if ([entityViewType isEqualToString:@"placeholder"]) {
-        kIsPlaceholder = YES;
-    }else{
-        kIsPlaceholder = NO;
-    }
-}
-
-+ (NSDictionary *)textAttributes
-{
-    NSFont *font = [NSFont fontWithName:@"Courier" size:[NSFont systemFontSize]];
-    NSColor *color = [NSColor whiteColor];
-    NSDictionary *textAttributes = @{NSFontAttributeName:font,
-                                     NSForegroundColorAttributeName:color,
-                                     NSParagraphStyleAttributeName:[BbObjectViewConfiguration paragraphStyle]
-                                     };
-    return textAttributes;
-}
-
-+ (NSParagraphStyle *)paragraphStyle
-{
-    NSMutableParagraphStyle *result = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
-    result.alignment = NSCenterTextAlignment;
-    return result;
-}
-
-@end
+#import "BbObject.h"
 
 @interface BbCocoaObjectView ()
 
+- (CGFloat)contentWidthFromViewDescription:(BbCocoaEntityViewDescription *)configuration;
+- (CGFloat)contentHeightFromViewDescription:(BbCocoaEntityViewDescription *)configuration;
+
 @property (nonatomic,strong)NSMutableArray *inletViews_;
 @property (nonatomic,strong)NSMutableArray *outletViews_;
-@property (nonatomic,strong)NSMutableArray *inletSpacers;
-@property (nonatomic,strong)NSMutableArray *outletSpacers;
 
 @end
 
@@ -65,33 +25,69 @@
 
 #pragma mark - Public Methods
 
-- (void)commonInit
+
+- (void)commonInitEntity:(BbEntity *)entity viewDescription:(id)viewDescription
 {
-    [super commonInit];
-    
-    if (!self.configuration) {
-        return;
-    }
-    self.inletViews_ = [self portViewsWithCount:self.configuration.inlets].mutableCopy;
-    self.outletViews_ = [self portViewsWithCount:self.configuration.outlets].mutableCopy;
-    self.inletSpacers = [self spacerViewsForPortViews:self.inletViews_].mutableCopy;
-    self.outletSpacers = [self spacerViewsForPortViews:self.outletViews_].mutableCopy;
+    [super commonInitEntity:entity viewDescription:viewDescription];
+    self.viewDescription = viewDescription;
+    self.normalizedPosition = self.viewDescription.normalizedPosition;
+    BbObject *myEntity = (BbObject *)entity;
+    self.inletViews_ = [self addViewsForBbPortEntities:myEntity.inlets].mutableCopy;
+    self.outletViews_ = [self addViewsForBbPortEntities:myEntity.outlets].mutableCopy;
 }
 
-- (void)setupConstraints
+- (void)setupConstraintsInParentView:(NSView *)parent
 {
-    [super setupConstraints];
-    [self setWidth:[BbCocoaObjectView widthForInlets:self.configuration.inlets
-                                             outlets:self.configuration.outlets
-                                                text:self.configuration.text]
-            height:kPortViewHeightConstraint * 2 + kMinVerticalSpacerSize];
-    if (self.configuration) {
-        [self layoutPortviews:self.inletViews spacers:self.inletSpacers isTopRow:YES];
-        [self layoutPortviews:self.outletViews spacers:self.outletSpacers isTopRow:NO];
+    [super setupConstraintsInParentView:parent];
+    [self layoutInletViews:self.inletViews];
+    [self layoutOutletViews:self.outletViews];
+}
+
+- (NSSize)intrinsicContentSize
+{
+    CGSize size;
+    size.width = [self contentWidthFromViewDescription:self.viewDescription];
+    size.height = [self contentHeightFromViewDescription:self.viewDescription];
+    return NSSizeFromCGSize(size);
+}
+
+- (CGFloat)contentWidthFromViewDescription:(BbCocoaEntityViewDescription *)viewDescription
+{
+    if (!viewDescription) {
+        return kDefaultCocoaObjectViewWidth;
     }
     
-    [self refreshEntityView];
-    [self setCenter:self.configuration.center];
+    CGFloat contentWidth = kDefaultCocoaObjectViewWidth;
+    
+    if (viewDescription) {
+        NSDictionary *textAttributes = [BbCocoaEntityViewDescription textAttributes];
+        contentWidth = [self intrinsicWidthForObjectWithInlets:viewDescription.inlets
+                                                       outlets:viewDescription.outlets
+                                                 portViewWidth:kPortViewWidthConstraint
+                                                 displayedText:viewDescription.text
+                                       displayedTextAttributes:textAttributes
+                                                minPortSpacing:kMinHorizontalSpacerSize
+                                                  defaultWidth:kDefaultCocoaObjectViewWidth];
+    }
+    
+    static CGFloat prevContentWidth;
+    if (contentWidth != prevContentWidth) {
+        [self invalidateIntrinsicContentSize];
+        prevContentWidth = contentWidth;
+    }
+    
+    return contentWidth;
+}
+
+- (CGFloat)contentHeightFromViewDescription:(BbCocoaEntityViewDescription *)viewDescription
+{
+    CGFloat contentHeight = kPortViewHeightConstraint * 2.0 + kMinVerticalSpacerSize;
+    return [NSView roundFloat:contentHeight];
+}
+
+- (void)setCenter:(CGPoint)center
+{
+    
 }
 
 #pragma accessors
@@ -117,58 +113,7 @@
     return [NSColor colorWithWhite:0.3 alpha:1];
 }
 
-
-#pragma constructors
-
-+ (instancetype)viewWithConfiguration:(BbObjectViewConfiguration *)config
-                           parentView:(BbCocoaEntityView *)parentView
-{
-    BbCocoaObjectView *objectView = [[BbCocoaObjectView alloc]initWithFrame:CGRectMake(0, 0, 100, 62)                                                            parentView:parentView
-                                                                     config:config];
-    return objectView;
-}
-
-- (instancetype)initWithFrame:(NSRect)frameRect
-                   parentView:(BbCocoaEntityView *)parentView
-                       config:(BbObjectViewConfiguration *)config
-{
-    self = [super initWithFrame:frameRect];
-    if (self) {
-        _configuration = config;
-        [self commonInit];
-        self.parentView = parentView;
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)coder
-                   parentView:(BbCocoaEntityView *)parentView
-                       config:(BbObjectViewConfiguration *)config
-
-{
-    self = [super initWithCoder:coder];;
-    if (self) {
-        _configuration = config;
-        [self commonInit];
-        self.parentView = parentView;
-    }
-    return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
-    return [self initWithCoder:coder
-                    parentView:nil
-                        config:nil];
-}
-
-- (instancetype)initWithFrame:(NSRect)frameRect
-{
-    return [self initWithFrame:frameRect
-                    parentView:nil
-                        config:nil];
-}
+#pragma drawing
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
@@ -177,8 +122,8 @@
                                    kPortViewWidthConstraint/2,
                                    kPortViewHeightConstraint + 2);
     
-    NSString *textToDraw = self.configuration.text;
-    [textToDraw drawInRect:insetRect withAttributes:[BbObjectViewConfiguration textAttributes]];
+    NSString *textToDraw = self.viewDescription.text;
+    [textToDraw drawInRect:insetRect withAttributes:[BbCocoaEntityViewDescription textAttributes]];
 }
 
 

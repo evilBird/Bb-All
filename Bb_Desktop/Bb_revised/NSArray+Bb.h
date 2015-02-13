@@ -10,6 +10,8 @@
 @class BbBang;
 @interface NSArray (Bb)
 
+
+
 + (NSArray *)typeArrayWithObjects:(NSArray *)objects;
 - (NSSet *)supportedConversions;
 - (NSDictionary *)toDictionary;

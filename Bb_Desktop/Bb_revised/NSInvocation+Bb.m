@@ -60,6 +60,40 @@
     return result;
 }
 
++ (id)doClassMethod:(NSString *)className
+       selectorName:(NSString *)selectorName
+               args:(NSArray *)args
+{
+    if (!className || !selectorName) {
+        return nil;
+    }
+    
+    SEL theSelector = NSSelectorFromString(selectorName);
+    Class c = NSClassFromString(className);
+    
+    NSMethodSignature *methodSig = [c methodSignatureForSelector:theSelector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
+    invocation.target = c;
+    invocation.selector = theSelector;
+    
+    if (args) {
+        for (NSUInteger i = 0; i < args.count; i++) {
+            [invocation setArgumentWithObject:args[i] atIndex:i];
+        }
+    }
+    
+    id result = nil;
+    [invocation invoke];
+    NSString *returnType = [NSString stringWithUTF8String:[methodSig methodReturnType]];
+    if ([returnType isEqualToString:@"@"]) {
+        void *returnVal = nil;
+        [invocation getReturnValue:&returnVal];
+        result = (__bridge NSObject *)returnVal;
+    }
+    
+    return result;
+}
+
 - (void)setArgumentWithObject:(id)object atIndex:(NSUInteger)index
 {
     NSInteger argIdx = 2+index;

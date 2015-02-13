@@ -34,6 +34,9 @@
         desc.UISize = [NSValue valueWithSize:size];
         CGPoint center = [self.view center];
         desc.UICenter = [NSValue valueWithPoint:center];
+        desc.UIPosition = @[@(center.x),@(center.y)];
+    }else{
+        desc.UIPosition = @[@(0),@(0)];
     }
     
     return desc;

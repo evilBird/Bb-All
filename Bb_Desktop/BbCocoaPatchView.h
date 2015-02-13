@@ -7,13 +7,14 @@
 //
 
 #import "BbCocoaEntityView.h"
-@class BbCocoaPortView,BbCocoaObjectView,BbObject;
+@class BbCocoaPortView,BbCocoaObjectView,BbObject,BbPatch;
 
 typedef NSArray* (^BbCocoaPatchGetConnectionArray)(void);
 
-@interface BbCocoaPatchView : BbCocoaEntityView {
-    
+@interface BbCocoaPatchView : BbCocoaEntityView <BbPlaceholderViewDelegate>
+{
     CGPoint                kPreviousLoc;
+    NSSize                  kInitOffset;
     BbCocoaObjectView      *kSelectedObjectView;
     BbCocoaPortView        *kSelectedPortViewSender;
     BbCocoaPortView        *kSelectedPortViewReceiver;
@@ -24,9 +25,10 @@ typedef NSArray* (^BbCocoaPatchGetConnectionArray)(void);
 @property (nonatomic,strong)NSMutableSet *connections;
 // a connection is a vector of the form: @[x1,y1,x2,y2]
 @property (nonatomic,strong)NSArray *drawThisConnection;
-//@property (nonatomic,strong)NSMutableSet *selectedPortViews;
 
-- (BbObject *)addObjectAndViewWithText:(NSString *)text;
-- (void)addPlaceholderObject;
+@property (nonatomic,readonly)BbPatch *patch;
+
+- (BbObject *)addObjectWithText:(NSString *)text;
+- (id)addPlaceholderAtPoint:(CGPoint)point;
 
 @end

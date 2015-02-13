@@ -30,11 +30,15 @@
 - (BOOL)selected;
 - (void)setSelected:(BOOL)selected;
 
-- (void)refreshEntityView;
+- (void)refresh;
 
 - (void)addSubview:(id<BbEntityView>)subview;
 - (void)removeFromSuperview;
 
 @end
 
+@protocol BbPlaceholderViewDelegate <NSObject>
 
+- (void)placeholder:(id)sender enteredText:(NSString *)text;
+
+@end

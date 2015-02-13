@@ -47,13 +47,9 @@
     [outlet connectToInlet:inlet];
     
     BbOutlet *receiverOutlet = receiver.outlets.firstObject;
-    BbInlet *senderInlet = sender.inlets.firstObject;
-    
     receiverOutlet.outputBlock = ^(id value){
-        NSLog(@"value = %@",value);
+        NSLog(@"\n%@ value = %@",receiver.name,value);
     };
-    
-    [senderInlet input:@(10)];
 }
 
 @end

@@ -11,6 +11,12 @@
 @interface BbNumberObject : BbObject
 @end
 
+@interface BbNumberSlider : BbNumberObject
+
+- (void)sliderValueDidChange:(id)sender;
+
+@end
+
 @interface BbAdd: BbNumberObject
 @end
 

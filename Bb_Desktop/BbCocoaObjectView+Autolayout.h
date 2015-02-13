@@ -10,21 +10,29 @@
 
 @interface BbCocoaObjectView (Autolayout)
 
-- (NSArray *)spacerViewsForPortViews:(NSArray *)portViews;
-- (NSArray *)portViewsWithCount:(NSUInteger)count;
-- (void)layoutPortviews:(NSArray *)portViews spacers:(NSArray *)spacers isTopRow:(BOOL)isTopRow;
+- (NSArray *)addViewsForBbPortEntities:(NSArray *)portEntities;
+
+- (void)layoutInletViews:(NSArray *)inletViews;
+- (void)layoutOutletViews:(NSArray *)outletViews;
+
+- (CGFloat)horizontalSpacerObjectViewWidth:(CGFloat)objectViewWidth
+                             portViewWidth:(CGFloat)portViewWidth
+                             portViewCount:(NSUInteger)portViewCount
+                            minSpacerWidth:(CGFloat)minSpacerWidth;
+
+- (CGFloat)intrinsicWidthForObjectWithInlets:(NSUInteger)inlets
+                                      outlets:(NSUInteger)outlets
+                               portViewWidth:(CGFloat)portViewWidth
+                               displayedText:(NSString *)displayedText
+                     displayedTextAttributes:(NSDictionary *)displayedTextAttributes
+                              minPortSpacing:(CGFloat)minPortSpacing
+                                defaultWidth:(CGFloat)defaultWidth;
+
+
 - (void)setHorizontalCenter:(CGFloat)horizontalCenter;
 - (void)setVerticalCenter:(CGFloat)verticalCenter;
-- (void)setWidth:(CGFloat)width height:(CGFloat)height;
-
-
 + (NSPoint)position:(NSPoint)position forView:(NSView *)view inSuperview:(NSView *)superview;
-+ (NSSize)spacerSizeForConfig:(BbObjectViewConfiguration *)config;
-+ (NSSize)portSize;
-+ (NSSize)frameSizeForInlets:(NSUInteger)inlets outlets:(NSUInteger)outlets text:(NSString *)text;
-+ (CGFloat)widthForInlets:(NSUInteger)inlets outlets:(NSUInteger)outlets;
-+ (CGFloat)widthForInlets:(NSUInteger)inlets outlets:(NSUInteger)outlets text:(NSString *)text;
-+ (CGFloat)widthForPortCount:(NSUInteger)portCount;
-+ (CGFloat)roundFloat:(CGFloat)aFloat;
+- (CGFloat)roundFloat:(CGFloat)aFloat;
+
 
 @end

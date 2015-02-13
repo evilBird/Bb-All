@@ -7,6 +7,7 @@
 //
 
 #import "BbCocoaEntityView.h"
+#import "BbBase.h"
 
 @interface BbCocoaEntityView ()
 
@@ -16,24 +17,31 @@
 
 #pragma mark - Public Methods
 
-- (void)commonInit
+- (void)commonInitEntity:(BbEntity *)entity viewDescription:(id)viewDescription
 {
     kSelected = NO;
-    self.translatesAutoresizingMaskIntoConstraints = NO;
+    self.entity = entity;
+    self.viewDescription = viewDescription;
 }
 
-- (void)setupConstraints {}
-
-
-- (void)setParentView:(BbCocoaEntityView *)parentView
+- (void)setupConstraintsInParentView:(id)parent
 {
-    _parentView = parentView;
-    [_parentView addSubview:self];
-    [self setupConstraints];
-    [self refreshEntityView];
+    if (!parent) {
+        return;
+    }
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    [(NSView *)parent addSubview:self];
 }
+
 
 #pragma mark - Overrides
+
+- (void)setEntity:(BbEntity *)entity
+{
+    _entity = entity;
+    _entity.view = self;
+}
+
 - (NSColor *)defaultColor
 {
     return [NSColor blackColor];
@@ -46,37 +54,9 @@
 
 #pragma mark BbEntityView Methods
 
-- (CGRect)frame
-{
-    return [super frame];
-}
-- (void)setFrame:(CGRect)frame
-{
-    [super setFrame:frame];
-}
-
 - (void)setCenter:(CGPoint)center
 {
-    CGRect oldFrame = self.frame;
-    CGPoint oldCenter = [NSView centerForFrame:oldFrame];
-    CGFloat dx = center.x - oldCenter.x;
-    CGFloat dy = center.y - oldCenter.y;
-    CGRect newFrame = CGRectOffset(self.frame, dx, dy);
-    self.frame = newFrame;
-    [self refreshEntityView];
-}
-
-- (void)setCenter:(CGPoint)center inView:(id<BbEntityView>)view
-{
-    NSView *toCenter = (NSView *)view;
-    NSView *selfView = (NSView *)self;
-    CGRect frame = [selfView convertRect:toCenter.bounds fromView:toCenter];
-    CGPoint oldCenter = [NSView centerForFrame:frame];
-    CGFloat dx = oldCenter.x - center.x;
-    CGFloat dy = oldCenter.y - center.y;
-    CGRect newFrame = CGRectOffset(toCenter.frame, dx, dy);
-    toCenter.frame = newFrame;
-    [view refreshEntityView];
+    kCenter = center;
 }
 
 - (CGPoint)center
@@ -88,10 +68,6 @@
 {
     [super addSubview:(NSView *)subview];
 }
-- (void)removeFromSuperview
-{
-    [super removeFromSuperview];
-}
 
 - (BOOL)selected
 {
@@ -102,33 +78,33 @@
 {
     if (selected != kSelected) {
         kSelected = selected;
-        [self refreshEntityView];
+        [self refresh];
     }
 }
 
-- (void)refreshEntityView
+- (void)refresh
 {
-    [self setNeedsLayout:YES];
+    if (!self.translatesAutoresizingMaskIntoConstraints) {
+        [self setNeedsLayout:YES];
+    }
+    
     [self setNeedsDisplay:YES];
+    
 }
 
 #pragma constructors
-- (instancetype)initWithFrame:(NSRect)frameRect
+
+- (instancetype)initWithEntity:(id)entity
+               viewDescription:(id)viewDescription
+                      inParent:(id)parentView
 {
-    self = [super initWithFrame:frameRect];
+    self = [super initWithFrame:CGRectZero];
     if (self) {
-        [self commonInit];
+        [self commonInitEntity:entity viewDescription:viewDescription];
+        [self setupConstraintsInParentView:parentView];
+        [self refresh];
     }
     
-    return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
-    self = [super initWithCoder:coder];;
-    if (self) {
-        [self commonInit];
-    }
     return self;
 }
 

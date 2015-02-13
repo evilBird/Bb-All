@@ -537,7 +537,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "38"
             endingLineNumber = "38"
-            landmarkName = "-layoutPortviews:spacers:isTopRow:"
+            landmarkName = "-intrinsicWidthForObjectWithInlets:outlets:portViewWidth:displayedText:displayedTextAttributes:minPortSpacing:defaultWidth:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -553,7 +553,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "44"
             endingLineNumber = "44"
-            landmarkName = "-layoutPortviews:spacers:isTopRow:"
+            landmarkName = "-intrinsicWidthForObjectWithInlets:outlets:portViewWidth:displayedText:displayedTextAttributes:minPortSpacing:defaultWidth:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

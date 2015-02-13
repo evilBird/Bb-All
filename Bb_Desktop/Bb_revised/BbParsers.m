@@ -49,7 +49,8 @@
     desc.stackInstruction = description.stackInstruction;
     desc.UIType = description.UIType;
     NSScanner *scanner = *scan;
-    desc.UICenter = [NSScanner scanUICenter:&scanner];
+    desc.UIPosition = [NSScanner scanUIPosition:&scanner];
+    //desc.UICenter = [NSScanner scanUICenter:&scanner];
     desc.UISize = [NSScanner scanUISize:&scanner];
     desc.BbObjectType = [NSScanner scanObjectType:&scanner];
     desc.BbObjectArgs = [NSScanner scanObjectArgs:&scanner];

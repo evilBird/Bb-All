@@ -9,23 +9,70 @@
 #import "BbCocoaPlaceholderObjectView.h"
 #import "BbCocoaPortView.h"
 #import "BbCocoaObjectView.h"
+#import "BbUI.h"
+static CGFloat kMinWidth = 100.0;
 
 @implementation BbCocoaPlaceholderObjectView
 
-- (void)commonInit
+- (void)commonInitEntity:(BbEntity *)entity viewDescription:(id)viewDescription
 {
-    [super commonInit];
+    [super commonInitEntity:entity viewDescription:viewDescription];
+    
     self.textField = [[NSTextField alloc]initWithFrame:self.bounds];
     self.textField.translatesAutoresizingMaskIntoConstraints = NO;
-    self.textField.textColor = [NSColor whiteColor];
-    self.textField.placeholderString = @"placeholder";
-    NSDictionary *textAttributes = [BbObjectViewConfiguration textAttributes];
+    self.textField.placeholderString = @"enter text";
+    NSDictionary *textAttributes = [BbCocoaEntityViewDescription textAttributes];
     self.textField.font = [textAttributes valueForKey:NSFontAttributeName];
+    self.textField.textColor = [textAttributes valueForKey:NSForegroundColorAttributeName];
     self.textField.delegate = self;
+    self.textField.alignment = NSCenterTextAlignment;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textDidBeginEditing:) name:NSTextDidBeginEditingNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textDidEndEditing:) name:NSTextDidEndEditingNotification object:nil];
     self.textField.backgroundColor = self.defaultColor;
     self.textField.bordered = NO;
-    [self addSubview:(id<BbEntityView>)_textField];
-    [self setupConstraints];
+    [(NSView *)self addSubview:self.textField];
+}
+
+- (void)setupConstraintsInParentView:(id)parent
+{
+    [super setupConstraintsInParentView:parent];
+    [self.textField autoPinEdgesToSuperviewEdgesWithInsets:NSEdgeInsetsMake(kPortViewHeightConstraint,
+                                                                            kPortViewWidthConstraint/2,
+                                                                            kPortViewHeightConstraint,
+                                                                            kPortViewWidthConstraint/2)];
+}
+
+- (NSSize)intrinsicContentSize
+{
+    CGSize size;
+    size.height = [self intrinsicContentHeight];
+    size.width = [self intrinsicContentWidth];
+    return NSSizeFromCGSize(size);
+}
+
+- (CGFloat)intrinsicContentWidth
+{
+    if (!self.textField || !self.textField.stringValue || !self.textField.stringValue.length) {
+        return kMinWidth;
+    }
+    NSString *text = [NSString stringWithString:self.textField.stringValue];
+    CGFloat textWidthRaw = [text sizeWithAttributes:[BbCocoaEntityViewDescription textAttributes]].width;
+    CGFloat textWidth = pow(textWidthRaw, 1.1);
+    
+    CGFloat textInsetsWidth = kPortViewWidthConstraint;
+    CGFloat widthRequiredByText = textWidth + textInsetsWidth;
+    if (widthRequiredByText >= kMinWidth) {
+        return [NSView roundFloat:widthRequiredByText];
+    }else{
+        return kMinWidth;
+    }
+}
+
+- (CGFloat)intrinsicContentHeight
+{
+    CGFloat contentHeight = kMinVerticalSpacerSize + 2.0f * kPortViewHeightConstraint;
+    return contentHeight;
 }
 
 - (NSColor *)defaultColor
@@ -38,45 +85,18 @@
     return [NSColor colorWithWhite:0.3 alpha:1.0];
 }
 
-- (void)setupConstraints
+- (instancetype)initWithDelegate:(id<BbPlaceholderViewDelegate>)delegate
+                 viewDescription:(id)viewDescription
+                        inParent:(id)parentView
 {
-    [super setupConstraints];
-    NSArray *constraints = nil;
-    NSDictionary *views = NSDictionaryOfVariableBindings(_textField,self);
-    NSDictionary *metrics = @{@"yinset":@(4),
-                              @"xinset":@(4),
-                              @"width":@(100),
-                              @"height":@(50),
-                              @"text_ht":@(30),
-                              @"text_width":@(70)};
+    self = [super initWithEntity:nil
+                 viewDescription:viewDescription
+                        inParent:parentView];
+    if (self) {
+        _delegate = delegate;
+    }
     
-    constraints = [NSLayoutConstraint
-                   constraintsWithVisualFormat:@"H:[_textField(text_width)]"
-                   options:NSLayoutFormatAlignAllCenterX
-                   metrics:metrics
-                   views:views];
-    [self addConstraints:constraints];
-    
-    constraints = [NSLayoutConstraint
-                   constraintsWithVisualFormat:@"V:[_textField(text_ht)]"
-                   options:NSLayoutFormatAlignAllCenterY
-                   metrics:metrics
-                   views:views];
-    [self addConstraints:constraints];
-    
-    constraints = [NSLayoutConstraint
-                   constraintsWithVisualFormat:@"V:[self(height)]"
-                   options:0
-                   metrics:metrics
-                   views:views];
-    [self addConstraints:constraints];
-    
-    constraints = [NSLayoutConstraint
-                   constraintsWithVisualFormat:@"H:[self(width)]"
-                   options:0
-                   metrics:metrics
-                   views:views];
-    [self addConstraints:constraints];
+    return self;
 }
 
 // These delegate and notification methods are sent from NSControl subclasses that allow text editing such as NSTextField and NSMatrix.  The classes that need to send these have delegates.  NSControl does not.
@@ -103,18 +123,32 @@
     return YES;
 }
 
-- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector{
-    NSString *text = textView.textContainer.textView.string;
-    NSLog(@"\nTEXT\n%@\n",text);
-    if ([NSStringFromSelector(commandSelector)isEqualToString:@"insertNewline:"]) {
-        return NO;
-    }
-    return YES;
+- (void)textDidBeginEditing:(NSNotification *)notification
+{
+    NSLog(@"text began editing");
+}
+
+- (void)textDidChange:(NSNotification *)notification
+{
+    [self invalidateIntrinsicContentSize];
+}
+
+- (void)textDidEndEditing:(NSNotification *)notification
+{
+    [self.textField resignFirstResponder];
+    [self.delegate placeholder:self enteredText:self.textField.stringValue];
+    NSLog(@"text ended editing");
 }
 
 - (NSArray *)control:(NSControl *)control textView:(NSTextView *)textView completions:(NSArray *)words forPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
 {
+    NSLog(@"completion method was called");
     return nil;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 /*

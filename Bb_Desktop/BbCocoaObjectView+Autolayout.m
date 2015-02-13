@@ -9,284 +9,155 @@
 #import "BbCocoaObjectView+Autolayout.h"
 #import "BbCocoaPortView.h"
 #import "NSView+Bb.h"
+#import "PureLayout.h"
+#import "BbPorts.h"
 
 @implementation BbCocoaObjectView (Autolayout)
 
-- (void)setWidth:(CGFloat)width height:(CGFloat)height
+- (CGFloat)horizontalSpacerObjectViewWidth:(CGFloat)objectViewWidth
+                             portViewWidth:(CGFloat)portViewWidth
+                             portViewCount:(NSUInteger)portViewCount
+                            minSpacerWidth:(CGFloat)minSpacerWidth
 {
-    NSArray *constraints = nil;
-    NSDictionary *views = NSDictionaryOfVariableBindings(self);
-    NSDictionary *metrics = @{@"width":@(width),
-                              @"height":@(height)
-                              };
-    constraints = [NSLayoutConstraint
-                   constraintsWithVisualFormat:@"V:[self(==height)]"
-                   options:0
-                   metrics:metrics
-                   views:views];
-    [self addConstraints:constraints];
+    NSUInteger numSpacers = [self numberOfSpacersForPortViewCount:portViewCount];
+    CGFloat totalWidthForPortViews = portViewWidth * (CGFloat)portViewCount;
+    CGFloat totalWidthForSpacers = objectViewWidth - totalWidthForPortViews;
+    CGFloat logicalSpacerWidth = totalWidthForSpacers/(CGFloat)numSpacers;
+    CGFloat result = [self maxOfValue1:logicalSpacerWidth value2:minSpacerWidth];
+    return [self roundFloat:result];
+}
+
+- (CGFloat)intrinsicWidthForObjectWithInlets:(NSUInteger)inlets
+                                     outlets:(NSUInteger)outlets
+                               portViewWidth:(CGFloat)portViewWidth
+                               displayedText:(NSString *)displayedText
+                     displayedTextAttributes:(NSDictionary *)displayedTextAttributes
+                              minPortSpacing:(CGFloat)minPortSpacing
+                                defaultWidth:(CGFloat)defaultWidth
+{
     
-    constraints = [NSLayoutConstraint
-                   constraintsWithVisualFormat:@"H:[self(==width)]"
-                   options:0
-                   metrics:metrics
-                   views:views];
-    [self addConstraints:constraints];
+    CGFloat widthRequiredByPorts,widthRequiredByText,requiredWidth,result;
+    CGFloat totalWidthForInlets = (CGFloat)inlets * portViewWidth;
+    NSUInteger inletSpacers = [self numberOfSpacersForPortViewCount:inlets];
+    CGFloat widthForInletSpacers = (CGFloat)inletSpacers * minPortSpacing;
+    CGFloat requiredTopWidth = totalWidthForInlets + widthForInletSpacers;
+    
+    CGFloat totalWidthForOutlets = (CGFloat)outlets * portViewWidth;
+    NSUInteger outletSpacers = [self numberOfSpacersForPortViewCount:outlets];
+    CGFloat widthForOutletSpacers = (CGFloat)outletSpacers * minPortSpacing;
+    CGFloat requiredBottomWidth = totalWidthForOutlets + widthForOutletSpacers;
+    widthRequiredByPorts = [self maxOfValue1:requiredTopWidth value2:requiredBottomWidth];
+    CGFloat textWidthRaw = [displayedText sizeWithAttributes:displayedTextAttributes].width;
+    CGFloat textWidth = pow(textWidthRaw, 1.1);
+    CGFloat textInsetsWidth = portViewWidth;
+    widthRequiredByText = textWidth + textInsetsWidth;
+    requiredWidth = [self maxOfValue1:widthRequiredByPorts value2:widthRequiredByText];
+    result = [self minOfValue1:defaultWidth value2:requiredWidth];
+    
+    return [self roundFloat:result];
 }
 
 
-- (void)layoutPortviews:(NSArray *)portViews spacers:(NSArray *)spacers isTopRow:(BOOL)isTopRow
+- (NSUInteger)numberOfSpacersForPortViewCount:(NSUInteger)portViewCount
 {
-    if (!portViews) {
+    if (portViewCount <=1) {
+        return 0;
+    }
+    
+    return portViewCount - 1;
+}
+
+
+- (CGFloat)maxOfValue1:(CGFloat)value1 value2:(CGFloat)value2
+{
+    if (value1 >= value2) {
+        return value1;
+    }
+    
+    return value2;
+}
+
+- (CGFloat)minOfValue1:(CGFloat)value1 value2:(CGFloat)value2
+{
+    if (value1 <= value2) {
+        return value1;
+    }
+    
+    return value2;
+}
+
+- (void)layoutInletViews:(NSArray *)inletViews
+{
+    if (!inletViews) {
         return;
     }
     
-    NSUInteger i = 0;
-
+    BbCocoaPortView *inletView = inletViews.firstObject;
+    [inletView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [inletView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     
-    for (BbCocoaPortView *portView in portViews){
+    if (inletViews.count > 1){
+        CGFloat myWidth = [self intrinsicContentSize].width;
+        CGFloat spacerSize = [self horizontalSpacerObjectViewWidth:myWidth
+                                                     portViewWidth:kPortViewWidthConstraint
+                                                     portViewCount:inletViews.count
+                                                    minSpacerWidth:kMinHorizontalSpacerSize];
         
-        if (portView) {
-            portView.parentView = self;
-            NSArray *constraints = nil;
-            NSDictionary *views = NSDictionaryOfVariableBindings(portView);
-            NSDictionary *metrics = @{@"width":@(kPortViewWidthConstraint),
-                                      @"height":@(kPortViewHeightConstraint)
-                                      };
-            constraints = [NSLayoutConstraint
-                           constraintsWithVisualFormat:@"H:[portView(==width)]"
-                           options:0
-                           metrics:metrics
-                           views:views];
-            [self addConstraints:constraints];
-            
-            constraints = [NSLayoutConstraint
-                           constraintsWithVisualFormat:@"V:[portView(==height)]"
-                           options:0
-                           metrics:metrics
-                           views:views];
-            [self addConstraints:constraints];
-        }
-
-        NSView *previousSpacer = nil;
-        NSView *nextSpacer = nil;
-        if (i>0){
-            previousSpacer = spacers[(i-1)];
-        }
-        if (i<spacers.count){
-            nextSpacer = spacers[i];
-            if (nextSpacer) {
-                [self addSubview:(id<BbEntityView>)nextSpacer];
-                NSArray *constraints = nil;
-                NSDictionary *views = NSDictionaryOfVariableBindings(nextSpacer);
-                NSDictionary *metrics = @{@"minSize":@(kMinHorizontalSpacerSize)};
-                
-                constraints = [NSLayoutConstraint
-                               constraintsWithVisualFormat:@"H:[nextSpacer(>=minSize)]"
-                               options:0
-                               metrics:metrics
-                               views:views];
-                [nextSpacer addConstraints:constraints];
-            }
-        }
-        
-        NSLayoutConstraint *constraint = nil;
-        
-        NSLayoutAttribute verticalAttribute;
-        CGFloat offset = 0.0;
-        if (isTopRow){
-            verticalAttribute = NSLayoutAttributeTop;
-            offset = 1.0f;
-        }else{
-            verticalAttribute = NSLayoutAttributeBottom;
-            offset = -1.0f;
-        }
-        
-        constraint = [NSLayoutConstraint
-                      constraintWithItem:portView
-                      attribute:verticalAttribute
-                      relatedBy:NSLayoutRelationEqual
-                      toItem:self
-                      attribute:verticalAttribute
-                      multiplier:1.0
-                      constant:offset];
-        [self addConstraint:constraint];
-        
-        if (portView && nextSpacer && !previousSpacer) {
-            
-            constraint = [NSLayoutConstraint
-                          constraintWithItem:portView
-                          attribute:NSLayoutAttributeLeft
-                          relatedBy:NSLayoutRelationEqual
-                          toItem:self
-                          attribute:NSLayoutAttributeLeft
-                          multiplier:1.0
-                          constant:1];
-            [self addConstraint:constraint];
-            
-            constraint = [NSLayoutConstraint
-                          constraintWithItem:nextSpacer
-                          attribute:NSLayoutAttributeTop
-                          relatedBy:NSLayoutRelationEqual
-                          toItem:portView
-                          attribute:NSLayoutAttributeTop
-                          multiplier:1.0
-                          constant:0.0];
-            [self addConstraint:constraint];
-            
-            constraint = [NSLayoutConstraint
-                          constraintWithItem:nextSpacer
-                          attribute:NSLayoutAttributeBottom
-                          relatedBy:NSLayoutRelationEqual
-                          toItem:portView
-                          attribute:NSLayoutAttributeBottom
-                          multiplier:1.0
-                          constant:0.0];
-            [self addConstraint:constraint];
-            
-            if (portViews.count == spacers.count == 1) {
-                constraint = [NSLayoutConstraint
-                              constraintWithItem:nextSpacer
-                              attribute:NSLayoutAttributeRight
-                              relatedBy:NSLayoutRelationEqual
-                              toItem:self
-                              attribute:NSLayoutAttributeRight
-                              multiplier:1.0
-                              constant:-1.0];
-                [self addConstraint:constraint];
-            }
-            
-        }else if (portView && nextSpacer && previousSpacer){
-            
-            constraint = [NSLayoutConstraint
-                          constraintWithItem:portView
-                          attribute:NSLayoutAttributeLeft
-                          relatedBy:NSLayoutRelationEqual
-                          toItem:previousSpacer
-                          attribute:NSLayoutAttributeRight
-                          multiplier:1.0
-                          constant:0.0];
-            [self addConstraint:constraint];
-            
-            constraint = [NSLayoutConstraint
-                          constraintWithItem:nextSpacer
-                          attribute:NSLayoutAttributeWidth
-                          relatedBy:NSLayoutRelationGreaterThanOrEqual
-                          toItem:portView
-                          attribute:NSLayoutAttributeWidth
-                          multiplier:0.0
-                          constant:kMinHorizontalSpacerSize];
-            [self addConstraint:constraint];
-            
-            constraint = [NSLayoutConstraint
-                          constraintWithItem:nextSpacer
-                          attribute:NSLayoutAttributeTop
-                          relatedBy:NSLayoutRelationEqual
-                          toItem:portView
-                          attribute:NSLayoutAttributeTop
-                          multiplier:1.0
-                          constant:0.0];
-            [self addConstraint:constraint];
-            
-            constraint = [NSLayoutConstraint
-                          constraintWithItem:nextSpacer
-                          attribute:NSLayoutAttributeBottom
-                          relatedBy:NSLayoutRelationEqual
-                          toItem:portView
-                          attribute:NSLayoutAttributeBottom
-                          multiplier:1.0
-                          constant:0.0];
-            [self addConstraint:constraint];
-            
-            constraint = [NSLayoutConstraint
-                          constraintWithItem:nextSpacer
-                          attribute:NSLayoutAttributeWidth
-                          relatedBy:NSLayoutRelationEqual
-                          toItem:previousSpacer
-                          attribute:NSLayoutAttributeWidth
-                          multiplier:1.0
-                          constant:0.0];
-            [self addConstraint:constraint];
-            
-        }else if (portView && previousSpacer && !nextSpacer){
-            
-            constraint = [NSLayoutConstraint
-                          constraintWithItem:portView
-                          attribute:NSLayoutAttributeLeft
-                          relatedBy:NSLayoutRelationEqual
-                          toItem:previousSpacer
-                          attribute:NSLayoutAttributeRight
-                          multiplier:1.0
-                          constant:0.0];
-            [self addConstraint:constraint];
-            
-            constraint = [NSLayoutConstraint
-                          constraintWithItem:portView
-                          attribute:NSLayoutAttributeRight
-                          relatedBy:NSLayoutRelationEqual
-                          toItem:self
-                          attribute:NSLayoutAttributeRight
-                          multiplier:1.0
-                          constant:-1.0];
-            [self addConstraint:constraint];
-            
-        }else{
-            NSLog(@"oops didn't catch it");
-        }
-        
-        i++;
+        [inletViews autoDistributeViewsAlongAxis:ALAxisHorizontal
+                                       alignedTo:ALAttributeTop
+                                withFixedSpacing:spacerSize
+                                    insetSpacing:NO];
     }
-    
 }
 
-- (NSArray *)spacerViewsForPortViews:(NSArray *)portViews
+- (void)layoutOutletViews:(NSArray *)outletViews
 {
-    if (!portViews || portViews.count == 0) {
-        return nil;
+    if (!outletViews) {
+        return;
     }
     
-    NSUInteger spacerCount;
-    if (portViews.count == 1){
-        spacerCount = 1;
-    }else{
-        spacerCount = portViews.count - 1;
-    }
+    BbCocoaPortView *outletView = outletViews.firstObject;
+    [outletView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    [outletView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     
-    NSMutableArray *spacerViews = [NSMutableArray arrayWithCapacity:spacerCount];
-    for (NSUInteger i = 0; i<spacerCount;i++){
-        NSView *spacerView = [NSView new];
-        spacerView.translatesAutoresizingMaskIntoConstraints = NO;
-        if (spacerView != nil){
-            [spacerViews addObject:spacerView];
-        }
+    if (outletViews.count > 1) {
+        CGFloat myWidth = [self intrinsicContentSize].width;
+        CGFloat spacerSize = [self horizontalSpacerObjectViewWidth:myWidth
+                                                     portViewWidth:kPortViewWidthConstraint
+                                                     portViewCount:outletViews.count
+                                                    minSpacerWidth:kMinHorizontalSpacerSize];
+        
+        [outletViews autoDistributeViewsAlongAxis:ALAxisHorizontal
+                                        alignedTo:ALAttributeBottom
+                                 withFixedSpacing:spacerSize
+                                     insetSpacing:NO];
     }
-    
-    return spacerViews;
 }
 
-- (NSArray *)portViewsWithCount:(NSUInteger)count
+- (NSArray *)addViewsForBbPortEntities:(NSArray *)portEntities
 {
-    if (count == 0) {
+    if (!portEntities || portEntities.count == 0) {
         return nil;
     }
-    
-    NSMutableArray *portViews = [NSMutableArray arrayWithCapacity:count];
-    for (NSUInteger i = 0; i<count;i++)
-    {
-        BbCocoaPortView *portView = [BbCocoaPortView new];
-        if (portView != nil){
-            [portViews addObject:portView];
+    NSMutableArray *portViews = nil;
+    for (BbPort *port in portEntities) {
+        BbCocoaPortView *portView = [[BbCocoaPortView alloc]initWithEntity:port
+                                                           viewDescription:nil
+                                                                  inParent:self];
+        //[portView setNeedsLayout:YES];
+        if (!portViews) {
+            portViews = [NSMutableArray arrayWithCapacity:portEntities.count];
         }
+        
+        [portViews addObject:portView];
     }
     
     return portViews;
 }
 
-
 - (void)setHorizontalCenter:(CGFloat)horizontalCenter
 {
     self.centerXConstraint = [self horizontalCenterConstraint:horizontalCenter];
-
 }
 
 - (void)setVerticalCenter:(CGFloat)verticalCenter
@@ -299,81 +170,7 @@
     return [view convertPoint:position fromView:superview];
 }
 
-+ (NSSize)spacerSizeForConfig:(BbObjectViewConfiguration *)config
-{
-    CGFloat logicalSpacerWidthTop,logicalSpacerWidthBottom = 0.0;
-    
-    if (config.inlets > 1) {
-        logicalSpacerWidthTop = config.inlets * kPortViewWidthConstraint;
-    }
-    if (config.outlets > 1) {
-        logicalSpacerWidthBottom = config.inlets * kPortViewWidthConstraint;
-    }
-    
-    CGFloat logicalSpacerWidth = 0.0;
-    if (logicalSpacerWidthBottom > logicalSpacerWidthTop) {
-        logicalSpacerWidth = logicalSpacerWidthBottom;
-    }else if (logicalSpacerWidthTop > logicalSpacerWidthBottom){
-        logicalSpacerWidth = logicalSpacerWidthTop;
-    }
-    
-    CGFloat finalSpacerWidth = 0.0f;
-    if (logicalSpacerWidth>kMinHorizontalSpacerSize) {
-        finalSpacerWidth = logicalSpacerWidth;
-    }else{
-        finalSpacerWidth = kMinHorizontalSpacerSize;
-    }
-    
-    NSSize result = NSMakeSize(finalSpacerWidth, kPortViewHeightConstraint);
-    return result;
-}
-
-+ (NSSize)portSize
-{
-    return NSSizeFromCGSize(CGSizeMake(kPortViewWidthConstraint, kPortViewHeightConstraint));
-}
-
-+ (NSSize)frameSizeForInlets:(NSUInteger)inlets outlets:(NSUInteger)outlets text:(NSString *)text
-{
-    NSSize result;
-    result.width = [BbCocoaObjectView widthForInlets:inlets outlets:outlets text:text];
-    result.height = (kPortViewWidthConstraint * 2.0) + kMinVerticalSpacerSize + 2;
-    return result;
-}
-
-+ (CGFloat)widthForInlets:(NSUInteger)inlets outlets:(NSUInteger)outlets
-{
-    CGFloat topWidth = [BbCocoaObjectView widthForPortCount:inlets] + 2;
-    CGFloat bottomWidth = [BbCocoaObjectView widthForPortCount:outlets] + 2;
-    if (topWidth>=bottomWidth) {
-        return topWidth;
-    }else{
-        return bottomWidth;
-    }
-}
-
-+ (CGFloat)widthForInlets:(NSUInteger)inlets outlets:(NSUInteger)outlets text:(NSString *)text
-{
-    CGFloat portBasedWidth = [BbCocoaObjectView widthForInlets:inlets outlets:outlets];
-    CGSize textBasedSize = [text sizeWithAttributes:[BbObjectViewConfiguration textAttributes]];
-    CGFloat textBasedWidth = [BbCocoaObjectView roundFloat:(textBasedSize.width + kPortViewWidthConstraint + 2)];
-    
-    if (portBasedWidth > textBasedWidth) {
-        return portBasedWidth;
-    }else{
-        return textBasedWidth;
-    }
-}
-
-+ (CGFloat)widthForPortCount:(NSUInteger)portCount
-{
-    if (portCount == 0) {
-        return 0;
-    }
-    return (CGFloat)portCount * kPortViewWidthConstraint + ((CGFloat)(portCount - 1) * kPortViewWidthConstraint);
-}
-
-+ (CGFloat)roundFloat:(CGFloat)aFloat
+- (CGFloat)roundFloat:(CGFloat)aFloat
 {
     return (CGFloat)(NSInteger)(aFloat + 0.5);
 }

@@ -17,63 +17,79 @@
 #import "NSString+Bb.h"
 #import "BbCocoaPortView.h"
 #import "BbCocoaPlaceholderObjectView.h"
+#import "PureLayout.h"
+#import "BbCocoaEntityView.h"
+#import "NSInvocation+Bb.h"
+#import "BbCocoaHSliderView.h"
 
 @implementation BbCocoaPatchView
 
-- (void)addPlaceholderObject
+- (id) addPlaceholderAtPoint:(CGPoint)point
 {
-    CGRect frame = CGRectMake(200, 200, 100, 40);
-    
-    BbCocoaPlaceholderObjectView *placeholder = [[BbCocoaPlaceholderObjectView alloc]initWithFrame:frame];
-    [self addSubview:placeholder];
-    [placeholder.textField becomeFirstResponder];
+    BbCocoaEntityViewDescription *placeholderDescription = [BbCocoaEntityViewDescription placeholderEntityViewDescription];
+    placeholderDescription.normalizedPosition = [self normalizePoint:point];
+    BbCocoaPlaceholderObjectView *placeholder = [[BbCocoaPlaceholderObjectView alloc]initWithDelegate:self
+                                                                                      viewDescription:placeholderDescription inParent:self];
+    [self moveEntityView:placeholder toPoint:point];
+    return placeholder;
 }
 
-- (BbObject *)addObjectAndViewWithText:(NSString *)text
+- (BbObject *)addObjectWithText:(NSString *)text
 {
-    BbObjectDescription *desc = (BbObjectDescription *)[BbBasicParser descriptionWithText:text];
-    return [self addObjectAndViewWithDescription:desc];
-}
+    BbObjectDescription *objDesc = (BbObjectDescription *)[BbBasicParser descriptionWithText:text];
+    BbObject *object = [BbObject objectWithDescription:objDesc];
+    if (!object) {
+        return nil;
+    }
+    
+    [self.patch addChildObject:object];
+    BbCocoaEntityViewDescription *viewDesc = [[BbCocoaEntityViewDescription alloc]init];
+    viewDesc.text = [NSString displayTextName:object.name args:objDesc.BbObjectArgs];
+    viewDesc.entityViewType = objDesc.UIType;
+    viewDesc.inlets = object.inlets.count;
+    viewDesc.outlets = object.outlets.count;
+    NSPoint normCenter;
+    CGFloat normX = [objDesc.UIPosition.firstObject doubleValue];
+    CGFloat normY = [objDesc.UIPosition.lastObject doubleValue];
+    normCenter.x = normX;
+    normCenter.y = normY;
+    viewDesc.normalizedPosition = normCenter;
+    BbCocoaObjectView *view = nil;
+    if ([viewDesc.entityViewType isEqualToString:@"hsl"]){
+        view = [[BbCocoaHSliderView alloc]initWithEntity:object
+                                         viewDescription:viewDesc
+                                                inParent:self];
+    }else{
+        view = [[BbCocoaObjectView alloc]initWithEntity:object
+                                        viewDescription:viewDesc
+                                               inParent:self];
+    }
 
-- (BbObject *)addObjectAndViewWithDescription:(BbObjectDescription *)description
-{
-    BbObject *object = [BbObject objectWithDescription:description];
-    BbObjectViewConfiguration *config = [BbObjectViewConfiguration new];
-    config.inlets = object.inlets.count;
-    config.outlets = object.outlets.count;
-    config.text = [NSString displayTextName:object.name args:description.BbObjectArgs];
-    config.entityViewType = description.UIType;
-    NSValue *centerValue = description.UICenter;
-    CGPoint center;
-    [centerValue getValue:&center];
-    config.center = center;
-    BbCocoaObjectView *view = [BbCocoaObjectView viewWithConfiguration:config parentView:self];
-    object.view = (id<BbEntityView>)view;
-    view.entity = object;
-    
-    for (NSUInteger i = 0; i<object.inlets.count; i++) {
-        BbCocoaPortView *portview = view.inletViews[i];
-        BbInlet *inlet = object.inlets[i];
-        [portview setEntity:inlet];
-        inlet.view = portview;
-    }
-    
-    for (NSUInteger i = 0; i<object.outlets.count; i++) {
-        BbCocoaPortView *portview = view.outletViews[i];
-        BbOutlet *outlet = object.outlets[i];
-        [portview setEntity:outlet];
-        outlet.view = portview;
-    }
-    
-    [(BbPatch *)self.entity addChildObject:object];
+    NSPoint viewPosition = [self scaleNormalizedPoint:view.normalizedPosition];
+    [self moveEntityView:view toPoint:viewPosition];
     return object;
 }
 
-- (void)commonInit
+- (void)commonInitEntity:(BbEntity *)entity viewDescription:(id)viewDescription
 {
-    if (self.entity == nil) {
+    [super commonInitEntity:entity viewDescription:viewDescription];
+    if (!self.entity) {
         self.entity = (BbEntity *)[[BbPatch alloc]initWithArguments:nil];
     }
+}
+
+- (void)setupConstraintsInParentView:(id)parent
+{
+    [super setupConstraintsInParentView:parent];
+    if (self.superview) {
+        [self autoPinEdgesToSuperviewEdgesWithInsets:NSEdgeInsetsZero];
+        [self refresh];
+    }
+}
+
+- (BbPatch *)patch
+{
+    return (BbPatch *)self.entity;
 }
 
 - (NSColor *)defaultColor
@@ -86,25 +102,68 @@
     return [NSColor colorWithWhite:0.9 alpha:1];
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder 
+- (NSSize)intrinsicContentSize
 {
-    self= [super initWithCoder:coder];
-    if (self) {
-        [self commonInit];
-    }
-    
-    return self;
+    return NSSizeFromCGSize(self.superview.bounds.size);
 }
 
-- (instancetype)initWithFrame:(NSRect)frameRect
+#pragma mark - BbPlaceholderViewDelegate
+
+- (void)placeholder:(id)sender enteredText:(NSString *)text
 {
-    self = [super initWithFrame:frameRect];
-    if (self) {
-        [self commonInit];
+    NSString *textDesc = [self textDescriptionWithText:text
+                                   fromPlaceholderView:sender];
+    if (textDesc) {
+        [self swapPlaceholderView:sender withObjectCreatedFromText:textDesc];
+    }
+}
+
+- (NSString *)textDescriptionWithText:(NSString *)text fromPlaceholderView:(BbCocoaPlaceholderObjectView *)p
+{
+    if (!text) {
+        return nil;
     }
     
-    return self;
+    NSArray *components = [text componentsSeparatedByString:@" "];
+    NSString *className = [BbObject lookUpClassWithText:components.firstObject];
+    if (!className) {
+        return nil;
+    }
+    
+    NSMutableString *textDesc = [[NSMutableString alloc]initWithString:@"#X"];
+    [textDesc appendString:@" "];
+    NSString *UIType = [NSInvocation doClassMethod:className
+                                      selectorName:@"UIType"
+                                              args:nil];
+    [textDesc appendString:UIType];
+    [textDesc appendString:@" "];
+    [textDesc appendFormat:@"%.f %.f",p.normalizedPosition.x,p.normalizedPosition.y];
+    [textDesc appendString:@" "];
+    [textDesc appendString:className];
+    [textDesc appendString:@" "];
+    
+    if (components.count > 1)
+    {
+        NSMutableArray *componentsCopy = components.mutableCopy;
+        [componentsCopy removeObjectAtIndex:0];
+        NSString *argsString = [NSString stringWithArray:componentsCopy];
+        [textDesc appendString:@" "];
+        [textDesc appendString:argsString];
+    }
+    
+    [textDesc appendString:@";\n"];
+    NSString *result = [NSString stringWithString:textDesc];
+    return result;
 }
+
+- (void)swapPlaceholderView:(BbCocoaPlaceholderObjectView *)placeholderView
+  withObjectCreatedFromText:(NSString *)text
+{
+    [placeholderView removeFromSuperviewWithoutNeedingDisplay];
+    [self addObjectWithText:text];
+}
+
+#pragma mark - drawing methods
 
 - (NSBezierPath *)connectionPathFromArray:(NSArray *)array
 {

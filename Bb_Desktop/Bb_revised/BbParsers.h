@@ -20,6 +20,7 @@
 
 @property (nonatomic,strong)NSValue *UICenter;
 @property (nonatomic,strong)NSValue *UISize;
+@property (nonatomic,strong)NSArray *UIPosition;
 @property (nonatomic,strong)NSString *BbObjectType;
 @property (nonatomic,strong)NSArray *BbObjectArgs;
 

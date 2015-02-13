@@ -12,33 +12,45 @@
 #import <Cocoa/Cocoa.h>
 #import "NSView+Bb.h"
 #import "BbUI.h"
+#import "PureLayout.h"
+#import "BbCocoaEntityViewDescription.h"
 
 @interface BbCocoaEntityView : NSView <BbEntityView> {
     BOOL kSelected;
+    CGPoint kCenter;
 }
 
 @property (nonatomic,weak)          BbEntity                        *entity;
-@property (nonatomic,weak)          BbCocoaEntityView               *parentView;
+@property (nonatomic,strong)        BbCocoaEntityViewDescription    *viewDescription;
+@property (nonatomic)               NSPoint                         normalizedPosition;
 @property (nonatomic,readonly)      NSColor                         *defaultColor;
 @property (nonatomic,readonly)      NSColor                         *selectedColor;
+@property (nonatomic,strong)        NSLayoutConstraint              *centerXConstraint;
+@property (nonatomic,strong)        NSLayoutConstraint              *centerYConstraint;
 
-- (void)setupConstraints;
-- (void)commonInit;
-- (void)setParentView:(BbCocoaEntityView *)parentView;
+#pragma - designated initializer
+- (instancetype)initWithEntity:(id)entity
+               viewDescription:(id)viewDescription
+                      inParent:(id)parentView;
+
+
+//Override to customize initialization
+- (void)commonInitEntity:(BbEntity *)entity
+         viewDescription:(id)viewDescription;
+
+//Override to customize constraints
+//Returns without installing constraints if parent view is nil
+- (void)setupConstraintsInParentView:(id)parent;
+- (void)refresh;
+- (void)setEntity:(BbEntity *)entity;
 
 #pragma BbEntityView Methods
 
-- (BbEntity *)entity;
-- (void)refreshEntityView;
-- (CGRect)frame;
-- (void)setFrame:(CGRect)frame;
 - (CGPoint)center;
 - (void)setCenter:(CGPoint)center;
-- (void)setCenter:(CGPoint)center inView:(id<BbEntityView>)view;
 - (BOOL)selected;
 - (void)setSelected:(BOOL)selected;
 - (void)addSubview:(id<BbEntityView>)subview;
-- (void)removeFromSuperview;
 
 @end
 

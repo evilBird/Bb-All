@@ -54,7 +54,7 @@
     NSScanner *UITypeScanner = *scanner;
     NSString *result = nil;
     BOOL didScan = NO;
-    NSArray *UITypes = @[@"canvas",@"obj",@"text",@"msg",@"inlet",@"outlet",@"connect"];
+    NSArray *UITypes = @[@"canvas",@"obj",@"text",@"msg",@"inlet",@"outlet",@"connect",@"hsl"];
     for (NSString *UIType in UITypes) {
         didScan = [UITypeScanner scanString:UIType intoString:&result];
         if (didScan) {
@@ -90,6 +90,31 @@
     return result;
 }
 
++ (NSArray *)scanUIPosition:(NSScanner **)scanner
+{
+    NSScanner *centerScanner = *scanner;
+    NSArray *result = nil;
+    BOOL didScan = YES;
+    double vals[2];
+    NSUInteger count = 0;
+    NSCharacterSet *numbers = [NSCharacterSet decimalDigitCharacterSet];
+    while (didScan && count < 2) {
+        NSString *numberString = nil;
+        didScan = [centerScanner scanCharactersFromSet:numbers intoString:&numberString];
+        if (didScan && numberString) {
+            vals[count] = numberString.integerValue;
+            count++;
+        }
+    }
+    
+    if (count == 2) {
+        result = @[@(vals[0]),@(vals[1])];
+    }
+    
+    return result;
+}
+
+
 + (NSValue *)scanUISize:(NSScanner **)scanner
 {
     NSScanner *sizeScanner = *scanner;
@@ -122,13 +147,16 @@
     NSString *result = nil;
     BOOL didScanChar = YES;
     BOOL didScanSpace = NO;
+    //BOOL didScanSemicolon = NO;
     NSCharacterSet *chars = [NSCharacterSet alphanumericCharacterSet];
     NSCharacterSet *ws = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    //NSCharacterSet *cr = [NSCharacterSet characterSetWithCharactersInString:@";"];
     BOOL done = NO;
     while (!done) {
         
         didScanChar = [classScanner scanCharactersFromSet:chars intoString:&result];
         didScanSpace = [classScanner scanCharactersFromSet:ws intoString:NULL];
+        //didScanSemicolon = [classScanner scanCharactersFromSet:cr intoString:NULL];
         
         if (didScanSpace && result!=nil) {
             done = YES;
