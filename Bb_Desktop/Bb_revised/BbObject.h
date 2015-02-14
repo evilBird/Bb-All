@@ -21,7 +21,7 @@ typedef id (^BbCalculateOutputBlock)(id hotValue, NSArray *inlets);
 
 @property (nonatomic,strong)    NSMutableArray      *inlets_;
 @property (nonatomic,strong)    NSMutableArray      *outlets_;
-@property (nonatomic,strong)    NSMutableArray      *childObjects_;
+@property (nonatomic,strong)    NSMutableOrderedSet *childObjects_;
 
 @property (nonatomic)           BbInlet             *hotInlet;
 @property (nonatomic)           BbInlet             *coldInlet;

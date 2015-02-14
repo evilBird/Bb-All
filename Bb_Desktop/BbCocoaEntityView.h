@@ -33,7 +33,6 @@
                viewDescription:(id)viewDescription
                       inParent:(id)parentView;
 
-
 //Override to customize initialization
 - (void)commonInitEntity:(BbEntity *)entity
          viewDescription:(id)viewDescription;

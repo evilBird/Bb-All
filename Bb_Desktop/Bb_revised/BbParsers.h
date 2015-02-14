@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, BbConnectionDescriptionFlags)
+{
+    BbConnectionDescriptionFlags_OK,
+    BbConnectionDescriptionFlags_DELETE,
+}BbConnectionDescriptionFlag;
+
 @interface BbDescription : NSObject
 
 @property (nonatomic)NSUInteger stackIndex;
@@ -28,10 +34,29 @@
 
 @interface BbConnectionDescription : BbDescription
 
-@property (nonatomic) NSUInteger senderObjectIndex;
-@property (nonatomic) NSUInteger senderPortIndex;
-@property (nonatomic) NSUInteger receiverObjectIndex;
-@property (nonatomic) NSUInteger receiverPortIndex;
+@property (nonatomic) NSUInteger                                 parentId;
+@property (nonatomic) NSUInteger                                 ancestors;
+@property (nonatomic,readonly) NSUInteger                        connectionId;
+@property (nonatomic) BbConnectionDescriptionFlags               flag;
+@property (nonatomic) NSUInteger                                 senderId;
+@property (nonatomic) NSUInteger                                 senderObjectIndex;
+@property (nonatomic) NSUInteger                                 senderPortIndex;
+@property (nonatomic) NSUInteger                                 senderPortId;
+@property (nonatomic) NSUInteger                                 receiverId;
+@property (nonatomic) NSUInteger                                 receiverObjectIndex;
+@property (nonatomic) NSUInteger                                 receiverPortIndex;
+@property (nonatomic) NSUInteger                                 receiverPortId;
+
+- (NSString *)textDescription;
+
+
+
++ (NSUInteger)connectionIdParent:(NSUInteger)parentId
+                        senderId:(NSUInteger)senderId
+                        outletId:(NSUInteger)outletId
+                      receiverId:(NSUInteger)receiverId
+                         inletId:(NSUInteger)inletId;
+
 
 @end
 

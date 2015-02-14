@@ -33,11 +33,11 @@
 
 - (NSUInteger)indexForObject:(BbObject *)object
 {
-    if (!self.childObjects_ || ![self.childObjects_ containsObject:object]) {
+    if (!object || !self.childObjects_ || ![self.childObjects_ containsObject:object]) {
         return -1;
     }
     
-    return [self.childObjects_ indexOfObjectIdenticalTo:object];
+    return [self.childObjects_ indexOfObject:object];
 }
 
 - (NSUInteger)indexInParent:(BbEntity *)child
@@ -60,7 +60,7 @@
     }
     
     if (!self.childObjects_) {
-        self.childObjects_ = [NSMutableArray array];
+        self.childObjects_ = [[NSMutableOrderedSet alloc]init];
     }
     
     childObject.parent = self;
@@ -94,7 +94,7 @@
 - (NSArray *)childObjects
 {
     if (self.childObjects_ && self.childObjects_.count > 0) {
-        return [NSArray arrayWithArray:self.childObjects_];
+        return self.childObjects_.array.mutableCopy;
     }
     
     return nil;

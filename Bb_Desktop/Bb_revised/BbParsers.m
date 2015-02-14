@@ -8,6 +8,7 @@
 
 #import "BbParsers.h"
 #import "NSScanner+Bb.h"
+#import "NSMutableString+Bb.h"
 
 @implementation BbDescription
 @end
@@ -16,6 +17,42 @@
 @end
 
 @implementation BbConnectionDescription
+
+- (NSString *)textDescription
+{
+    NSMutableString *desc = [NSMutableString newDescription];
+    [desc tabCt:self.ancestors];
+    [desc appendThenSpace:@"#X"];
+    [desc appendThenSpace:@"connect"];
+    [desc appendThenSpace:@(self.senderObjectIndex)];
+    [desc appendThenSpace:@(self.senderPortIndex)];
+    [desc appendThenSpace:@(self.receiverObjectIndex)];
+    [desc appendThenSpace:@(self.receiverPortIndex)];
+    [desc semiColon];
+    [desc lineBreak];
+    
+    return desc;
+}
+
+
++ (NSUInteger)connectionIdParent:(NSUInteger)parentId
+                        senderId:(NSUInteger)senderId
+                        outletId:(NSUInteger)outletId
+                      receiverId:(NSUInteger)receiverId
+                         inletId:(NSUInteger)inletId
+{
+    return ((parentId/1000) + (senderId/1000 + outletId/1000) + (receiverId/1000 + inletId/1000))/1000;
+}
+
+- (NSUInteger)connectionId
+{
+    return [BbConnectionDescription connectionIdParent:self.parentId
+                                              senderId:self.senderId
+                                              outletId:self.senderPortId
+                                            receiverId:self.receiverId
+                                               inletId:self.receiverPortId];
+}
+
 @end
 
 @implementation BbBasicParser

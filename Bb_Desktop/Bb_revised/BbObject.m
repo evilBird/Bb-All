@@ -194,9 +194,9 @@
                                       size:[self UISize]
                                       args:[self creationArguments]];
     
-    if (self.childObjects && self.childObjects.count) {
+    if (self.childObjects_ && self.childObjects_.count) {
         
-        for (BbObject *child in self.childObjects) {
+        for (BbObject *child in [self.childObjects_ array]) {
             
             [myDescription appendObject:[child textDescription]];
         }
@@ -315,7 +315,7 @@
         [outlet tearDown];
     }
     
-    for (BbObject *childObject in self.childObjects_) {
+    for (BbObject *childObject in [self.childObjects_ array]) {
         [self removeChildObject:childObject];
         [childObject tearDown];
     }
