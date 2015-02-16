@@ -31,7 +31,8 @@
 + (NSString *)lookUpClassWithText:(NSString *)text
 {
     NSArray *libClasses = [BbObject BbStandardLibraryClassNames];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] %@",text];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] %@ OR SELF BEGINSWITH[cd] %@",
+                              text,[@"Bb" stringByAppendingString:text]];
     NSArray *filtered = [libClasses filteredArrayUsingPredicate:predicate];
     NSSortDescriptor *lengthSort = [NSSortDescriptor sortDescriptorWithKey:@"length" ascending:YES];
     NSArray *sorted = [filtered sortedArrayUsingDescriptors:@[lengthSort]];

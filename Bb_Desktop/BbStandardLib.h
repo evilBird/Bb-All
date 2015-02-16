@@ -12,6 +12,7 @@
 #import "BbStrings.h"
 #import "BbBasicMath.h"
 #import "BbPatch.h"
+#import "BbLog.h"
 
 @interface BbKeyCommandGenerator:BbObject
 
