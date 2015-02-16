@@ -157,7 +157,7 @@
 
 - (NSInteger)index
 {
-    return [self.parent indexForPort:self];
+    return [self.parent indexOfPort:self];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

@@ -15,17 +15,12 @@
 @property (nonatomic,strong)NSMutableSet *connectionIds;
 @property (nonatomic,strong)NSMutableDictionary *connections;
 
-- (BbConnectionDescription *)descConnectionSender:(NSUInteger)senderIdx
-                                          portIdx:(NSUInteger)senderPortIdx
-                                         receiver:(NSUInteger)receiverIdx
-                                          portIdx:(NSUInteger)receiverPortIdx;
+- (id)connectObject:(NSUInteger)senderObjectIndex
+               port:(NSUInteger)senderPortIndex
+           toObject:(NSUInteger)receiverObjectIndex
+               port:(NSUInteger)receiverPortIndex;
 
-- (void)connectObject:(NSUInteger)senderObjectIndex
-                 port:(NSUInteger)senderPortIndex
-             toObject:(NSUInteger)receiverObjectIndex
-                 port:(NSUInteger)receiverPortIndex;
-
-- (void)disconnectObject:(NSUInteger)senderObjectIndex
+- (id)disconnectObject:(NSUInteger)senderObjectIndex
                     port:(NSUInteger)senderPortIndex
               fromObject:(NSUInteger)receiverObjectIndex
                     port:(NSUInteger)receiverPortIndex;

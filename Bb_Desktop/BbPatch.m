@@ -10,8 +10,6 @@
 #import "NSMutableString+Bb.h"
 #import "BbCocoaEntityView.h"
 
-
-
 @implementation BbPatch
 
 #pragma child objects
@@ -38,59 +36,50 @@
     BbConnectionDescription *desc = [BbConnectionDescription new];
     desc.parentId = self.objectId;
     desc.senderId = sender.objectId;
-    desc.senderObjectIndex = [sender indexInParent:sender.parent];
+    desc.senderObjectIndex = [self indexOfChild:sender];
     desc.senderPortId = outlet.objectId;
-    desc.senderPortIndex = [sender indexForPort:outlet];
+    desc.senderPortIndex = [sender indexOfPort:outlet];
     desc.receiverId = receiver.objectId;
-    desc.receiverObjectIndex = [receiver indexInParent:receiver.parent];
+    desc.receiverObjectIndex = [self indexOfChild:receiver];
     desc.receiverPortId = inlet.objectId;
-    desc.receiverPortIndex = [receiver indexForPort:inlet];
+    desc.receiverPortIndex = [receiver indexOfPort:inlet];
     desc.ancestors = [self countAncestors]+1;
+    desc.flag = BbConnectionDescriptionFlags_OK;
     
     return desc;
 }
 
-- (void)connectObject:(NSUInteger)senderObjectIndex
-                 port:(NSUInteger)senderPortIndex
-             toObject:(NSUInteger)receiverObjectIndex
-                 port:(NSUInteger)receiverPortIndex
+- (id)connectObject:(NSUInteger)senderObjectIndex
+               port:(NSUInteger)senderPortIndex
+           toObject:(NSUInteger)receiverObjectIndex
+               port:(NSUInteger)receiverPortIndex
 {
     BbObject *sender = self.childObjects[senderObjectIndex];
     BbObject *receiver = self.childObjects[receiverObjectIndex];
     BbOutlet *outlet = sender.outlets[senderPortIndex];
     BbInlet *inlet = receiver.inlets[receiverPortIndex];
     
-    BbConnectionDescription *desc = [BbConnectionDescription new];
-    desc.parentId = self.objectId;
-    desc.senderId = sender.objectId;
-    desc.senderObjectIndex = senderObjectIndex;
-    desc.senderPortId = outlet.objectId;
-    desc.senderPortIndex = senderPortIndex;
-    desc.receiverId = receiver.objectId;
-    desc.receiverObjectIndex = receiverObjectIndex;
-    desc.receiverPortId = inlet.objectId;
-    desc.receiverPortIndex = receiverPortIndex;
-    desc.ancestors = [self countAncestors]+1;
-    
+    BbConnectionDescription *desc = nil;
+    desc = [self descConnectionSender:sender
+                               outlet:outlet
+                           toReceiver:receiver
+                                inlet:inlet];
     if (desc) {
         if (!self.connections) {
             self.connections = [[NSMutableDictionary alloc]init];
         }
         NSString *connectionId = [@([desc connectionId])toString];
-        NSLog(@"connection id: %@\n%@",connectionId,[desc textDescription]);
-        
         if ([self.connections.allKeys containsObject:connectionId]) {
-            NSLog(@"error with connection: that connection already exists");
-            return;
+            return nil;
         }
         [self.connections setValue:desc forKey:connectionId];
         [self connectOutlet:outlet toInlet:inlet];
-    }else{
-        NSLog(@"error with connection");
     }
+    
+    return desc;
 }
 
-- (void)disconnectObject:(NSUInteger)senderObjectIndex
+- (id)disconnectObject:(NSUInteger)senderObjectIndex
                     port:(NSUInteger)senderPortIndex
               fromObject:(NSUInteger)receiverObjectIndex
                     port:(NSUInteger)receiverPortIndex
@@ -100,26 +89,20 @@
     BbOutlet *outlet = sender.outlets[senderPortIndex];
     BbInlet *inlet = receiver.inlets[receiverPortIndex];
     
-    BbConnectionDescription *desc = [BbConnectionDescription new];
-    desc.parentId = self.objectId;
-    desc.senderId = sender.objectId;
-    desc.senderObjectIndex = senderObjectIndex;
-    desc.senderPortId = outlet.objectId;
-    desc.senderPortIndex = senderPortIndex;
-    desc.receiverId = receiver.objectId;
-    desc.receiverObjectIndex = receiverObjectIndex;
-    desc.receiverPortId = inlet.objectId;
-    desc.receiverPortIndex = receiverPortIndex;
-    desc.ancestors = [self countAncestors]+1;
+    BbConnectionDescription *desc = nil;
+    desc = [self descConnectionSender:sender
+                               outlet:outlet
+                           toReceiver:receiver
+                                inlet:inlet];
     
     NSString *connectionId = [@([desc connectionId])toString];
     
     if ([self.connections.allValues containsObject:connectionId]) {
-        NSLog(@"will remove connection");
-
-    }else{
-        NSLog(@"connection not found");
+        [self.connections removeObjectForKey:connectionId];
+        desc.flag = BbConnectionDescriptionFlags_DELETE;
+        return desc;
     }
+    return nil;
 }
 
 - (void)connectOutlet:(BbOutlet *)outlet
@@ -132,6 +115,15 @@
 {
     NSMutableString *desc = [NSMutableString newDescription];
     [desc appendObject:[super textDescription]];
+    if (self.connections){
+        for (NSString *connectionId in self.connections.allKeys) {
+            BbConnectionDescription *connection = [self.connections valueForKey:connectionId];
+            if (connection.flag == BbConnectionDescriptionFlags_OK) {
+                [desc appendObject:[connection textDescription]];
+            }
+        }
+    }
+    
     [desc appendThenSpace:@"#C"];
     [desc appendThenSpace:@"restore"];
     [desc appendThenSpace:self.creationArguments];

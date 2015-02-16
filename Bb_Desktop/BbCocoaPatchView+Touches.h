@@ -11,8 +11,8 @@
 @interface BbCocoaPatchView (Touches)
 
 - (void)moveEntityView:(BbCocoaEntityView *)entityView toPoint:(NSPoint)point;
-
 - (NSPoint)normalizePoint:(NSPoint)point;
 - (NSPoint)scaleNormalizedPoint:(NSPoint)point;
+- (BbCocoaPatchGetConnectionArray)pathArrayWithConnection:(id)desc;
 
 @end

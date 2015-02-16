@@ -407,19 +407,22 @@ typedef NS_ENUM(NSUInteger, BbViewType){
             NSUInteger receiverPortIndex = [receiverInfo[@"port_index"]unsignedIntegerValue];
             NSUInteger receiverParentIndex = [receiverInfo[@"parent_index"]unsignedIntegerValue];
             BbPatch *patch = (BbPatch *)self.entity;
-            [patch connectObject:senderParentIndex
-                            port:senderPortIndex
-                        toObject:receiverParentIndex
-                            port:receiverPortIndex];
+            id desc = [patch connectObject:senderParentIndex
+                                      port:senderPortIndex
+                                  toObject:receiverParentIndex
+                                      port:receiverPortIndex];
             
-            NSLog(@"#X connect %@ %@ %@ %@;\n",senderInfo[@"parent_index"],senderInfo[@"port_index"],receiverInfo[@"parent_index"],receiverInfo[@"port_index"]);
-            
-            BbCocoaPatchGetConnectionArray block = [self connectionBlockSender:kSelectedPortViewSender receiver:kSelectedPortViewReceiver];
-            if (!self.connections) {
-                self.connections = [[NSMutableSet alloc]init];
+            BbCocoaPatchGetConnectionArray block = [self pathArrayWithConnection:desc];
+            if (block != NULL) {
+                if (!self.connections) {
+                    self.connections = [[NSMutableSet alloc]init];
+                }
+                
+                [self.connections addObject:block];
+                
+                NSString *patchDescription = [patch textDescription];
+                NSLog(@"\n%@\n",patchDescription);
             }
-            
-            [self.connections addObject:block];
         }
     }
     
@@ -433,6 +436,31 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     [self setNeedsDisplay:YES];
 }
 
+- (BbCocoaPatchGetConnectionArray)pathArrayWithConnection:(id)desc
+{
+    if (!desc) {
+        return NULL;
+    }
+    
+    BbConnectionDescription *c = desc;
+    if (c.flag == BbConnectionDescriptionFlags_DELETE) {
+        return NULL;
+    }
+    BbPatch *patch = (BbPatch *)self.entity;
+    BbObject *sender = [patch childObjects][c.senderObjectIndex];
+    BbOutlet *outlet = sender.outlets[c.senderPortIndex];
+    BbObject *receiver = [patch childObjects][c.receiverObjectIndex];
+    BbInlet *inlet = receiver.inlets[c.receiverPortIndex];
+    BbCocoaPortView *outletView = (BbCocoaPortView *)outlet.view;
+    BbCocoaPortView *inletView = (BbCocoaPortView *)inlet.view;
+    
+    if (!outletView || !inletView) {
+        return NULL;
+    }
+    
+    return [self connectionBlockSender:outletView receiver:inletView];
+    
+}
 - (BbCocoaPatchGetConnectionArray)connectionBlockSender:(BbCocoaPortView *)sender receiver:(BbCocoaPortView *)receiver
 {
     __weak BbCocoaPatchView *weakself = self;

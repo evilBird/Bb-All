@@ -17,8 +17,8 @@
 @optional
 
 - (NSSet *)allowedTypesForPort:(BbPort *)port;
-- (NSUInteger)indexForPort:(BbPort *)port;
-- (NSUInteger)indexInParent:(BbEntity *)child;
+- (NSUInteger)indexOfPort:(BbPort *)port;
+- (NSUInteger)indexOfChild:(BbEntity *)child;
 
 
 - (BbEntity *)rootEntity;

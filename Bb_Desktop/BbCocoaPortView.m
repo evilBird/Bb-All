@@ -65,7 +65,7 @@
     result[@"port_id"] = @(port.objectId);
     
     if (parent) {
-        portIndex = [parent indexInParent:port];
+        portIndex = [parent indexOfChild:port];
         result[@"port_index"] = @(portIndex);
         NSSet *types = [parent allowedTypesForPort:(BbPort *)port];
         if (types) {
@@ -92,7 +92,7 @@
 
     CGPoint center = [self center];
     if (grandParent) {
-        parentIndex = [grandParent indexInParent:parent];
+        parentIndex = [grandParent indexOfChild:parent];
         center = [self convertPoint:center toView:(NSView *)[grandParent view]];
         result[@"parent_index"] = @(parentIndex);
         result[@"patch_id"] = @(grandParent.objectId);

@@ -18,7 +18,7 @@
     return nil;
 }
 
-- (NSInteger)indexForPort:(BbPort *)port
+- (NSInteger)indexOfPort:(BbPort *)port
 {
     if ([port isKindOfClass:[BbInlet class]] && [self.inlets containsObject:port]) {
         return [self.inlets indexOfObject:port];
@@ -40,10 +40,10 @@
     return [self.childObjects_ indexOfObject:object];
 }
 
-- (NSUInteger)indexInParent:(BbEntity *)child
+- (NSUInteger)indexOfChild:(BbEntity *)child
 {
     if ([child isKindOfClass:[BbPort class]]) {
-        return [self indexForPort:(BbPort *)child];
+        return [self indexOfPort:(BbPort *)child];
     }
     
     if ([child isKindOfClass:[BbObject class]]) {

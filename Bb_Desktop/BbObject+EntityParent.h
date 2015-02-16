@@ -13,8 +13,8 @@
 #pragma mark - BbEntityParent Methods
 
 - (NSSet *)allowedTypesForPort:(BbPort *)port;
-- (NSInteger)indexForPort:(BbPort *)port;
-- (NSUInteger)indexInParent:(BbEntity *)child;
+- (NSInteger)indexOfPort:(BbPort *)port;
+- (NSUInteger)indexOfChild:(BbEntity *)child;
 - (void)addChildObject:(BbObject *)childObject;
 - (void)removeChildObject:(BbObject *)childObject;
 
