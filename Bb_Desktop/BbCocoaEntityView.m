@@ -9,8 +9,9 @@
 #import "BbCocoaEntityView.h"
 #import "BbBase.h"
 #import "BbCocoaObjectView.h"
-#import "BbCocoaHSliderView.h"
-#import "BbCocoaMessageView.h"
+//#import "BbCocoaHSliderView.h"
+//#import "BbCocoaMessageView.h"
+//#import "BbCocoaBangView.h"
 
 @interface BbCocoaEntityView ()
 

@@ -17,5 +17,6 @@
 #import "BbTrigger.h"
 #import "BbClassMethod.h"
 #import "BbInstanceMethod.h"
+#import "BbBangObject.h"
 
 #endif

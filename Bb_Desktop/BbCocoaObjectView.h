@@ -11,9 +11,10 @@
 static CGFloat kDefaultCocoaObjectViewWidth = 100;
 static CGFloat kDefaultCocoaObjectViewHeight = 40;
 
-static NSString *kBbUITypeObject = @"obj";
-static NSString *kBbUITypeHorizontalSlider = @"hsl";
-static NSString *kBbUITypeMessage = @"msg";
+static NSString *kBbUITypeObject                = @"obj";
+static NSString *kBbUITypeHorizontalSlider      = @"hsl";
+static NSString *kBbUITypeMessage               = @"msg";
+static NSString *kBbUITypeBang                  = @"bang";
 
 @interface BbCocoaObjectView : BbCocoaEntityView
 

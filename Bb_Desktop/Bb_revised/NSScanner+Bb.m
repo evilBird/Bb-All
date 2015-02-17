@@ -54,7 +54,7 @@
     NSScanner *UITypeScanner = *scanner;
     NSString *result = nil;
     BOOL didScan = NO;
-    NSArray *UITypes = @[@"canvas",@"obj",@"text",@"msg",@"inlet",@"outlet",@"connect",@"hsl"];
+    NSArray *UITypes = @[@"canvas",@"obj",@"text",@"msg",@"inlet",@"outlet",@"connect",@"hsl",@"bang"];
     for (NSString *UIType in UITypes) {
         didScan = [UITypeScanner scanString:UIType intoString:&result];
         if (didScan) {

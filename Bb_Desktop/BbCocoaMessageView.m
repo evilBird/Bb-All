@@ -62,9 +62,11 @@
 - (void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];
+    
     if (selected) {
         [self.textField becomeFirstResponder];
     }else{
+        [[(BbMessage *)self.entity hotInlet]input:[BbBang bang]];
         [self.textField resignFirstResponder];
     }
 }

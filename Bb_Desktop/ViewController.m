@@ -35,18 +35,20 @@
     NSUInteger ancestors;
     ancestors = [[self.patchView patch]countAncestors];
     
+    desc = [NSMutableString descBbObject:@"BbBangObject"
+                               ancestors:ancestors+1
+                                position:@[@50,@60]
+                                    args:nil
+            ];
+    
+    [self.patchView addObjectWithText:desc];
+    
     desc = [NSMutableString descBbObject:@"BbMessage"
                                ancestors:ancestors+1
                                 position:@[@50,@50]
                                     args:@"This is a message"
             ];
     
-    [self.patchView addObjectWithText:desc];
-
-    desc = [NSMutableString descBbObject:@"BbTrigger"
-                               ancestors:ancestors+1
-                                position:@[@50,@60]
-                                    args:@[@"b"]];
     [self.patchView addObjectWithText:desc];
     
     desc = [NSMutableString descBbObject:@"BbLog"
@@ -56,31 +58,9 @@
     
     [self.patchView addObjectWithText:desc];
     
-    desc = [NSMutableString descBbObject:@"BbNumberSlider"
-                               ancestors:ancestors+1
-                                position:@[@50,@70]
-                                    args:nil];
-    
-    [self.patchView addObjectWithText:desc];
-    
-    [self.patchView connectSender:0
-                           outlet:0
-                         receiver:2
-                            inlet:0];
-    [self.patchView connectSender:1
-                           outlet:0
-                         receiver:0
-                            inlet:0];
-    [self.patchView connectSender:3
-                           outlet:0
-                         receiver:1
-                            inlet:0];
-    
-    NSString *patch = [self.patchView.patch textDescription];
-    
-    [self.patchView refresh];
-    
-    NSLog(@"\n%@\n",patch);
+    [self.patchView connectSender:0 outlet:0 receiver:1 inlet:0];
+    [self.patchView connectSender:1 outlet:0 receiver:2 inlet:0];
+    [self.view setNeedsDisplay:YES];
     
 }
 

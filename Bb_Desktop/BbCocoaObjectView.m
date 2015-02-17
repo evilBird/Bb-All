@@ -13,6 +13,7 @@
 #import "BbCocoaMessageView.h"
 #import "BbCocoaHSliderView.h"
 #import "NSInvocation+Bb.h"
+#import "BbCocoaBangView.h"
 
 @interface BbCocoaObjectView ()
 
@@ -148,6 +149,9 @@
     }else if ([type isEqualToString:kBbUITypeMessage]){
         return [[BbCocoaMessageView alloc]initWithEntity:entity
                                          viewDescription:desc inParent:parentView];
+    }else if ([type isEqualToString:kBbUITypeBang]){
+        return [[BbCocoaBangView alloc]initWithEntity:entity
+                                      viewDescription:desc inParent:parentView];
     }
     
     return nil;
