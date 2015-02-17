@@ -126,7 +126,8 @@
 
 - (id)getValue
 {
-    return [self valueForKeyPath:kPortObservationKeyPath];
+    id value = [self valueForKeyPath:kPortObservationKeyPath];
+    return value;
 }
 
 - (id)outputForInputValue:(id)input

@@ -13,20 +13,7 @@
 #import "BbBasicMath.h"
 #import "BbPatch.h"
 #import "BbLog.h"
-
-@interface BbKeyCommandGenerator:BbObject
-
-@end
-
-@implementation BbKeyCommandGenerator
-
-- (void)setupWithArguments:(id)arguments
-{
-    
-}
-
-
-@end
-
+#import "BbClassMethod.h"
+#import "BbInstanceMethod.h"
 
 #endif

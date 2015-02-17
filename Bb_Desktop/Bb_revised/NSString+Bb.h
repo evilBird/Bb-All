@@ -19,6 +19,7 @@
 - (NSSet *)supportedConversions;
 - (NSNumber *)toNumber;
 - (NSArray *)toArray;
+- (NSString *)toString;
 - (NSArray *)delimitedArray:(NSString *)delimiter;
 - (BbBang *)toBang;
 

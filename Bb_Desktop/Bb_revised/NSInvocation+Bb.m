@@ -43,6 +43,7 @@
     invocation.selector = theSelector;
     
     if (args) {
+        NSUInteger numargs = [methodSig numberOfArguments] - 2;
         for (NSUInteger i = 0; i < args.count; i++) {
             [invocation setArgumentWithObject:args[i] atIndex:i];
         }
@@ -77,6 +78,8 @@
     invocation.selector = theSelector;
     
     if (args) {
+        
+        NSUInteger numargs = [methodSig numberOfArguments] - 2;
         for (NSUInteger i = 0; i < args.count; i++) {
             [invocation setArgumentWithObject:args[i] atIndex:i];
         }

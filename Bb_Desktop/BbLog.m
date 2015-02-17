@@ -22,14 +22,13 @@
 
 - (BbCalculateOutputBlock)calculateOutputForOutletAtIndex:(NSInteger)index
 {
-    __weak BbLog *weakself = self;
     return ^(id hotValue, NSArray *inlets){
         id valueCopy = [hotValue copy];
         NSDateFormatter *df = [[NSDateFormatter alloc]init];
         df.dateStyle = NSDateFormatterShortStyle;
-        df.timeStyle = NSDateIntervalFormatterFullStyle;
+        df.timeStyle = NSDateIntervalFormatterMediumStyle;
         NSString *timeString = [df stringFromDate:[NSDate date]];
-        NSString *tagCopy = [[weakself.inlets[1] getValue]copy];
+        NSString *tagCopy = [[inlets[1] getValue]copy];
         NSString *log = [NSString stringWithFormat:@"\n%@ Bb %@: %@\n",timeString,tagCopy,valueCopy];
         NSLog(@"%@",log);
         return hotValue;

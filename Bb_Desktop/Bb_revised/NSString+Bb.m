@@ -38,6 +38,11 @@ void printInts(int n,...)
     return [NSSet setWithArray:conversions];
 }
 
+- (NSString *)toString
+{
+    return self;
+}
+
 - (NSNumber *)toNumber
 {
     return @([self floatValue]);
