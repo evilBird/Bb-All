@@ -6,12 +6,13 @@
 //  Copyright (c) 2015 birdSound. All rights reserved.
 //
 
-#import "BbCocoaEntityView.h"
+#import "BbCocoaEntityView+TextDelegate.h"
 
-@interface BbCocoaPlaceholderObjectView : BbCocoaEntityView <NSTextFieldDelegate,NSTextDelegate>
+@interface BbCocoaPlaceholderObjectView : BbCocoaEntityView
 
-@property (nonatomic,strong)    NSTextField                                 *textField;
 @property (nonatomic,weak)      id<BbPlaceholderViewDelegate>               delegate;
+
++ (NSDictionary *)textAttributes;
 
 - (instancetype)initWithDelegate:(id<BbPlaceholderViewDelegate>)delegate
                  viewDescription:(id)viewDescription

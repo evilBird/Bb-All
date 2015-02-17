@@ -10,6 +10,9 @@
 #import "BbCocoaPortView.h"
 #import "BbCocoaObjectView+Autolayout.h"
 #import "BbObject.h"
+#import "BbCocoaMessageView.h"
+#import "BbCocoaHSliderView.h"
+#import "NSInvocation+Bb.h"
 
 @interface BbCocoaObjectView ()
 
@@ -113,6 +116,43 @@
     return [NSColor colorWithWhite:0.3 alpha:1];
 }
 
++ (NSDictionary *)textAttributes
+{
+    NSFont *font = [NSFont fontWithName:@"Courier" size:[NSFont systemFontSize]];
+    NSColor *color = [NSColor whiteColor];
+    NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+    paragraphStyle.alignment = NSCenterTextAlignment;
+    NSDictionary *textAttributes = @{NSFontAttributeName:font,
+                                     NSForegroundColorAttributeName:color,
+                                     NSParagraphStyleAttributeName:paragraphStyle
+                                     };
+    return textAttributes;
+}
+
+- (NSString *)displayedText
+{
+    return self.viewDescription.text;
+}
+
++ (instancetype)viewWithBbUIType:(id)type
+                          entity:(id)entity
+                     description:(id)desc
+                          parent:(id)parentView
+{
+    if ([type isEqualToString:kBbUITypeObject]) {
+        return [[BbCocoaObjectView alloc]initWithEntity:entity
+                                        viewDescription:desc inParent:parentView];
+    }else if ([type isEqualToString:kBbUITypeHorizontalSlider]){
+        return [[BbCocoaHSliderView alloc]initWithEntity:entity
+                                         viewDescription:desc inParent:parentView];
+    }else if ([type isEqualToString:kBbUITypeMessage]){
+        return [[BbCocoaMessageView alloc]initWithEntity:entity
+                                         viewDescription:desc inParent:parentView];
+    }
+    
+    return nil;
+}
+
 #pragma drawing
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -122,8 +162,11 @@
                                    kPortViewWidthConstraint/2,
                                    kPortViewHeightConstraint + 2);
     
-    NSString *textToDraw = self.viewDescription.text;
-    [textToDraw drawInRect:insetRect withAttributes:[BbCocoaEntityViewDescription textAttributes]];
+    NSString *textToDraw = self.displayedText;
+    NSDictionary *textAttributes = [NSInvocation doClassMethod:NSStringFromClass([self class])
+                                                  selectorName:@"textAttributes"
+                                                          args:nil];
+    [textToDraw drawInRect:insetRect withAttributes:textAttributes];
 }
 
 

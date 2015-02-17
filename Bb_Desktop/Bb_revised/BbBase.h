@@ -11,7 +11,7 @@
 #import "BbConstants.h"
 #import "NSObject+Bb.h"
 
-@class BbPort;
+@class BbPort,BbInlet;
 
 @protocol BbEntityParent <NSObject>
 @optional
@@ -19,14 +19,12 @@
 - (NSSet *)allowedTypesForPort:(BbPort *)port;
 - (NSUInteger)indexOfPort:(BbPort *)port;
 - (NSUInteger)indexOfChild:(BbEntity *)child;
-
-
+- (void)hotInlet:(BbInlet *)inlet receivedBang:(BbBang *)bang;
 - (BbEntity *)rootEntity;
 - (NSUInteger)countAncestors;
 - (BOOL)hasUI;
 - (BOOL)needsUI;
 - (BOOL)wantsUI;
-
 - (NSArray *)UIPosition;
 
 @end

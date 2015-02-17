@@ -13,6 +13,11 @@
 
 #pragma mark - BbEntityParent Methods
 
+- (void)hotInlet:(BbInlet *)inlet receivedBang:(BbBang *)bang
+{
+    
+}
+
 - (NSSet *)allowedTypesForPort:(BbPort *)port
 {
     return nil;

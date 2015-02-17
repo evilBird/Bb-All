@@ -17,5 +17,6 @@
 - (NSUInteger)indexOfChild:(BbEntity *)child;
 - (void)addChildObject:(BbObject *)childObject;
 - (void)removeChildObject:(BbObject *)childObject;
+- (void)hotInlet:(BbInlet *)inlet receivedBang:(BbBang *)bang;
 
 @end

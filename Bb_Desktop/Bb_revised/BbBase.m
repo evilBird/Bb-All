@@ -59,6 +59,11 @@
     return [[BbBang alloc]init];
 }
 
+- (BbBang *)copyWithZone:(NSZone *)zone
+{
+    return [BbBang bang];
+}
+
 - (instancetype)init
 {
     self = [super init];

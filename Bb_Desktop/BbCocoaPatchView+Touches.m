@@ -396,6 +396,30 @@ typedef NS_ENUM(NSUInteger, BbViewType){
     [self setNeedsDisplay:YES];
 }
 
+- (void)connectSender:(NSUInteger)senderIndex
+               outlet:(NSUInteger)outletIndex
+             receiver:(NSUInteger)receiverIndex
+                inlet:(NSUInteger)inletIndex
+{
+    BbPatch *patch = (BbPatch *)self.entity;
+    id desc = [patch connectObject:senderIndex
+                              port:outletIndex
+                          toObject:receiverIndex
+                              port:inletIndex];
+    
+    BbCocoaPatchGetConnectionArray block = [self pathArrayWithConnection:desc];
+    if (block != NULL) {
+        if (!self.connections) {
+            self.connections = [[NSMutableSet alloc]init];
+        }
+        
+        [self.connections addObject:block];
+        
+        NSString *patchDescription = [patch textDescription];
+        NSLog(@"\n%@\n",patchDescription);
+    }
+}
+
 - (void)singleClickUp:(NSEvent *)theEvent inPortView:(BbCocoaPortView *)portView
 {
     if (kSelectedPortViewSender && kSelectedPortViewReceiver && kSelectedPortViewReceiver != kSelectedPortViewSender) {
@@ -406,6 +430,11 @@ typedef NS_ENUM(NSUInteger, BbViewType){
             NSUInteger senderParentIndex = [senderInfo[@"parent_index"]unsignedIntegerValue];
             NSUInteger receiverPortIndex = [receiverInfo[@"port_index"]unsignedIntegerValue];
             NSUInteger receiverParentIndex = [receiverInfo[@"parent_index"]unsignedIntegerValue];
+            [self connectSender:senderParentIndex
+                         outlet:senderPortIndex
+                       receiver:receiverParentIndex
+                          inlet:receiverPortIndex];
+            /*
             BbPatch *patch = (BbPatch *)self.entity;
             id desc = [patch connectObject:senderParentIndex
                                       port:senderPortIndex
@@ -423,6 +452,7 @@ typedef NS_ENUM(NSUInteger, BbViewType){
                 NSString *patchDescription = [patch textDescription];
                 NSLog(@"\n%@\n",patchDescription);
             }
+             */
         }
     }
     

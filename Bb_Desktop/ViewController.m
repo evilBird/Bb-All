@@ -35,37 +35,50 @@
     NSUInteger ancestors;
     ancestors = [[self.patchView patch]countAncestors];
     
-    desc = [NSMutableString descBbObject:@"BbAdd"
+    desc = [NSMutableString descBbObject:@"BbMessage"
                                ancestors:ancestors+1
                                 position:@[@50,@50]
-                                    args:@5];
+                                    args:@"This is a message"
+            ];
+    
+    [self.patchView addObjectWithText:desc];
+
+    desc = [NSMutableString descBbObject:@"BbTrigger"
+                               ancestors:ancestors+1
+                                position:@[@50,@60]
+                                    args:@[@"b"]];
     [self.patchView addObjectWithText:desc];
     
-    desc = [NSMutableString descBbObject:@"BbAdd"
+    desc = [NSMutableString descBbObject:@"BbLog"
                                ancestors:ancestors+1
-                                position:@[@25,@50]
-                                    args:@25];
+                                position:@[@50,@40]
+                                    args:@"print"];
+    
     [self.patchView addObjectWithText:desc];
     
-    desc = [NSMutableString descBbObject:@"BbMod"
+    desc = [NSMutableString descBbObject:@"BbNumberSlider"
                                ancestors:ancestors+1
-                                position:@[@75,@50]
-                                    args:@3];
+                                position:@[@50,@70]
+                                    args:nil];
+    
     [self.patchView addObjectWithText:desc];
     
-    desc = [NSMutableString descBbObject:@"BbSubtract"
-                               ancestors:ancestors+1
-                                position:@[@50,@25]
-                                    args:@10];
-    [self.patchView addObjectWithText:desc];
-    
-    desc = [NSMutableString descBbObject:@"BbMultiply"
-                               ancestors:ancestors+1
-                                position:@[@50,@75]
-                                    args:@100];
-    [self.patchView addObjectWithText:desc];
+    [self.patchView connectSender:0
+                           outlet:0
+                         receiver:2
+                            inlet:0];
+    [self.patchView connectSender:1
+                           outlet:0
+                         receiver:0
+                            inlet:0];
+    [self.patchView connectSender:3
+                           outlet:0
+                         receiver:1
+                            inlet:0];
     
     NSString *patch = [self.patchView.patch textDescription];
+    
+    [self.patchView refresh];
     
     NSLog(@"\n%@\n",patch);
     

@@ -12,7 +12,9 @@
 #import "BbStrings.h"
 #import "BbBasicMath.h"
 #import "BbPatch.h"
+#import "BbMessage.h"
 #import "BbLog.h"
+#import "BbTrigger.h"
 #import "BbClassMethod.h"
 #import "BbInstanceMethod.h"
 

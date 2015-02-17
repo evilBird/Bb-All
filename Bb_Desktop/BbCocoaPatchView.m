@@ -55,15 +55,10 @@
     normCenter.y = normY;
     viewDesc.normalizedPosition = normCenter;
     BbCocoaObjectView *view = nil;
-    if ([viewDesc.entityViewType isEqualToString:@"hsl"]){
-        view = [[BbCocoaHSliderView alloc]initWithEntity:object
-                                         viewDescription:viewDesc
-                                                inParent:self];
-    }else{
-        view = [[BbCocoaObjectView alloc]initWithEntity:object
-                                        viewDescription:viewDesc
-                                               inParent:self];
-    }
+    view = [BbCocoaObjectView viewWithBbUIType:objDesc.UIType
+                                        entity:object
+                                   description:viewDesc
+                                        parent:self];
 
     NSPoint viewPosition = [self scaleNormalizedPoint:view.normalizedPosition];
     [self moveEntityView:view toPoint:viewPosition];

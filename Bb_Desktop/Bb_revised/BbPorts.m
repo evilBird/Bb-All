@@ -211,7 +211,11 @@
 
 - (void)input:(id)value
 {
-    self.inputElement.value = value;
+    if ([value isKindOfClass:[BbBang class]]) {
+        [self.parent hotInlet:self receivedBang:value];
+    }else{
+        self.inputElement.value = value;
+    }
 }
 
 @end

@@ -14,5 +14,8 @@
 - (NSPoint)normalizePoint:(NSPoint)point;
 - (NSPoint)scaleNormalizedPoint:(NSPoint)point;
 - (BbCocoaPatchGetConnectionArray)pathArrayWithConnection:(id)desc;
-
+- (void)connectSender:(NSUInteger)senderIndex
+               outlet:(NSUInteger)outletIndex
+             receiver:(NSUInteger)receiverIndex
+                inlet:(NSUInteger)inletIndex;
 @end

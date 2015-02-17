@@ -24,9 +24,11 @@
 {
     NSFont *font = [NSFont fontWithName:@"Courier" size:[NSFont systemFontSize]];
     NSColor *color = [NSColor whiteColor];
+    NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+    paragraphStyle.alignment = NSCenterTextAlignment;
     NSDictionary *textAttributes = @{NSFontAttributeName:font,
                                      NSForegroundColorAttributeName:color,
-                                     NSParagraphStyleAttributeName:[BbCocoaEntityViewDescription paragraphStyle]
+                                     NSParagraphStyleAttributeName:paragraphStyle
                                      };
     return textAttributes;
 }

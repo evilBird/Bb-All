@@ -14,6 +14,11 @@
 		F2381CC31A8AC64100B7D2A4 /* BbCocoaObjectView+Autolayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F2381CC21A8AC64100B7D2A4 /* BbCocoaObjectView+Autolayout.m */; };
 		F23925E31A8D526E00EB7BCB /* BbCocoaTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F23925E21A8D526E00EB7BCB /* BbCocoaTextField.m */; };
 		F23925E61A8D748200EB7BCB /* BbCocoaEntityViewDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = F23925E51A8D748200EB7BCB /* BbCocoaEntityViewDescription.m */; };
+		F2621DCB1A92CFE300585016 /* BbCocoaEntityView+TextDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F2621DCA1A92CFE300585016 /* BbCocoaEntityView+TextDelegate.m */; };
+		F2621DCE1A92D53500585016 /* BbCocoaMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2621DCD1A92D53500585016 /* BbCocoaMessageView.m */; };
+		F2621DD11A92D98400585016 /* BbMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F2621DD01A92D98400585016 /* BbMessage.m */; };
+		F2621DD31A92E85300585016 /* BbMessageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2621DD21A92E85300585016 /* BbMessageTests.m */; };
+		F2621DD61A92EA6900585016 /* BbTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = F2621DD41A92EA6900585016 /* BbTrigger.m */; };
 		F2709CFC1A894D08004BF4FF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F2709CFB1A894D08004BF4FF /* AppDelegate.m */; };
 		F2709CFE1A894D08004BF4FF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F2709CFD1A894D08004BF4FF /* main.m */; };
 		F2709D011A894D08004BF4FF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2709D001A894D08004BF4FF /* ViewController.m */; };
@@ -86,6 +91,15 @@
 		F23925E21A8D526E00EB7BCB /* BbCocoaTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbCocoaTextField.m; sourceTree = "<group>"; };
 		F23925E41A8D748200EB7BCB /* BbCocoaEntityViewDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbCocoaEntityViewDescription.h; sourceTree = "<group>"; };
 		F23925E51A8D748200EB7BCB /* BbCocoaEntityViewDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbCocoaEntityViewDescription.m; sourceTree = "<group>"; };
+		F2621DC91A92CFE300585016 /* BbCocoaEntityView+TextDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbCocoaEntityView+TextDelegate.h"; sourceTree = "<group>"; };
+		F2621DCA1A92CFE300585016 /* BbCocoaEntityView+TextDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbCocoaEntityView+TextDelegate.m"; sourceTree = "<group>"; };
+		F2621DCC1A92D53500585016 /* BbCocoaMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbCocoaMessageView.h; sourceTree = "<group>"; };
+		F2621DCD1A92D53500585016 /* BbCocoaMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbCocoaMessageView.m; sourceTree = "<group>"; };
+		F2621DCF1A92D98400585016 /* BbMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbMessage.h; sourceTree = "<group>"; };
+		F2621DD01A92D98400585016 /* BbMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbMessage.m; sourceTree = "<group>"; };
+		F2621DD21A92E85300585016 /* BbMessageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbMessageTests.m; sourceTree = "<group>"; };
+		F2621DD41A92EA6900585016 /* BbTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbTrigger.m; sourceTree = "<group>"; };
+		F2621DD51A92EA6900585016 /* BbTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbTrigger.h; sourceTree = "<group>"; };
 		F2709CF51A894D08004BF4FF /* Bb_Desktop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bb_Desktop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2709CF91A894D08004BF4FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2709CFA1A894D08004BF4FF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -263,6 +277,7 @@
 			children = (
 				F2709D171A894D08004BF4FF /* Bb_DesktopTests.m */,
 				F2AC28C21A92B751005B95EF /* BbClassMethodTests.m */,
+				F2621DD21A92E85300585016 /* BbMessageTests.m */,
 				F2709D151A894D08004BF4FF /* Supporting Files */,
 			);
 			path = Bb_DesktopTests;
@@ -299,6 +314,8 @@
 				F29EDAA61A8D974300A828B0 /* BbCocoaHSliderView.m */,
 				F2F6E1601A8A9324000959AB /* BbCocoaPatchView.h */,
 				F2F6E1611A8A9324000959AB /* BbCocoaPatchView.m */,
+				F2621DCC1A92D53500585016 /* BbCocoaMessageView.h */,
+				F2621DCD1A92D53500585016 /* BbCocoaMessageView.m */,
 			);
 			name = "UI Objects";
 			sourceTree = "<group>";
@@ -325,6 +342,8 @@
 				F2F6E1581A8A8E84000959AB /* NSView+Bb.m */,
 				F2D6AA121A8AAD5A00F6B720 /* BbObject+CocoaView.h */,
 				F2D6AA131A8AAD5A00F6B720 /* BbObject+CocoaView.m */,
+				F2621DC91A92CFE300585016 /* BbCocoaEntityView+TextDelegate.h */,
+				F2621DCA1A92CFE300585016 /* BbCocoaEntityView+TextDelegate.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -415,12 +434,16 @@
 			isa = PBXGroup;
 			children = (
 				F29EDAA41A8D80E500A828B0 /* BbStandardLib.h */,
+				F2621DD51A92EA6900585016 /* BbTrigger.h */,
+				F2621DD41A92EA6900585016 /* BbTrigger.m */,
 				F2709D7E1A89B2B0004BF4FF /* BbStrings.h */,
 				F2709D7F1A89B2B0004BF4FF /* BbStrings.m */,
 				F2709DA01A89B4D2004BF4FF /* BbBasicMath.h */,
 				F2709D9F1A89B4D2004BF4FF /* BbBasicMath.m */,
 				F2AC28BC1A928F56005B95EF /* BbLog.h */,
 				F2AC28BD1A928F56005B95EF /* BbLog.m */,
+				F2621DCF1A92D98400585016 /* BbMessage.h */,
+				F2621DD01A92D98400585016 /* BbMessage.m */,
 				F2AC28BF1A92B2D0005B95EF /* BbClassMethod.h */,
 				F2AC28C01A92B2D0005B95EF /* BbClassMethod.m */,
 				F2AC28C41A92BD56005B95EF /* BbInstanceMethod.h */,
@@ -638,22 +661,26 @@
 				F2709D9B1A89B2B0004BF4FF /* NSInvocation+Bb.m in Sources */,
 				F2709D961A89B2B0004BF4FF /* BbStrings.m in Sources */,
 				F2AC28C61A92BD56005B95EF /* BbInstanceMethod.m in Sources */,
+				F2621DD61A92EA6900585016 /* BbTrigger.m in Sources */,
 				F2709D2C1A8985B5004BF4FF /* ObjectView+CocoaLayout.m in Sources */,
 				F2381CC01A8AB83A00B7D2A4 /* BbObject+EntityParent.m in Sources */,
 				F2F6E1561A8A88ED000959AB /* BbiOSEntityView.m in Sources */,
 				F29DE43E1A8C203900C01E75 /* NSDictionary+Bb.m in Sources */,
+				F2621DD11A92D98400585016 /* BbMessage.m in Sources */,
 				F2709CFE1A894D08004BF4FF /* main.m in Sources */,
 				F2381CC31A8AC64100B7D2A4 /* BbCocoaObjectView+Autolayout.m in Sources */,
 				F297D86E1A8E8DEA0074BD14 /* NSMutableString+Bb.m in Sources */,
 				F2709D921A89B2B0004BF4FF /* BbBase.m in Sources */,
 				F2709D951A89B2B0004BF4FF /* NSScanner+Bb.m in Sources */,
 				F2381CBA1A8AB5F200B7D2A4 /* BbCocoaPatchView+Touches.m in Sources */,
+				F2621DCE1A92D53500585016 /* BbCocoaMessageView.m in Sources */,
 				F2709D071A894D08004BF4FF /* Document.xcdatamodeld in Sources */,
 				F2709D9E1A89B2B0004BF4FF /* BbBasicMathTests.m in Sources */,
 				F2709D231A89539B004BF4FF /* BbBoxView.m in Sources */,
 				F2F6E1591A8A8E84000959AB /* NSView+Bb.m in Sources */,
 				F2709CFC1A894D08004BF4FF /* AppDelegate.m in Sources */,
 				F2381CBD1A8AB7BD00B7D2A4 /* BbPatch.m in Sources */,
+				F2621DCB1A92CFE300585016 /* BbCocoaEntityView+TextDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,6 +688,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2621DD31A92E85300585016 /* BbMessageTests.m in Sources */,
 				F2709D181A894D08004BF4FF /* Bb_DesktopTests.m in Sources */,
 				F2AC28C31A92B751005B95EF /* BbClassMethodTests.m in Sources */,
 			);

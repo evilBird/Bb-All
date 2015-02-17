@@ -22,7 +22,8 @@
     self.slider.continuous = YES;
     [(NSView *)self addSubview:self.slider];
     [self.slider setTarget:entity];
-    [self.slider setAction:@selector(sliderValueDidChange:)];
+    SEL selector = NSSelectorFromString(@"sliderValueDidChange:");
+    [self.slider setAction:selector];
 }
 
 - (void)setupConstraintsInParentView:(id)parent

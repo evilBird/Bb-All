@@ -47,6 +47,9 @@
     CGFloat widthForOutletSpacers = (CGFloat)outletSpacers * minPortSpacing;
     CGFloat requiredBottomWidth = totalWidthForOutlets + widthForOutletSpacers;
     widthRequiredByPorts = [self maxOfValue1:requiredTopWidth value2:requiredBottomWidth];
+    if (inlets == outlets == 1) {
+        widthRequiredByPorts = defaultWidth;
+    }
     CGFloat textWidthRaw = [displayedText sizeWithAttributes:displayedTextAttributes].width;
     CGFloat textWidth = pow(textWidthRaw, 1.1);
     CGFloat textInsetsWidth = portViewWidth;

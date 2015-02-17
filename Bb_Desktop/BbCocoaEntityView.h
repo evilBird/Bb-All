@@ -15,9 +15,16 @@
 #import "PureLayout.h"
 #import "BbCocoaEntityViewDescription.h"
 
+static CGFloat kDefaultMinWidth = 100.0;
+
+typedef void (^BbTextEditingDidEndHandler)(NSString *text);
+typedef void (^BbTextEditingDidChangeHandler)(NSTextField *textField);
+typedef void (^BbTextEditingDidBeginHandler)(NSTextField *textField);
+
 @interface BbCocoaEntityView : NSView <BbEntityView> {
     BOOL kSelected;
     CGPoint kCenter;
+    CGFloat kMinWidth;
 }
 
 @property (nonatomic,weak)          BbEntity                        *entity;
@@ -28,7 +35,14 @@
 @property (nonatomic,strong)        NSLayoutConstraint              *centerXConstraint;
 @property (nonatomic,strong)        NSLayoutConstraint              *centerYConstraint;
 
+@property (nonatomic,strong)        NSTextField                     *textField;
+@property (nonatomic,strong)        BbTextEditingDidEndHandler      textEditingEndedHandler;
+@property (nonatomic,strong)        BbTextEditingDidChangeHandler   textEditingChangedHandler;
+@property (nonatomic,strong)        BbTextEditingDidBeginHandler    textEditingBeganHandler;
+
+
 #pragma - designated initializer
+
 - (instancetype)initWithEntity:(id)entity
                viewDescription:(id)viewDescription
                       inParent:(id)parentView;

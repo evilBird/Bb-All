@@ -8,6 +8,9 @@
 
 #import "BbCocoaEntityView.h"
 #import "BbBase.h"
+#import "BbCocoaObjectView.h"
+#import "BbCocoaHSliderView.h"
+#import "BbCocoaMessageView.h"
 
 @interface BbCocoaEntityView ()
 
@@ -20,6 +23,7 @@
 - (void)commonInitEntity:(BbEntity *)entity viewDescription:(id)viewDescription
 {
     kSelected = NO;
+    kMinWidth = kDefaultMinWidth;
     self.entity = entity;
     self.viewDescription = viewDescription;
 }
