@@ -139,7 +139,7 @@
 - (void)setupWithArguments:(id)arguments
 {
     [super setupWithArguments:arguments];
-    self.name = @"str append";
+    self.name = @"str prepend";
 }
 
 - (BbCalculateOutputBlock)calculateOutputForOutletAtIndex:(NSInteger)index

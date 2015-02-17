@@ -63,7 +63,7 @@
                                                   selectorName:@"textAttributes"
                                                           args:nil];
     CGFloat textWidthRaw = [text sizeWithAttributes:textAttributes].width;
-    CGFloat textWidth = pow(textWidthRaw, 1.1);
+    CGFloat textWidth = pow(textWidthRaw, 1.02);
     return textWidth;
 }
 

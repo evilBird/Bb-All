@@ -22,7 +22,6 @@ static NSString *kBbUITypeBang                  = @"bang";
 @property (nonatomic,readonly)      NSArray                         *outletViews;
 @property (nonatomic,readonly)      NSString                        *displayedText;
 
-
 + (instancetype)viewWithBbUIType:(id)type
                           entity:(id)entity
                      description:(id)desc

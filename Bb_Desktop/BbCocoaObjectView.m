@@ -64,7 +64,7 @@
     CGFloat contentWidth = kDefaultCocoaObjectViewWidth;
     
     if (viewDescription) {
-        NSDictionary *textAttributes = [BbCocoaEntityViewDescription textAttributes];
+        NSDictionary *textAttributes = [[self class] textAttributes];
         contentWidth = [self intrinsicWidthForObjectWithInlets:viewDescription.inlets
                                                        outlets:viewDescription.outlets
                                                  portViewWidth:kPortViewWidthConstraint

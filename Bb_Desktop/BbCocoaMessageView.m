@@ -20,11 +20,9 @@
     __weak BbCocoaMessageView *weakself = self;
     
     self.textEditingBeganHandler = ^(NSTextField *textField){
-        NSLog(@"text field began editing");
     };
     
     self.textEditingChangedHandler = ^(NSTextField *textField){
-        NSLog(@"text changed: %@",textField.stringValue);
         [weakself invalidateIntrinsicContentSize];
         [weakself setNeedsDisplay:YES];
     };
