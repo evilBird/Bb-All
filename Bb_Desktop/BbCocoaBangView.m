@@ -26,21 +26,70 @@
     return [NSColor colorWithWhite:0.9 alpha:1];
 }
 
+- (NSColor *)editingFillColor
+{
+    return [NSColor colorWithWhite:0.8 alpha:1];
+}
+
 - (NSSize)intrinsicContentSize
 {
     return NSSizeFromCGSize(CGSizeMake(kDefaultBangViewSize, kDefaultBangViewSize));
 }
 
+- (id)clickDown:(NSEvent *)theEvent
+{
+    self.editing = YES;
+    [self setSelected:YES];
+    [self setNeedsDisplay:YES];
+    return self;
+}
+
+- (id)clickUp:(NSEvent *)theEvent
+{
+    [self setSelected:NO];
+    [self setNeedsDisplay:YES];
+    switch (theEvent.clickCount) {
+        case 1:
+            if (self.editing) {
+                [self setEditing:NO];
+                [self setNeedsDisplay:YES];
+                return nil;
+            }else{
+                [self setEditing:YES];
+                [self setNeedsDisplay:YES];
+                return self;
+            }
+            break;
+        default:
+            [self setEditing:NO];
+            [self setNeedsDisplay:YES];
+            return nil;
+            break;
+    }
+}
+
 - (void)setSelected:(BOOL)selected
 {
-    [super setSelected:selected];
-    if (selected) {
-        [[(BbBangObject *)self.entity hotInlet]input:[BbBang bang]];
+    if (selected != kSelected)
+    {
+        kSelected = selected;
+        if (kSelected) {
+            [[(BbBangObject *)self.entity hotInlet]input:[BbBang bang]];
+        }
     }
+
 }
 - (void)drawRect:(NSRect)dirtyRect {
 
-    [[self backgroundFillColor] setFill];
+    NSColor *backgroundColor = nil;
+    if (self.editing) {
+        backgroundColor = [self backgroundFillColor];
+    }else{
+        backgroundColor = [self editingFillColor];
+    }
+    
+    [backgroundColor setFill];
+    
     NSRectFill(dirtyRect);
     // Drawing code here.
     

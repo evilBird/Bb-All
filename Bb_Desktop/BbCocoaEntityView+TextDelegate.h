@@ -17,6 +17,9 @@
 - (CGFloat)intrinsicTextWidth;
 - (CGFloat)intrinsicContentWidth;
 
+- (void)beginObservingText;
+- (void)endObservingText;
+
 - (void)textDidBeginEditing:(NSNotification *)notification;
 - (void)textDidChange:(NSNotification *)notification;
 - (void)textDidEndEditing:(NSNotification *)notification;

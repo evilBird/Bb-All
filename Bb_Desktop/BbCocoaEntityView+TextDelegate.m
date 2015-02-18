@@ -21,17 +21,29 @@
     NSString *classString = NSStringFromClass([self class]);
     NSDictionary *textAttributes = [NSInvocation doClassMethod:classString
                                                   selectorName:@"textAttributes"
-                                                          args:nil];//[BbCocoaEntityViewDescription textAttributes];
+                                                          args:nil];
     self.textField.font = [textAttributes valueForKey:NSFontAttributeName];
     self.textField.textColor = [textAttributes valueForKey:NSForegroundColorAttributeName];
     self.textField.delegate = self;
     self.textField.alignment = NSCenterTextAlignment;
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textDidBeginEditing:) name:NSTextDidBeginEditingNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textDidEndEditing:) name:NSTextDidEndEditingNotification object:nil];
     self.textField.backgroundColor = self.defaultColor;
     self.textField.bordered = NO;
     [(NSView *)self addSubview:self.textField];
+    [self beginObservingText];
+}
+
+- (void)beginObservingText
+{
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textDidBeginEditing:) name:NSTextDidBeginEditingNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textDidEndEditing:) name:NSTextDidEndEditingNotification object:nil];
+}
+
+- (void)endObservingText
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NSTextDidBeginEditingNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NSTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NSTextDidEndEditingNotification object:nil];
 }
 
 - (void)setupTextFieldConstraints
@@ -109,7 +121,7 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self endObservingText];
 }
 
 @end

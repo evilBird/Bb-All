@@ -25,6 +25,7 @@
     self.textEditingChangedHandler = ^(NSTextField *textField){
         [weakself invalidateIntrinsicContentSize];
         [weakself setNeedsDisplay:YES];
+        [weakself.superview setNeedsDisplay:YES];
     };
     
     self.textEditingEndedHandler = ^(NSString *text){
@@ -59,13 +60,18 @@
 
 - (void)setSelected:(BOOL)selected
 {
-    [super setSelected:selected];
-    
-    if (selected) {
-        [self.textField becomeFirstResponder];
-    }else{
-        [[(BbMessage *)self.entity hotInlet]input:[BbBang bang]];
-        [self.textField resignFirstResponder];
+    if (selected != kSelected) {
+        kSelected = selected;
+        if (selected) {
+            [self.textField setEditable:YES];
+            [self.textField becomeFirstResponder];
+            [self beginObservingText];
+        }else{
+            [[(BbMessage *)self.entity hotInlet]input:[BbBang bang]];
+            [self.textField setEditable:NO];
+            [self.textField resignFirstResponder];
+            [self endObservingText];
+        }
     }
 }
 

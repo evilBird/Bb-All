@@ -21,6 +21,11 @@ typedef void (^BbTextEditingDidEndHandler)(NSString *text);
 typedef void (^BbTextEditingDidChangeHandler)(NSTextField *textField);
 typedef void (^BbTextEditingDidBeginHandler)(NSTextField *textField);
 
+typedef NS_ENUM(NSInteger, BbEntityViewSelectionState) {
+    BbEntityViewSelectionState_DEFAULT,
+    BbEntityViewSelectionState_SELECTED
+};
+
 @interface BbCocoaEntityView : NSView <BbEntityView> {
     BOOL kSelected;
     CGPoint kCenter;
@@ -40,6 +45,8 @@ typedef void (^BbTextEditingDidBeginHandler)(NSTextField *textField);
 @property (nonatomic,strong)        BbTextEditingDidChangeHandler   textEditingChangedHandler;
 @property (nonatomic,strong)        BbTextEditingDidBeginHandler    textEditingBeganHandler;
 
+
+@property (nonatomic)               BOOL                            editing;
 
 #pragma - designated initializer
 

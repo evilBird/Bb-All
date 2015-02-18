@@ -14,18 +14,21 @@ typedef NSArray* (^BbCocoaPatchGetConnectionArray)(void);
 @interface BbCocoaPatchView : BbCocoaEntityView <BbPlaceholderViewDelegate>
 {
     CGPoint                kPreviousLoc;
-    NSSize                  kInitOffset;
-    BbCocoaObjectView      *kSelectedObjectView;
-    BbCocoaPortView        *kSelectedPortViewSender;
-    BbCocoaPortView        *kSelectedPortViewReceiver;
-    id                     kInitView;
+    NSSize                 kInitOffset;
+    NSUInteger             kClickCount;
 }
 
 // a connection is a vector of the form: @[x1,y1,x2,y2]
 @property (nonatomic,strong)NSMutableSet *connections;
 // a connection is a vector of the form: @[x1,y1,x2,y2]
 @property (nonatomic,strong)NSArray *drawThisConnection;
+// underlying BbEntity
 @property (nonatomic,readonly)BbPatch *patch;
+
+@property (nonatomic,weak) id                   initialTouchView;
+@property (nonatomic,weak) BbCocoaObjectView    *selectedObjectView;
+@property (nonatomic,weak) BbCocoaPortView      *selectedPortViewSender;
+@property (nonatomic,weak) BbCocoaPortView      *selectedPortViewReceiver;
 
 - (BbObject *)addObjectWithText:(NSString *)text;
 - (id)addPlaceholderAtPoint:(CGPoint)point;

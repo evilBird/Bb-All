@@ -10,6 +10,8 @@
 		33883FFDC3EF3996A9B58DAD /* libPods-Bb_Desktop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C1F1CD772F5CAEE41526A32 /* libPods-Bb_Desktop.a */; };
 		F2250DC61A92F9F200768E76 /* BbBangObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F2250DC51A92F9F200768E76 /* BbBangObject.m */; };
 		F2250DC91A92FAE600768E76 /* BbCocoaBangView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2250DC81A92FAE600768E76 /* BbCocoaBangView.m */; };
+		F2250DCE1A93D4BC00768E76 /* BbCocoaEntityView+Touches.m in Sources */ = {isa = PBXBuildFile; fileRef = F2250DCD1A93D4BC00768E76 /* BbCocoaEntityView+Touches.m */; };
+		F2250DD11A94322F00768E76 /* BbCocoaPatchView+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = F2250DD01A94322F00768E76 /* BbCocoaPatchView+Helpers.m */; };
 		F2381CBA1A8AB5F200B7D2A4 /* BbCocoaPatchView+Touches.m in Sources */ = {isa = PBXBuildFile; fileRef = F2381CB91A8AB5F200B7D2A4 /* BbCocoaPatchView+Touches.m */; };
 		F2381CBD1A8AB7BD00B7D2A4 /* BbPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = F2381CBC1A8AB7BD00B7D2A4 /* BbPatch.m */; };
 		F2381CC01A8AB83A00B7D2A4 /* BbObject+EntityParent.m in Sources */ = {isa = PBXBuildFile; fileRef = F2381CBF1A8AB83A00B7D2A4 /* BbObject+EntityParent.m */; };
@@ -85,6 +87,10 @@
 		F2250DC51A92F9F200768E76 /* BbBangObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbBangObject.m; sourceTree = "<group>"; };
 		F2250DC71A92FAE600768E76 /* BbCocoaBangView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbCocoaBangView.h; sourceTree = "<group>"; };
 		F2250DC81A92FAE600768E76 /* BbCocoaBangView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbCocoaBangView.m; sourceTree = "<group>"; };
+		F2250DCC1A93D4BC00768E76 /* BbCocoaEntityView+Touches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbCocoaEntityView+Touches.h"; sourceTree = "<group>"; };
+		F2250DCD1A93D4BC00768E76 /* BbCocoaEntityView+Touches.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbCocoaEntityView+Touches.m"; sourceTree = "<group>"; };
+		F2250DCF1A94322F00768E76 /* BbCocoaPatchView+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbCocoaPatchView+Helpers.h"; sourceTree = "<group>"; };
+		F2250DD01A94322F00768E76 /* BbCocoaPatchView+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbCocoaPatchView+Helpers.m"; sourceTree = "<group>"; };
 		F2381CB81A8AB5F200B7D2A4 /* BbCocoaPatchView+Touches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbCocoaPatchView+Touches.h"; sourceTree = "<group>"; };
 		F2381CB91A8AB5F200B7D2A4 /* BbCocoaPatchView+Touches.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbCocoaPatchView+Touches.m"; sourceTree = "<group>"; };
 		F2381CBB1A8AB7BD00B7D2A4 /* BbPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbPatch.h; sourceTree = "<group>"; };
@@ -346,8 +352,12 @@
 				F2381CC21A8AC64100B7D2A4 /* BbCocoaObjectView+Autolayout.m */,
 				F2381CB81A8AB5F200B7D2A4 /* BbCocoaPatchView+Touches.h */,
 				F2381CB91A8AB5F200B7D2A4 /* BbCocoaPatchView+Touches.m */,
+				F2250DCF1A94322F00768E76 /* BbCocoaPatchView+Helpers.h */,
+				F2250DD01A94322F00768E76 /* BbCocoaPatchView+Helpers.m */,
 				F2F6E1571A8A8E84000959AB /* NSView+Bb.h */,
 				F2F6E1581A8A8E84000959AB /* NSView+Bb.m */,
+				F2250DCC1A93D4BC00768E76 /* BbCocoaEntityView+Touches.h */,
+				F2250DCD1A93D4BC00768E76 /* BbCocoaEntityView+Touches.m */,
 				F2D6AA121A8AAD5A00F6B720 /* BbObject+CocoaView.h */,
 				F2D6AA131A8AAD5A00F6B720 /* BbObject+CocoaView.m */,
 				F2621DC91A92CFE300585016 /* BbCocoaEntityView+TextDelegate.h */,
@@ -641,6 +651,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2250DCE1A93D4BC00768E76 /* BbCocoaEntityView+Touches.m in Sources */,
 				F23925E61A8D748200EB7BCB /* BbCocoaEntityViewDescription.m in Sources */,
 				F2709DA11A89B4D2004BF4FF /* BbBasicMath.m in Sources */,
 				F2F6E1621A8A9324000959AB /* BbCocoaPatchView.m in Sources */,
@@ -681,6 +692,7 @@
 				F2709CFE1A894D08004BF4FF /* main.m in Sources */,
 				F2381CC31A8AC64100B7D2A4 /* BbCocoaObjectView+Autolayout.m in Sources */,
 				F297D86E1A8E8DEA0074BD14 /* NSMutableString+Bb.m in Sources */,
+				F2250DD11A94322F00768E76 /* BbCocoaPatchView+Helpers.m in Sources */,
 				F2709D921A89B2B0004BF4FF /* BbBase.m in Sources */,
 				F2709D951A89B2B0004BF4FF /* NSScanner+Bb.m in Sources */,
 				F2381CBA1A8AB5F200B7D2A4 /* BbCocoaPatchView+Touches.m in Sources */,

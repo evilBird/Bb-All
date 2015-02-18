@@ -58,6 +58,13 @@
     
     [self.patchView addObjectWithText:desc];
     
+    desc = [NSMutableString descBbObject:@"BbLog"
+                               ancestors:ancestors+1
+                                position:@[@50,@30]
+                                    args:@"print2"];
+    
+    [self.patchView addObjectWithText:desc];
+    
     [self.patchView connectSender:0 outlet:0 receiver:1 inlet:0];
     [self.patchView connectSender:1 outlet:0 receiver:2 inlet:0];
     [self.view setNeedsDisplay:YES];

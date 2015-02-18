@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 birdSound. All rights reserved.
 //
 
-#import "BbCocoaEntityView.h"
+#import "BbCocoaEntityView+Touches.h"
 
 static CGFloat kDefaultCocoaObjectViewWidth = 100;
 static CGFloat kDefaultCocoaObjectViewHeight = 40;
@@ -26,5 +26,6 @@ static NSString *kBbUITypeBang                  = @"bang";
                           entity:(id)entity
                      description:(id)desc
                           parent:(id)parentView;
+
 
 @end

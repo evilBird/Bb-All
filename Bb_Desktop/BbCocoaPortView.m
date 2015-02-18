@@ -117,13 +117,53 @@
     return [NSColor colorWithWhite:0.7 alpha:1];
 }
 
-
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     NSBezierPath *outlinePath = [NSBezierPath bezierPathWithRect:self.bounds];
     [outlinePath setLineWidth:1.0];
     [[NSColor blackColor]setStroke];
     [outlinePath stroke];
+}
+
+- (id)clickDown:(NSEvent *)theEvent
+{
+    if ([self.entity isKindOfClass:[BbInlet class]]) {
+        return nil;
+    }else{
+        [self setSelected:YES];
+        [self setNeedsDisplay:YES];
+        return self;
+    }
+}
+
+- (id)clickUp:(NSEvent *)theEvent
+{
+    [self setSelected:NO];
+    [self setNeedsDisplay:YES];
+    return nil;
+}
+
+- (id)boundsWereEntered:(NSEvent *)theEvent
+{
+    if (![self.entity isKindOfClass:[BbInlet class]]) {
+        return nil;
+    }
+    
+    [self setSelected:YES];
+    [self setNeedsDisplay:YES];
+    return self;
+}
+
+- (id)boundsWereExited:(NSEvent *)theEvent
+{
+    [self setSelected:NO];
+    [self setNeedsDisplay:YES];
+    return nil;
+}
+
+- (BbViewType)viewType
+{
+    return BbViewType_Port;
 }
 
 @end

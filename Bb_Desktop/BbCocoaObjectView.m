@@ -29,6 +29,10 @@
 
 #pragma mark - Public Methods
 
+- (void)singleClickUp:(NSEvent *)theEvent
+{
+    
+}
 
 - (void)commonInitEntity:(BbEntity *)entity viewDescription:(id)viewDescription
 {

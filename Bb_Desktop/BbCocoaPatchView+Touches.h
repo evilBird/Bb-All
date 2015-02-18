@@ -7,13 +7,19 @@
 //
 
 #import "BbCocoaPatchView.h"
+
+typedef NS_ENUM(NSUInteger, BbViewType){
+    BbViewType_Port,
+    BbViewType_Object,
+    BbViewType_Patch,
+    BbViewType_None
+};
+
 @class BbCocoaEntityView;
 @interface BbCocoaPatchView (Touches)
 
-- (void)moveEntityView:(BbCocoaEntityView *)entityView toPoint:(NSPoint)point;
-- (NSPoint)normalizePoint:(NSPoint)point;
-- (NSPoint)scaleNormalizedPoint:(NSPoint)point;
 - (BbCocoaPatchGetConnectionArray)pathArrayWithConnection:(id)desc;
+
 - (void)connectSender:(NSUInteger)senderIndex
                outlet:(NSUInteger)outletIndex
              receiver:(NSUInteger)receiverIndex

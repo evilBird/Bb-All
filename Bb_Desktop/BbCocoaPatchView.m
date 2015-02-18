@@ -21,6 +21,7 @@
 #import "BbCocoaEntityView.h"
 #import "NSInvocation+Bb.h"
 #import "BbCocoaHSliderView.h"
+#import "BbCocoaPatchView+Helpers.h"
 
 @implementation BbCocoaPatchView
 
@@ -211,6 +212,11 @@
     
     self.drawThisConnection = nil;
     
+}
+
+- (BbViewType)viewType
+{
+    return BbViewType_Patch;
 }
 
 @end

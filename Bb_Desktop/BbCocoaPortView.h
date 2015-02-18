@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 birdSound. All rights reserved.
 //
 
-#import "BbCocoaEntityView.h"
+#import "BbCocoaEntityView+Touches.h"
 
 static CGFloat kPortViewHeightConstraint = 10;
 static CGFloat kPortViewWidthConstraint = 24;
