@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, BbEntityViewSelectionState) {
 };
 
 @interface BbCocoaEntityView : NSView <BbEntityView> {
-    BOOL kSelected;
+    //BOOL kSelected;
     CGPoint kCenter;
     CGFloat kMinWidth;
 }
@@ -45,8 +45,8 @@ typedef NS_ENUM(NSInteger, BbEntityViewSelectionState) {
 @property (nonatomic,strong)        BbTextEditingDidChangeHandler   textEditingChangedHandler;
 @property (nonatomic,strong)        BbTextEditingDidBeginHandler    textEditingBeganHandler;
 
-
 @property (nonatomic)               BOOL                            editing;
+@property (nonatomic)               BOOL                            selected;
 
 #pragma - designated initializer
 

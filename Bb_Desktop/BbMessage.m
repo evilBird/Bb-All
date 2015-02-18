@@ -19,6 +19,7 @@
     [self addPort:[BbInlet newHotInletNamed:kBbPortDefaultNameForHotInlet]];
     [self addPort:[BbOutlet newOutletNamed:kBbPortDefaultNameForMainOutlet]];
     self.messageBuffer = arguments;
+    self.name = @"";
 }
 
 - (void)hotInlet:(BbInlet *)inlet receivedBang:(BbBang *)bang

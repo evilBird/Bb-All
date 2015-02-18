@@ -23,6 +23,7 @@
 #import "BbCocoaHSliderView.h"
 #import "BbCocoaPatchView+Helpers.h"
 #import "BbCocoaPatchView+Connections.h"
+#import "NSMutableString+Bb.h"
 
 @implementation BbCocoaPatchView
 
@@ -131,30 +132,24 @@
         return nil;
     }
     
-    NSMutableString *textDesc = [[NSMutableString alloc]initWithString:@"#X"];
-    [textDesc appendString:@" "];
-    NSString *UIType = [NSInvocation doClassMethod:className
-                                      selectorName:@"UIType"
-                                              args:nil];
-    [textDesc appendString:UIType];
-    [textDesc appendString:@" "];
-    [textDesc appendFormat:@"%.f %.f",p.normalizedPosition.x,p.normalizedPosition.y];
-    [textDesc appendString:@" "];
-    [textDesc appendString:className];
-    [textDesc appendString:@" "];
+    NSString *desc = nil;
+    NSUInteger ancestors;
+    ancestors = [self.patch countAncestors];
+    NSMutableArray *compcopy = components.mutableCopy;
+    NSArray *args = nil;
     
-    if (components.count > 1)
-    {
-        NSMutableArray *componentsCopy = components.mutableCopy;
-        [componentsCopy removeObjectAtIndex:0];
-        NSString *argsString = [NSString stringWithArray:componentsCopy];
-        [textDesc appendString:@" "];
-        [textDesc appendString:argsString];
+    if (compcopy.count > 1) {
+        [compcopy removeObjectAtIndex:0];
+        args = [NSArray arrayWithArray:compcopy];
     }
     
-    [textDesc appendString:@";\n"];
-    NSString *result = [NSString stringWithString:textDesc];
-    return result;
+    desc = [NSMutableString descBbObject:className
+                               ancestors:ancestors+1
+                                position:@[@(p.normalizedPosition.x),@(p.normalizedPosition.y)]
+                                    args:args
+            ];
+    
+    return desc;
 }
 
 - (void)swapPlaceholderView:(BbCocoaPlaceholderObjectView *)placeholderView
@@ -164,57 +159,6 @@
     [self addObjectWithText:text];
 }
 
-#pragma mark - drawing methods
-/*
-- (NSBezierPath *)connectionPathFromArray:(NSArray *)array
-{
-    if (!array || array.count != 4) {
-        return nil;
-    }
-    
-    CGFloat x1,y1,x2,y2;
-    x1 = [array[0] doubleValue];
-    y1 = [array[1] doubleValue];
-    x2 = [array[2] doubleValue];
-    y2 = [array[3] doubleValue];
-    
-    CGPoint point = CGPointMake(x1, y1);
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    [path moveToPoint:point];
-    point.x = x2;
-    point.y = y2;
-    [path lineToPoint:point];
-    
-    [path setLineWidth:4];
-    [[NSColor blackColor]setStroke];
-    
-    return path;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    [super drawRect:dirtyRect];
-    
-    NSMutableArray *connections = self.connections.allValues.mutableCopy;
-    if (connections) {
-        for (BbCocoaPatchGetConnectionArray block in connections) {
-            NSBezierPath *connectionPath = [self connectionPathFromArray:block()];
-            [connectionPath stroke];
-        }
-    }
-    
-    if (!self.drawThisConnection || self.drawThisConnection.count != 4) {
-        return;
-    }
-    
-    NSMutableArray *a = self.drawThisConnection.mutableCopy;
-    NSBezierPath *path = [self connectionPathFromArray:a];
-    [path stroke];
-    
-    self.drawThisConnection = nil;
-    
-}
-*/
 - (BbViewType)viewType
 {
     return BbViewType_Patch;

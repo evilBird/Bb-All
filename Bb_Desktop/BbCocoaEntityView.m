@@ -20,7 +20,7 @@
 
 - (void)commonInitEntity:(BbEntity *)entity viewDescription:(id)viewDescription
 {
-    kSelected = NO;
+    self.selected = NO;
     kMinWidth = kDefaultMinWidth;
     self.entity = entity;
     self.viewDescription = viewDescription;
@@ -60,28 +60,31 @@
 {
     kCenter = center;
 }
-
 - (CGPoint)center
 {
     return [NSView centerForFrame:self.frame];
 }
 
-- (void)addSubview:(id<BbEntityView>)subview
+- (void)setEditing:(BOOL)editing
 {
-    [super addSubview:(NSView *)subview];
-}
-
-- (BOOL)selected
-{
-    return kSelected;
+    if (editing != _editing) {
+        _editing = editing;
+        [self setNeedsDisplay:YES];
+    }
 }
 
 - (void)setSelected:(BOOL)selected
 {
-    if (selected != kSelected) {
-        kSelected = selected;
-        [self refresh];
+    if (selected != _selected) {
+        _selected = selected;
+        
+        [self setNeedsDisplay:YES];
     }
+}
+
+- (void)addSubview:(id<BbEntityView>)subview
+{
+    [super addSubview:(NSView *)subview];
 }
 
 - (void)refresh
@@ -113,7 +116,7 @@
 - (void)drawRect:(NSRect)dirtyRect {
     
     NSColor *fillColor;
-    if (kSelected || self.editing) {
+    if (self.selected || self.editing) {
         fillColor = self.selectedColor;
     }else{
         fillColor = self.defaultColor;

@@ -17,11 +17,8 @@
     [super commonInitEntity:entity viewDescription:viewDescription];
     kMinWidth = 100.0;
     [self setupTextField];
+    
     __weak BbCocoaMessageView *weakself = self;
-    
-    self.textEditingBeganHandler = ^(NSTextField *textField){
-    };
-    
     self.textEditingChangedHandler = ^(NSTextField *textField){
         [weakself invalidateIntrinsicContentSize];
         [weakself setNeedsDisplay:YES];
@@ -29,11 +26,11 @@
     };
     
     self.textEditingEndedHandler = ^(NSString *text){
-        [weakself.textField resignFirstResponder];
-        NSString *string = weakself.textField.stringValue;
-        NSLog(@"string: %@",string);
+        NSLog(@"message text: %@",text);
         [(BbMessage *)weakself.entity setMessageBuffer:text];
         [weakself invalidateIntrinsicContentSize];
+        [weakself setNeedsDisplay:YES];
+        [weakself.superview setNeedsDisplay:YES];
     };
 }
 
@@ -53,23 +50,6 @@
 - (NSColor *)selectedColor
 {
     return [NSColor colorWithWhite:0.85 alpha:1];
-}
-
-- (void)setSelected:(BOOL)selected
-{
-    if (selected != kSelected) {
-        kSelected = selected;
-        if (selected) {
-            [self.textField setEditable:YES];
-            [self.textField becomeFirstResponder];
-            [self beginObservingText];
-        }else{
-            [[(BbMessage *)self.entity hotInlet]input:[BbBang bang]];
-            [self.textField setEditable:NO];
-            [self.textField resignFirstResponder];
-            [self endObservingText];
-        }
-    }
 }
 
 + (NSDictionary *)textAttributes
@@ -102,4 +82,6 @@
     [outlinePath setLineWidth:1];
     [outlinePath stroke];
 }
+
+
 @end

@@ -57,7 +57,7 @@
 - (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
     NSColor *fillColor;
-    if (kSelected) {
+    if (self.selected) {
         fillColor = self.selectedColor;
     }else{
         fillColor = self.defaultColor;

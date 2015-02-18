@@ -68,6 +68,9 @@
     }
 }
 
+
+
+/*
 - (void)setSelected:(BOOL)selected
 {
     if (selected != kSelected)
@@ -79,6 +82,8 @@
     }
 
 }
+ 
+*/
 - (void)drawRect:(NSRect)dirtyRect {
 
     NSColor *backgroundColor = nil;
@@ -95,7 +100,7 @@
     
     NSBezierPath *bezierPath = [NSBezierPath bezierPathWithOvalInRect:NSRectFromCGRect(CGRectInset(self.bounds, 4, 4))];
     NSColor *fillColor = nil;
-    if (kSelected) {
+    if (self.selected) {
         fillColor = self.selectedColor;
     }else{
         fillColor = self.defaultColor;

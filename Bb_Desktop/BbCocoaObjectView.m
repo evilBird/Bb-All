@@ -29,11 +29,6 @@
 
 #pragma mark - Public Methods
 
-- (void)singleClickUp:(NSEvent *)theEvent
-{
-    
-}
-
 - (void)commonInitEntity:(BbEntity *)entity viewDescription:(id)viewDescription
 {
     [super commonInitEntity:entity viewDescription:viewDescription];
@@ -49,6 +44,10 @@
     [super setupConstraintsInParentView:parent];
     [self layoutInletViews:self.inletViews];
     [self layoutOutletViews:self.outletViews];
+    
+    if (self.textField) {
+        [self setupTextFieldConstraints];
+    }
 }
 
 - (NSSize)intrinsicContentSize
@@ -91,11 +90,6 @@
 {
     CGFloat contentHeight = kPortViewHeightConstraint * 2.0 + kMinVerticalSpacerSize;
     return [NSView roundFloat:contentHeight];
-}
-
-- (void)setCenter:(CGPoint)center
-{
-    
 }
 
 #pragma accessors
@@ -166,15 +160,18 @@
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     // Drawing code here.
-    CGRect insetRect = CGRectInset(self.bounds,
-                                   kPortViewWidthConstraint/2,
-                                   kPortViewHeightConstraint + 2);
-    
-    NSString *textToDraw = self.displayedText;
-    NSDictionary *textAttributes = [NSInvocation doClassMethod:NSStringFromClass([self class])
-                                                  selectorName:@"textAttributes"
-                                                          args:nil];
-    [textToDraw drawInRect:insetRect withAttributes:textAttributes];
+    if (!self.textField) {
+        CGRect insetRect = CGRectInset(self.bounds,
+                                       kPortViewWidthConstraint/2,
+                                       kPortViewHeightConstraint + 2);
+        
+        NSString *textToDraw = self.displayedText;
+        NSDictionary *textAttributes = [NSInvocation doClassMethod:NSStringFromClass([self class])
+                                                      selectorName:@"textAttributes"
+                                                              args:nil];
+        [textToDraw drawInRect:insetRect withAttributes:textAttributes];
+    }
+
 }
 
 

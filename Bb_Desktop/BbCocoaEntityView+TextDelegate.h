@@ -19,6 +19,8 @@
 
 - (void)beginObservingText;
 - (void)endObservingText;
+- (void)entityView:(id)sender didEndObservingText:(NSTextField *)text;
+- (void)entityView:(id)sender didBeginObservingText:(NSTextField *)text;
 
 - (void)textDidBeginEditing:(NSNotification *)notification;
 - (void)textDidChange:(NSNotification *)notification;
