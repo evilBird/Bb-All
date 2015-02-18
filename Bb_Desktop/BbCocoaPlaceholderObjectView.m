@@ -19,7 +19,9 @@
     [self setupTextField];
     __weak BbCocoaPlaceholderObjectView *weakself = self;
     self.textEditingEndedHandler = ^(NSString *text){
-        [weakself.delegate placeholder:weakself enteredText:text];
+        if (text && text.length > 1) {
+            [weakself.delegate placeholder:weakself enteredText:text];
+        }
     };
 }
 

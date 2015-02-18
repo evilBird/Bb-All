@@ -30,6 +30,8 @@
     
     self.textEditingEndedHandler = ^(NSString *text){
         [weakself.textField resignFirstResponder];
+        NSString *string = weakself.textField.stringValue;
+        NSLog(@"string: %@",string);
         [(BbMessage *)weakself.entity setMessageBuffer:text];
         [weakself invalidateIntrinsicContentSize];
     };
@@ -41,11 +43,6 @@
     size.height = [self intrinsicContentHeight];
     size.width = [self intrinsicContentWidth];
     return NSSizeFromCGSize(size);
-}
-
-- (void)setupConstraintsInParentView:(id)parent
-{
-    [super setupConstraintsInParentView:parent];
 }
 
 - (NSColor *)defaultColor

@@ -58,7 +58,6 @@
 		F2AC28C11A92B2D0005B95EF /* BbClassMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AC28C01A92B2D0005B95EF /* BbClassMethod.m */; };
 		F2AC28C31A92B751005B95EF /* BbClassMethodTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AC28C21A92B751005B95EF /* BbClassMethodTests.m */; };
 		F2AC28C61A92BD56005B95EF /* BbInstanceMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AC28C51A92BD56005B95EF /* BbInstanceMethod.m */; };
-		F2D6AA141A8AAD5A00F6B720 /* BbObject+CocoaView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2D6AA131A8AAD5A00F6B720 /* BbObject+CocoaView.m */; };
 		F2F6E1411A8A7228000959AB /* BbObject+Decoder.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F6E1401A8A7228000959AB /* BbObject+Decoder.m */; };
 		F2F6E1471A8A7907000959AB /* BbObject+Encoder.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F6E1461A8A7907000959AB /* BbObject+Encoder.m */; };
 		F2F6E1531A8A88BC000959AB /* BbCocoaEntityView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F6E1521A8A88BC000959AB /* BbCocoaEntityView.m */; };
@@ -183,8 +182,6 @@
 		F2AC28C21A92B751005B95EF /* BbClassMethodTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbClassMethodTests.m; sourceTree = "<group>"; };
 		F2AC28C41A92BD56005B95EF /* BbInstanceMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbInstanceMethod.h; sourceTree = "<group>"; };
 		F2AC28C51A92BD56005B95EF /* BbInstanceMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbInstanceMethod.m; sourceTree = "<group>"; };
-		F2D6AA121A8AAD5A00F6B720 /* BbObject+CocoaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbObject+CocoaView.h"; sourceTree = "<group>"; };
-		F2D6AA131A8AAD5A00F6B720 /* BbObject+CocoaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbObject+CocoaView.m"; sourceTree = "<group>"; };
 		F2F6E13F1A8A7228000959AB /* BbObject+Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbObject+Decoder.h"; sourceTree = "<group>"; };
 		F2F6E1401A8A7228000959AB /* BbObject+Decoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbObject+Decoder.m"; sourceTree = "<group>"; };
 		F2F6E1451A8A7907000959AB /* BbObject+Encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbObject+Encoder.h"; sourceTree = "<group>"; };
@@ -255,8 +252,6 @@
 			children = (
 				F2F6E1571A8A8E84000959AB /* NSView+Bb.h */,
 				F2F6E1581A8A8E84000959AB /* NSView+Bb.m */,
-				F2D6AA121A8AAD5A00F6B720 /* BbObject+CocoaView.h */,
-				F2D6AA131A8AAD5A00F6B720 /* BbObject+CocoaView.m */,
 				F2250DCC1A93D4BC00768E76 /* BbCocoaEntityView+Touches.h */,
 				F2250DCD1A93D4BC00768E76 /* BbCocoaEntityView+Touches.m */,
 				F2621DC91A92CFE300585016 /* BbCocoaEntityView+TextDelegate.h */,
@@ -401,8 +396,8 @@
 			children = (
 				F2F6E14B1A8A8780000959AB /* Main */,
 				F2F6E1501A8A8829000959AB /* Parsing */,
-				F2F6E14F1A8A8814000959AB /* Tests */,
 				F2F6E14E1A8A87FB000959AB /* Object Library */,
+				F2F6E14F1A8A8814000959AB /* Tests */,
 				F2F6E14D1A8A87E7000959AB /* Foundation Categories */,
 			);
 			name = Bb;
@@ -730,7 +725,6 @@
 				F2709D931A89B2B0004BF4FF /* BbObject.m in Sources */,
 				F2F6E1411A8A7228000959AB /* BbObject+Decoder.m in Sources */,
 				F2709D9D1A89B2B0004BF4FF /* BbObject+Tests.m in Sources */,
-				F2D6AA141A8AAD5A00F6B720 /* BbObject+CocoaView.m in Sources */,
 				F2F6E15F1A8A9304000959AB /* BbCocoaPortView.m in Sources */,
 				F2709D981A89B2B0004BF4FF /* BbTests.m in Sources */,
 				F2709D971A89B2B0004BF4FF /* NSArray+Bb.m in Sources */,

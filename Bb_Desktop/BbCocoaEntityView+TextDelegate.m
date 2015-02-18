@@ -10,6 +10,7 @@
 #import "BbCocoaPortView.h"
 #import "BbCocoaObjectView.h"
 #import "NSInvocation+Bb.h"
+#import "BbCocoaObjectView+Autolayout.h"
 
 @implementation BbCocoaEntityView (TextDelegate)
 
@@ -75,7 +76,7 @@
                                                   selectorName:@"textAttributes"
                                                           args:nil];
     CGFloat textWidthRaw = [text sizeWithAttributes:textAttributes].width;
-    CGFloat textWidth = pow(textWidthRaw, 1.02);
+    CGFloat textWidth = pow(textWidthRaw, 1.05);
     return textWidth;
 }
 
@@ -84,6 +85,7 @@
     if (!self.textField || !self.textField.stringValue || !self.textField.stringValue.length) {
         return kMinWidth;
     }
+    
     CGFloat textWidth = [self intrinsicTextWidth];
     CGFloat textInsetsWidth = kPortViewWidthConstraint;
     CGFloat widthRequiredByText = textWidth + textInsetsWidth;
@@ -98,24 +100,27 @@
 
 - (void)textDidBeginEditing:(NSNotification *)notification
 {
+    __weak BbCocoaEntityView *weakself = self;
     if (self.textEditingBeganHandler != NULL) {
-        self.textEditingBeganHandler(self.textField);
+        self.textEditingBeganHandler(weakself.textField);
     }
 }
 
 - (void)textDidChange:(NSNotification *)notification
 {
-    [self invalidateIntrinsicContentSize];
+    __weak BbCocoaEntityView *weakself = self;
+    //[self invalidateIntrinsicContentSize];
     if (self.textEditingChangedHandler != NULL) {
-        self.textEditingChangedHandler(self.textField);
+        self.textEditingChangedHandler(weakself.textField);
     }
 }
 
 - (void)textDidEndEditing:(NSNotification *)notification
 {
-    [self.textField resignFirstResponder];
+    __weak BbCocoaEntityView *weakself = self;
+   // [self.textField resignFirstResponder];
     if (self.textEditingEndedHandler != NULL) {
-        self.textEditingEndedHandler(self.textField.stringValue);
+        self.textEditingEndedHandler(weakself.textField.stringValue);
     }
 }
 
