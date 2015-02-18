@@ -10,7 +10,7 @@
 #import "BbCocoaPatchView+Touches.h"
 #import "BbObject+Decoder.h"
 #import "BbCocoaObjectView.h"
-#import "BbCocoaPatchView.h"
+#import "BbCocoaPatchView+Connections.h"
 #import "BbUI.h"
 #import "BbPatch.h"
 #import "NSMutableString+Bb.h"

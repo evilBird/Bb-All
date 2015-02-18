@@ -15,6 +15,7 @@
 #import "BbCocoaPlaceholderObjectView.h"
 #import "BbCocoaEntityView+Touches.h"
 #import "BbCocoaPatchView+Helpers.h"
+#import "BbCocoaPatchView+Connections.h"
 
 @implementation BbCocoaPatchView (Touches)
 
@@ -129,98 +130,5 @@
     
     [self setNeedsDisplay:YES];
 }
-
-#pragma mark - connections
-
-- (void)connectSender:(NSUInteger)senderIndex
-               outlet:(NSUInteger)outletIndex
-             receiver:(NSUInteger)receiverIndex
-                inlet:(NSUInteger)inletIndex
-{
-    BbPatch *patch = (BbPatch *)self.entity;
-    id desc = [patch connectObject:senderIndex
-                              port:outletIndex
-                          toObject:receiverIndex
-                              port:inletIndex];
-    
-    BbCocoaPatchGetConnectionArray block = [self pathArrayWithConnection:desc];
-    if (block != NULL) {
-        if (!self.connections) {
-            self.connections = [[NSMutableSet alloc]init];
-        }
-        
-        [self.connections addObject:block];
-        
-        //NSString *patchDescription = [patch textDescription];
-        //NSLog(@"\n%@\n",patchDescription);
-    }
-}
-
-- (void)connectPortView:(BbCocoaPortView *)sender toReceiver:(BbCocoaPortView *)receiver
-{
-    NSDictionary *senderInfo = [sender userInfo];
-    NSDictionary *receiverInfo = [receiver userInfo];
-    if (senderInfo && receiverInfo) {
-        NSUInteger senderPortIndex = [senderInfo[@"port_index"]unsignedIntegerValue];
-        NSUInteger senderParentIndex = [senderInfo[@"parent_index"]unsignedIntegerValue];
-        NSUInteger receiverPortIndex = [receiverInfo[@"port_index"]unsignedIntegerValue];
-        NSUInteger receiverParentIndex = [receiverInfo[@"parent_index"]unsignedIntegerValue];
-        [self connectSender:senderParentIndex
-                     outlet:senderPortIndex
-                   receiver:receiverParentIndex
-                      inlet:receiverPortIndex];
-    }
-}
-
-#pragma mark - draw connections as paths
-
-- (BbCocoaPatchGetConnectionArray)pathArrayWithConnection:(id)desc
-{
-    if (!desc) {
-        return NULL;
-    }
-    
-    BbConnectionDescription *c = desc;
-    if (c.flag == BbConnectionDescriptionFlags_DELETE) {
-        return NULL;
-    }
-    BbPatch *patch = (BbPatch *)self.entity;
-    BbObject *sender = [patch childObjects][c.senderObjectIndex];
-    BbOutlet *outlet = sender.outlets[c.senderPortIndex];
-    BbObject *receiver = [patch childObjects][c.receiverObjectIndex];
-    BbInlet *inlet = receiver.inlets[c.receiverPortIndex];
-    BbCocoaPortView *outletView = (BbCocoaPortView *)outlet.view;
-    BbCocoaPortView *inletView = (BbCocoaPortView *)inlet.view;
-    
-    if (!outletView || !inletView) {
-        return NULL;
-    }
-    
-    return [self connectionBlockSender:outletView receiver:inletView];
-    
-}
-- (BbCocoaPatchGetConnectionArray)connectionBlockSender:(BbCocoaPortView *)sender receiver:(BbCocoaPortView *)receiver
-{
-    __weak BbCocoaPatchView *weakself = self;
-    BbCocoaPatchGetConnectionArray connectionBlock = ^ NSArray *{
-        
-        CGRect senderRect = [weakself convertRect:sender.bounds fromView:sender];
-        CGRect receiverRect = [weakself convertRect:receiver.bounds fromView:receiver];
-        NSArray *senderPoint = @[@(CGRectGetMidX(senderRect)),@(CGRectGetMidY(senderRect))];
-        NSArray *receiverPoint = @[@(CGRectGetMidX(receiverRect)),@(CGRectGetMidY(receiverRect))];
-        NSArray *result = nil;
-        if (senderPoint && receiverPoint) {
-            NSMutableArray *temp = [NSMutableArray array];
-            [temp addObjectsFromArray:senderPoint];
-            [temp addObjectsFromArray:receiverPoint];
-            result = [NSArray arrayWithArray:temp];
-        }
-        return result;
-    };
-    
-    return connectionBlock;
-}
-
-
 
 @end

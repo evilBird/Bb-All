@@ -19,7 +19,7 @@ typedef NSArray* (^BbCocoaPatchGetConnectionArray)(void);
 }
 
 // a connection is a vector of the form: @[x1,y1,x2,y2]
-@property (nonatomic,strong)NSMutableSet *connections;
+@property (nonatomic,strong)NSMutableDictionary *connections;
 // a connection is a vector of the form: @[x1,y1,x2,y2]
 @property (nonatomic,strong)NSArray *drawThisConnection;
 // underlying BbEntity

@@ -22,6 +22,7 @@
 #import "NSInvocation+Bb.h"
 #import "BbCocoaHSliderView.h"
 #import "BbCocoaPatchView+Helpers.h"
+#import "BbCocoaPatchView+Connections.h"
 
 @implementation BbCocoaPatchView
 
@@ -164,7 +165,7 @@
 }
 
 #pragma mark - drawing methods
-
+/*
 - (NSBezierPath *)connectionPathFromArray:(NSArray *)array
 {
     if (!array || array.count != 4) {
@@ -194,7 +195,7 @@
 {
     [super drawRect:dirtyRect];
     
-    NSMutableArray *connections = self.connections.allObjects.mutableCopy;
+    NSMutableArray *connections = self.connections.allValues.mutableCopy;
     if (connections) {
         for (BbCocoaPatchGetConnectionArray block in connections) {
             NSBezierPath *connectionPath = [self connectionPathFromArray:block()];
@@ -213,7 +214,7 @@
     self.drawThisConnection = nil;
     
 }
-
+*/
 - (BbViewType)viewType
 {
     return BbViewType_Patch;
