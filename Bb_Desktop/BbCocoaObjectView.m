@@ -112,7 +112,7 @@
 
 - (NSColor *)selectedColor
 {
-    return [NSColor colorWithWhite:0.3 alpha:1];
+    return [NSColor colorWithWhite:0.4 alpha:1];
 }
 
 + (NSDictionary *)textAttributes

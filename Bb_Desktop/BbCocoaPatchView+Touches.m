@@ -26,11 +26,18 @@
     CGPoint loc = theEvent.locationInWindow;
     id theView = [self hitTest:loc];
     kClickCount = theEvent.clickCount;
-    if (theEvent.clickCount == 1 && [theView respondsToSelector:@selector(viewType)]) {
-        [self clickDown:theEvent inView:theView];
-    }else if (theEvent.clickCount == 2){
-        [self addPlaceholderAtPoint:theEvent.locationInWindow];
+    
+    if (![theView respondsToSelector:@selector(viewType)]) {
+        return;
     }
+    
+    if ([theView viewType] == BbViewType_Patch && theEvent.clickCount == 2) {
+        [self addPlaceholderAtPoint:theEvent.locationInWindow];
+        return;
+    }
+    
+    [self clickDown:theEvent inView:theView];
+
     
     kPreviousLoc = theEvent.locationInWindow;
 }

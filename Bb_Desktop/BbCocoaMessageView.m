@@ -26,12 +26,13 @@
     };
     
     self.textEditingEndedHandler = ^(NSString *text){
-        NSLog(@"message text: %@",text);
         [(BbMessage *)weakself.entity setMessageBuffer:text];
         [weakself invalidateIntrinsicContentSize];
         [weakself setNeedsDisplay:YES];
         [weakself.superview setNeedsDisplay:YES];
     };
+    
+    self.editing = NO;
 }
 
 - (NSSize)intrinsicContentSize
@@ -42,6 +43,11 @@
     return NSSizeFromCGSize(size);
 }
 
+- (CGFloat)editingTextExpansionFactor
+{
+    return 1.05;
+}
+
 - (NSColor *)defaultColor
 {
     return [NSColor colorWithWhite:0.9 alpha:1];
@@ -50,6 +56,11 @@
 - (NSColor *)selectedColor
 {
     return [NSColor colorWithWhite:0.85 alpha:1];
+}
+
+- (NSColor *)editingColor
+{
+    return [NSColor whiteColor];
 }
 
 + (NSDictionary *)textAttributes

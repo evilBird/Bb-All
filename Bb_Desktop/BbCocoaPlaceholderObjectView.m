@@ -17,18 +17,39 @@
 {
     [super commonInitEntity:entity viewDescription:viewDescription];
     [self setupTextField];
+    kMinWidth = 100.0;
+    
     __weak BbCocoaPlaceholderObjectView *weakself = self;
+    
+    
+    self.textEditingChangedHandler = ^(NSTextField *text){
+        [weakself invalidateIntrinsicContentSize];
+        [weakself setNeedsDisplay:YES];
+        [weakself.superview setNeedsDisplay:YES];
+    };
+    
     self.textEditingEndedHandler = ^(NSString *text){
         if (text && text.length > 1) {
             [weakself.delegate placeholder:weakself enteredText:text];
         }
     };
+    
+    self.editing = YES;
 }
 
 - (void)setupConstraintsInParentView:(id)parent
 {
     [super setupConstraintsInParentView:parent];
     [self setupTextFieldConstraints];
+}
+
+- (CGFloat)intrinsicTextWidth
+{
+    NSString *text = [NSString stringWithString:self.textField.stringValue];
+    NSDictionary *textAttributes = [[self class]textAttributes];
+    CGFloat textWidthRaw = [text sizeWithAttributes:textAttributes].width;
+    CGFloat textWidth = pow(textWidthRaw, 1.1);
+    return textWidth;
 }
 
 - (NSColor *)defaultColor
@@ -38,7 +59,7 @@
 
 - (NSColor *)selectedColor
 {
-    return [NSColor colorWithWhite:0.3 alpha:1.0];
+    return [NSColor colorWithWhite:0.4 alpha:1.0];
 }
 
 + (NSDictionary *)textAttributes
@@ -66,6 +87,12 @@
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [self removeObserver:self forKeyPath:@"selected"];
+    [self removeObserver:self forKeyPath:@"editing"];
 }
 
 @end

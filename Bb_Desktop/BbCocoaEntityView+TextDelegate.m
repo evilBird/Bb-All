@@ -25,37 +25,38 @@
     self.textField.textColor = [textAttributes valueForKey:NSForegroundColorAttributeName];
     self.textField.delegate = self;
     self.textField.alignment = NSCenterTextAlignment;
-    self.textField.backgroundColor = self.defaultColor;
+    //self.textField.backgroundColor = self.defaultColor;
     self.textField.bordered = NO;
-    
     if (self.viewDescription.text) {
         self.textField.stringValue = self.viewDescription.text;
     }
     [(NSView *)self addSubview:self.textField];
-    
-    [self addObserver:self
-           forKeyPath:@"selected"
-              options:NSKeyValueObservingOptionNew
-              context:nil];
 }
 
-- (void)entityView:(id)sender didEndObservingText:(NSTextField *)text
+- (void)beginEditingText
 {
-    if (sender == self && text == self.textField) {
-        [[text window]makeFirstResponder:nil];
-        [text setEditable:NO];
-    }else{
-        
-    }
+    [self beginObservingText];
+    [[self.textField window]makeFirstResponder:self.textField];
+    [self.textField setEditable:YES];
+    [self setNeedsDisplay:YES];
 }
-- (void)entityView:(id)sender didBeginObservingText:(NSTextField *)text
+
+- (void)endEditingText
 {
-    if (sender == self && text == self.textField) {
-        [[text window]makeFirstResponder:text];
-        [text setEditable:YES];
-    }else{
-        
-    }
+    [self endObservingText];
+    [[self.textField window]makeFirstResponder:nil];
+    [self.textField setEditable:NO];
+    [self setNeedsDisplay:YES];
+}
+
+- (BOOL)control:(NSControl *)control textShouldBeginEditing:(NSText *)fieldEditor
+{
+    return self.editing;
+}
+
+- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
+{
+    return self.editing;
 }
 
 - (void)beginObservingText
@@ -80,7 +81,6 @@
                                                                             kPortViewWidthConstraint)];
     [self invalidateIntrinsicContentSize];
     [self layoutSubtreeIfNeeded];
-    self.selected = NO;
 }
 
 - (NSSize)intrinsicContentSize
@@ -99,11 +99,9 @@
 - (CGFloat)intrinsicTextWidth
 {
     NSString *text = [NSString stringWithString:self.textField.stringValue];
-    NSDictionary *textAttributes = [NSInvocation doClassMethod:NSStringFromClass([self class])
-                                                  selectorName:@"textAttributes"
-                                                          args:nil];
+    NSDictionary *textAttributes = [[self class]textAttributes];
     CGFloat textWidthRaw = [text sizeWithAttributes:textAttributes].width;
-    CGFloat textWidth = pow(textWidthRaw, 1.1);
+    CGFloat textWidth = pow(textWidthRaw, [self textExpansionFactor]);
     return textWidth;
 }
 
@@ -143,34 +141,15 @@
 
 - (void)textDidEndEditing:(NSNotification *)notification
 {
+
     __weak BbCocoaEntityView *weakself = self;
     if (self.textEditingEndedHandler != NULL) {
         self.textEditingEndedHandler(weakself.textField.stringValue);
     }
 }
 
-#pragma mark - KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if (context == nil) {
-        NSNumber *value = change[@"new"];
-        BOOL isSelected = value.boolValue;
-        if (isSelected) {
-            [self beginObservingText];
-            [self entityView:self didBeginObservingText:self.textField];
-        }else{
-            [self endObservingText];
-            [self entityView:self didEndObservingText:self.textField];
-        }
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
-
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"selected"];
     [self endObservingText];
 }
 

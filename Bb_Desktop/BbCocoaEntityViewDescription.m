@@ -15,7 +15,7 @@
     BbCocoaEntityViewDescription *description = [[BbCocoaEntityViewDescription alloc]init];
     description.outlets = 0;
     description.inlets = 0;
-    description.text = @"enter text";
+    description.text = @" ";
     description.entityViewType = @"placeholder";
     return description;
 }

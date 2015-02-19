@@ -37,6 +37,7 @@ typedef NS_ENUM(NSInteger, BbEntityViewSelectionState) {
 @property (nonatomic)               NSPoint                         normalizedPosition;
 @property (nonatomic,readonly)      NSColor                         *defaultColor;
 @property (nonatomic,readonly)      NSColor                         *selectedColor;
+@property (nonatomic,readonly)      NSColor                         *editingColor;
 @property (nonatomic,strong)        NSLayoutConstraint              *centerXConstraint;
 @property (nonatomic,strong)        NSLayoutConstraint              *centerYConstraint;
 
@@ -47,6 +48,10 @@ typedef NS_ENUM(NSInteger, BbEntityViewSelectionState) {
 
 @property (nonatomic)               BOOL                            editing;
 @property (nonatomic)               BOOL                            selected;
+
+- (CGFloat)textExpansionFactor;
+- (CGFloat)editingTextExpansionFactor;
+- (CGFloat)defaultTextExpansionFactor;
 
 #pragma - designated initializer
 
@@ -60,9 +65,16 @@ typedef NS_ENUM(NSInteger, BbEntityViewSelectionState) {
 
 //Override to customize constraints
 //Returns without installing constraints if parent view is nil
+
 - (void)setupConstraintsInParentView:(id)parent;
 - (void)refresh;
 - (void)setEntity:(BbEntity *)entity;
+
+- (void)entityView:(id)sender didBeginEditingObject:(id)object;
+- (void)entityView:(id)sender didEndEditingObject:(id)object;
+
+- (void)entityViewDidBeginSelected:(id)sender;
+- (void)entityViewDidEndSelected:(id)sender;
 
 #pragma BbEntityView Methods
 

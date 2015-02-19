@@ -12,34 +12,45 @@
 
 - (id)clickDown:(NSEvent *)theEvent
 {
-    self.editing = YES;
-    [self setNeedsDisplay:YES];
-    return self;
+    NSString *className = NSStringFromClass([self class]);
+    NSLog(@"click down in %@, count = %@",className,@(theEvent.clickCount));
+    switch (theEvent.clickCount) {
+        case 1:
+            if (self.selected) {
+                self.selected = NO;
+            }else{
+                self.selected = YES;
+            }
+            break;
+        case 2:
+            if (self.editing) {
+                self.editing = NO;
+            }else{
+                self.editing = YES;
+            }
+            break;
+        default:
+            self.selected = NO;
+            break;
+    }
+    
+    if (self.selected) {
+        return self;
+    }
+    
+    return nil;
 }
 
 - (id)clickUp:(NSEvent *)theEvent
 {
-    switch (theEvent.clickCount) {
-        case 1:
-            if ([self selected]) {
-                [self setSelected:NO];
-                [self setEditing:NO];
-                [self setNeedsDisplay:YES];
-                return nil;
-            }else{
-                [self setSelected:YES];
-                [self setEditing:YES];
-                [self setNeedsDisplay:YES];
-                return self;
-            }
-            break;
-        default:
-            [self setSelected:NO];
-            [self setEditing:NO];
-            [self setNeedsDisplay:YES];
-            return nil;
-            break;
+    if (theEvent.clickCount == 0) {
+        self.selected = NO;
     }
+    
+    if (self.selected) {
+        return self;
+    }
+    return nil;
 }
 
 - (id)boundsWereEntered:(NSEvent *)theEvent

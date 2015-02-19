@@ -17,13 +17,18 @@
 - (CGFloat)intrinsicTextWidth;
 - (CGFloat)intrinsicContentWidth;
 
+- (void)beginEditingText;
+- (void)endEditingText;
+
 - (void)beginObservingText;
 - (void)endObservingText;
-- (void)entityView:(id)sender didEndObservingText:(NSTextField *)text;
-- (void)entityView:(id)sender didBeginObservingText:(NSTextField *)text;
+
+- (BOOL)control:(NSControl *)control textShouldBeginEditing:(NSText *)fieldEditor;
+- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor;
 
 - (void)textDidBeginEditing:(NSNotification *)notification;
 - (void)textDidChange:(NSNotification *)notification;
 - (void)textDidEndEditing:(NSNotification *)notification;
+
 
 @end

@@ -12,4 +12,8 @@ static CGFloat kDefaultBangViewSize = 60.0;
 
 @interface BbCocoaBangView : BbCocoaObjectView
 
+@property (nonatomic)       BOOL  sending;
+
+- (void)sendBang;
+
 @end
