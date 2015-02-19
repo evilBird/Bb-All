@@ -16,4 +16,6 @@
 - (id)boundsWereExited:(NSEvent *)theEvent;
 - (BbViewType)viewType;
 
+- (BOOL)acceptsFirstResponder;
+
 @end

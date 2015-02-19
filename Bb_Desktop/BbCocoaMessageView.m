@@ -45,7 +45,12 @@
 
 - (CGFloat)editingTextExpansionFactor
 {
-    return 1.05;
+    return 1.1;
+}
+
+- (CGFloat)defaultTextExpansionFactor
+{
+    return 1.0;
 }
 
 - (NSColor *)defaultColor
@@ -55,12 +60,58 @@
 
 - (NSColor *)selectedColor
 {
-    return [NSColor colorWithWhite:0.85 alpha:1];
+    return [NSColor colorWithWhite:0.8 alpha:1];
+}
+
+- (NSColor *)sendingColor
+{
+    return [NSColor colorWithWhite:0.7 alpha:1];
 }
 
 - (NSColor *)editingColor
 {
     return [NSColor whiteColor];
+}
+
+- (void)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector
+{
+    NSLog(@"Selector method is (%@)", NSStringFromSelector( commandSelector ) );
+    if (commandSelector == @selector(insertNewline:)) {
+        //Do something against ENTER key
+        if (self.editing) {
+            [self endEditingText];
+            self.editing = NO;
+        }
+    }
+}
+
+- (void)sendMessage
+{
+    [[(BbMessage *)self.entity hotInlet]input:[BbBang bang]];
+    self.sending = YES;
+    [self setNeedsDisplay:YES];
+    
+    __weak BbCocoaMessageView *weakself = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakself endMessage];
+    });
+}
+
+- (void)endMessage
+{
+    self.sending = NO;
+    [self setNeedsDisplay:YES];
+}
+
+- (id)clickDown:(NSEvent *)theEvent
+{
+    [super clickDown:theEvent];
+    [self sendMessage];
+    if (self.selected) {
+        return self;
+    }
+    
+    return nil;
 }
 
 + (NSDictionary *)textAttributes
@@ -76,18 +127,24 @@
     return textAttributes;
 }
 
-- (NSString *)displayedText
-{
-    if (self.textField.stringValue.length == 0) {
-        self.textField.stringValue = [[(BbMessage *)self.entity messageBuffer]toString];
+- (void)drawRect:(NSRect)dirtyRect {
+    //[super drawRect:dirtyRect];
+    // Drawing code here.
+    
+    NSColor *fillColor;
+    if (self.sending) {
+        fillColor = [self sendingColor];
+    }else if (self.editing){
+        fillColor = self.editingColor;
+    }else if (self.selected){
+        fillColor = self.selectedColor;
+    }else{
+        fillColor = self.defaultColor;
     }
     
-    return self.textField.stringValue;
-}
-
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-    // Drawing code here.
+    [fillColor setFill];
+    NSRectFill(dirtyRect);
+    
     NSBezierPath *outlinePath = [NSBezierPath bezierPathWithRect:self.bounds];
     [[NSColor blackColor]setStroke];
     [outlinePath setLineWidth:1];

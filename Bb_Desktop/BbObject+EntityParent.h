@@ -18,5 +18,7 @@
 - (void)addChildObject:(BbObject *)childObject;
 - (void)removeChildObject:(BbObject *)childObject;
 - (void)hotInlet:(BbInlet *)inlet receivedBang:(BbBang *)bang;
+- (BbObject *)childWithId:(NSUInteger)objectId;
+- (BbPort *)portWithId:(NSUInteger)portId;
 
 @end

@@ -24,6 +24,7 @@
 #import "BbCocoaPatchView+Helpers.h"
 #import "BbCocoaPatchView+Connections.h"
 #import "NSMutableString+Bb.h"
+#import "BbCocoaPatchView+Keys.h"
 
 @implementation BbCocoaPatchView
 
@@ -163,5 +164,6 @@
 {
     return BbViewType_Patch;
 }
+
 
 @end

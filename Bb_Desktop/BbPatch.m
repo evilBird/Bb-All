@@ -28,6 +28,66 @@
     }
 }
 
+- (void)removeChildObject:(BbObject *)childObject
+{
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"%K == %@ || %K == %@",@"senderId",@(childObject.objectId),@"receiverId",@(childObject.objectId)];
+    
+    NSArray *toRemove = [self.connections.allValues filteredArrayUsingPredicate:pred];
+    
+    for (BbConnectionDescription *connection in toRemove) {
+        
+        NSString *connectionId = [@([connection connectionId])toString];
+        [self disconnectObject:connection.senderObjectIndex
+                          port:connection.senderPortIndex
+                    fromObject:connection.receiverObjectIndex
+                          port:connection.receiverPortIndex];
+        BbConnectionDescription *new = connection;
+        new.flag = BbConnectionDescriptionFlags_DELETE;
+        
+        [self.connections setObject:new forKey:connectionId];
+        [self.view removeConnectionPathWithId:connectionId];
+    }
+    
+    [super removeChildObject:childObject];
+    [self refreshConnections];
+    [self.view refresh];
+    
+    NSString *textDesc = [self textDescription];
+    NSLog(@"\nPATCH DESCRIPTION UPDATE:\n%@",textDesc);
+}
+
+- (void)refreshConnections
+{
+    NSMutableDictionary *connections = nil;
+    for (NSString *connectionId in self.connections.allKeys) {
+        
+        BbConnectionDescription *old = [self.connections valueForKey:connectionId];
+        
+        if (old.flag == BbConnectionDescriptionFlags_DELETE) {
+            [self.connections removeObjectForKey:connectionId];
+        }else{
+            BbObject *sender = [self childWithId:old.senderId];
+            BbOutlet *outlet = (BbOutlet *)[sender portWithId:old.senderPortId];
+            BbObject *receiver = [self childWithId:old.receiverId];
+            BbInlet *inlet = (BbInlet *)[receiver portWithId:old.receiverPortId];
+            BbConnectionDescription *new = old;
+            new.senderObjectIndex = [self indexOfChild:sender];
+            new.senderPortIndex = [sender indexOfPort:outlet];
+            new.receiverObjectIndex = [self indexOfChild:receiver];
+            new.receiverPortIndex = [receiver indexOfPort:inlet];
+            
+            if (!connections) {
+                connections = [NSMutableDictionary dictionary];
+            }
+            
+            connections[connectionId] = new;
+            
+        }
+    }
+    
+    self.connections = connections;
+}
+
 - (BbConnectionDescription *)descConnectionSender:(BbObject *)sender
                                            outlet:(BbOutlet *)outlet
                                        toReceiver:(BbObject *)receiver
@@ -97,8 +157,8 @@
     
     NSString *connectionId = [@([desc connectionId])toString];
     
-    if ([self.connections.allValues containsObject:connectionId]) {
-        [self.connections removeObjectForKey:connectionId];
+    if ([self.connections.allKeys containsObject:connectionId]) {
+        //[self.connections removeObjectForKey:connectionId];
         desc.flag = BbConnectionDescriptionFlags_DELETE;
         return desc;
     }

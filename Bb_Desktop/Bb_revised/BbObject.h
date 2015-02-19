@@ -45,5 +45,6 @@ typedef id (^BbCalculateOutputBlock)(id hotValue, NSArray *inlets);
 - (NSArray *)UIPosition;
 - (NSArray *)UISize;
 
+
 @end
 

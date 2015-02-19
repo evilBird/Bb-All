@@ -25,7 +25,6 @@
     self.textField.textColor = [textAttributes valueForKey:NSForegroundColorAttributeName];
     self.textField.delegate = self;
     self.textField.alignment = NSCenterTextAlignment;
-    //self.textField.backgroundColor = self.defaultColor;
     self.textField.bordered = NO;
     if (self.viewDescription.text) {
         self.textField.stringValue = self.viewDescription.text;

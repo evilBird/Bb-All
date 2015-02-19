@@ -7,13 +7,12 @@
 //
 
 #import "BbCocoaEntityView+Touches.h"
+#import "BbBase.h"
 
 @implementation BbCocoaEntityView (Touches)
 
 - (id)clickDown:(NSEvent *)theEvent
 {
-    NSString *className = NSStringFromClass([self class]);
-    NSLog(@"click down in %@, count = %@",className,@(theEvent.clickCount));
     switch (theEvent.clickCount) {
         case 1:
             if (self.selected) {
@@ -30,7 +29,6 @@
             }
             break;
         default:
-            self.selected = NO;
             break;
     }
     
@@ -61,6 +59,19 @@
 - (id)boundsWereExited:(NSEvent *)theEvent
 {
     return nil;
+}
+
+- (BOOL)acceptsFirstResponder
+{
+    return YES;
+}
+
+- (void)keyDown:(NSEvent *)theEvent
+{
+    NSString *theKey = theEvent.characters;
+    if ([theKey isEqualToString:@"\x7f"] && self.selected) {
+        [self.entity.parent removeChildObject:(BbObject *)self.entity];
+    }
 }
 
 - (BbViewType)viewType

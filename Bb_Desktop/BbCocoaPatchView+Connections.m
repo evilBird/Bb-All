@@ -33,6 +33,15 @@
     }
 }
 
+- (void)removeConnectionPathWithId:(NSString *)connectionId
+{
+    if ([self.connections.allKeys containsObject:connectionId]) {
+        [self.connections removeObjectForKey:connectionId];
+    }else{
+        NSLog(@"I don't have a connection with id %@",connectionId);
+    }
+}
+
 - (void)connectPortView:(BbCocoaPortView *)sender toReceiver:(BbCocoaPortView *)receiver
 {
     NSDictionary *senderInfo = [sender userInfo];

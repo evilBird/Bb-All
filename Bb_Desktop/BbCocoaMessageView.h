@@ -12,5 +12,6 @@
 @interface BbCocoaMessageView : BbCocoaObjectView
 
 + (NSDictionary *)textAttributes;
+@property (nonatomic)       BOOL        sending;
 
 @end

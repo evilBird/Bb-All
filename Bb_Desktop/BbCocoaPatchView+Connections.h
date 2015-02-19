@@ -25,5 +25,6 @@
 
 - (NSBezierPath *)connectionPathFromArray:(NSArray *)array;
 
+- (void)removeConnectionPathWithId:(NSString *)connectionId;
 
 @end

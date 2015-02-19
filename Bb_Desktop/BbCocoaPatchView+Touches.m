@@ -1,3 +1,4 @@
+
 //
 //  BbCocoaPatchView+Touches.m
 //  Bb_Desktop
@@ -37,8 +38,6 @@
     }
     
     [self clickDown:theEvent inView:theView];
-
-    
     kPreviousLoc = theEvent.locationInWindow;
 }
 
@@ -138,4 +137,19 @@
     [self setNeedsDisplay:YES];
 }
 
+#pragma mark - Key down
+/*
+- (void)keyDown:(NSEvent *)theEvent
+{
+   NSString *theKey = theEvent.characters;
+    if ([theKey isEqualToString:@"\x7f"]) {
+        [self deleteSelected];
+    }
+}
+
+- (void)deleteSelected
+{
+    
+}
+*/
 @end

@@ -18,17 +18,12 @@
 
 - (NSColor *)defaultColor
 {
-    return [NSColor colorWithWhite:0.95 alpha:1];
+    return [NSColor colorWithWhite:0.9 alpha:1];
 }
 
 - (NSColor *)selectedColor
 {
     return [NSColor colorWithWhite:0.8 alpha:1];
-}
-
-- (NSColor *)backgroundFillColor
-{
-    return [NSColor colorWithWhite:0.9 alpha:1];
 }
 
 - (NSColor *)sendingColor
@@ -64,15 +59,20 @@
     [self setNeedsDisplay:YES];
 }
 
+- (NSRect)hitTestRect
+{
+    return (CGRectInset(self.bounds, 16, 16));
+}
+
 - (NSRect)insetRect
 {
-    return (CGRectInset(self.bounds, 10, 10));
+    return (CGRectInset(self.bounds, 4, 4));
 }
 
 - (id)clickDown:(NSEvent *)theEvent
 {
     CGPoint thePoint = [self convertPoint:theEvent.locationInWindow fromView:self.superview];
-    CGRect bangRect = [self insetRect];
+    CGRect bangRect = [self hitTestRect];
     if (CGRectContainsPoint(bangRect, thePoint)) {
         [self sendBang];
         if (self.selected) {

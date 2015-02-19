@@ -37,6 +37,8 @@
 - (void)addSubview:(id<BbEntityView>)subview;
 - (void)removeFromSuperview;
 
+- (void)removeConnectionPathWithId:(NSString *)connectionId;
+
 @end
 
 @protocol BbPlaceholderViewDelegate <NSObject>

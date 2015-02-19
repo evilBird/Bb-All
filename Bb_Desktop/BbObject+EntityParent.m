@@ -13,10 +13,7 @@
 
 #pragma mark - BbEntityParent Methods
 
-- (void)hotInlet:(BbInlet *)inlet receivedBang:(BbBang *)bang
-{
-    
-}
+- (void)hotInlet:(BbInlet *)inlet receivedBang:(BbBang *)bang {}
 
 - (NSSet *)allowedTypesForPort:(BbPort *)port
 {
@@ -93,7 +90,34 @@
         [childObject.view removeFromSuperview];
     }
     
-    [childObject tearDown];
+    //[childObject tearDown];
+}
+
+- (BbObject *)childWithId:(NSUInteger)objectId
+{
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"%K == %@",@"objectId",@(objectId)];
+    NSArray *filtered = [self.childObjects_.array filteredArrayUsingPredicate:pred];
+    return filtered.firstObject;
+}
+
+- (BbPort *)portWithId:(NSUInteger)portId
+{
+    BbPort *port = nil;
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"%K == %@",@"objectId",@(portId)];
+    NSArray *filtered = [self.inlets_ filteredArrayUsingPredicate:pred];
+    
+    port = filtered.firstObject;
+    if (port) {
+        return port;
+    }
+    
+    filtered = [self.outlets_ filteredArrayUsingPredicate:pred];
+    port = filtered.firstObject;
+    if (port) {
+        return port;
+    }
+    
+    return nil;
 }
 
 - (NSArray *)childObjects
@@ -104,5 +128,6 @@
     
     return nil;
 }
+
 
 @end

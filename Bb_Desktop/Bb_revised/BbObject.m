@@ -122,6 +122,7 @@
     return nil;
 }
 
+
 #pragma calculate output
 
 - (id) outputForOutlet:(BbOutlet *)outlet withChangeInHotInlet:(BbInlet *)hotInlet
@@ -131,7 +132,6 @@
     BbCalculateOutputBlock calculateOutputBlock = [self calculateOutputForOutletAtIndex:index];
     return calculateOutputBlock(hot,self.inlets);
 }
-
 
 - (BbCalculateOutputBlock)calculateOutputForOutletAtIndex:(NSInteger)index
 {

@@ -49,6 +49,7 @@
 		F2709D9D1A89B2B0004BF4FF /* BbObject+Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2709D8E1A89B2B0004BF4FF /* BbObject+Tests.m */; };
 		F2709D9E1A89B2B0004BF4FF /* BbBasicMathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2709D901A89B2B0004BF4FF /* BbBasicMathTests.m */; };
 		F2709DA11A89B4D2004BF4FF /* BbBasicMath.m in Sources */ = {isa = PBXBuildFile; fileRef = F2709D9F1A89B4D2004BF4FF /* BbBasicMath.m */; };
+		F28A5F411A959C6C007EB436 /* BbCocoaPatchView+Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = F28A5F401A959C6C007EB436 /* BbCocoaPatchView+Keys.m */; };
 		F297D86E1A8E8DEA0074BD14 /* NSMutableString+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F297D86D1A8E8DEA0074BD14 /* NSMutableString+Bb.m */; };
 		F29DE43B1A8C1B5A00C01E75 /* NSNumber+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F29DE43A1A8C1B5A00C01E75 /* NSNumber+Bb.m */; };
 		F29DE43E1A8C203900C01E75 /* NSDictionary+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F29DE43D1A8C203900C01E75 /* NSDictionary+Bb.m */; };
@@ -164,6 +165,8 @@
 		F2709D901A89B2B0004BF4FF /* BbBasicMathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BbBasicMathTests.m; path = Bb_revised/BbBasicMathTests.m; sourceTree = "<group>"; };
 		F2709D9F1A89B4D2004BF4FF /* BbBasicMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbBasicMath.m; sourceTree = "<group>"; };
 		F2709DA01A89B4D2004BF4FF /* BbBasicMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbBasicMath.h; sourceTree = "<group>"; };
+		F28A5F3F1A959C6C007EB436 /* BbCocoaPatchView+Keys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbCocoaPatchView+Keys.h"; sourceTree = "<group>"; };
+		F28A5F401A959C6C007EB436 /* BbCocoaPatchView+Keys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbCocoaPatchView+Keys.m"; sourceTree = "<group>"; };
 		F297D86C1A8E8DEA0074BD14 /* NSMutableString+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+Bb.h"; sourceTree = "<group>"; };
 		F297D86D1A8E8DEA0074BD14 /* NSMutableString+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableString+Bb.m"; sourceTree = "<group>"; };
 		F29DE4391A8C1B5A00C01E75 /* NSNumber+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+Bb.h"; sourceTree = "<group>"; };
@@ -306,6 +309,8 @@
 				F2250DD01A94322F00768E76 /* BbCocoaPatchView+Helpers.m */,
 				F2250DD21A9445DB00768E76 /* BbCocoaPatchView+Connections.h */,
 				F2250DD31A9445DB00768E76 /* BbCocoaPatchView+Connections.m */,
+				F28A5F3F1A959C6C007EB436 /* BbCocoaPatchView+Keys.h */,
+				F28A5F401A959C6C007EB436 /* BbCocoaPatchView+Keys.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -743,6 +748,7 @@
 				F297D86E1A8E8DEA0074BD14 /* NSMutableString+Bb.m in Sources */,
 				F2250DD41A9445DB00768E76 /* BbCocoaPatchView+Connections.m in Sources */,
 				F2250DD11A94322F00768E76 /* BbCocoaPatchView+Helpers.m in Sources */,
+				F28A5F411A959C6C007EB436 /* BbCocoaPatchView+Keys.m in Sources */,
 				F2709D921A89B2B0004BF4FF /* BbBase.m in Sources */,
 				F2709D951A89B2B0004BF4FF /* NSScanner+Bb.m in Sources */,
 				F2381CBA1A8AB5F200B7D2A4 /* BbCocoaPatchView+Touches.m in Sources */,
