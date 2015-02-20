@@ -45,7 +45,6 @@
     
     [self.connections setObject:new forKey:connectionId];
     [self.view removeConnectionPathWithId:connectionId];
-    
     [self refreshConnections];
     [self.view refresh];
     

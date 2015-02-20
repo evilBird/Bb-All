@@ -146,7 +146,7 @@
     
     return result;
 }
-
+/*
 - (NSUInteger)countAncestors
 {
     if (self.parent != nil) {
@@ -155,7 +155,7 @@
         return 0;
     }
 }
-
+*/
 - (BOOL)hasUI
 {
     return (self.view != nil);

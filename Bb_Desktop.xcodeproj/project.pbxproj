@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		33883FFDC3EF3996A9B58DAD /* libPods-Bb_Desktop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C1F1CD772F5CAEE41526A32 /* libPods-Bb_Desktop.a */; };
+		F206CE3F1A9708AA006BB9C8 /* BbConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F206CE3E1A9708AA006BB9C8 /* BbConnection.m */; };
 		F2250DC61A92F9F200768E76 /* BbBangObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F2250DC51A92F9F200768E76 /* BbBangObject.m */; };
 		F2250DC91A92FAE600768E76 /* BbCocoaBangView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2250DC81A92FAE600768E76 /* BbCocoaBangView.m */; };
 		F2250DCE1A93D4BC00768E76 /* BbCocoaEntityView+Touches.m in Sources */ = {isa = PBXBuildFile; fileRef = F2250DCD1A93D4BC00768E76 /* BbCocoaEntityView+Touches.m */; };
@@ -83,6 +84,8 @@
 		283F62CA37EDFC9AD6EE1093 /* Pods-Bb_Desktop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bb_Desktop.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bb_Desktop/Pods-Bb_Desktop.debug.xcconfig"; sourceTree = "<group>"; };
 		4365CCF086C9A817D9089A95 /* Pods-Bb_Desktop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bb_Desktop.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bb_Desktop/Pods-Bb_Desktop.release.xcconfig"; sourceTree = "<group>"; };
 		6C1F1CD772F5CAEE41526A32 /* libPods-Bb_Desktop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bb_Desktop.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F206CE3D1A9708AA006BB9C8 /* BbConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbConnection.h; sourceTree = "<group>"; };
+		F206CE3E1A9708AA006BB9C8 /* BbConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbConnection.m; sourceTree = "<group>"; };
 		F2250DC41A92F9F200768E76 /* BbBangObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbBangObject.h; sourceTree = "<group>"; };
 		F2250DC51A92F9F200768E76 /* BbBangObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbBangObject.m; sourceTree = "<group>"; };
 		F2250DC71A92FAE600768E76 /* BbCocoaBangView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbCocoaBangView.h; sourceTree = "<group>"; };
@@ -469,6 +472,8 @@
 				F2709D861A89B2B0004BF4FF /* BbConstants.h */,
 				F2709D761A89B2B0004BF4FF /* BbBase.h */,
 				F2709D751A89B2B0004BF4FF /* BbBase.m */,
+				F206CE3D1A9708AA006BB9C8 /* BbConnection.h */,
+				F206CE3E1A9708AA006BB9C8 /* BbConnection.m */,
 				F2709D791A89B2B0004BF4FF /* BbObject.h */,
 				F2709D771A89B2B0004BF4FF /* BbObject.m */,
 				F2381CBE1A8AB83A00B7D2A4 /* BbObject+EntityParent.h */,
@@ -755,6 +760,7 @@
 				F2621DCE1A92D53500585016 /* BbCocoaMessageView.m in Sources */,
 				F2250DC91A92FAE600768E76 /* BbCocoaBangView.m in Sources */,
 				F2709D071A894D08004BF4FF /* Document.xcdatamodeld in Sources */,
+				F206CE3F1A9708AA006BB9C8 /* BbConnection.m in Sources */,
 				F2709D9E1A89B2B0004BF4FF /* BbBasicMathTests.m in Sources */,
 				F2709D231A89539B004BF4FF /* BbBoxView.m in Sources */,
 				F2F6E1591A8A8E84000959AB /* NSView+Bb.m in Sources */,

@@ -27,6 +27,15 @@
     return (self.objectId == [object hash]);
 }
 
+- (NSUInteger)countAncestors
+{
+    if (self.parent != nil) {
+        return ([self.parent countAncestors]+1);
+    }else{
+        return 0;
+    }
+}
+
 - (void)tearDown{
     
     self.name = nil;
