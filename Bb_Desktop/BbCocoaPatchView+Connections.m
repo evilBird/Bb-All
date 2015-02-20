@@ -42,6 +42,25 @@
     }
 }
 
+- (void)patch:(BbPatch *)patch connectionsDidChange:(id)connections
+{
+    
+    if (patch == self.patch && connections) {
+        NSMutableDictionary *temp = [NSMutableDictionary dictionary];
+        NSArray *connects = connections;
+        for (BbConnectionDescription *desc in connects) {
+            NSDictionary *dict = [self connectionDictionaryWithDescription:desc];
+            if (dict) {
+                [temp addEntriesFromDictionary:dict];
+            }
+        }
+        
+        self.connections = nil;
+        self.connections = temp;
+        [self setNeedsDisplay:YES];
+    }
+}
+
 - (void)connectPortView:(BbCocoaPortView *)sender toReceiver:(BbCocoaPortView *)receiver
 {
     NSDictionary *senderInfo = [sender userInfo];
@@ -119,6 +138,92 @@
     return connectionBlock;
 }
 
+- (void)hitTestConnections:(NSDictionary *)connections withPoint:(NSPoint)point
+{
+    BOOL shouldRefresh = NO;
+    for (NSString *connectionId in connections.allKeys) {
+        BbCocoaPatchGetConnectionArray block = [connections valueForKey:connectionId];
+        NSArray *array = block();
+        BOOL hit = [self line:array intersectsPoint:point];
+        if (hit) {
+            shouldRefresh = YES;
+            if (!self.selectedConnections) {
+                self.selectedConnections = [[NSMutableSet alloc]init];
+            }
+            
+            if (![self.selectedConnections containsObject:connectionId]) {
+                [self.selectedConnections addObject:connectionId];
+            }else{
+                [self.selectedConnections removeObject:connectionId];
+                if (self.selectedConnections.count == 0) {
+                    self.selectedConnections = nil;
+                }
+            }
+        }
+    }
+    
+    if (shouldRefresh) {
+        [self setNeedsDisplay:YES];
+    }
+}
+
+- (BOOL)line:(NSArray *)array intersectsPoint:(NSPoint)point
+{
+    CGFloat x1,y1,x2,y2,x3,y3,dx,dx1,dy,m,b;
+    if (!array || array.count == 0) {
+        return NO;
+    }
+    
+    x1 = [array[0] doubleValue];
+    y1 = [array[1] doubleValue];
+    x2 = [array[2] doubleValue];
+    y2 = [array[3] doubleValue];
+    x3 = point.x;
+    y3 = point.y;
+    
+    if (x2 > x1) {
+        if (!(x2 >= x3) || !(x3>= x1)) {
+            return NO;
+        }
+        
+        dx = x2 - x1;
+        dy = y2 - y1;
+        b = y1;
+        dx1 = x3 - x1;
+        
+    }else{
+        if (!(x1 >= x3) || !(x3>= x2)) {
+            return NO;
+        }
+        
+        dx = x1 - x2;
+        dy = y1 - y2;
+        b = y2;
+        dx1 = x3 - x2;
+    }
+    
+    if (y2 > y1) {
+        if (!(y2>=y3) || !(y3>=y1)) {
+            return NO;
+        }
+    }else{
+        if (!(y1>=y3) || !(y3>=y2)) {
+            return NO;
+        }
+    }
+    
+    m = dy/dx;
+    CGFloat yhat = m * dx1 + b;
+    CGFloat error = fabs(yhat - y3);
+    NSLog(@"error = %.2f",error);
+    
+    if (error < 8) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (NSBezierPath *)connectionPathFromArray:(NSArray *)array
 {
     if (!array || array.count != 4) {
@@ -144,18 +249,48 @@
     return path;
 }
 
+- (NSBezierPath *)connectionPathFromArray:(NSArray *)array selected:(BOOL)selected
+{
+    if (!array || array.count != 4) {
+        return nil;
+    }
+    
+    CGFloat x1,y1,x2,y2;
+    x1 = [array[0] doubleValue];
+    y1 = [array[1] doubleValue];
+    x2 = [array[2] doubleValue];
+    y2 = [array[3] doubleValue];
+    
+    CGPoint point = CGPointMake(x1, y1);
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path moveToPoint:point];
+    point.x = x2;
+    point.y = y2;
+    [path lineToPoint:point];
+    
+    [path setLineWidth:4];
+    if (!selected) {
+        [[NSColor blackColor]setStroke];
+    }else{
+        [[NSColor colorWithWhite:0.5 alpha:1]setStroke];
+    }
+    
+    return path;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     [super drawRect:dirtyRect];
     
-    NSMutableArray *connections = self.connections.allValues.mutableCopy;
-    if (connections) {
-        for (BbCocoaPatchGetConnectionArray block in connections) {
-            NSBezierPath *connectionPath = [self connectionPathFromArray:block()];
+    if (self.connections && self.connections.allKeys.count) {
+        for (NSString *connectionId in self.connections.allKeys) {
+            BbCocoaPatchGetConnectionArray block = [self.connections valueForKey:connectionId];
+            BOOL selected = [self.selectedConnections containsObject:connectionId];
+            NSBezierPath *connectionPath = [self connectionPathFromArray:block() selected:selected];
             [connectionPath stroke];
         }
     }
-    
+
     if (!self.drawThisConnection || self.drawThisConnection.count != 4) {
         return;
     }

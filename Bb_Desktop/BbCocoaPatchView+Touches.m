@@ -26,18 +26,33 @@
 {
     CGPoint loc = theEvent.locationInWindow;
     id theView = [self hitTest:loc];
+    id superView = [theView superview];
+    id myView = nil;
+    
+    if (![theView respondsToSelector:@selector(viewType)] && [superView respondsToSelector:@selector(editing)]) {
+        BOOL editing = [superView editing];
+        if (editing) {
+            return;
+        }
+        
+        myView = superView;
+    }else{
+        myView = theView;
+    }
+    
     kClickCount = theEvent.clickCount;
     
-    if (![theView respondsToSelector:@selector(viewType)]) {
-        return;
+    if ([myView viewType] == BbViewType_Patch) {
+        if (theEvent.clickCount == 1) {
+            [self hitTestConnections:self.connections.mutableCopy withPoint:loc];
+            return;
+        }else if (theEvent.clickCount == 2){
+            [self addPlaceholderAtPoint:theEvent.locationInWindow];
+            return;
+        }
     }
     
-    if ([theView viewType] == BbViewType_Patch && theEvent.clickCount == 2) {
-        [self addPlaceholderAtPoint:theEvent.locationInWindow];
-        return;
-    }
-    
-    [self clickDown:theEvent inView:theView];
+    [self clickDown:theEvent inView:myView];
     kPreviousLoc = theEvent.locationInWindow;
 }
 
@@ -138,18 +153,20 @@
 }
 
 #pragma mark - Key down
-/*
+
 - (void)keyDown:(NSEvent *)theEvent
 {
-   NSString *theKey = theEvent.characters;
-    if ([theKey isEqualToString:@"\x7f"]) {
-        [self deleteSelected];
+    NSString *theKey = theEvent.characters;
+    if ([theKey isEqualToString:@"\x7f"] && self.selectedConnections) {
+        for (NSString *connectionId in self.selectedConnections.allObjects) {
+            if ([self.patch hasConnectionWithId:connectionId]) {
+                [self.patch deleteConnectionWithId:connectionId];
+            }else{
+                NSLog(@"patch doesn't have a connection with id %@",connectionId);
+            }
+        }
     }
+
 }
 
-- (void)deleteSelected
-{
-    
-}
-*/
 @end

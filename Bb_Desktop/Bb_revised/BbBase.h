@@ -11,7 +11,7 @@
 #import "BbConstants.h"
 #import "NSObject+Bb.h"
 
-@class BbPort,BbInlet,BbObject;
+@class BbPort,BbInlet,BbObject,BbPatch;
 
 @protocol BbEntityParent <NSObject>
 @optional

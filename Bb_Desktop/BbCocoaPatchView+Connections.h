@@ -27,4 +27,8 @@
 
 - (void)removeConnectionPathWithId:(NSString *)connectionId;
 
+- (void)hitTestConnections:(NSDictionary *)connections withPoint:(NSPoint)point;
+
+- (void)patch:(BbPatch *)patch connectionsDidChange:(id)connections;
+
 @end

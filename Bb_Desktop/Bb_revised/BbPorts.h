@@ -55,6 +55,7 @@ typedef NS_ENUM(NSUInteger, PortElementScope)
 + (BbOutlet *)newOutletNamed:(NSString *)name;
 - (BOOL)canConnectToInlet:(BbInlet *)inlet;
 - (void)connectToInlet:(BbInlet *)inlet;
+- (void)disconnectFromInlet:(BbInlet *)inlet;
 - (void)output:(id)value;
 
 @end

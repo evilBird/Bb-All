@@ -14,7 +14,7 @@
 #import <Cocoa/Cocoa.h>
 #endif
 
-@class BbEntity;
+@class BbEntity,BbPatch;
 @protocol BbEntityView <NSObject>
 @optional
 
@@ -38,6 +38,8 @@
 - (void)removeFromSuperview;
 
 - (void)removeConnectionPathWithId:(NSString *)connectionId;
+- (void)patch:(BbPatch *)patch connectionsDidChange:(id)connections;
+
 
 @end
 

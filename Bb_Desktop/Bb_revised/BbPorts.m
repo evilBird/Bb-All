@@ -247,6 +247,12 @@
     [inlet.inputElement observePortElement:self.outputElement];
 }
 
+- (void)disconnectFromInlet:(BbInlet *)inlet
+{
+    [self.outputElement removeObserver:inlet.inputElement forKeyPath:kPortElementObservationKey];
+    [self.outputElement.observers removeObject:inlet.inputElement];
+}
+
 - (void)output:(id)value
 {
     self.inputElement.value = value;

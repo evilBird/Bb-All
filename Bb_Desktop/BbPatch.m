@@ -28,6 +28,31 @@
     }
 }
 
+- (BOOL)hasConnectionWithId:(NSString *)connectionId
+{
+    return [self.connections.allKeys containsObject:connectionId];
+}
+
+- (void)deleteConnectionWithId:(NSString *)connectionId
+{
+    BbConnectionDescription *connection = [self.connections valueForKey:connectionId];
+    [self disconnectObject:connection.senderObjectIndex
+                      port:connection.senderPortIndex
+                fromObject:connection.receiverObjectIndex
+                      port:connection.receiverPortIndex];
+    BbConnectionDescription *new = connection;
+    new.flag = BbConnectionDescriptionFlags_DELETE;
+    
+    [self.connections setObject:new forKey:connectionId];
+    [self.view removeConnectionPathWithId:connectionId];
+    
+    [self refreshConnections];
+    [self.view refresh];
+    
+    NSString *textDesc = [self textDescription];
+    NSLog(@"\nPATCH DESCRIPTION UPDATE:\n%@",textDesc);
+}
+
 - (void)removeChildObject:(BbObject *)childObject
 {
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"%K == %@ || %K == %@",@"senderId",@(childObject.objectId),@"receiverId",@(childObject.objectId)];
@@ -48,9 +73,11 @@
         [self.view removeConnectionPathWithId:connectionId];
     }
     
-    [super removeChildObject:childObject];
+    [self removeChildObject:childObject];
     [self refreshConnections];
     [self.view refresh];
+    
+    //[childObject tearDown];
     
     NSString *textDesc = [self textDescription];
     NSLog(@"\nPATCH DESCRIPTION UPDATE:\n%@",textDesc);
@@ -86,6 +113,8 @@
     }
     
     self.connections = connections;
+    
+    [self.view patch:self connectionsDidChange:connections.allValues];
 }
 
 - (BbConnectionDescription *)descConnectionSender:(BbObject *)sender
@@ -148,6 +177,8 @@
     BbObject *receiver = self.childObjects[receiverObjectIndex];
     BbOutlet *outlet = sender.outlets[senderPortIndex];
     BbInlet *inlet = receiver.inlets[receiverPortIndex];
+    
+    [outlet disconnectFromInlet:inlet];
     
     BbConnectionDescription *desc = nil;
     desc = [self descConnectionSender:sender

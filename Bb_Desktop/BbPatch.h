@@ -25,6 +25,10 @@
               fromObject:(NSUInteger)receiverObjectIndex
                     port:(NSUInteger)receiverPortIndex;
 
+- (BOOL)hasConnectionWithId:(NSString *)connectionId;
+
+- (void)deleteConnectionWithId:(NSString *)connectionId;
+
 - (void)connectOutlet:(BbOutlet *)outlet
               toInlet:(BbInlet *)inlet;
 
