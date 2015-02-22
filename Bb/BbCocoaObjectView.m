@@ -68,11 +68,13 @@
     
     if (viewDescription) {
         NSDictionary *textAttributes = [[self class] textAttributes];
+        CGFloat textExpansion = [self textExpansionFactor];
         contentWidth = [self intrinsicWidthForObjectWithInlets:viewDescription.inlets
                                                        outlets:viewDescription.outlets
                                                  portViewWidth:kPortViewWidthConstraint
                                                  displayedText:viewDescription.text
                                        displayedTextAttributes:textAttributes
+                                           textExpansionFactor:textExpansion
                                                 minPortSpacing:kMinHorizontalSpacerSize
                                                   defaultWidth:kDefaultCocoaObjectViewWidth];
     }
@@ -90,6 +92,16 @@
 {
     CGFloat contentHeight = kPortViewHeightConstraint * 2.0 + kMinVerticalSpacerSize;
     return [NSView roundFloat:contentHeight];
+}
+
+- (CGFloat)editingTextExpansionFactor
+{
+    return 1.1;
+}
+
+- (CGFloat)defaultTextExpansionFactor
+{
+    return 1.05;
 }
 
 #pragma accessors

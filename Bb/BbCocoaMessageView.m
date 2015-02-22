@@ -9,6 +9,7 @@
 #import "BbCocoaMessageView.h"
 #import "BbMessage.h"
 #import "NSObject+Bb.h"
+#import "NSString+Bb.h"
 
 @implementation BbCocoaMessageView
 
@@ -50,7 +51,7 @@
 
 - (CGFloat)defaultTextExpansionFactor
 {
-    return 1.0;
+    return 1.05;
 }
 
 - (NSColor *)defaultColor
@@ -81,6 +82,8 @@
         if (self.editing) {
             [self endEditingText];
             self.editing = NO;
+            NSString *text = [NSString stringWithString:self.textField.stringValue];
+            self.textEditingEndedHandler(text);
         }
     }
 }
@@ -90,7 +93,6 @@
     [[(BbMessage *)self.entity hotInlet]input:[BbBang bang]];
     self.sending = YES;
     [self setNeedsDisplay:YES];
-    
     __weak BbCocoaMessageView *weakself = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakself endMessage];

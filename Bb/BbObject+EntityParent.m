@@ -129,15 +129,5 @@
     
     return nil;
 }
-/*
-- (NSArray *)childObjects
-{
-    if (self.childObjects_ && self.childObjects_.count > 0) {
-        return self.childObjects_.array.mutableCopy;
-    }
-    
-    return nil;
-}
-*/
 
 @end

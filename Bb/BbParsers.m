@@ -59,7 +59,10 @@
 
 + (NSArray *)descriptionsWithText:(NSString *)text
 {
-    NSArray *lines = [text componentsSeparatedByString:@"\n"];
+    NSArray *components = [text componentsSeparatedByString:@"\n"];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"%K > 0",@"length"];
+    NSArray *lines = [components filteredArrayUsingPredicate:pred];
+    
     NSMutableArray *descriptions = nil;
     for (NSString *line in lines) {
         BbDescription *desc = [BbBasicParser descriptionWithText:line];
@@ -88,7 +91,9 @@
     description.stackInstruction = [NSScanner scanStackInstruction:&scanner];
     description.UIType = [NSScanner scanUIType:&scanner];
     
-    if (![description.UIType isEqualToString:@"connect"]) {
+    if ([description.UIType isEqualToString:@"restore"]) {
+        return description;
+    }else if (![description.UIType isEqualToString:@"connect"]) {
         return [BbBasicParser scanObject:&scanner description:description];
     }else{
         return [BbBasicParser scanConnection:&scanner description:description];

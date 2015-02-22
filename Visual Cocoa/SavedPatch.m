@@ -82,7 +82,10 @@
     // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
     // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
     //[NSException raise:@"UnimplementedMethod" format:@"%@ is unimplemented", NSStringFromSelector(_cmd)];
-    return nil;
+    PatchViewController *vc = (PatchViewController *)[self.windowControllers.lastObject contentViewController];
+    NSString *patchDescription = vc.patch.textDescription;
+    NSData *data = [NSData dataWithBytes:[patchDescription UTF8String] length:patchDescription.length];
+    return data;
 }
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError {

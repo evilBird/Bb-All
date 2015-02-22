@@ -73,6 +73,7 @@
     }
     
     [self.patch addChildObject:object];
+    
     BbCocoaEntityViewDescription *viewDesc = [[BbCocoaEntityViewDescription alloc]init];
     viewDesc.text = [NSString displayTextName:object.name args:objDesc.BbObjectArgs];
     viewDesc.entityViewType = objDesc.UIType;
@@ -84,6 +85,7 @@
     normCenter.x = normX;
     normCenter.y = normY;
     viewDesc.position = normCenter;
+    object.position = @[@(normX),@(normY)];
     BbCocoaObjectView *view = nil;
     view = [BbCocoaObjectView viewWithBbUIType:objDesc.UIType
                                         entity:object

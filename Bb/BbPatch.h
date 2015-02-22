@@ -9,11 +9,13 @@
 #import "BbObject+EntityParent.h"
 #import "BbObject+Encoder.h"
 #import "BbParsers.h"
+#import "BbConnection.h"
 
 @interface BbPatch : BbObject
 
 @property (nonatomic,strong)NSMutableSet *connectionIds;
 @property (nonatomic,strong)NSMutableDictionary *connections;
+@property (nonatomic,strong)NSMutableDictionary *myConnections;
 
 - (void)addConnectionsWithDescriptions:(NSArray *)descriptions;
 

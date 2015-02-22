@@ -302,6 +302,148 @@
 		F28FB4681A994BCE00E37BA3 /* Bb */ = {
 			isa = PBXGroup;
 			children = (
+				F2E031B31A999D8D005A0BDB /* Foundation Categories */,
+				F2E031B11A999D52005A0BDB /* Bb Main */,
+				F2E031B01A999D1F005A0BDB /* Bb Parsers */,
+				F2E031AE1A999CC1005A0BDB /* Bb Objects */,
+				F2E031B21A999D78005A0BDB /* Bb Tests */,
+				F2E031AB1A999C47005A0BDB /* UI */,
+			);
+			name = Bb;
+			path = ../Bb;
+			sourceTree = "<group>";
+		};
+		F2E031AB1A999C47005A0BDB /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F2E031B41A999DC3005A0BDB /* iOS */,
+				F2E031B51A999DCD005A0BDB /* OSX */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		F2E031AC1A999C58005A0BDB /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F28FB4251A994BCE00E37BA3 /* BbCocoaEntityView+Autolayout.h */,
+				F28FB4261A994BCE00E37BA3 /* BbCocoaEntityView+Autolayout.m */,
+				F28FB4271A994BCE00E37BA3 /* BbCocoaEntityView+BbCocoaObjectView.h */,
+				F28FB4281A994BCE00E37BA3 /* BbCocoaEntityView+BbCocoaObjectView.m */,
+				F28FB4291A994BCE00E37BA3 /* BbCocoaEntityView+TextDelegate.h */,
+				F28FB42A1A994BCE00E37BA3 /* BbCocoaEntityView+TextDelegate.m */,
+				F28FB42B1A994BCE00E37BA3 /* BbCocoaEntityView+Touches.h */,
+				F28FB42C1A994BCE00E37BA3 /* BbCocoaEntityView+Touches.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		F2E031AD1A999C8C005A0BDB /* UI Objects */ = {
+			isa = PBXGroup;
+			children = (
+				F28FB4471A994BCE00E37BA3 /* BbCocoaPortView.h */,
+				F28FB4481A994BCE00E37BA3 /* BbCocoaPortView.m */,
+				F28FB4231A994BCE00E37BA3 /* BbCocoaBangView.h */,
+				F28FB4241A994BCE00E37BA3 /* BbCocoaBangView.m */,
+				F28FB4311A994BCE00E37BA3 /* BbCocoaHSliderView.h */,
+				F28FB4321A994BCE00E37BA3 /* BbCocoaHSliderView.m */,
+				F28FB4331A994BCE00E37BA3 /* BbCocoaMessageView.h */,
+				F28FB4341A994BCE00E37BA3 /* BbCocoaMessageView.m */,
+				F28FB4391A994BCE00E37BA3 /* BbCocoaObjectView.h */,
+				F28FB43A1A994BCE00E37BA3 /* BbCocoaObjectView.m */,
+				F28FB4451A994BCE00E37BA3 /* BbCocoaPlaceholderObjectView.h */,
+				F28FB4461A994BCE00E37BA3 /* BbCocoaPlaceholderObjectView.m */,
+				F2E031AF1A999CE0005A0BDB /* Categories */,
+			);
+			name = "UI Objects";
+			sourceTree = "<group>";
+		};
+		F2E031AE1A999CC1005A0BDB /* Bb Objects */ = {
+			isa = PBXGroup;
+			children = (
+				F28FB49A1A994ECF00E37BA3 /* BbStrings.m */,
+				F28FB49F1A994ECF00E37BA3 /* BbStrings.h */,
+				F28FB41D1A994BCE00E37BA3 /* BbBangObject.h */,
+				F28FB41E1A994BCE00E37BA3 /* BbBangObject.m */,
+				F28FB41F1A994BCE00E37BA3 /* BbBasicMath.h */,
+				F28FB4201A994BCE00E37BA3 /* BbBasicMath.m */,
+				F28FB4211A994BCE00E37BA3 /* BbClassMethod.h */,
+				F28FB4221A994BCE00E37BA3 /* BbClassMethod.m */,
+				F28FB44D1A994BCE00E37BA3 /* BbInstanceMethod.h */,
+				F28FB44E1A994BCE00E37BA3 /* BbInstanceMethod.m */,
+				F28FB4511A994BCE00E37BA3 /* BbLog.h */,
+				F28FB4521A994BCE00E37BA3 /* BbLog.m */,
+				F28FB4531A994BCE00E37BA3 /* BbMessage.h */,
+				F28FB4541A994BCE00E37BA3 /* BbMessage.m */,
+				F28FB45D1A994BCE00E37BA3 /* BbStandardLib.h */,
+				F28FB45E1A994BCE00E37BA3 /* BbTrigger.h */,
+				F28FB45F1A994BCE00E37BA3 /* BbTrigger.m */,
+			);
+			name = "Bb Objects";
+			sourceTree = "<group>";
+		};
+		F2E031AF1A999CE0005A0BDB /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F28FB4351A994BCE00E37BA3 /* BbCocoaObjectView+Autolayout.h */,
+				F28FB4361A994BCE00E37BA3 /* BbCocoaObjectView+Autolayout.m */,
+				F28FB4371A994BCE00E37BA3 /* BbCocoaObjectView+TextFieldDelegate.h */,
+				F28FB4381A994BCE00E37BA3 /* BbCocoaObjectView+TextFieldDelegate.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		F2E031B01A999D1F005A0BDB /* Bb Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				F28FB4971A994ECF00E37BA3 /* BbParsers.h */,
+				F28FB4981A994ECF00E37BA3 /* BbParsers.m */,
+				F28FB49E1A994ECF00E37BA3 /* BbEncoders.h */,
+				F28FB49D1A994ECF00E37BA3 /* BbEncoders.m */,
+				F28FB4551A994BCE00E37BA3 /* BbObject+Decoder.h */,
+				F28FB4561A994BCE00E37BA3 /* BbObject+Decoder.m */,
+				F28FB4571A994BCE00E37BA3 /* BbObject+Encoder.h */,
+				F28FB4581A994BCE00E37BA3 /* BbObject+Encoder.m */,
+			);
+			name = "Bb Parsers";
+			sourceTree = "<group>";
+		};
+		F2E031B11A999D52005A0BDB /* Bb Main */ = {
+			isa = PBXGroup;
+			children = (
+				F28FB4921A994ECF00E37BA3 /* BbPorts.h */,
+				F28FB4931A994ECF00E37BA3 /* BbPorts.m */,
+				F28FB4941A994ECF00E37BA3 /* BbUI.h */,
+				F28FB4961A994ECF00E37BA3 /* BbObject.h */,
+				F28FB4951A994ECF00E37BA3 /* BbObject.m */,
+				F28FB4911A994ECF00E37BA3 /* BbBase.h */,
+				F28FB4991A994ECF00E37BA3 /* BbBase.m */,
+				F28FB4A01A994ECF00E37BA3 /* BbConstants.h */,
+				F28FB4491A994BCE00E37BA3 /* BbConnection.h */,
+				F28FB44A1A994BCE00E37BA3 /* BbConnection.m */,
+				F28FB4591A994BCE00E37BA3 /* BbObject+EntityParent.h */,
+				F28FB45A1A994BCE00E37BA3 /* BbObject+EntityParent.m */,
+				F28FB45B1A994BCE00E37BA3 /* BbPatch.h */,
+				F28FB45C1A994BCE00E37BA3 /* BbPatch.m */,
+			);
+			name = "Bb Main";
+			sourceTree = "<group>";
+		};
+		F2E031B21A999D78005A0BDB /* Bb Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F28FB4A11A994ECF00E37BA3 /* BbTests.h */,
+				F28FB49B1A994ECF00E37BA3 /* BbTests.m */,
+				F28FB4A21A994ECF00E37BA3 /* BbObject+Tests.h */,
+				F28FB49C1A994ECF00E37BA3 /* BbObject+Tests.m */,
+				F28FB4A31A994ECF00E37BA3 /* BbBasicMathTests.h */,
+				F28FB4A41A994ECF00E37BA3 /* BbBasicMathTests.m */,
+			);
+			name = "Bb Tests";
+			sourceTree = "<group>";
+		};
+		F2E031B31A999D8D005A0BDB /* Foundation Categories */ = {
+			isa = PBXGroup;
+			children = (
 				F28FB4AF1A994F4800E37BA3 /* NSInvocation+Bb.h */,
 				F28FB4BA1A9950AD00E37BA3 /* NSInvocation+Bb.m */,
 				F28FB4B01A994F4800E37BA3 /* NSScanner+Bb.h */,
@@ -320,56 +462,46 @@
 				F28FB4651A994BCE00E37BA3 /* NSNumber+Bb.m */,
 				F28FB4661A994BCE00E37BA3 /* NSView+Bb.h */,
 				F28FB4671A994BCE00E37BA3 /* NSView+Bb.m */,
-				F28FB4921A994ECF00E37BA3 /* BbPorts.h */,
-				F28FB4931A994ECF00E37BA3 /* BbPorts.m */,
-				F28FB4941A994ECF00E37BA3 /* BbUI.h */,
-				F28FB4961A994ECF00E37BA3 /* BbObject.h */,
-				F28FB4951A994ECF00E37BA3 /* BbObject.m */,
-				F28FB4971A994ECF00E37BA3 /* BbParsers.h */,
-				F28FB4981A994ECF00E37BA3 /* BbParsers.m */,
-				F28FB4911A994ECF00E37BA3 /* BbBase.h */,
-				F28FB4991A994ECF00E37BA3 /* BbBase.m */,
-				F28FB49A1A994ECF00E37BA3 /* BbStrings.m */,
-				F28FB49B1A994ECF00E37BA3 /* BbTests.m */,
-				F28FB49C1A994ECF00E37BA3 /* BbObject+Tests.m */,
-				F28FB49E1A994ECF00E37BA3 /* BbEncoders.h */,
-				F28FB49D1A994ECF00E37BA3 /* BbEncoders.m */,
-				F28FB49F1A994ECF00E37BA3 /* BbStrings.h */,
-				F28FB4A01A994ECF00E37BA3 /* BbConstants.h */,
-				F28FB4A11A994ECF00E37BA3 /* BbTests.h */,
-				F28FB4A21A994ECF00E37BA3 /* BbObject+Tests.h */,
-				F28FB4A31A994ECF00E37BA3 /* BbBasicMathTests.h */,
-				F28FB4A41A994ECF00E37BA3 /* BbBasicMathTests.m */,
-				F28FB41D1A994BCE00E37BA3 /* BbBangObject.h */,
-				F28FB41E1A994BCE00E37BA3 /* BbBangObject.m */,
-				F28FB41F1A994BCE00E37BA3 /* BbBasicMath.h */,
-				F28FB4201A994BCE00E37BA3 /* BbBasicMath.m */,
-				F28FB4211A994BCE00E37BA3 /* BbClassMethod.h */,
-				F28FB4221A994BCE00E37BA3 /* BbClassMethod.m */,
-				F28FB4231A994BCE00E37BA3 /* BbCocoaBangView.h */,
-				F28FB4241A994BCE00E37BA3 /* BbCocoaBangView.m */,
-				F28FB4251A994BCE00E37BA3 /* BbCocoaEntityView+Autolayout.h */,
-				F28FB4261A994BCE00E37BA3 /* BbCocoaEntityView+Autolayout.m */,
-				F28FB4271A994BCE00E37BA3 /* BbCocoaEntityView+BbCocoaObjectView.h */,
-				F28FB4281A994BCE00E37BA3 /* BbCocoaEntityView+BbCocoaObjectView.m */,
-				F28FB4291A994BCE00E37BA3 /* BbCocoaEntityView+TextDelegate.h */,
-				F28FB42A1A994BCE00E37BA3 /* BbCocoaEntityView+TextDelegate.m */,
-				F28FB42B1A994BCE00E37BA3 /* BbCocoaEntityView+Touches.h */,
-				F28FB42C1A994BCE00E37BA3 /* BbCocoaEntityView+Touches.m */,
+			);
+			name = "Foundation Categories";
+			sourceTree = "<group>";
+		};
+		F2E031B41A999DC3005A0BDB /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				F28FB44F1A994BCE00E37BA3 /* BbiOSEntityView.h */,
+				F28FB4501A994BCE00E37BA3 /* BbiOSEntityView.m */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		F2E031B51A999DCD005A0BDB /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				F2E031AD1A999C8C005A0BDB /* UI Objects */,
+				F2E031B61A999E13005A0BDB /* Patch View */,
+				F2E031AC1A999C58005A0BDB /* Categories */,
 				F28FB42D1A994BCE00E37BA3 /* BbCocoaEntityView.h */,
 				F28FB42E1A994BCE00E37BA3 /* BbCocoaEntityView.m */,
 				F28FB42F1A994BCE00E37BA3 /* BbCocoaEntityViewDescription.h */,
 				F28FB4301A994BCE00E37BA3 /* BbCocoaEntityViewDescription.m */,
-				F28FB4311A994BCE00E37BA3 /* BbCocoaHSliderView.h */,
-				F28FB4321A994BCE00E37BA3 /* BbCocoaHSliderView.m */,
-				F28FB4331A994BCE00E37BA3 /* BbCocoaMessageView.h */,
-				F28FB4341A994BCE00E37BA3 /* BbCocoaMessageView.m */,
-				F28FB4351A994BCE00E37BA3 /* BbCocoaObjectView+Autolayout.h */,
-				F28FB4361A994BCE00E37BA3 /* BbCocoaObjectView+Autolayout.m */,
-				F28FB4371A994BCE00E37BA3 /* BbCocoaObjectView+TextFieldDelegate.h */,
-				F28FB4381A994BCE00E37BA3 /* BbCocoaObjectView+TextFieldDelegate.m */,
-				F28FB4391A994BCE00E37BA3 /* BbCocoaObjectView.h */,
-				F28FB43A1A994BCE00E37BA3 /* BbCocoaObjectView.m */,
+			);
+			name = OSX;
+			sourceTree = "<group>";
+		};
+		F2E031B61A999E13005A0BDB /* Patch View */ = {
+			isa = PBXGroup;
+			children = (
+				F28FB4431A994BCE00E37BA3 /* BbCocoaPatchView.h */,
+				F28FB4441A994BCE00E37BA3 /* BbCocoaPatchView.m */,
+				F2E031B71A999E20005A0BDB /* Categories */,
+			);
+			name = "Patch View";
+			sourceTree = "<group>";
+		};
+		F2E031B71A999E20005A0BDB /* Categories */ = {
+			isa = PBXGroup;
+			children = (
 				F28FB43B1A994BCE00E37BA3 /* BbCocoaPatchView+Connections.h */,
 				F28FB43C1A994BCE00E37BA3 /* BbCocoaPatchView+Connections.m */,
 				F28FB43D1A994BCE00E37BA3 /* BbCocoaPatchView+Helpers.h */,
@@ -378,36 +510,8 @@
 				F28FB4401A994BCE00E37BA3 /* BbCocoaPatchView+Keys.m */,
 				F28FB4411A994BCE00E37BA3 /* BbCocoaPatchView+Touches.h */,
 				F28FB4421A994BCE00E37BA3 /* BbCocoaPatchView+Touches.m */,
-				F28FB4431A994BCE00E37BA3 /* BbCocoaPatchView.h */,
-				F28FB4441A994BCE00E37BA3 /* BbCocoaPatchView.m */,
-				F28FB4451A994BCE00E37BA3 /* BbCocoaPlaceholderObjectView.h */,
-				F28FB4461A994BCE00E37BA3 /* BbCocoaPlaceholderObjectView.m */,
-				F28FB4471A994BCE00E37BA3 /* BbCocoaPortView.h */,
-				F28FB4481A994BCE00E37BA3 /* BbCocoaPortView.m */,
-				F28FB4491A994BCE00E37BA3 /* BbConnection.h */,
-				F28FB44A1A994BCE00E37BA3 /* BbConnection.m */,
-				F28FB44D1A994BCE00E37BA3 /* BbInstanceMethod.h */,
-				F28FB44E1A994BCE00E37BA3 /* BbInstanceMethod.m */,
-				F28FB44F1A994BCE00E37BA3 /* BbiOSEntityView.h */,
-				F28FB4501A994BCE00E37BA3 /* BbiOSEntityView.m */,
-				F28FB4511A994BCE00E37BA3 /* BbLog.h */,
-				F28FB4521A994BCE00E37BA3 /* BbLog.m */,
-				F28FB4531A994BCE00E37BA3 /* BbMessage.h */,
-				F28FB4541A994BCE00E37BA3 /* BbMessage.m */,
-				F28FB4551A994BCE00E37BA3 /* BbObject+Decoder.h */,
-				F28FB4561A994BCE00E37BA3 /* BbObject+Decoder.m */,
-				F28FB4571A994BCE00E37BA3 /* BbObject+Encoder.h */,
-				F28FB4581A994BCE00E37BA3 /* BbObject+Encoder.m */,
-				F28FB4591A994BCE00E37BA3 /* BbObject+EntityParent.h */,
-				F28FB45A1A994BCE00E37BA3 /* BbObject+EntityParent.m */,
-				F28FB45B1A994BCE00E37BA3 /* BbPatch.h */,
-				F28FB45C1A994BCE00E37BA3 /* BbPatch.m */,
-				F28FB45D1A994BCE00E37BA3 /* BbStandardLib.h */,
-				F28FB45E1A994BCE00E37BA3 /* BbTrigger.h */,
-				F28FB45F1A994BCE00E37BA3 /* BbTrigger.m */,
 			);
-			name = Bb;
-			path = ../Bb;
+			name = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

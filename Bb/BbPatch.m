@@ -84,7 +84,7 @@
         [self.view removeConnectionPathWithId:connectionId];
     }
     
-    [self removeChildObject:childObject];
+    [super removeChildObject:childObject];
     [self refreshConnections];
     [self.view refresh];
     
@@ -143,7 +143,7 @@
     desc.receiverObjectIndex = [self indexOfChild:receiver];
     desc.receiverPortId = inlet.objectId;
     desc.receiverPortIndex = [receiver indexOfPort:inlet];
-    //desc.ancestors = [self countAncestors]+1;
+    desc.ancestors = [self countAncestors]+1;
     desc.flag = BbConnectionDescriptionFlags_OK;
     
     return desc;
@@ -220,6 +220,7 @@
 - (void)connectOutlet:(BbOutlet *)outlet
               toInlet:(BbInlet *)inlet
 {
+    
     [outlet connectToInlet:inlet];
 }
 
@@ -236,7 +237,7 @@
         }
     }
     
-    [desc appendThenSpace:@"#C"];
+    [desc appendThenSpace:@"#N"];
     [desc appendThenSpace:@"restore"];
     [desc appendThenSpace:self.creationArguments];
     [desc semiColon];

@@ -28,6 +28,16 @@
                               minPortSpacing:(CGFloat)minPortSpacing
                                 defaultWidth:(CGFloat)defaultWidth;
 
+- (CGFloat)intrinsicWidthForObjectWithInlets:(NSUInteger)inlets
+                                     outlets:(NSUInteger)outlets
+                               portViewWidth:(CGFloat)portViewWidth
+                               displayedText:(NSString *)displayedText
+                     displayedTextAttributes:(NSDictionary *)displayedTextAttributes
+                         textExpansionFactor:(CGFloat)textExpansion
+                              minPortSpacing:(CGFloat)minPortSpacing
+                                defaultWidth:(CGFloat)defaultWidth;
+
+
 
 - (void)setHorizontalCenter:(CGFloat)horizontalCenter;
 - (void)setVerticalCenter:(CGFloat)verticalCenter;

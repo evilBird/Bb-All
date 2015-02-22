@@ -172,7 +172,8 @@
 
 - (NSArray *)UIPosition
 {
-    return self.position;
+    NSPoint point = [self.view normalizedPosition];
+    return @[@(point.x),@(point.y)];
 }
 
 - (NSArray *)UISize

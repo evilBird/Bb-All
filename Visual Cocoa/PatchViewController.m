@@ -17,7 +17,6 @@
 @interface PatchViewController ()
 
 @property (nonatomic,strong)BbCocoaPatchView *patchView;
-@property (nonatomic,strong)BbPatch *patch;
 
 @end
 
@@ -35,6 +34,8 @@
     if (self.patch && !self.patchView) {
         self.patchView = [BbCocoaPatchView patchViewWithPatch:self.patch inView:self.view];
         [self.view setNeedsDisplay:YES];
+        NSUInteger ancestors = [self.patch countAncestors];
+        NSLog(@"ancestors: %@",@(ancestors));
     }
     // Update the view, if already loaded.
 }

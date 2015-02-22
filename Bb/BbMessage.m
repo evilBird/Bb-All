@@ -22,6 +22,12 @@
     self.name = @"";
 }
 
+- (void)setMessageBuffer:(id)messageBuffer
+{
+    _messageBuffer = messageBuffer;
+    self.creationArguments = messageBuffer;
+}
+
 - (void)hotInlet:(BbInlet *)inlet receivedBang:(BbBang *)bang
 {
     [inlet input:self.messageBuffer];

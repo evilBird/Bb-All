@@ -26,9 +26,9 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"t";
     bangin = NO;
     NSArray *args = arguments;
+    self.name = @"t";
     [self addPort:[BbInlet newHotInletNamed:kBbPortDefaultNameForHotInlet]];
     if (arguments && [arguments isKindOfClass:[NSArray class]]) {
         self.outletType = [NSMutableArray array];

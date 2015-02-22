@@ -32,10 +32,10 @@
                                portViewWidth:(CGFloat)portViewWidth
                                displayedText:(NSString *)displayedText
                      displayedTextAttributes:(NSDictionary *)displayedTextAttributes
+                         textExpansionFactor:(CGFloat)textExpansion
                               minPortSpacing:(CGFloat)minPortSpacing
                                 defaultWidth:(CGFloat)defaultWidth
 {
-    
     CGFloat widthRequiredByPorts,widthRequiredByText,requiredWidth,result;
     CGFloat totalWidthForInlets = (CGFloat)inlets * portViewWidth;
     NSUInteger inletSpacers = [self numberOfSpacersForPortViewCount:inlets];
@@ -53,13 +53,31 @@
     }
     
     CGFloat textWidthRaw = [displayedText sizeWithAttributes:displayedTextAttributes].width;
-    CGFloat textWidth = pow(textWidthRaw, 1.0);
+    CGFloat textWidth = pow(textWidthRaw, textExpansion);
     CGFloat textInsetsWidth = portViewWidth;
     widthRequiredByText = textWidth + textInsetsWidth;
     requiredWidth = [self maxOfValue1:widthRequiredByPorts value2:widthRequiredByText];
-    result = requiredWidth;//[self minOfValue1:defaultWidth value2:requiredWidth];
+    result = requiredWidth;
     
     return [self roundFloat:result];
+}
+
+- (CGFloat)intrinsicWidthForObjectWithInlets:(NSUInteger)inlets
+                                     outlets:(NSUInteger)outlets
+                               portViewWidth:(CGFloat)portViewWidth
+                               displayedText:(NSString *)displayedText
+                     displayedTextAttributes:(NSDictionary *)displayedTextAttributes
+                              minPortSpacing:(CGFloat)minPortSpacing
+                                defaultWidth:(CGFloat)defaultWidth
+{
+    return [self intrinsicWidthForObjectWithInlets:inlets
+                                           outlets:outlets
+                                     portViewWidth:portViewWidth
+                                     displayedText:displayedText
+                           displayedTextAttributes:displayedTextAttributes
+                               textExpansionFactor:1.0
+                                    minPortSpacing:minPortSpacing
+                                      defaultWidth:defaultWidth];
 }
 
 

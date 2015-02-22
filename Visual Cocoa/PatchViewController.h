@@ -10,6 +10,7 @@
 
 @interface PatchViewController : NSViewController
 
+@property (nonatomic,strong)BbPatch *patch;
 
 @end
 
