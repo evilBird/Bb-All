@@ -4,6 +4,7 @@
 target 'Visual Cocoa' do
 
 pod 'PureLayout'
+pod 'AFNetworking'
 
 end
 
