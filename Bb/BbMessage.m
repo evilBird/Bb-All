@@ -7,8 +7,10 @@
 //
 
 #import "BbMessage.h"
+#import "BbMessageParser.h"
 
 @interface BbMessage ()
+
 
 @end
 

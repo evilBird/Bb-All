@@ -10,6 +10,8 @@
 		F16F7F8AF5390FDDE60AE59C /* libPods-Visual Cocoa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3927039BB9D834E2C3F36E5 /* libPods-Visual Cocoa.a */; };
 		F207A4CE1A9C17C4009A9354 /* BbArrayLength.m in Sources */ = {isa = PBXBuildFile; fileRef = F207A4CB1A9C17C4009A9354 /* BbArrayLength.m */; };
 		F207A4CF1A9C17C4009A9354 /* BbArraySplit.m in Sources */ = {isa = PBXBuildFile; fileRef = F207A4CD1A9C17C4009A9354 /* BbArraySplit.m */; };
+		F207A4D21A9C38F1009A9354 /* BbMessageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F207A4D11A9C38F1009A9354 /* BbMessageParser.m */; };
+		F207A4D41A9C3D8C009A9354 /* BbMessageParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F207A4D31A9C3D8C009A9354 /* BbMessageParserTests.m */; };
 		F28FB3FA1A980A8100E37BA3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3F91A980A8100E37BA3 /* AppDelegate.m */; };
 		F28FB3FC1A980A8100E37BA3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FB1A980A8100E37BA3 /* main.m */; };
 		F28FB3FF1A980A8100E37BA3 /* PatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FE1A980A8100E37BA3 /* PatchViewController.m */; };
@@ -88,6 +90,9 @@
 		F207A4CB1A9C17C4009A9354 /* BbArrayLength.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbArrayLength.m; sourceTree = "<group>"; };
 		F207A4CC1A9C17C4009A9354 /* BbArraySplit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbArraySplit.h; sourceTree = "<group>"; };
 		F207A4CD1A9C17C4009A9354 /* BbArraySplit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbArraySplit.m; sourceTree = "<group>"; };
+		F207A4D01A9C38F1009A9354 /* BbMessageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbMessageParser.h; sourceTree = "<group>"; };
+		F207A4D11A9C38F1009A9354 /* BbMessageParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbMessageParser.m; sourceTree = "<group>"; };
+		F207A4D31A9C3D8C009A9354 /* BbMessageParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbMessageParserTests.m; sourceTree = "<group>"; };
 		F28FB3F31A980A8100E37BA3 /* Visual Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Visual Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F28FB3F71A980A8100E37BA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F28FB3F81A980A8100E37BA3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -309,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				F28FB4121A980A8100E37BA3 /* Visual_CocoaTests.m */,
+				F207A4D31A9C3D8C009A9354 /* BbMessageParserTests.m */,
 				F28FB4101A980A8100E37BA3 /* Supporting Files */,
 			);
 			path = "Visual CocoaTests";
@@ -425,6 +431,8 @@
 			children = (
 				F28FB4971A994ECF00E37BA3 /* BbParsers.h */,
 				F28FB4981A994ECF00E37BA3 /* BbParsers.m */,
+				F207A4D01A9C38F1009A9354 /* BbMessageParser.h */,
+				F207A4D11A9C38F1009A9354 /* BbMessageParser.m */,
 				F28FB49E1A994ECF00E37BA3 /* BbEncoders.h */,
 				F28FB49D1A994ECF00E37BA3 /* BbEncoders.m */,
 				F28FB4551A994BCE00E37BA3 /* BbObject+Decoder.h */,
@@ -714,6 +722,7 @@
 				F2E031BD1A99AE5F005A0BDB /* BbDictionary.m in Sources */,
 				F207A4CF1A9C17C4009A9354 /* BbArraySplit.m in Sources */,
 				F28FB4761A994BCE00E37BA3 /* BbCocoaObjectView+TextFieldDelegate.m in Sources */,
+				F207A4D21A9C38F1009A9354 /* BbMessageParser.m in Sources */,
 				F28FB47E1A994BCE00E37BA3 /* BbCocoaPortView.m in Sources */,
 				F28FB48A1A994BCE00E37BA3 /* NSDictionary+Bb.m in Sources */,
 				F28FB4A91A994ECF00E37BA3 /* BbStrings.m in Sources */,
@@ -741,6 +750,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F207A4D41A9C3D8C009A9354 /* BbMessageParserTests.m in Sources */,
 				F28FB4131A980A8100E37BA3 /* Visual_CocoaTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
