@@ -10,8 +10,6 @@
 
 @interface BbMessage : BbObject
 
-//@property (nonatomic) id  messageBuffer;
-
-- (void)setMessageWithText:(NSString *)text;
+@property (nonatomic) NSString  *messageBuffer;
 
 @end

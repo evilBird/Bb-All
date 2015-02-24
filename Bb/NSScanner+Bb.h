@@ -20,4 +20,6 @@
 + (NSArray *)scanObjectArgs:(NSScanner **)scanner;
 + (NSArray *)scanConnectionArgs:(NSScanner **)scanner;
 
++ (NSCharacterSet *)validArgCharacterSet;
+
 @end

@@ -173,27 +173,41 @@
     BOOL didScanWhiteSpace = NO;
     NSMutableArray *temp = [NSMutableArray array];
     NSCharacterSet *endChar = [NSCharacterSet characterSetWithCharactersInString:@";"];
-    NSCharacterSet *argChars = [NSCharacterSet alphanumericCharacterSet];
+    NSCharacterSet *argChars = [NSScanner validArgCharacterSet];
     NSCharacterSet *ws = [NSCharacterSet whitespaceCharacterSet];
     NSString *arg = nil;
-    while (!didScanEndChar) {
+    BOOL done = NO;
+    while (!done) {
+    //while (!didScanEndChar && !done) {
         didScanEndChar = [argsScanner scanCharactersFromSet:endChar intoString:NULL];
         if (!didScanEndChar) {
             didScanWhiteSpace = [argsScanner scanCharactersFromSet:ws intoString:NULL];
             if (didScanWhiteSpace) {
-                if (arg) {
+                if (arg && ![temp containsObject:arg]) {
                     [temp addObject:[arg copy]];
                     arg = nil;
+                }else{
+                    didScanEndChar = [argsScanner scanCharactersFromSet:endChar intoString:NULL];
+                    if (didScanEndChar) {
+                        done = YES;
+                    }
                 }
             }else{
-                [argsScanner scanCharactersFromSet:argChars intoString:&arg];
+                BOOL didScanArgs = [argsScanner scanCharactersFromSet:argChars intoString:&arg];
             }
         }else{
             if (arg) {
                 [temp addObject:[arg copy]];
                 arg = nil;
             }
+            
+            done = YES;
         }
+        
+        //done = argsScanner.isAtEnd;
+        //NSUInteger loc = argsScanner.scanLocation;
+        //NSUInteger len = argsScanner.string;
+        
     }
     
     if (temp) {
@@ -229,6 +243,11 @@
     }
     
     return result;
+}
+
++ (NSCharacterSet *)validArgCharacterSet
+{
+    return [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890./?><:!@#$%^&*()~`'<>-_=+"];
 }
 
 @end

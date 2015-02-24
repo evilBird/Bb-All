@@ -42,8 +42,9 @@
                 id value = [BbMessageParser setTypeForString:messageStringCopy];
                 if ([value isKindOfClass:[NSNumber class]]) {
                     //format for substiution set is
-                    //@[argIndex(0 based), inputIndex(1 based)]
-                    substitutionSet = @[@(argIndex + firstIndex),value];
+                    //@[messageIndex(0 based), argIndex(0 based), inputIndex(1 based)]
+                    substitutionSet = @[@(firstIndex),@(argIndex),value];
+
                     if (!result) {
                         result = [NSMutableArray array];
                     }

@@ -32,7 +32,7 @@
         NSMutableString *mutable = [NSMutableString stringWithString:text];
         [mutable trimWhiteSpace];
         NSString *message = [NSString stringWithString:mutable.mutableCopy];
-        [(BbMessage *)weakself.entity setMessageWithText:text];
+        [(BbMessage *)weakself.entity setMessageBuffer:message];
         weakself.textField.stringValue = message;
         [weakself invalidateIntrinsicContentSize];
         [weakself setNeedsDisplay:YES];
