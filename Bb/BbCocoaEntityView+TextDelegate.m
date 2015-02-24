@@ -111,12 +111,13 @@
     }
     
     CGFloat textWidth = [self intrinsicTextWidth];
+    
     CGFloat textInsetsWidth = kPortViewWidthConstraint;
     CGFloat widthRequiredByText = textWidth + textInsetsWidth;
     if (widthRequiredByText >= kMinWidth) {
         return [NSView roundFloat:widthRequiredByText];
     }else{
-        return kMinWidth;
+        return kMinWidth + widthRequiredByText;
     }
 }
 
@@ -140,7 +141,6 @@
 
 - (void)textDidEndEditing:(NSNotification *)notification
 {
-
     __weak BbCocoaEntityView *weakself = self;
     if (self.textEditingEndedHandler != NULL) {
         self.textEditingEndedHandler(weakself.textField.stringValue);

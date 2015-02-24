@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@interface NSMutableArray (Queue)
+
+- (BOOL)isEmpty;
+- (NSArray *)placeholderIndices;
+- (void)sendMessagesWithBlock:(void(^)(id message))block;
+
+@end
+
+
 @interface BbMessageParser : NSObject
 
 + (id)messageFromText:(NSString *)text;

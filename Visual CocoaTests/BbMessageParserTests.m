@@ -78,6 +78,22 @@
     XCTAssertNotNil(message,@"message is nil");
     XCTAssertTrue([message isKindOfClass:[NSNumber class]],@"message is not a number: %@",message);
     NSLog(@"set string %@ to integer %@",text,message);
+    
+    text = @"string 7 with 8 numbers in it 6";
+    message = [BbMessageParser setTypeForString:text];
+    XCTAssertNotNil(message,@"message is nil");
+    XCTAssertTrue([message isKindOfClass:[NSString class]],@"message is not a string: %@",message);
+    NSLog(@"set string %@ to string %@",text,message);
+}
+
+- (void)testGetPlaceholderIndices
+{
+    NSString *text = @"First $1 Last $2";
+    NSMutableArray *queue = [BbMessageParser messageFromText:text];
+    XCTAssertNotNil(queue,@"queue is nil");
+    NSArray *indices = [queue placeholderIndices];
+    XCTAssertNotNil(indices,@"indices are nil");
+    NSLog(@"indicies: %@",indices);
 }
 
 - (void)testExample {

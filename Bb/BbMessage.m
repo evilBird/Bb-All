@@ -11,6 +11,7 @@
 
 @interface BbMessage ()
 
+@property (nonatomic,strong)NSMutableArray *messageQueue;
 
 @end
 
@@ -20,27 +21,22 @@
 {
     [self addPort:[BbInlet newHotInletNamed:kBbPortDefaultNameForHotInlet]];
     [self addPort:[BbOutlet newOutletNamed:kBbPortDefaultNameForMainOutlet]];
-    self.messageBuffer = arguments;
+    self.messageQueue = [NSMutableArray array];
     self.name = @"";
 }
 
-- (void)setMessageBuffer:(id)messageBuffer
+- (void)setMessageWithText:(NSString *)text
 {
-    _messageBuffer = messageBuffer;
-    self.creationArguments = messageBuffer;
+    self.creationArguments = [text toArray];
+    self.messageQueue = [BbMessageParser messageFromText:text];
 }
 
 - (void)hotInlet:(BbInlet *)inlet receivedBang:(BbBang *)bang
 {
-    [inlet input:self.messageBuffer];
-}
-
-- (BbCalculateOutputBlock)calculateOutputForOutletAtIndex:(NSInteger)index
-{
     __weak BbMessage *weakself = self;
-    return ^(id hotValue,NSArray *inlets){
-        return [weakself messageBuffer];
-    };
+    [self.messageQueue sendMessagesWithBlock:^(id message) {
+        [weakself.mainOutlet output:message];
+    }];
 }
 
 + (NSString *)UIType
