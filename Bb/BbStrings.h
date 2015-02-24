@@ -26,3 +26,11 @@
 @interface BbStringPrepend : BbStringObject
 @end
 
+@interface BbIsString : BbStringObject
+@end
+
+@interface BbToString : BbStringObject
+@end
+
+@interface BbArrayToString : BbStringObject
+@end

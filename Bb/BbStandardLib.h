@@ -18,5 +18,8 @@
 #import "BbClassMethod.h"
 #import "BbInstanceMethod.h"
 #import "BbBangObject.h"
-
+#import "BbGET.h"
+#import "BbDictionary.h"
+#import "BbArrayLength.h"
+#import "BbArraySplit.h"
 #endif

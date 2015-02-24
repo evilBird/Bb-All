@@ -70,6 +70,7 @@ void printInts(int n,...)
     return [BbBang bang];
 }
 
+
 #pragma mark - class methods
 
 + (NSString*)encodeType:(char *)encodedType

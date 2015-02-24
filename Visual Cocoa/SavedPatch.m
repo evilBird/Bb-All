@@ -73,6 +73,11 @@
     NSWindowController *wc = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Document Window Controller"];
     [self addWindowController:wc];
     BbPatch *patch = [self.patchStack pop];
+    
+    if (!patch) {
+        patch = [[BbPatch alloc]initWithArguments:@"untitled patch"];
+    }
+    
     if (patch) {
         [wc.contentViewController setRepresentedObject:patch];
     }

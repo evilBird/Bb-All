@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F16F7F8AF5390FDDE60AE59C /* libPods-Visual Cocoa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3927039BB9D834E2C3F36E5 /* libPods-Visual Cocoa.a */; };
+		F207A4CE1A9C17C4009A9354 /* BbArrayLength.m in Sources */ = {isa = PBXBuildFile; fileRef = F207A4CB1A9C17C4009A9354 /* BbArrayLength.m */; };
+		F207A4CF1A9C17C4009A9354 /* BbArraySplit.m in Sources */ = {isa = PBXBuildFile; fileRef = F207A4CD1A9C17C4009A9354 /* BbArraySplit.m */; };
 		F28FB3FA1A980A8100E37BA3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3F91A980A8100E37BA3 /* AppDelegate.m */; };
 		F28FB3FC1A980A8100E37BA3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FB1A980A8100E37BA3 /* main.m */; };
 		F28FB3FF1A980A8100E37BA3 /* PatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FE1A980A8100E37BA3 /* PatchViewController.m */; };
@@ -65,6 +67,8 @@
 		F28FB4B81A994F4800E37BA3 /* NSObject+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB4B41A994F4800E37BA3 /* NSObject+Bb.m */; };
 		F28FB4BB1A9950AD00E37BA3 /* NSScanner+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB4B91A9950AD00E37BA3 /* NSScanner+Bb.m */; };
 		F28FB4BC1A9950AD00E37BA3 /* NSInvocation+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB4BA1A9950AD00E37BA3 /* NSInvocation+Bb.m */; };
+		F2E031BA1A999F42005A0BDB /* BbGET.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E031B91A999F42005A0BDB /* BbGET.m */; };
+		F2E031BD1A99AE5F005A0BDB /* BbDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E031BC1A99AE5F005A0BDB /* BbDictionary.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +84,10 @@
 /* Begin PBXFileReference section */
 		051F7E6FEC52E012ED4DE418 /* Pods-Visual Cocoa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Visual Cocoa.release.xcconfig"; path = "Pods/Target Support Files/Pods-Visual Cocoa/Pods-Visual Cocoa.release.xcconfig"; sourceTree = "<group>"; };
 		26C3F0A1EAF536BB9D417831 /* Pods-Visual Cocoa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Visual Cocoa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Visual Cocoa/Pods-Visual Cocoa.debug.xcconfig"; sourceTree = "<group>"; };
+		F207A4CA1A9C17C4009A9354 /* BbArrayLength.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbArrayLength.h; sourceTree = "<group>"; };
+		F207A4CB1A9C17C4009A9354 /* BbArrayLength.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbArrayLength.m; sourceTree = "<group>"; };
+		F207A4CC1A9C17C4009A9354 /* BbArraySplit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbArraySplit.h; sourceTree = "<group>"; };
+		F207A4CD1A9C17C4009A9354 /* BbArraySplit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbArraySplit.m; sourceTree = "<group>"; };
 		F28FB3F31A980A8100E37BA3 /* Visual Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Visual Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F28FB3F71A980A8100E37BA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F28FB3F81A980A8100E37BA3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -197,6 +205,10 @@
 		F28FB4B51A994F4800E37BA3 /* NSObject+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Bb.h"; sourceTree = "<group>"; };
 		F28FB4B91A9950AD00E37BA3 /* NSScanner+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSScanner+Bb.m"; sourceTree = "<group>"; };
 		F28FB4BA1A9950AD00E37BA3 /* NSInvocation+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Bb.m"; sourceTree = "<group>"; };
+		F2E031B81A999F42005A0BDB /* BbGET.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbGET.h; sourceTree = "<group>"; };
+		F2E031B91A999F42005A0BDB /* BbGET.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbGET.m; sourceTree = "<group>"; };
+		F2E031BB1A99AE5F005A0BDB /* BbDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbDictionary.h; sourceTree = "<group>"; };
+		F2E031BC1A99AE5F005A0BDB /* BbDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbDictionary.m; sourceTree = "<group>"; };
 		F3927039BB9D834E2C3F36E5 /* libPods-Visual Cocoa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Visual Cocoa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -234,6 +246,17 @@
 				051F7E6FEC52E012ED4DE418 /* Pods-Visual Cocoa.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		F207A4C91A9C177C009A9354 /* Arrays */ = {
+			isa = PBXGroup;
+			children = (
+				F207A4CA1A9C17C4009A9354 /* BbArrayLength.h */,
+				F207A4CB1A9C17C4009A9354 /* BbArrayLength.m */,
+				F207A4CC1A9C17C4009A9354 /* BbArraySplit.h */,
+				F207A4CD1A9C17C4009A9354 /* BbArraySplit.m */,
+			);
+			name = Arrays;
 			sourceTree = "<group>";
 		};
 		F28FB3EA1A980A8000E37BA3 = {
@@ -302,12 +325,12 @@
 		F28FB4681A994BCE00E37BA3 /* Bb */ = {
 			isa = PBXGroup;
 			children = (
-				F2E031B31A999D8D005A0BDB /* Foundation Categories */,
 				F2E031B11A999D52005A0BDB /* Bb Main */,
 				F2E031B01A999D1F005A0BDB /* Bb Parsers */,
 				F2E031AE1A999CC1005A0BDB /* Bb Objects */,
 				F2E031B21A999D78005A0BDB /* Bb Tests */,
 				F2E031AB1A999C47005A0BDB /* UI */,
+				F2E031B31A999D8D005A0BDB /* Foundation Categories */,
 			);
 			name = Bb;
 			path = ../Bb;
@@ -360,8 +383,10 @@
 		F2E031AE1A999CC1005A0BDB /* Bb Objects */ = {
 			isa = PBXGroup;
 			children = (
-				F28FB49A1A994ECF00E37BA3 /* BbStrings.m */,
+				F207A4C91A9C177C009A9354 /* Arrays */,
+				F28FB45D1A994BCE00E37BA3 /* BbStandardLib.h */,
 				F28FB49F1A994ECF00E37BA3 /* BbStrings.h */,
+				F28FB49A1A994ECF00E37BA3 /* BbStrings.m */,
 				F28FB41D1A994BCE00E37BA3 /* BbBangObject.h */,
 				F28FB41E1A994BCE00E37BA3 /* BbBangObject.m */,
 				F28FB41F1A994BCE00E37BA3 /* BbBasicMath.h */,
@@ -374,9 +399,12 @@
 				F28FB4521A994BCE00E37BA3 /* BbLog.m */,
 				F28FB4531A994BCE00E37BA3 /* BbMessage.h */,
 				F28FB4541A994BCE00E37BA3 /* BbMessage.m */,
-				F28FB45D1A994BCE00E37BA3 /* BbStandardLib.h */,
 				F28FB45E1A994BCE00E37BA3 /* BbTrigger.h */,
 				F28FB45F1A994BCE00E37BA3 /* BbTrigger.m */,
+				F2E031B81A999F42005A0BDB /* BbGET.h */,
+				F2E031B91A999F42005A0BDB /* BbGET.m */,
+				F2E031BB1A99AE5F005A0BDB /* BbDictionary.h */,
+				F2E031BC1A99AE5F005A0BDB /* BbDictionary.m */,
 			);
 			name = "Bb Objects";
 			sourceTree = "<group>";
@@ -683,11 +711,14 @@
 				F28FB4AD1A994ECF00E37BA3 /* BbBasicMathTests.m in Sources */,
 				F28FB4691A994BCE00E37BA3 /* BbBangObject.m in Sources */,
 				F28FB48D1A994BCE00E37BA3 /* NSView+Bb.m in Sources */,
+				F2E031BD1A99AE5F005A0BDB /* BbDictionary.m in Sources */,
+				F207A4CF1A9C17C4009A9354 /* BbArraySplit.m in Sources */,
 				F28FB4761A994BCE00E37BA3 /* BbCocoaObjectView+TextFieldDelegate.m in Sources */,
 				F28FB47E1A994BCE00E37BA3 /* BbCocoaPortView.m in Sources */,
 				F28FB48A1A994BCE00E37BA3 /* NSDictionary+Bb.m in Sources */,
 				F28FB4A91A994ECF00E37BA3 /* BbStrings.m in Sources */,
 				F28FB4B81A994F4800E37BA3 /* NSObject+Bb.m in Sources */,
+				F207A4CE1A9C17C4009A9354 /* BbArrayLength.m in Sources */,
 				F28FB4811A994BCE00E37BA3 /* BbInstanceMethod.m in Sources */,
 				F28FB4711A994BCE00E37BA3 /* BbCocoaEntityView.m in Sources */,
 				F28FB3FF1A980A8100E37BA3 /* PatchViewController.m in Sources */,
@@ -698,6 +729,7 @@
 				F28FB3FC1A980A8100E37BA3 /* main.m in Sources */,
 				F28FB4BB1A9950AD00E37BA3 /* NSScanner+Bb.m in Sources */,
 				F28FB3FA1A980A8100E37BA3 /* AppDelegate.m in Sources */,
+				F2E031BA1A999F42005A0BDB /* BbGET.m in Sources */,
 				F28FB4821A994BCE00E37BA3 /* BbiOSEntityView.m in Sources */,
 				F28FB4B61A994F4800E37BA3 /* NSString+Bb.m in Sources */,
 				F28FB4B71A994F4800E37BA3 /* NSArray+Bb.m in Sources */,

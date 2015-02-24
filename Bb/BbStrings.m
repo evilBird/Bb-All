@@ -7,6 +7,7 @@
 //
 
 #import "BbStrings.h"
+#import "NSObject+Bb.h"
 #import "NSArray+Bb.h"
 
 @implementation BbStringObject : BbObject
@@ -149,6 +150,80 @@
         NSString *hot = hotValue;
         NSString *cold = [inlets[1] getValue];
         result = [cold stringByAppendingString:hot];
+        return result;
+    };
+}
+
+@end
+
+@implementation BbIsString
+
+- (NSSet *)allowedTypesForPort:(BbPort *)port
+{
+    return nil;
+}
+
+- (void)setupWithArguments:(id)arguments
+{
+    self.name = @"is string?";
+    [self addPort:[BbInlet newHotInletNamed:@"hot"]];
+    [self addPort:[BbOutlet newOutletNamed:@"main"]];
+}
+
+- (BbCalculateOutputBlock)calculateOutputForOutletAtIndex:(NSInteger)index
+{
+    return ^(id hotValue, NSArray *inlets){
+        NSUInteger isString = (NSUInteger)([hotValue isKindOfClass:[NSString class]]||[hotValue isKindOfClass:[NSMutableString class]] || [hotValue isKindOfClass:[NSAttributedString class]]);
+        return @(isString);
+    };
+}
+
+@end
+
+
+@implementation BbToString
+@end
+
+@implementation BbArrayToString
+
+- (NSSet *)allowedTypesForPort:(BbPort *)port
+{
+    if (port == self.hotInlet) {
+        return [NSSet setWithObject:@(BbValueType_Array)];
+    }
+    
+    return nil;
+}
+
+- (void)setupWithArguments:(id)arguments
+{
+    self.name = @"arr2str";
+    [self addPort:[BbInlet newHotInletNamed:@"hot"]];
+    [self addPort:[BbOutlet newOutletNamed:@"main"]];
+}
+
+- (BbCalculateOutputBlock)calculateOutputForOutletAtIndex:(NSInteger)index
+{
+    return ^(id hotValue, NSArray *inlets){
+        NSString *result = nil;
+        NSMutableString *temp = [[NSMutableString alloc]init];
+        NSArray *hot = hotValue;
+        NSUInteger idx = 0;
+        for (id object in hot) {
+            if ([object respondsToSelector:@selector(toString)]){
+                [temp appendString:[object toString]];
+            }else{
+                [temp appendFormat:@"%@",object];
+            }
+            
+            if (idx < (hot.count - 1)) {
+                [temp appendString:@" "];
+            }
+            
+            idx ++;
+        }
+        
+        result = [NSString stringWithString:temp];
         return result;
     };
 }

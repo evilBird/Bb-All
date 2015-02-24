@@ -13,9 +13,8 @@
 - (void)setupWithArguments:(id)arguments
 {
     [super setupWithArguments:arguments];
-    
+    self.name = @"Log";
     if (arguments) {
-        self.name = [NSString stringWithFormat:@"log %@",[arguments toString]];
         [self.coldInlet input:[arguments toString]];
     }
 }

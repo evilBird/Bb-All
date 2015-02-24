@@ -179,4 +179,60 @@ static NSString *kInstructionSelector = @"stackInstruction";
     [self appendObject:object];
 }
 
+- (NSString *)trimWhiteSpace
+{
+    [self trimLeadingAndTrailingWhiteSpace];
+    [self trimExtraWhiteSpaces];
+    return self;
+}
+
+- (NSString *)trimLeadingAndTrailingWhiteSpace
+{
+    [self trimLeadingWhiteSpace];
+    [self trimTrailingWhiteSpace];
+    return self;
+}
+
+- (NSString *)trimLeadingWhiteSpace
+{
+    NSRange range = [self rangeOfString:@" "];
+    
+    if ((range.location) == 0 && (range.length) == 1) {
+        [self deleteCharactersInRange:range];
+        return [self trimLeadingWhiteSpace];
+    }
+    
+    return self;
+}
+
+- (NSString *)trimTrailingWhiteSpace
+{
+    NSRange range = [self rangeOfString:@" " options:NSBackwardsSearch];
+    
+    if ((range.location) == (self.length - 1) && (range.length) == 1) {
+        [self deleteCharactersInRange:range];
+        return [self trimTrailingWhiteSpace];
+    }
+    
+    return self;
+}
+
+
+- (NSString *)trimExtraWhiteSpaces
+{
+    NSString *xws = @"  ";
+    NSRange rangeOfExtraWhiteSpace = [self rangeOfString:xws];
+    if (rangeOfExtraWhiteSpace.length == 0) {
+        return self;
+    }
+    if (rangeOfExtraWhiteSpace.length == 2) {
+        rangeOfExtraWhiteSpace.length = 1;
+        [self deleteCharactersInRange:rangeOfExtraWhiteSpace];
+        return [self trimExtraWhiteSpaces];
+
+    }
+    
+    return nil;
+}
+
 @end

@@ -10,6 +10,7 @@
 #import "BbMessage.h"
 #import "NSObject+Bb.h"
 #import "NSString+Bb.h"
+#import "NSMutableString+Bb.h"
 
 @implementation BbCocoaMessageView
 
@@ -27,7 +28,12 @@
     };
     
     self.textEditingEndedHandler = ^(NSString *text){
-        [(BbMessage *)weakself.entity setMessageBuffer:text];
+        
+        NSMutableString *mutable = [NSMutableString stringWithString:text];
+        [mutable trimWhiteSpace];
+        NSString *message = [NSString stringWithString:mutable.mutableCopy];
+        [(BbMessage *)weakself.entity setMessageBuffer:message];
+        weakself.textField.stringValue = message;
         [weakself invalidateIntrinsicContentSize];
         [weakself setNeedsDisplay:YES];
         [weakself.superview setNeedsDisplay:YES];
@@ -51,7 +57,7 @@
 
 - (CGFloat)defaultTextExpansionFactor
 {
-    return 1.05;
+    return 1.07;
 }
 
 - (NSColor *)defaultColor

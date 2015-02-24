@@ -45,4 +45,8 @@
 - (void)appendThenNewLine:(id)object;
 - (void)newLineThenAppend:(id)object;
 
+- (NSString *)trimWhiteSpace;
+- (NSString *)trimLeadingAndTrailingWhiteSpace;
+- (NSString *)trimLeadingWhiteSpace;
+- (NSString *)trimTrailingWhiteSpace;
 @end
