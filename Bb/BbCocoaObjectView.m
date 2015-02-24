@@ -14,6 +14,7 @@
 #import "BbCocoaHSliderView.h"
 #import "NSInvocation+Bb.h"
 #import "BbCocoaBangView.h"
+#import "BbCocoaInletView.h"
 
 @interface BbCocoaObjectView ()
 
@@ -173,6 +174,14 @@
     }else if ([type isEqualToString:kBbUITypeBang]){
         return [[BbCocoaBangView alloc]initWithEntity:entity
                                       viewDescription:desc inParent:parentView];
+    }else if ([type isEqualToString:kBbUITypeInlet]){
+        return [[BbCocoaInletView alloc]initWithEntity:entity
+                                       viewDescription:desc
+                                              inParent:parentView];
+    }else if ([type isEqualToString:kBbUITypeOutlet]){
+        return [[BbCocoaOutletView alloc]initWithEntity:entity
+                                        viewDescription:desc
+                                               inParent:parentView];
     }
     
     return nil;

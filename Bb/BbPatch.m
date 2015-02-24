@@ -21,14 +21,8 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    //[super setupWithArguments:arguments];
     self.name = @"patch";
-    if (!arguments) {
-        self.name = @"patch";
-        return;
-    }else{
-        self.name = arguments;
-    }
+    self.creationArguments = [arguments toArray];
 }
 
 - (void)addConnectionsWithDescriptions:(NSArray *)descriptions
@@ -62,6 +56,14 @@
     
     NSString *textDesc = [self textDescription];
     NSLog(@"\nPATCH DESCRIPTION UPDATE:\n%@",textDesc);
+}
+
+- (void)addChildObject:(BbObject *)childObject
+{
+    [super addChildObject:childObject];
+    if ([childObject isKindOfClass:[BbProxyPort class]]) {
+        [self addProxyPort:(BbProxyPort *)childObject];
+    }
 }
 
 - (void)removeChildObject:(BbObject *)childObject
@@ -266,5 +268,61 @@
 {
     return @"#N";
 }
+
+- (void)addPort:(BbPort *)port {}
+
+- (void)addProxyPort:(id)port
+{
+    if ([port isKindOfClass:[BbProxyInlet class]]) {
+        BbProxyInlet *proxy = port;
+        BbInlet *inlet = [BbInlet newHotInletNamed:[NSString stringWithFormat:@"in-%@",@(self.inlets.count)]];
+        [self addInlet:inlet withProxy:proxy];
+    }else if ([port isKindOfClass:[BbProxyOutlet class]]){
+        BbProxyOutlet *proxy = port;
+        BbOutlet *outlet = [BbOutlet newOutletNamed:[NSString stringWithFormat:@"out-%@",@(self.outlets.count)]];
+        [self addOutlet:outlet withProxy:proxy];
+    }
+}
+
+
+@end
+
+
+@implementation BbPatch (ProxyPorts)
+
+- (void)addInlet:(BbInlet *)inlet withProxy:(BbProxyInlet *)proxy
+{
+    if (!inlet || (self.inlets_ && [self.inlets_ containsObject:inlet])) {
+        return;
+    }
+    
+    inlet.parent = self;
+    proxy.parentPort = inlet;
+    inlet.proxy = proxy;
+    
+    if (!self.inlets_) {
+        self.inlets_ = [NSMutableArray array];
+    }
+    
+    [self.inlets_ addObject:inlet];
+}
+
+- (void)addOutlet:(BbOutlet *)outlet withProxy:(BbProxyOutlet *)proxy
+{
+    if (!outlet || (self.outlets_ && [self.outlets_ containsObject:outlet])) {
+        return;
+    }
+    
+    outlet.parent = self;
+    proxy.parentPort = outlet;
+    outlet.proxy = nil;
+    
+    if (!self.outlets_) {
+        self.outlets_ = [NSMutableArray array];
+    }
+    [self.outlets_ addObject:outlet];
+}
+
+
 
 @end

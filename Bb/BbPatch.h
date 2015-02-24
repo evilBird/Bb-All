@@ -10,8 +10,11 @@
 #import "BbObject+Encoder.h"
 #import "BbParsers.h"
 #import "BbConnection.h"
+#import "BbProxyPort.h"
 
-@interface BbPatch : BbObject
+@interface BbPatch : BbObject;
+
+- (void)addProxyPort:(id)port;
 
 @property (nonatomic,strong)NSMutableSet *connectionIds;
 @property (nonatomic,strong)NSMutableDictionary *connections;
@@ -43,3 +46,12 @@
 - (NSArray *)UISize;
 
 @end
+
+
+@interface BbPatch (ProxyPorts)
+
+- (void)addInlet:(BbInlet *)inlet withProxy:(BbProxyInlet *)proxy;
+- (void)addOutlet:(BbOutlet *)outlet withProxy:(BbProxyOutlet *)proxy;
+
+@end
+

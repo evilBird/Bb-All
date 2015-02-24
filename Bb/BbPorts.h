@@ -8,6 +8,13 @@
 
 #import "BbBase.h"
 
+@protocol BbPortProxy <NSObject>
+
+- (NSUInteger)index;
+
+@end
+
+
 typedef id (^BbValidateTypeBlock)(id value);
 typedef void(^BbOutletOutputBlock)(id outputValue);
 
@@ -32,6 +39,7 @@ typedef NS_ENUM(NSUInteger, PortElementScope)
 @property (nonatomic,strong)BbPortElement *inputElement;
 @property (nonatomic,strong)BbPortElement *outputElement;
 @property (nonatomic,readonly) NSInteger index;
+@property (nonatomic,weak) id<BbPortProxy> proxy;
 
 - (id)outputForInputValue:(id)input;
 - (id)getValue;
@@ -59,3 +67,4 @@ typedef NS_ENUM(NSUInteger, PortElementScope)
 - (void)output:(id)value;
 
 @end
+

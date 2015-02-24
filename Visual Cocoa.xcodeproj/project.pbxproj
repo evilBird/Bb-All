@@ -12,6 +12,8 @@
 		F207A4CF1A9C17C4009A9354 /* BbArraySplit.m in Sources */ = {isa = PBXBuildFile; fileRef = F207A4CD1A9C17C4009A9354 /* BbArraySplit.m */; };
 		F207A4D21A9C38F1009A9354 /* BbMessageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F207A4D11A9C38F1009A9354 /* BbMessageParser.m */; };
 		F207A4D41A9C3D8C009A9354 /* BbMessageParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F207A4D31A9C3D8C009A9354 /* BbMessageParserTests.m */; };
+		F24FD9F21A9D0B850038D102 /* BbCocoaInletView.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FD9F11A9D0B850038D102 /* BbCocoaInletView.m */; };
+		F24FD9F81A9D0EE60038D102 /* BbProxyPort.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FD9F71A9D0EE60038D102 /* BbProxyPort.m */; };
 		F28FB3FA1A980A8100E37BA3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3F91A980A8100E37BA3 /* AppDelegate.m */; };
 		F28FB3FC1A980A8100E37BA3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FB1A980A8100E37BA3 /* main.m */; };
 		F28FB3FF1A980A8100E37BA3 /* PatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FE1A980A8100E37BA3 /* PatchViewController.m */; };
@@ -93,6 +95,10 @@
 		F207A4D01A9C38F1009A9354 /* BbMessageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbMessageParser.h; sourceTree = "<group>"; };
 		F207A4D11A9C38F1009A9354 /* BbMessageParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbMessageParser.m; sourceTree = "<group>"; };
 		F207A4D31A9C3D8C009A9354 /* BbMessageParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbMessageParserTests.m; sourceTree = "<group>"; };
+		F24FD9F01A9D0B850038D102 /* BbCocoaInletView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbCocoaInletView.h; sourceTree = "<group>"; };
+		F24FD9F11A9D0B850038D102 /* BbCocoaInletView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbCocoaInletView.m; sourceTree = "<group>"; };
+		F24FD9F61A9D0EE60038D102 /* BbProxyPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbProxyPort.h; sourceTree = "<group>"; };
+		F24FD9F71A9D0EE60038D102 /* BbProxyPort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbProxyPort.m; sourceTree = "<group>"; };
 		F28FB3F31A980A8100E37BA3 /* Visual Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Visual Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F28FB3F71A980A8100E37BA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F28FB3F81A980A8100E37BA3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -379,6 +385,8 @@
 				F28FB4341A994BCE00E37BA3 /* BbCocoaMessageView.m */,
 				F28FB4391A994BCE00E37BA3 /* BbCocoaObjectView.h */,
 				F28FB43A1A994BCE00E37BA3 /* BbCocoaObjectView.m */,
+				F24FD9F01A9D0B850038D102 /* BbCocoaInletView.h */,
+				F24FD9F11A9D0B850038D102 /* BbCocoaInletView.m */,
 				F28FB4451A994BCE00E37BA3 /* BbCocoaPlaceholderObjectView.h */,
 				F28FB4461A994BCE00E37BA3 /* BbCocoaPlaceholderObjectView.m */,
 				F2E031AF1A999CE0005A0BDB /* Categories */,
@@ -446,6 +454,8 @@
 		F2E031B11A999D52005A0BDB /* Bb Main */ = {
 			isa = PBXGroup;
 			children = (
+				F24FD9F61A9D0EE60038D102 /* BbProxyPort.h */,
+				F24FD9F71A9D0EE60038D102 /* BbProxyPort.m */,
 				F28FB4921A994ECF00E37BA3 /* BbPorts.h */,
 				F28FB4931A994ECF00E37BA3 /* BbPorts.m */,
 				F28FB4941A994ECF00E37BA3 /* BbUI.h */,
@@ -703,8 +713,10 @@
 				F28FB46E1A994BCE00E37BA3 /* BbCocoaEntityView+BbCocoaObjectView.m in Sources */,
 				F28FB4A71A994ECF00E37BA3 /* BbParsers.m in Sources */,
 				F28FB46A1A994BCE00E37BA3 /* BbBasicMath.m in Sources */,
+				F24FD9F81A9D0EE60038D102 /* BbProxyPort.m in Sources */,
 				F28FB4AA1A994ECF00E37BA3 /* BbTests.m in Sources */,
 				F28FB46D1A994BCE00E37BA3 /* BbCocoaEntityView+Autolayout.m in Sources */,
+				F24FD9F21A9D0B850038D102 /* BbCocoaInletView.m in Sources */,
 				F28FB4AC1A994ECF00E37BA3 /* BbEncoders.m in Sources */,
 				F28FB46F1A994BCE00E37BA3 /* BbCocoaEntityView+TextDelegate.m in Sources */,
 				F28FB4741A994BCE00E37BA3 /* BbCocoaMessageView.m in Sources */,

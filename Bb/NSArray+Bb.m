@@ -14,6 +14,7 @@
 
 @implementation NSArray (Bb)
 
+
 + (NSArray *)typeArrayWithObjects:(NSArray *)objects
 {
     if (!objects) {
@@ -91,6 +92,11 @@
     }
     
     return nil;
+}
+
+- (NSArray *)toArray
+{
+    return self;
 }
 
 - (NSString *)toString

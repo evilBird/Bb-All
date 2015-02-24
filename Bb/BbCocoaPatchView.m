@@ -73,6 +73,12 @@
     }
     
     [self.patch addChildObject:object];
+    BbCocoaObjectView *view = [BbCocoaObjectView viewWithObject:object
+                                                         parent:self];
+    NSPoint viewPosition = [self scaleNormalizedPoint:view.normalizedPosition];
+    
+    [self moveEntityView:view toPoint:viewPosition];
+    /*
     
     BbCocoaEntityViewDescription *viewDesc = [[BbCocoaEntityViewDescription alloc]init];
     viewDesc.text = [NSString displayTextName:object.name args:objDesc.BbObjectArgs];
@@ -94,6 +100,7 @@
 
     NSPoint viewPosition = [self scaleNormalizedPoint:view.normalizedPosition];
     [self moveEntityView:view toPoint:viewPosition];
+     */
     return object;
 }
 

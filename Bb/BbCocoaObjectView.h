@@ -15,6 +15,8 @@ static NSString *kBbUITypeObject                = @"obj";
 static NSString *kBbUITypeHorizontalSlider      = @"hsl";
 static NSString *kBbUITypeMessage               = @"msg";
 static NSString *kBbUITypeBang                  = @"bang";
+static NSString *kBbUITypeInlet                 = @"inlet";
+static NSString *kBbUITypeOutlet                = @"outlet";
 
 @interface BbCocoaObjectView : BbCocoaEntityView
 

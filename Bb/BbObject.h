@@ -36,6 +36,7 @@ typedef id (^BbCalculateOutputBlock)(id hotValue, NSArray *inlets);
 - (void)addPort:(BbPort *)port;
 - (id)outputForOutlet:(BbOutlet *)outlet withChangeInHotInlet:(BbInlet *)hotInlet;
 - (BbCalculateOutputBlock)calculateOutputForOutletAtIndex:(NSInteger)index;
+- (void)observeInlet:(BbInlet *)inlet;
 
 - (NSString *)textDescription;
 - (BOOL)hasUI;

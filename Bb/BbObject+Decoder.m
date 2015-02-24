@@ -19,6 +19,7 @@
 {
     BbObject *object = nil;
     object = [BbObject newObjectClassName:description.BbObjectType arguments:description.BbObjectArgs];
+    object.position = description.UIPosition;
     return object;
 }
 

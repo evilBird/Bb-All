@@ -18,5 +18,6 @@
 - (NSNumber *)toNumber;
 - (NSString *)toString;
 - (BbBang *)toBang;
+- (NSArray *)toArray;
 
 @end
