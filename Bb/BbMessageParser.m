@@ -23,7 +23,6 @@
     NSCharacterSet *quote = [NSCharacterSet characterSetWithCharactersInString:@"\""];
     NSCharacterSet *comma = [NSCharacterSet characterSetWithCharactersInString:@","];
     NSCharacterSet *space = [NSCharacterSet characterSetWithCharactersInString:@" "];
-    NSCharacterSet *data = [NSCharacterSet alphanumericCharacterSet];
     NSCharacterSet *allNoQuotes = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890,./?><;:!@#$%^&*()~`'<>-_=+ "];
     NSCharacterSet *allNoQuotesNoCommasNoSpaces = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890./?><;:!@#$%^&*()~`'<>-_=+"];
     NSScanner *scanner = [NSScanner scannerWithString:text];
@@ -49,8 +48,8 @@
             }
         }else if (scannedComma && !quoteIsOpen){
             if (stringBuffer.length) {
-                NSString *addToMessageBuffer = [NSString stringWithString:stringBuffer];
-                [messageBuffer addObject:addToMessageBuffer];
+                NSString *addToArrayBuffer = [NSString stringWithString:stringBuffer];
+                [arrayBuffer addObject:addToArrayBuffer];
                 stringBuffer = [NSString new];
             }
             
@@ -91,6 +90,32 @@
     }
     
     return messageBuffer;
+}
+
++ (id)setTypeForString:(NSString *)string
+{
+    NSCharacterSet *numbers = [NSCharacterSet characterSetWithCharactersInString:@"1234567890."];
+    NSScanner *numberScanner = [NSScanner scannerWithString:string];
+    NSString *stringBuffer = [NSString new];
+    BOOL done = NO;
+    id result = nil;
+    while (!done) {
+        [numberScanner scanCharactersFromSet:numbers intoString:&stringBuffer];
+        done = numberScanner.isAtEnd;
+    }
+    
+    if (stringBuffer.length == string.length) {
+        //it's a number; determine whether float or int
+        if ([stringBuffer rangeOfString:@"."].length > 0){
+            result = @([string doubleValue]);
+        }else{
+            result = @([string integerValue]);
+        }
+    }else{
+        result = [NSString stringWithString:string];
+    }
+    
+    return result;
 }
 
 @end

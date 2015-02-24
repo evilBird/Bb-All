@@ -33,6 +33,7 @@
     NSString *text = @"\"Quotes with spaces\"";
     id message = [BbMessageParser messageFromText:text];
     XCTAssertNotNil(message,@"message is nil");
+    NSLog(@"parsed message to string: %@",message);
 }
 
 - (void)testParseMessageToArray
@@ -40,6 +41,43 @@
     NSString *text = @"this these those";
     id message = [BbMessageParser messageFromText:text];
     XCTAssertNotNil(message,@"message is nil");
+    NSLog(@"parsed message to array: %@",message);
+}
+
+- (void)testParseMessageToMulipleArrays
+{
+    NSString *text = @"this these, those";
+    id message = [BbMessageParser messageFromText:text];
+    XCTAssertNotNil(message,@"message is nil");
+    NSLog(@"parsed message to multiple arrays: %@",message);
+    
+    text = @"this, these, those";
+    message = [BbMessageParser messageFromText:text];
+    XCTAssertNotNil(message,@"message is nil");
+    NSLog(@"parsed message to multiple arrays: %@",message);
+}
+
+- (void)testParseMessageToStringWithCommas
+{
+    NSString *text = @"\"this these, those\"";
+    id message = [BbMessageParser messageFromText:text];
+    XCTAssertNotNil(message,@"message is nil");
+    NSLog(@"parsed message to string with commas: %@",message);
+}
+
+- (void)testSetStringType
+{
+    NSString *text = @"44.978";
+    id message = [BbMessageParser setTypeForString:text];
+    XCTAssertNotNil(message,@"message is nil");
+    XCTAssertTrue([message isKindOfClass:[NSNumber class]],@"message is not a number: %@",message);
+    NSLog(@"set string %@ to double %@",text,message);
+    
+    text = @"44";
+    message = [BbMessageParser setTypeForString:text];
+    XCTAssertNotNil(message,@"message is nil");
+    XCTAssertTrue([message isKindOfClass:[NSNumber class]],@"message is not a number: %@",message);
+    NSLog(@"set string %@ to integer %@",text,message);
 }
 
 - (void)testExample {

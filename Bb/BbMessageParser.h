@@ -11,5 +11,6 @@
 @interface BbMessageParser : NSObject
 
 + (id)messageFromText:(NSString *)text;
++ (id)setTypeForString:(NSString *)string;
 
 @end
