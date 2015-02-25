@@ -178,7 +178,6 @@
     NSString *arg = nil;
     BOOL done = NO;
     while (!done) {
-    //while (!didScanEndChar && !done) {
         didScanEndChar = [argsScanner scanCharactersFromSet:endChar intoString:NULL];
         if (!didScanEndChar) {
             didScanWhiteSpace = [argsScanner scanCharactersFromSet:ws intoString:NULL];
@@ -193,7 +192,7 @@
                     }
                 }
             }else{
-                BOOL didScanArgs = [argsScanner scanCharactersFromSet:argChars intoString:&arg];
+                [argsScanner scanCharactersFromSet:argChars intoString:&arg];
             }
         }else{
             if (arg) {

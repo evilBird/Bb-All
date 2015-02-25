@@ -7,6 +7,8 @@
 //
 
 #import "BbCompiledPatch.h"
+#import "BbObject+Decoder.h"
+#import "NSMutableArray+Stack.h"
 
 @implementation BbCompiledPatch
 

@@ -22,6 +22,7 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>bb</string>
+				<string>txt</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string></string>

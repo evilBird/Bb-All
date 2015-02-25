@@ -54,7 +54,4 @@
 
 @end
 
-@interface BbCompiledPatch : BbPatch
-
-@end
 
