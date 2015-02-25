@@ -17,6 +17,11 @@
 		F24FD9FE1A9D68680038D102 /* NSMutableArray+Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FD9FD1A9D68680038D102 /* NSMutableArray+Stack.m */; };
 		F24FDA011A9D699B0038D102 /* BbCompiledPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA001A9D699B0038D102 /* BbCompiledPatch.m */; };
 		F24FDA041A9D6A210038D102 /* NSMutableArray+MessageQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA031A9D6A210038D102 /* NSMutableArray+MessageQueue.m */; };
+		F24FDA071A9D73780038D102 /* BbArrayAppend.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA061A9D73780038D102 /* BbArrayAppend.m */; };
+		F24FDA0A1A9D73990038D102 /* BbArrayPrepend.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA091A9D73990038D102 /* BbArrayPrepend.m */; };
+		F24FDA0D1A9D73AF0038D102 /* BbArrayDrip.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA0C1A9D73AF0038D102 /* BbArrayDrip.m */; };
+		F24FDA101A9D73C90038D102 /* BbArrayDripSlow.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA0F1A9D73C90038D102 /* BbArrayDripSlow.m */; };
+		F24FDA141A9D74560038D102 /* BbArrayElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA131A9D74560038D102 /* BbArrayElement.m */; };
 		F28FB3FA1A980A8100E37BA3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3F91A980A8100E37BA3 /* AppDelegate.m */; };
 		F28FB3FC1A980A8100E37BA3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FB1A980A8100E37BA3 /* main.m */; };
 		F28FB3FF1A980A8100E37BA3 /* PatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FE1A980A8100E37BA3 /* PatchViewController.m */; };
@@ -108,6 +113,17 @@
 		F24FDA001A9D699B0038D102 /* BbCompiledPatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbCompiledPatch.m; sourceTree = "<group>"; };
 		F24FDA021A9D6A210038D102 /* NSMutableArray+MessageQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+MessageQueue.h"; sourceTree = "<group>"; };
 		F24FDA031A9D6A210038D102 /* NSMutableArray+MessageQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+MessageQueue.m"; sourceTree = "<group>"; };
+		F24FDA051A9D73780038D102 /* BbArrayAppend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbArrayAppend.h; sourceTree = "<group>"; };
+		F24FDA061A9D73780038D102 /* BbArrayAppend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbArrayAppend.m; sourceTree = "<group>"; };
+		F24FDA081A9D73990038D102 /* BbArrayPrepend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbArrayPrepend.h; sourceTree = "<group>"; };
+		F24FDA091A9D73990038D102 /* BbArrayPrepend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbArrayPrepend.m; sourceTree = "<group>"; };
+		F24FDA0B1A9D73AF0038D102 /* BbArrayDrip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbArrayDrip.h; sourceTree = "<group>"; };
+		F24FDA0C1A9D73AF0038D102 /* BbArrayDrip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbArrayDrip.m; sourceTree = "<group>"; };
+		F24FDA0E1A9D73C90038D102 /* BbArrayDripSlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbArrayDripSlow.h; sourceTree = "<group>"; };
+		F24FDA0F1A9D73C90038D102 /* BbArrayDripSlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbArrayDripSlow.m; sourceTree = "<group>"; };
+		F24FDA111A9D73F30038D102 /* BbArrayObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbArrayObjects.h; sourceTree = "<group>"; };
+		F24FDA121A9D74560038D102 /* BbArrayElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbArrayElement.h; sourceTree = "<group>"; };
+		F24FDA131A9D74560038D102 /* BbArrayElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbArrayElement.m; sourceTree = "<group>"; };
 		F28FB3F31A980A8100E37BA3 /* Visual Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Visual Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F28FB3F71A980A8100E37BA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F28FB3F81A980A8100E37BA3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -271,12 +287,31 @@
 		F207A4C91A9C177C009A9354 /* Arrays */ = {
 			isa = PBXGroup;
 			children = (
+				F24FDA111A9D73F30038D102 /* BbArrayObjects.h */,
 				F207A4CA1A9C17C4009A9354 /* BbArrayLength.h */,
 				F207A4CB1A9C17C4009A9354 /* BbArrayLength.m */,
 				F207A4CC1A9C17C4009A9354 /* BbArraySplit.h */,
 				F207A4CD1A9C17C4009A9354 /* BbArraySplit.m */,
+				F24FDA051A9D73780038D102 /* BbArrayAppend.h */,
+				F24FDA061A9D73780038D102 /* BbArrayAppend.m */,
+				F24FDA081A9D73990038D102 /* BbArrayPrepend.h */,
+				F24FDA091A9D73990038D102 /* BbArrayPrepend.m */,
+				F24FDA121A9D74560038D102 /* BbArrayElement.h */,
+				F24FDA131A9D74560038D102 /* BbArrayElement.m */,
+				F24FDA151A9D76990038D102 /* TO DO */,
 			);
 			name = Arrays;
+			sourceTree = "<group>";
+		};
+		F24FDA151A9D76990038D102 /* TO DO */ = {
+			isa = PBXGroup;
+			children = (
+				F24FDA0B1A9D73AF0038D102 /* BbArrayDrip.h */,
+				F24FDA0C1A9D73AF0038D102 /* BbArrayDrip.m */,
+				F24FDA0E1A9D73C90038D102 /* BbArrayDripSlow.h */,
+				F24FDA0F1A9D73C90038D102 /* BbArrayDripSlow.m */,
+			);
+			name = "TO DO";
 			sourceTree = "<group>";
 		};
 		F28FB3EA1A980A8000E37BA3 = {
@@ -740,9 +775,12 @@
 				F28FB4881A994BCE00E37BA3 /* BbPatch.m in Sources */,
 				F28FB4841A994BCE00E37BA3 /* BbMessage.m in Sources */,
 				F28FB47D1A994BCE00E37BA3 /* BbCocoaPlaceholderObjectView.m in Sources */,
+				F24FDA101A9D73C90038D102 /* BbArrayDripSlow.m in Sources */,
 				F28FB4871A994BCE00E37BA3 /* BbObject+EntityParent.m in Sources */,
 				F28FB4021A980A8100E37BA3 /* SavedPatch.m in Sources */,
 				F28FB4781A994BCE00E37BA3 /* BbCocoaPatchView+Connections.m in Sources */,
+				F24FDA141A9D74560038D102 /* BbArrayElement.m in Sources */,
+				F24FDA0A1A9D73990038D102 /* BbArrayPrepend.m in Sources */,
 				F28FB47A1A994BCE00E37BA3 /* BbCocoaPatchView+Keys.m in Sources */,
 				F24FD9FE1A9D68680038D102 /* NSMutableArray+Stack.m in Sources */,
 				F28FB4AD1A994ECF00E37BA3 /* BbBasicMathTests.m in Sources */,
@@ -767,9 +805,11 @@
 				F28FB4771A994BCE00E37BA3 /* BbCocoaObjectView.m in Sources */,
 				F28FB3FC1A980A8100E37BA3 /* main.m in Sources */,
 				F28FB4BB1A9950AD00E37BA3 /* NSScanner+Bb.m in Sources */,
+				F24FDA071A9D73780038D102 /* BbArrayAppend.m in Sources */,
 				F28FB3FA1A980A8100E37BA3 /* AppDelegate.m in Sources */,
 				F2E031BA1A999F42005A0BDB /* BbGET.m in Sources */,
 				F28FB4821A994BCE00E37BA3 /* BbiOSEntityView.m in Sources */,
+				F24FDA0D1A9D73AF0038D102 /* BbArrayDrip.m in Sources */,
 				F28FB4B61A994F4800E37BA3 /* NSString+Bb.m in Sources */,
 				F28FB4B71A994F4800E37BA3 /* NSArray+Bb.m in Sources */,
 				F28FB4831A994BCE00E37BA3 /* BbLog.m in Sources */,
