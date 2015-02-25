@@ -13,6 +13,11 @@
 
 @implementation NSDictionary (Bb)
 
+- (NSDictionary *)toDictionary
+{
+    return self;
+}
+
 - (NSArray *)toArray
 {
     NSMutableArray *temp = [NSMutableArray array];

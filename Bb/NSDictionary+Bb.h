@@ -13,6 +13,8 @@
 - (NSArray *)toArray;
 - (NSString *)toString;
 - (BbBang *)toBang;
+- (NSDictionary *)toDictionary;
+
 - (NSSet *)supportedConversions;
 
 @end

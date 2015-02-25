@@ -42,7 +42,6 @@
               toInlet:(BbInlet *)inlet;
 
 - (NSString *)textDescription;
-
 - (NSArray *)UISize;
 
 @end
@@ -52,6 +51,19 @@
 
 - (void)addInlet:(BbInlet *)inlet withProxy:(BbProxyInlet *)proxy;
 - (void)addOutlet:(BbOutlet *)outlet withProxy:(BbProxyOutlet *)proxy;
+
+@end
+
+@interface BbCompiledPatch : BbPatch
+
++ (NSString *)textForSavedPatchWithName:(NSString *)name;
+
+@end
+
+@interface BbCompiledPatch (Loader)
+
+//+ (BbCompiledPatch *)patchFromText:(NSString *)patchText creationArgs:(id)args;
+//+ (NSString *)textForSavedPatchName:(NSString *)name;
 
 @end
 

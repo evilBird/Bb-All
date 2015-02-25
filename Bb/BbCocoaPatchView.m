@@ -78,29 +78,7 @@
     NSPoint viewPosition = [self scaleNormalizedPoint:view.normalizedPosition];
     
     [self moveEntityView:view toPoint:viewPosition];
-    /*
-    
-    BbCocoaEntityViewDescription *viewDesc = [[BbCocoaEntityViewDescription alloc]init];
-    viewDesc.text = [NSString displayTextName:object.name args:objDesc.BbObjectArgs];
-    viewDesc.entityViewType = objDesc.UIType;
-    viewDesc.inlets = object.inlets.count;
-    viewDesc.outlets = object.outlets.count;
-    NSPoint normCenter;
-    CGFloat normX = [objDesc.UIPosition.firstObject doubleValue];
-    CGFloat normY = [objDesc.UIPosition.lastObject doubleValue];
-    normCenter.x = normX;
-    normCenter.y = normY;
-    viewDesc.position = normCenter;
-    object.position = @[@(normX),@(normY)];
-    BbCocoaObjectView *view = nil;
-    view = [BbCocoaObjectView viewWithBbUIType:objDesc.UIType
-                                        entity:object
-                                   description:viewDesc
-                                        parent:self];
 
-    NSPoint viewPosition = [self scaleNormalizedPoint:view.normalizedPosition];
-    [self moveEntityView:view toPoint:viewPosition];
-     */
     return object;
 }
 

@@ -13,6 +13,7 @@
 - (NSSet *)supportedConversions;
 - (NSString *)toString;
 - (NSArray *)toArray;
+- (NSNumber *)toNumber;
 - (BbBang *)toBang;
 
 @end

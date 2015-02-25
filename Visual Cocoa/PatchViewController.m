@@ -37,7 +37,6 @@
         NSUInteger ancestors = [self.patch countAncestors];
         NSLog(@"ancestors: %@",@(ancestors));
     }
-    // Update the view, if already loaded.
 }
 
 @end

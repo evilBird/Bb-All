@@ -10,6 +10,11 @@
 #import "BbBase.h"
 @implementation NSNumber (Bb)
 
+- (NSNumber *)toNumber
+{
+    return self;
+}
+
 - (NSSet *)supportedConversions
 {
     NSArray *conversions = @[@(BbValueType_String),@(BbValueType_Array),@(BbValueType_Bang)];

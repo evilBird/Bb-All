@@ -14,10 +14,6 @@
 
 #pragma child objects
 
-- (instancetype)initWithArguments:(id)arguments
-{
-    return [super initWithArguments:arguments];
-}
 
 - (void)setupWithArguments:(id)arguments
 {
@@ -273,13 +269,14 @@
 
 - (void)addProxyPort:(id)port
 {
+    NSUInteger portName = arc4random_uniform(1000);
     if ([port isKindOfClass:[BbProxyInlet class]]) {
         BbProxyInlet *proxy = port;
-        BbInlet *inlet = [BbInlet newHotInletNamed:[NSString stringWithFormat:@"in-%@",@(self.inlets.count)]];
+        BbInlet *inlet = [BbInlet newHotInletNamed:[NSString stringWithFormat:@"in-%@",@(portName)]];
         [self addInlet:inlet withProxy:proxy];
     }else if ([port isKindOfClass:[BbProxyOutlet class]]){
         BbProxyOutlet *proxy = port;
-        BbOutlet *outlet = [BbOutlet newOutletNamed:[NSString stringWithFormat:@"out-%@",@(self.outlets.count)]];
+        BbOutlet *outlet = [BbOutlet newOutletNamed:[NSString stringWithFormat:@"out-%@",@(portName)]];
         [self addOutlet:outlet withProxy:proxy];
     }
 }
@@ -315,14 +312,167 @@
     
     outlet.parent = self;
     proxy.parentPort = outlet;
-    outlet.proxy = nil;
+    outlet.proxy = proxy;
     
     if (!self.outlets_) {
         self.outlets_ = [NSMutableArray array];
     }
+    
     [self.outlets_ addObject:outlet];
 }
 
+@end
 
+#import "SavedPatch.h"
+#import "BbObject+Decoder.h"
 
+@implementation BbCompiledPatch
+
+- (void)setupWithArguments:(id)arguments
+{
+    self.name = @"compiled patch";
+    if (arguments) {
+        NSString *name = [arguments firstObject];
+        NSString *patchName = nil;
+        if ([name hasSuffix:@".bb"]) {
+            patchName = name;
+        }else{
+            patchName = [name stringByAppendingPathExtension:@"bb"];
+        }
+        
+        if (patchName) {
+            NSString *text = [BbCompiledPatch textForSavedPatchWithName:patchName];
+            if (text) {
+                [self createChildObjectsWithText:text];
+            }
+        }
+    }
+}
+
+- (void)createChildObjectsWithText:(NSString *)text
+{
+    NSMutableArray *rawDescriptions = [BbBasicParser descriptionsWithText:text].mutableCopy;
+    [rawDescriptions removeObjectAtIndex:0];
+    [rawDescriptions removeObjectAtIndex:(rawDescriptions.count - 1)];
+    NSArray *descriptions = rawDescriptions;
+    NSMutableArray *patches = [NSMutableArray array];
+    NSMutableArray *childObjects = nil;
+    NSMutableArray *connections = nil;
+    
+    [patches push:self];
+    for (BbDescription *desc in descriptions) {
+        if ([desc.stackInstruction isEqualToString:@"#N"]) {
+            if ([desc.UIType isEqualToString:@"canvas"]) {
+                BbPatch *patch = (BbPatch *)[BbObject objectWithDescription:(BbObjectDescription *)desc];
+                patch.position = [(BbObjectDescription *)desc UIPosition];
+                [patches push:patch];
+            }else if ([desc.UIType isEqualToString:@"restore"]){
+                BbPatch *patch = [patches pop];
+                patch.name = [(BbObjectDescription *)desc BbObjectType];
+                BbPatch *parent = [patches pop];
+                if (parent) {
+                    [parent addChildObject:patch];
+                }
+            }
+        }else if ([desc.stackInstruction isEqualToString:@"#X"]){
+            
+            if ([desc.UIType isEqualToString:@"connect"]) {
+                if (!connections) {
+                    connections = [NSMutableArray array];
+                }
+                
+                [connections addObject:desc];
+                BbPatch *patch = [patches pop];
+                [patch addConnectionWithDescription:desc];
+                [patches push:patch];
+                
+            }else{
+                
+                BbObject *child = [BbObject objectWithDescription:(BbObjectDescription *)desc];
+                child.position = [(BbObjectDescription *)desc UIPosition];
+                if (!childObjects) {
+                    childObjects = [NSMutableArray array];
+                }
+                
+                BbPatch *patch = [patches pop];
+                [patch addChildObject:child];
+                [patches push:patch];
+            }
+        }
+    }
+}
+
++ (NSString *)textForSavedPatchWithName:(NSString *)patchName
+{
+    NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSAllDomainsMask,YES);
+    NSString *documentsDirectory = [pathArray objectAtIndex:0];
+    NSString *patchPath = [documentsDirectory stringByAppendingPathComponent:patchName];
+    NSURL *patchURL = nil;
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:patchPath])
+    {
+        patchURL = [NSURL fileURLWithPath:patchPath isDirectory:NO];
+        NSLog(@"found saved patch %@ at path: %@",patchName,patchPath);
+    }else{
+        
+        NSLog(@"couldn't find saved patch named %@ at path %@",patchName,patchPath);
+    }
+    
+    NSString *result = nil;
+    if (patchURL) {
+        NSError *e = nil;
+        NSStringEncoding encoding = 0;
+        result = [NSString stringWithContentsOfURL:patchURL
+                                      usedEncoding:&encoding
+                                             error:&e];
+        
+        if (!e) {
+            return result;
+        }else{
+            NSLog(@"error loading patch: %@",e.debugDescription);
+        }
+    }
+    
+    
+    return nil;
+}
+
++ (NSString *)stackInstruction
+{
+    return @"#X";
+}
+
++ (NSString *)UIType
+{
+    return @"obj";
+}
+
+@end
+
+#import "SavedPatch.h"
+
+@implementation BbCompiledPatch (Loader)
+/*
++ (BbCompiledPatch *)patchFromText:(NSString *)patchText creationArgs:(id)args
+{
+    BbCompiledPatch *patch = [SavedPatch compiledPatchFromText:patchText];
+    patch.name = [args firstObject];
+    patch.creationArguments = args;
+    return patch;
+}
+
++ (NSString *)textForSavedPatchName:(NSString *)name
+{
+    NSString *fileName = nil;
+    if ([name hasSuffix:@".bb"]) {
+        fileName = name;
+    }else{
+        fileName = [name stringByAppendingPathExtension:@"bb"];
+    }
+    
+    return [SavedPatch textForSavedPatchWithName:fileName];
+    
+    return nil;
+}
+*/
 @end
