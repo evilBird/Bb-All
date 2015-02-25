@@ -45,6 +45,9 @@ typedef NS_ENUM(NSUInteger, BbConnectionStatus)
                             receiver:(BbObject *)receiver
                                inlet:(BbInlet *)inlet;
 
++ (BbConnection *)connectOutlet:(BbOutlet *)outlet
+                        toInlet:(BbInlet *)inlet;
+
 - (NSInteger)connect;
 - (NSInteger)disconnect;
 - (void)tearDown;

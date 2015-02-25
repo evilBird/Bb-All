@@ -22,6 +22,7 @@
 		F24FDA0D1A9D73AF0038D102 /* BbArrayDrip.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA0C1A9D73AF0038D102 /* BbArrayDrip.m */; };
 		F24FDA101A9D73C90038D102 /* BbArrayDripSlow.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA0F1A9D73C90038D102 /* BbArrayDripSlow.m */; };
 		F24FDA141A9D74560038D102 /* BbArrayElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA131A9D74560038D102 /* BbArrayElement.m */; };
+		F24FDA181A9D9C630038D102 /* BbPatch+BbConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA171A9D9C630038D102 /* BbPatch+BbConnection.m */; };
 		F28FB3FA1A980A8100E37BA3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3F91A980A8100E37BA3 /* AppDelegate.m */; };
 		F28FB3FC1A980A8100E37BA3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FB1A980A8100E37BA3 /* main.m */; };
 		F28FB3FF1A980A8100E37BA3 /* PatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FE1A980A8100E37BA3 /* PatchViewController.m */; };
@@ -124,6 +125,8 @@
 		F24FDA111A9D73F30038D102 /* BbArrayObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbArrayObjects.h; sourceTree = "<group>"; };
 		F24FDA121A9D74560038D102 /* BbArrayElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbArrayElement.h; sourceTree = "<group>"; };
 		F24FDA131A9D74560038D102 /* BbArrayElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbArrayElement.m; sourceTree = "<group>"; };
+		F24FDA161A9D9C630038D102 /* BbPatch+BbConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbPatch+BbConnection.h"; sourceTree = "<group>"; };
+		F24FDA171A9D9C630038D102 /* BbPatch+BbConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbPatch+BbConnection.m"; sourceTree = "<group>"; };
 		F28FB3F31A980A8100E37BA3 /* Visual Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Visual Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F28FB3F71A980A8100E37BA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F28FB3F81A980A8100E37BA3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -381,10 +384,10 @@
 		F28FB4681A994BCE00E37BA3 /* Bb */ = {
 			isa = PBXGroup;
 			children = (
-				F2E031B11A999D52005A0BDB /* Bb Main */,
-				F2E031B01A999D1F005A0BDB /* Bb Parsers */,
-				F2E031AE1A999CC1005A0BDB /* Bb Objects */,
-				F2E031B21A999D78005A0BDB /* Bb Tests */,
+				F2E031B11A999D52005A0BDB /* Main */,
+				F2E031B01A999D1F005A0BDB /* Parsers */,
+				F2E031AE1A999CC1005A0BDB /* Objects */,
+				F2E031B21A999D78005A0BDB /* Tests */,
 				F2E031AB1A999C47005A0BDB /* UI */,
 				F2E031B31A999D8D005A0BDB /* Foundation Categories */,
 			);
@@ -438,7 +441,7 @@
 			name = "UI Objects";
 			sourceTree = "<group>";
 		};
-		F2E031AE1A999CC1005A0BDB /* Bb Objects */ = {
+		F2E031AE1A999CC1005A0BDB /* Objects */ = {
 			isa = PBXGroup;
 			children = (
 				F207A4C91A9C177C009A9354 /* Arrays */,
@@ -464,7 +467,7 @@
 				F2E031BB1A99AE5F005A0BDB /* BbDictionary.h */,
 				F2E031BC1A99AE5F005A0BDB /* BbDictionary.m */,
 			);
-			name = "Bb Objects";
+			name = Objects;
 			sourceTree = "<group>";
 		};
 		F2E031AF1A999CE0005A0BDB /* Categories */ = {
@@ -478,7 +481,7 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		F2E031B01A999D1F005A0BDB /* Bb Parsers */ = {
+		F2E031B01A999D1F005A0BDB /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
 				F28FB4971A994ECF00E37BA3 /* BbParsers.h */,
@@ -492,10 +495,10 @@
 				F28FB4571A994BCE00E37BA3 /* BbObject+Encoder.h */,
 				F28FB4581A994BCE00E37BA3 /* BbObject+Encoder.m */,
 			);
-			name = "Bb Parsers";
+			name = Parsers;
 			sourceTree = "<group>";
 		};
-		F2E031B11A999D52005A0BDB /* Bb Main */ = {
+		F2E031B11A999D52005A0BDB /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				F24FD9F61A9D0EE60038D102 /* BbProxyPort.h */,
@@ -517,10 +520,10 @@
 				F24FD9FF1A9D699B0038D102 /* BbCompiledPatch.h */,
 				F24FDA001A9D699B0038D102 /* BbCompiledPatch.m */,
 			);
-			name = "Bb Main";
+			name = Main;
 			sourceTree = "<group>";
 		};
-		F2E031B21A999D78005A0BDB /* Bb Tests */ = {
+		F2E031B21A999D78005A0BDB /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				F28FB4A11A994ECF00E37BA3 /* BbTests.h */,
@@ -530,7 +533,7 @@
 				F28FB4A31A994ECF00E37BA3 /* BbBasicMathTests.h */,
 				F28FB4A41A994ECF00E37BA3 /* BbBasicMathTests.m */,
 			);
-			name = "Bb Tests";
+			name = Tests;
 			sourceTree = "<group>";
 		};
 		F2E031B31A999D8D005A0BDB /* Foundation Categories */ = {
@@ -606,6 +609,8 @@
 				F28FB4401A994BCE00E37BA3 /* BbCocoaPatchView+Keys.m */,
 				F28FB4411A994BCE00E37BA3 /* BbCocoaPatchView+Touches.h */,
 				F28FB4421A994BCE00E37BA3 /* BbCocoaPatchView+Touches.m */,
+				F24FDA161A9D9C630038D102 /* BbPatch+BbConnection.h */,
+				F24FDA171A9D9C630038D102 /* BbPatch+BbConnection.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -812,6 +817,7 @@
 				F24FDA0D1A9D73AF0038D102 /* BbArrayDrip.m in Sources */,
 				F28FB4B61A994F4800E37BA3 /* NSString+Bb.m in Sources */,
 				F28FB4B71A994F4800E37BA3 /* NSArray+Bb.m in Sources */,
+				F24FDA181A9D9C630038D102 /* BbPatch+BbConnection.m in Sources */,
 				F28FB4831A994BCE00E37BA3 /* BbLog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

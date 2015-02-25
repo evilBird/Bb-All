@@ -35,6 +35,18 @@
     return connection;
 }
 
++ (BbConnection *)connectOutlet:(BbOutlet *)outlet toInlet:(BbInlet *)inlet
+{
+    BbConnection *connection = [[BbConnection alloc]init];
+    connection.outlet = outlet;
+    connection.sender = outlet.parent;
+    connection.inlet = inlet;
+    connection.receiver = inlet.parent;
+    connection.parent = connection.sender.parent;
+    [outlet connectToInlet:inlet];
+    return connection;
+}
+
 - (NSInteger)connect
 {
     if (self.isDirty) {
