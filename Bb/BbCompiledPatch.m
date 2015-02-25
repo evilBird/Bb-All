@@ -14,16 +14,10 @@
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"compiled patch";
+    self.name = @"";
     if (arguments) {
         NSString *name = [arguments firstObject];
-        NSString *patchName = nil;
-        if ([name hasSuffix:@".bb"]) {
-            patchName = name;
-        }else{
-            patchName = [name stringByAppendingPathExtension:@"bb"];
-        }
-        
+        NSString *patchName = [name stringByAppendingPathExtension:@"txt"];
         if (patchName) {
             NSString *text = [BbCompiledPatch textForSavedPatchWithName:patchName];
             if (text) {
@@ -88,7 +82,9 @@
 
 + (NSString *)textForSavedPatchWithName:(NSString *)patchName
 {
-    NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSAllDomainsMask,YES);
+    //NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSAllDomainsMask,YES);
+    NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSAllDomainsMask,YES);
+
     NSString *documentsDirectory = [pathArray objectAtIndex:0];
     NSString *patchPath = [documentsDirectory stringByAppendingPathComponent:patchName];
     NSURL *patchURL = nil;
