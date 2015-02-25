@@ -14,6 +14,9 @@
 		F207A4D41A9C3D8C009A9354 /* BbMessageParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F207A4D31A9C3D8C009A9354 /* BbMessageParserTests.m */; };
 		F24FD9F21A9D0B850038D102 /* BbCocoaInletView.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FD9F11A9D0B850038D102 /* BbCocoaInletView.m */; };
 		F24FD9F81A9D0EE60038D102 /* BbProxyPort.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FD9F71A9D0EE60038D102 /* BbProxyPort.m */; };
+		F24FD9FE1A9D68680038D102 /* NSMutableArray+Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FD9FD1A9D68680038D102 /* NSMutableArray+Stack.m */; };
+		F24FDA011A9D699B0038D102 /* BbCompiledPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA001A9D699B0038D102 /* BbCompiledPatch.m */; };
+		F24FDA041A9D6A210038D102 /* NSMutableArray+MessageQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA031A9D6A210038D102 /* NSMutableArray+MessageQueue.m */; };
 		F28FB3FA1A980A8100E37BA3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3F91A980A8100E37BA3 /* AppDelegate.m */; };
 		F28FB3FC1A980A8100E37BA3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FB1A980A8100E37BA3 /* main.m */; };
 		F28FB3FF1A980A8100E37BA3 /* PatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FE1A980A8100E37BA3 /* PatchViewController.m */; };
@@ -99,6 +102,12 @@
 		F24FD9F11A9D0B850038D102 /* BbCocoaInletView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbCocoaInletView.m; sourceTree = "<group>"; };
 		F24FD9F61A9D0EE60038D102 /* BbProxyPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbProxyPort.h; sourceTree = "<group>"; };
 		F24FD9F71A9D0EE60038D102 /* BbProxyPort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbProxyPort.m; sourceTree = "<group>"; };
+		F24FD9FC1A9D68680038D102 /* NSMutableArray+Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Stack.h"; sourceTree = "<group>"; };
+		F24FD9FD1A9D68680038D102 /* NSMutableArray+Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Stack.m"; sourceTree = "<group>"; };
+		F24FD9FF1A9D699B0038D102 /* BbCompiledPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbCompiledPatch.h; sourceTree = "<group>"; };
+		F24FDA001A9D699B0038D102 /* BbCompiledPatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbCompiledPatch.m; sourceTree = "<group>"; };
+		F24FDA021A9D6A210038D102 /* NSMutableArray+MessageQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+MessageQueue.h"; sourceTree = "<group>"; };
+		F24FDA031A9D6A210038D102 /* NSMutableArray+MessageQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+MessageQueue.m"; sourceTree = "<group>"; };
 		F28FB3F31A980A8100E37BA3 /* Visual Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Visual Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F28FB3F71A980A8100E37BA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F28FB3F81A980A8100E37BA3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -470,6 +479,8 @@
 				F28FB45A1A994BCE00E37BA3 /* BbObject+EntityParent.m */,
 				F28FB45B1A994BCE00E37BA3 /* BbPatch.h */,
 				F28FB45C1A994BCE00E37BA3 /* BbPatch.m */,
+				F24FD9FF1A9D699B0038D102 /* BbCompiledPatch.h */,
+				F24FDA001A9D699B0038D102 /* BbCompiledPatch.m */,
 			);
 			name = "Bb Main";
 			sourceTree = "<group>";
@@ -502,6 +513,10 @@
 				F28FB4B41A994F4800E37BA3 /* NSObject+Bb.m */,
 				F28FB4601A994BCE00E37BA3 /* NSDictionary+Bb.h */,
 				F28FB4611A994BCE00E37BA3 /* NSDictionary+Bb.m */,
+				F24FD9FC1A9D68680038D102 /* NSMutableArray+Stack.h */,
+				F24FD9FD1A9D68680038D102 /* NSMutableArray+Stack.m */,
+				F24FDA021A9D6A210038D102 /* NSMutableArray+MessageQueue.h */,
+				F24FDA031A9D6A210038D102 /* NSMutableArray+MessageQueue.m */,
 				F28FB4621A994BCE00E37BA3 /* NSMutableString+Bb.h */,
 				F28FB4631A994BCE00E37BA3 /* NSMutableString+Bb.m */,
 				F28FB4641A994BCE00E37BA3 /* NSNumber+Bb.h */,
@@ -717,6 +732,7 @@
 				F28FB4AA1A994ECF00E37BA3 /* BbTests.m in Sources */,
 				F28FB46D1A994BCE00E37BA3 /* BbCocoaEntityView+Autolayout.m in Sources */,
 				F24FD9F21A9D0B850038D102 /* BbCocoaInletView.m in Sources */,
+				F24FDA041A9D6A210038D102 /* NSMutableArray+MessageQueue.m in Sources */,
 				F28FB4AC1A994ECF00E37BA3 /* BbEncoders.m in Sources */,
 				F28FB46F1A994BCE00E37BA3 /* BbCocoaEntityView+TextDelegate.m in Sources */,
 				F28FB4741A994BCE00E37BA3 /* BbCocoaMessageView.m in Sources */,
@@ -728,6 +744,7 @@
 				F28FB4021A980A8100E37BA3 /* SavedPatch.m in Sources */,
 				F28FB4781A994BCE00E37BA3 /* BbCocoaPatchView+Connections.m in Sources */,
 				F28FB47A1A994BCE00E37BA3 /* BbCocoaPatchView+Keys.m in Sources */,
+				F24FD9FE1A9D68680038D102 /* NSMutableArray+Stack.m in Sources */,
 				F28FB4AD1A994ECF00E37BA3 /* BbBasicMathTests.m in Sources */,
 				F28FB4691A994BCE00E37BA3 /* BbBangObject.m in Sources */,
 				F28FB48D1A994BCE00E37BA3 /* NSView+Bb.m in Sources */,
@@ -746,6 +763,7 @@
 				F28FB4861A994BCE00E37BA3 /* BbObject+Encoder.m in Sources */,
 				F28FB46B1A994BCE00E37BA3 /* BbClassMethod.m in Sources */,
 				F28FB4891A994BCE00E37BA3 /* BbTrigger.m in Sources */,
+				F24FDA011A9D699B0038D102 /* BbCompiledPatch.m in Sources */,
 				F28FB4771A994BCE00E37BA3 /* BbCocoaObjectView.m in Sources */,
 				F28FB3FC1A980A8100E37BA3 /* main.m in Sources */,
 				F28FB4BB1A9950AD00E37BA3 /* NSScanner+Bb.m in Sources */,

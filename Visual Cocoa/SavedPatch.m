@@ -12,7 +12,7 @@
 #import "BbObject+Decoder.h"
 #import "BbObject+EntityParent.h"
 #import "PatchViewController.h"
-
+#import "NSMutableArray+Stack.h"
 
 @interface SavedPatch ()
 
@@ -93,72 +93,6 @@
     }
 }
 
-+ (BbCompiledPatch *)compiledPatchFromText:(NSString *)text
-{
-    NSMutableArray *rawDescriptions = [BbBasicParser descriptionsWithText:text].mutableCopy;
-    [rawDescriptions removeObjectAtIndex:0];
-    [rawDescriptions removeObjectAtIndex:(rawDescriptions.count - 1)];
-    NSArray *descriptions = rawDescriptions;
-    NSMutableArray *patches = [NSMutableArray array];
-    NSMutableArray *childObjects = nil;
-    NSMutableArray *connections = nil;
-    
-    BbCompiledPatch *result = [[BbCompiledPatch alloc]initWithArguments:nil];
-    [patches push:result];
-    for (BbDescription *desc in descriptions) {
-        if ([desc.stackInstruction isEqualToString:@"#N"]) {
-            if ([desc.UIType isEqualToString:@"canvas"]) {
-                BbCompiledPatch *patch = (BbCompiledPatch *)[BbObject objectWithDescription:(BbObjectDescription *)desc];
-                patch.position = [(BbObjectDescription *)desc UIPosition];
-                [patches push:patch];
-            }else if ([desc.UIType isEqualToString:@"restore"]){
-                BbCompiledPatch *patch = [patches pop];
-                patch.name = [(BbObjectDescription *)desc BbObjectType];
-                BbCompiledPatch *parent = [patches pop];
-                if (parent) {
-                    [parent addChildObject:patch];
-                }else{
-                    result = patch;
-                }
-            }
-        }else if ([desc.stackInstruction isEqualToString:@"#X"]){
-            
-            if ([desc.UIType isEqualToString:@"connect"]) {
-                if (!connections) {
-                    connections = [NSMutableArray array];
-                }
-                
-                [connections addObject:desc];
-                BbCompiledPatch *patch = [patches pop];
-                [patch addConnectionWithDescription:desc];
-                [patches push:patch];
-                
-            }else{
-                
-                BbObject *child = [BbObject objectWithDescription:(BbObjectDescription *)desc];
-                child.position = [(BbObjectDescription *)desc UIPosition];
-                if (!childObjects) {
-                    childObjects = [NSMutableArray array];
-                }
-                
-                BbCompiledPatch *patch = [patches pop];
-                [patch addChildObject:child];
-                
-                if ([desc.UIType isEqualToString:@"inlet"]) {
-                    
-                }else if ([desc.UIType isEqualToString:@"outlet"]){
-                    
-                }
-                
-                [patches push:patch];
-
-            }
-        }
-    }
-    
-    return result;
-}
-
 + (BbPatch *)patchFromText:(NSString *)text
 {
     NSArray *descriptions = [BbBasicParser descriptionsWithText:text];
@@ -217,41 +151,6 @@
     }
     
     return result;
-}
-
-+ (NSString *)textForSavedPatchWithName:(NSString *)patchName
-{
-    NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSAllDomainsMask,YES);
-    NSString *documentsDirectory = [pathArray objectAtIndex:0];
-    NSString *patchPath = [documentsDirectory stringByAppendingPathComponent:patchName];
-    NSURL *patchURL = nil;
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:patchPath])
-    {
-        patchURL = [NSURL fileURLWithPath:patchPath isDirectory:NO];
-        NSLog(@"found saved patch %@ at path: %@",patchName,patchPath);
-    }else{
-        
-        NSLog(@"couldn't find saved patch named %@ at path %@",patchName,patchPath);
-    }
-    
-    NSString *result = nil;
-    if (patchURL) {
-        NSError *e = nil;
-        NSStringEncoding encoding = 0;
-        result = [NSString stringWithContentsOfURL:patchURL
-                                      usedEncoding:&encoding
-                                             error:&e];
-        
-        if (!e) {
-            return result;
-        }else{
-            NSLog(@"error loading patch: %@",e.debugDescription);
-        }
-    }
-    
-    
-    return nil;
 }
 
 @end

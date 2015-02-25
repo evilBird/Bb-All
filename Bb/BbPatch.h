@@ -56,14 +56,5 @@
 
 @interface BbCompiledPatch : BbPatch
 
-+ (NSString *)textForSavedPatchWithName:(NSString *)name;
-
-@end
-
-@interface BbCompiledPatch (Loader)
-
-//+ (BbCompiledPatch *)patchFromText:(NSString *)patchText creationArgs:(id)args;
-//+ (NSString *)textForSavedPatchName:(NSString *)name;
-
 @end
 
