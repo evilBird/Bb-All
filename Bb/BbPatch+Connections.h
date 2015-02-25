@@ -7,6 +7,7 @@
 //
 
 #import "BbPatch.h"
+
 @class BbConnectionDescription;
 @interface BbPatch (Connections)
 
@@ -16,12 +17,17 @@
 - (BOOL)hasConnectionWithId:(NSString *)connectionId;
 - (void)removeConnectionWithId:(NSString *)connectionId;
 
+- (NSArray *)selectedConnections;
+
 - (NSBezierPath *)pathForConnectionWithId:(NSString *)connectionId;
 - (NSArray *)pathCoordinatesForConnectionWithId:(NSString *)connectionId;
 
 - (void)addConnectionWithDescription:(BbConnectionDescription *)description;
 - (void)addConnectionsWithDescriptions:(NSArray *)descriptions;
 
-- (void)refreshConnections;
+- (BOOL)refreshConnections;
+
+- (BOOL)connection:(BbConnection *)connection
+    containsObject:(BbObject *)object;
 
 @end

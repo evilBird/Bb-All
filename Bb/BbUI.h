@@ -29,6 +29,8 @@
 
 - (NSPoint)normalizedPosition;
 
+- (NSRect)convertRect:(NSRect)rect fromView:(NSView *)view;
+
 - (BOOL)selected;
 - (void)setSelected:(BOOL)selected;
 

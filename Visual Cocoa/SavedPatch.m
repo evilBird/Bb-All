@@ -8,7 +8,7 @@
 
 #import "SavedPatch.h"
 #import "BbParsers.h"
-#import "BbPatch.h"
+#import "BbPatch+Connections.h"
 #import "BbObject+Decoder.h"
 #import "BbObject+EntityParent.h"
 #import "PatchViewController.h"
@@ -125,7 +125,7 @@
                 
                 [connections addObject:desc];
                 BbPatch *patch = [patches pop];
-                [patch addConnectionWithDescription:desc];
+                [patch addConnectionWithDescription:(BbConnectionDescription *)desc];
                 [patches push:patch];
                 
             }else{

@@ -25,6 +25,7 @@
 		F24FDA181A9D9C630038D102 /* BbPatch+BbConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA171A9D9C630038D102 /* BbPatch+BbConnection.m */; };
 		F25EC3A81A9E6566009CC384 /* BbConnection+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = F25EC3A71A9E6566009CC384 /* BbConnection+Drawing.m */; };
 		F25EC3AB1A9E6CB1009CC384 /* BbPatch+Connections.m in Sources */ = {isa = PBXBuildFile; fileRef = F25EC3AA1A9E6CB1009CC384 /* BbPatch+Connections.m */; };
+		F25EC3AE1A9E7DDD009CC384 /* NSBezierPath+Array.m in Sources */ = {isa = PBXBuildFile; fileRef = F25EC3AD1A9E7DDD009CC384 /* NSBezierPath+Array.m */; };
 		F28FB3FA1A980A8100E37BA3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3F91A980A8100E37BA3 /* AppDelegate.m */; };
 		F28FB3FC1A980A8100E37BA3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FB1A980A8100E37BA3 /* main.m */; };
 		F28FB3FF1A980A8100E37BA3 /* PatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FE1A980A8100E37BA3 /* PatchViewController.m */; };
@@ -133,6 +134,8 @@
 		F25EC3A71A9E6566009CC384 /* BbConnection+Drawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbConnection+Drawing.m"; sourceTree = "<group>"; };
 		F25EC3A91A9E6CB1009CC384 /* BbPatch+Connections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbPatch+Connections.h"; sourceTree = "<group>"; };
 		F25EC3AA1A9E6CB1009CC384 /* BbPatch+Connections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbPatch+Connections.m"; sourceTree = "<group>"; };
+		F25EC3AC1A9E7DDD009CC384 /* NSBezierPath+Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+Array.h"; sourceTree = "<group>"; };
+		F25EC3AD1A9E7DDD009CC384 /* NSBezierPath+Array.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+Array.m"; sourceTree = "<group>"; };
 		F28FB3F31A980A8100E37BA3 /* Visual Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Visual Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F28FB3F71A980A8100E37BA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F28FB3F81A980A8100E37BA3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -621,6 +624,8 @@
 				F28FB4421A994BCE00E37BA3 /* BbCocoaPatchView+Touches.m */,
 				F24FDA161A9D9C630038D102 /* BbPatch+BbConnection.h */,
 				F24FDA171A9D9C630038D102 /* BbPatch+BbConnection.m */,
+				F25EC3AC1A9E7DDD009CC384 /* NSBezierPath+Array.h */,
+				F25EC3AD1A9E7DDD009CC384 /* NSBezierPath+Array.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -767,6 +772,7 @@
 				F28FB4A81A994ECF00E37BA3 /* BbBase.m in Sources */,
 				F28FB4721A994BCE00E37BA3 /* BbCocoaEntityViewDescription.m in Sources */,
 				F28FB4731A994BCE00E37BA3 /* BbCocoaHSliderView.m in Sources */,
+				F25EC3AE1A9E7DDD009CC384 /* NSBezierPath+Array.m in Sources */,
 				F28FB46C1A994BCE00E37BA3 /* BbCocoaBangView.m in Sources */,
 				F28FB4701A994BCE00E37BA3 /* BbCocoaEntityView+Touches.m in Sources */,
 				F28FB4BC1A9950AD00E37BA3 /* NSInvocation+Bb.m in Sources */,

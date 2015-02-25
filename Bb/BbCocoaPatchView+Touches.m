@@ -44,7 +44,10 @@
     
     if ([myView viewType] == BbViewType_Patch) {
         if (theEvent.clickCount == 1) {
-            [self hitTestConnections:self.connections.mutableCopy withPoint:loc];
+            BOOL connectionHit = [self hitTestConnections:loc];
+            if (connectionHit) {
+                [self setNeedsDisplay:YES];
+            }
             return;
         }else if (theEvent.clickCount == 2){
             [self addPlaceholderAtPoint:theEvent.locationInWindow];
@@ -142,8 +145,8 @@
     self.selectedObjectView = [self.selectedObjectView clickUp:theEvent];
     
     if (self.selectedPortViewSender && self.selectedPortViewReceiver) {
-        [self connectPortView:self.selectedPortViewSender
-                   toReceiver:self.selectedPortViewReceiver];
+        [self connectOutletView:self.selectedPortViewSender
+                   toInletView:self.selectedPortViewReceiver];
     }
     
     self.selectedPortViewSender = [self.selectedPortViewSender clickUp:theEvent];
@@ -157,16 +160,18 @@
 - (void)keyDown:(NSEvent *)theEvent
 {
     NSString *theKey = theEvent.characters;
-    if ([theKey isEqualToString:@"\x7f"] && self.selectedConnections) {
-        for (NSString *connectionId in self.selectedConnections.allObjects) {
-            if ([self.patch hasConnectionWithId:connectionId]) {
-                [self.patch deleteConnectionWithId:connectionId];
-            }else{
-                NSLog(@"patch doesn't have a connection with id %@",connectionId);
-            }
-        }
+    NSArray *selectedConnections = [self.patch selectedConnections];
+    if (!selectedConnections) {
+        return;
     }
-
+    
+    if ([theKey isEqualToString:@"\x7f"] && selectedConnections) {
+        for (BbConnection *connection in selectedConnections) {
+                [self.patch removeConnectionWithId:connection.connectionId];
+        }
+        
+        [self setNeedsDisplay:YES];
+    }
 }
 
 @end

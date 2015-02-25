@@ -13,8 +13,6 @@
 @interface BbConnection ()
 
 @property (nonatomic)                               NSUInteger      ancestors;
-//If any of the BbEntitys are deleted
-@property (nonatomic,readonly,getter=isDirty)       BOOL            isDirty;
 
 @end
 
@@ -92,7 +90,7 @@
         return BbConnectionStatus_Connected;
     }
     
-    return BbConnectionStatus_NotConnected;
+    return BbConnectionStatus_Connected;//BbConnectionStatus_NotConnected;
 }
 
 - (NSString *)connectionId
@@ -148,17 +146,21 @@
 }
 
 //If any of the BbEntitys are deleted
+
 - (BOOL)isDirty
 {
-    return (self.sender && self.outlet && self.receiver && self.inlet);
+    BbPatch *parent = self.parent;
+    if (!self.sender || !self.outlet || !self.receiver || !self.inlet) { return YES; }
+    NSSet *children = [NSSet setWithArray:parent.childObjects];
+    if (![children containsObject:self.sender] || ![children containsObject:self.receiver]) { return YES; }
+    NSSet *outlets = [NSSet setWithArray:self.sender.outlets];
+    NSSet *inlets = [NSSet setWithArray:self.receiver.inlets];
+    if (![outlets containsObject:self.outlet] || ![inlets containsObject:self.inlet]) { return YES; }
+    return NO;
 }
 
 - (void)tearDown
 {
-    if (self.isConnected && !self.isDirty) {
-        [self disconnect];
-    }
-    
     self.outlet = nil;
     self.inlet = nil;
     self.parent = nil;

@@ -37,6 +37,8 @@ typedef NS_ENUM(NSUInteger, BbConnectionStatus)
 //Connection Status
 @property (nonatomic,readonly,getter=isConnected)       BOOL                    connected;
 @property (nonatomic,readonly)                          BbConnectionStatus      status;
+//If any of the BbEntitys are deleted
+@property (nonatomic,readonly,getter=isDirty)           BOOL                    isDirty;
 
 //selection status
 @property (nonatomic)                                   BOOL                    selected;

@@ -61,7 +61,7 @@
                 
                 [connections addObject:desc];
                 BbPatch *patch = [patches pop];
-                [patch addConnectionWithDescription:desc];
+                [patch addConnectionWithDescription:(BbConnectionDescription *)desc];
                 [patches push:patch];
                 
             }else{

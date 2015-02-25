@@ -51,8 +51,19 @@
     BbConnection *connection = [self.connections valueForKey:connectionId];
     [self.connections removeObjectForKey:connectionId];
     [connection disconnect];
-    [connection tearDown];
-    connection = nil;
+}
+
+- (NSArray *)selectedConnections
+{
+    if (!self.connections) {
+        return nil;
+    }
+    
+    NSMutableArray *connections = self.connections.allValues.mutableCopy;
+    NSPredicate *isSelected = [NSPredicate predicateWithFormat:@"%K == YES",@"selected"];
+    NSArray *selected = [connections filteredArrayUsingPredicate:isSelected];
+    
+    return selected;
 }
 
 - (NSBezierPath *)pathForConnectionWithId:(NSString *)connectionId
@@ -138,16 +149,18 @@
     return result;
 }
 
-- (void)refreshConnections
+- (BOOL)refreshConnections
 {
     if (!self.connections) {
-        return;
+        return NO;
     }
+    
     NSMutableDictionary *toKeep = nil;
     NSMutableArray *toDestroy = nil;
+    
     for (NSString *connectionId in self.connections.allKeys) {
         BbConnection *connection = [self.connections valueForKey:connectionId];
-        if (connection.status == BbConnectionStatus_Connected) {
+        if (!connection.isDirty) {
             if (!toKeep) {
                 toKeep = [NSMutableDictionary dictionary];
             }
@@ -163,7 +176,10 @@
     }
     
     self.connections = toKeep;
+    BOOL viewShouldRefresh = (toDestroy.count > 0);
     [self destroyConnections:toDestroy];
+    
+    return viewShouldRefresh;
 }
 
 - (void)destroyConnections:(NSArray *)connections
@@ -175,5 +191,7 @@
     
     connections = nil;
 }
+
+
 
 @end

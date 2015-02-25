@@ -7,28 +7,15 @@
 //
 
 #import "BbCocoaPatchView.h"
+#import "BbPatch+Connections.h"
+
 @class BbCocoaPortView;
 @interface BbCocoaPatchView (Connections)
 
-- (BbConnectionCalculatePathBlock)connectionBlockWithDescription:(id)desc;
+- (void)connectOutletView:(BbCocoaPortView *)outletView
+             toInletView:(BbCocoaPortView *)inletView;
 
-- (BbConnectionCalculatePathBlock)connectionBlockSender:(BbCocoaPortView *)sender
-                                               receiver:(BbCocoaPortView *)receiver;
-
-- (void)connectPortView:(BbCocoaPortView *)sender
-             toReceiver:(BbCocoaPortView *)receiver;
-
-- (void)connectSender:(NSUInteger)senderIndex
-               outlet:(NSUInteger)outletIndex
-             receiver:(NSUInteger)receiverIndex
-                inlet:(NSUInteger)inletIndex;
-
-- (NSBezierPath *)connectionPathFromArray:(NSArray *)array;
-
-- (void)removeConnectionPathWithId:(NSString *)connectionId;
-
-- (void)hitTestConnections:(NSDictionary *)connections withPoint:(NSPoint)point;
-
+- (BOOL)hitTestConnections:(NSPoint)point;
 - (void)patch:(BbPatch *)patch connectionsDidChange:(id)connections;
 
 @end

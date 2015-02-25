@@ -7,6 +7,7 @@
 //
 
 #import "BbConnection.h"
+#import "NSBezierPath+Array.h"
 
 typedef NSArray* (^BbConnectionCalculatePathBlock)(void);
 
@@ -14,5 +15,6 @@ typedef NSArray* (^BbConnectionCalculatePathBlock)(void);
 
 - (NSArray *)pathCoordinates;
 - (NSBezierPath *)bezierPath;
+- (BOOL)hitTest:(NSPoint)point;
 
 @end

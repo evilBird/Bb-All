@@ -16,15 +16,15 @@
 
 - (void)addProxyPort:(id)port;
 
-@property (nonatomic,strong)NSSet *BbConnections;
-@property (nonatomic,strong)NSMutableSet *connectionIds;
+//@property (nonatomic,strong)NSSet *BbConnections;
+//@property (nonatomic,strong)NSMutableSet *connectionIds;
 @property (nonatomic,strong)NSMutableDictionary *connections;
-@property (nonatomic,strong)NSMutableDictionary *myConnections;
+//@property (nonatomic,strong)NSMutableDictionary *myConnections;
 
-- (void)addConnectionsWithDescriptions:(NSArray *)descriptions;
+//- (void)addConnectionsWithDescriptions:(NSArray *)descriptions;
 
-- (void)addConnectionWithDescription:(id)desc;
-
+//- (void)addConnectionWithDescription:(id)desc;
+/*
 - (id)connectObject:(NSUInteger)senderObjectIndex
                port:(NSUInteger)senderPortIndex
            toObject:(NSUInteger)receiverObjectIndex
@@ -41,9 +41,9 @@
 
 - (void)connectOutlet:(BbOutlet *)outlet
               toInlet:(BbInlet *)inlet;
+*/
 
 - (NSString *)textDescription;
-
 - (NSArray *)UISize;
 
 @end

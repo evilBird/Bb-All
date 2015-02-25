@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 birdSound. All rights reserved.
 //
 
-#import "BbPatch.h"
+#import "BbPatch+Connections.h"
 
 @interface BbCompiledPatch : BbPatch
 
