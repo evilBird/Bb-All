@@ -23,6 +23,8 @@
 		F24FDA101A9D73C90038D102 /* BbArrayDripSlow.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA0F1A9D73C90038D102 /* BbArrayDripSlow.m */; };
 		F24FDA141A9D74560038D102 /* BbArrayElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA131A9D74560038D102 /* BbArrayElement.m */; };
 		F24FDA181A9D9C630038D102 /* BbPatch+BbConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FDA171A9D9C630038D102 /* BbPatch+BbConnection.m */; };
+		F25EC3A81A9E6566009CC384 /* BbConnection+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = F25EC3A71A9E6566009CC384 /* BbConnection+Drawing.m */; };
+		F25EC3AB1A9E6CB1009CC384 /* BbPatch+Connections.m in Sources */ = {isa = PBXBuildFile; fileRef = F25EC3AA1A9E6CB1009CC384 /* BbPatch+Connections.m */; };
 		F28FB3FA1A980A8100E37BA3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3F91A980A8100E37BA3 /* AppDelegate.m */; };
 		F28FB3FC1A980A8100E37BA3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FB1A980A8100E37BA3 /* main.m */; };
 		F28FB3FF1A980A8100E37BA3 /* PatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB3FE1A980A8100E37BA3 /* PatchViewController.m */; };
@@ -127,6 +129,10 @@
 		F24FDA131A9D74560038D102 /* BbArrayElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbArrayElement.m; sourceTree = "<group>"; };
 		F24FDA161A9D9C630038D102 /* BbPatch+BbConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbPatch+BbConnection.h"; sourceTree = "<group>"; };
 		F24FDA171A9D9C630038D102 /* BbPatch+BbConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbPatch+BbConnection.m"; sourceTree = "<group>"; };
+		F25EC3A61A9E6566009CC384 /* BbConnection+Drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbConnection+Drawing.h"; sourceTree = "<group>"; };
+		F25EC3A71A9E6566009CC384 /* BbConnection+Drawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbConnection+Drawing.m"; sourceTree = "<group>"; };
+		F25EC3A91A9E6CB1009CC384 /* BbPatch+Connections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbPatch+Connections.h"; sourceTree = "<group>"; };
+		F25EC3AA1A9E6CB1009CC384 /* BbPatch+Connections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbPatch+Connections.m"; sourceTree = "<group>"; };
 		F28FB3F31A980A8100E37BA3 /* Visual Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Visual Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F28FB3F71A980A8100E37BA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F28FB3F81A980A8100E37BA3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -517,6 +523,8 @@
 				F28FB45A1A994BCE00E37BA3 /* BbObject+EntityParent.m */,
 				F28FB45B1A994BCE00E37BA3 /* BbPatch.h */,
 				F28FB45C1A994BCE00E37BA3 /* BbPatch.m */,
+				F25EC3A91A9E6CB1009CC384 /* BbPatch+Connections.h */,
+				F25EC3AA1A9E6CB1009CC384 /* BbPatch+Connections.m */,
 				F24FD9FF1A9D699B0038D102 /* BbCompiledPatch.h */,
 				F24FDA001A9D699B0038D102 /* BbCompiledPatch.m */,
 			);
@@ -603,6 +611,8 @@
 			children = (
 				F28FB43B1A994BCE00E37BA3 /* BbCocoaPatchView+Connections.h */,
 				F28FB43C1A994BCE00E37BA3 /* BbCocoaPatchView+Connections.m */,
+				F25EC3A61A9E6566009CC384 /* BbConnection+Drawing.h */,
+				F25EC3A71A9E6566009CC384 /* BbConnection+Drawing.m */,
 				F28FB43D1A994BCE00E37BA3 /* BbCocoaPatchView+Helpers.h */,
 				F28FB43E1A994BCE00E37BA3 /* BbCocoaPatchView+Helpers.m */,
 				F28FB43F1A994BCE00E37BA3 /* BbCocoaPatchView+Keys.h */,
@@ -791,6 +801,7 @@
 				F28FB4AD1A994ECF00E37BA3 /* BbBasicMathTests.m in Sources */,
 				F28FB4691A994BCE00E37BA3 /* BbBangObject.m in Sources */,
 				F28FB48D1A994BCE00E37BA3 /* NSView+Bb.m in Sources */,
+				F25EC3AB1A9E6CB1009CC384 /* BbPatch+Connections.m in Sources */,
 				F2E031BD1A99AE5F005A0BDB /* BbDictionary.m in Sources */,
 				F207A4CF1A9C17C4009A9354 /* BbArraySplit.m in Sources */,
 				F28FB4761A994BCE00E37BA3 /* BbCocoaObjectView+TextFieldDelegate.m in Sources */,
@@ -806,6 +817,7 @@
 				F28FB4861A994BCE00E37BA3 /* BbObject+Encoder.m in Sources */,
 				F28FB46B1A994BCE00E37BA3 /* BbClassMethod.m in Sources */,
 				F28FB4891A994BCE00E37BA3 /* BbTrigger.m in Sources */,
+				F25EC3A81A9E6566009CC384 /* BbConnection+Drawing.m in Sources */,
 				F24FDA011A9D699B0038D102 /* BbCompiledPatch.m in Sources */,
 				F28FB4771A994BCE00E37BA3 /* BbCocoaObjectView.m in Sources */,
 				F28FB3FC1A980A8100E37BA3 /* main.m in Sources */,

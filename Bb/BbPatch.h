@@ -16,6 +16,7 @@
 
 - (void)addProxyPort:(id)port;
 
+@property (nonatomic,strong)NSSet *BbConnections;
 @property (nonatomic,strong)NSMutableSet *connectionIds;
 @property (nonatomic,strong)NSMutableDictionary *connections;
 @property (nonatomic,strong)NSMutableDictionary *myConnections;
@@ -42,6 +43,7 @@
               toInlet:(BbInlet *)inlet;
 
 - (NSString *)textDescription;
+
 - (NSArray *)UISize;
 
 @end

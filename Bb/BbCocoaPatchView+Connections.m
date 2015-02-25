@@ -79,7 +79,7 @@
 
 - (NSDictionary *)connectionDictionaryWithDescription:(id)desc
 {
-    BbCocoaPatchGetConnectionArray connectionBlock;
+    BbConnectionCalculatePathBlock connectionBlock;
     BbConnectionDescription *c = desc;
     connectionBlock = [self connectionBlockWithDescription:c];
     if (connectionBlock == NULL) {
@@ -90,7 +90,7 @@
     return @{connectionId:connectionBlock};
 }
 
-- (BbCocoaPatchGetConnectionArray)connectionBlockWithDescription:(id)desc
+- (BbConnectionCalculatePathBlock)connectionBlockWithDescription:(id)desc
 {
     if (!desc) {
         return NULL;
@@ -116,10 +116,10 @@
     return [self connectionBlockSender:outletView receiver:inletView];
     
 }
-- (BbCocoaPatchGetConnectionArray)connectionBlockSender:(BbCocoaPortView *)sender receiver:(BbCocoaPortView *)receiver
+- (BbConnectionCalculatePathBlock)connectionBlockSender:(BbCocoaPortView *)sender receiver:(BbCocoaPortView *)receiver
 {
     __weak BbCocoaPatchView *weakself = self;
-    BbCocoaPatchGetConnectionArray connectionBlock = ^ NSArray *{
+    BbConnectionCalculatePathBlock connectionBlock = ^ NSArray *{
         
         CGRect senderRect = [weakself convertRect:sender.bounds fromView:sender];
         CGRect receiverRect = [weakself convertRect:receiver.bounds fromView:receiver];
@@ -142,7 +142,7 @@
 {
     BOOL shouldRefresh = NO;
     for (NSString *connectionId in connections.allKeys) {
-        BbCocoaPatchGetConnectionArray block = [connections valueForKey:connectionId];
+        BbConnectionCalculatePathBlock block = [connections valueForKey:connectionId];
         NSArray *array = block();
         BOOL hit = [self line:array intersectsPoint:point];
         if (hit) {
@@ -284,7 +284,7 @@
     
     if (self.connections && self.connections.allKeys.count) {
         for (NSString *connectionId in self.connections.allKeys) {
-            BbCocoaPatchGetConnectionArray block = [self.connections valueForKey:connectionId];
+            BbConnectionCalculatePathBlock block = [self.connections valueForKey:connectionId];
             BOOL selected = [self.selectedConnections containsObject:connectionId];
             NSBezierPath *connectionPath = [self connectionPathFromArray:block() selected:selected];
             [connectionPath stroke];

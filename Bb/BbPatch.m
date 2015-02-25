@@ -264,6 +264,7 @@
     return @"#N";
 }
 
+//Override so all ports are added with a proxy
 - (void)addPort:(BbPort *)port {}
 
 - (void)addProxyPort:(id)port
@@ -282,7 +283,6 @@
 
 
 @end
-
 
 @implementation BbPatch (ProxyPorts)
 

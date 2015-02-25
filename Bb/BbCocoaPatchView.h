@@ -7,9 +7,8 @@
 //
 
 #import "BbCocoaEntityView.h"
+#import "BbConnection+Drawing.h"
 @class BbCocoaPortView,BbCocoaObjectView,BbObject,BbPatch;
-
-typedef NSArray* (^BbCocoaPatchGetConnectionArray)(void);
 
 @interface BbCocoaPatchView : BbCocoaEntityView <BbPlaceholderViewDelegate>
 {

@@ -20,22 +20,7 @@
 
 @implementation BbConnection
 
-+ (BbConnection *) newConnectionPatch:(BbPatch *)patch
-                               sender:(BbObject *)sender
-                               outlet:(BbOutlet *)outlet
-                             receiver:(BbObject *)receiver
-                                inlet:(BbInlet *)inlet
-{
-    BbConnection *connection = [[BbConnection alloc]init];
-    connection.sender = sender;
-    connection.outlet = outlet;
-    connection.receiver = receiver;
-    connection.inlet = inlet;
-    connection.parent = patch;
-    return connection;
-}
-
-+ (BbConnection *)connectOutlet:(BbOutlet *)outlet toInlet:(BbInlet *)inlet
++ (BbConnection *)newWithOutlet:(BbOutlet *)outlet inlet:(BbInlet *)inlet
 {
     BbConnection *connection = [[BbConnection alloc]init];
     connection.outlet = outlet;
@@ -43,7 +28,15 @@
     connection.inlet = inlet;
     connection.receiver = inlet.parent;
     connection.parent = connection.sender.parent;
-    [outlet connectToInlet:inlet];
+    connection.ancestors = [connection.parent countAncestors] + 1;
+    return connection;
+}
+
++ (BbConnection *)connectOutlet:(BbOutlet *)outlet toInlet:(BbInlet *)inlet
+{
+    BbConnection *connection = [BbConnection newWithOutlet:outlet
+                                                     inlet:inlet];
+    [connection connect];
     return connection;
 }
 

@@ -38,12 +38,12 @@ typedef NS_ENUM(NSUInteger, BbConnectionStatus)
 @property (nonatomic,readonly,getter=isConnected)       BOOL                    connected;
 @property (nonatomic,readonly)                          BbConnectionStatus      status;
 
+//selection status
+@property (nonatomic)                                   BOOL                    selected;
 
-+ (BbConnection *)newConnectionPatch:(BbPatch *)patch
-                              sender:(BbObject *)sender
-                              outlet:(BbOutlet *)outlet
-                            receiver:(BbObject *)receiver
-                               inlet:(BbInlet *)inlet;
+
++ (BbConnection *)newWithOutlet:(BbOutlet *)outlet
+                          inlet:(BbInlet *)inlet;
 
 + (BbConnection *)connectOutlet:(BbOutlet *)outlet
                         toInlet:(BbInlet *)inlet;
@@ -51,6 +51,6 @@ typedef NS_ENUM(NSUInteger, BbConnectionStatus)
 - (NSInteger)connect;
 - (NSInteger)disconnect;
 - (void)tearDown;
-
+- (NSString *)textDescription;
 
 @end

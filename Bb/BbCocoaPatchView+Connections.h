@@ -10,9 +10,9 @@
 @class BbCocoaPortView;
 @interface BbCocoaPatchView (Connections)
 
-- (BbCocoaPatchGetConnectionArray)connectionBlockWithDescription:(id)desc;
+- (BbConnectionCalculatePathBlock)connectionBlockWithDescription:(id)desc;
 
-- (BbCocoaPatchGetConnectionArray)connectionBlockSender:(BbCocoaPortView *)sender
+- (BbConnectionCalculatePathBlock)connectionBlockSender:(BbCocoaPortView *)sender
                                                receiver:(BbCocoaPortView *)receiver;
 
 - (void)connectPortView:(BbCocoaPortView *)sender
