@@ -12,11 +12,18 @@
 #import "NSString+Bb.h"
 #import "NSMutableString+Bb.h"
 
+@interface BbCocoaMessageView () <BbObjectDisplayDelegate>
+
+- (void)object:(id)sender didUpdate:(NSString *)updateToDisplay;
+
+@end
+
 @implementation BbCocoaMessageView
 
 - (void)commonInitEntity:(BbEntity *)entity viewDescription:(id)viewDescription
 {
     [super commonInitEntity:entity viewDescription:viewDescription];
+    [(BbMessage *)entity setDisplayDelegate:self];
     kMinWidth = 100.0;
     [self setupTextField];
     
@@ -159,5 +166,17 @@
     [outlinePath stroke];
 }
 
+
+#pragma mark - BbObjectDisplayDelegate
+
+- (void)object:(id)sender didUpdate:(NSString *)updateToDisplay
+{
+    if (sender == self.entity && ![updateToDisplay isEqualToString:self.textField.stringValue]) {
+        [self.textField setStringValue:updateToDisplay];
+        [self invalidateIntrinsicContentSize];
+        [self setNeedsDisplay:YES];
+        [self.superview setNeedsDisplay:YES];
+    }
+}
 
 @end
