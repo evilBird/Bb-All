@@ -13,14 +13,33 @@
 #import "BbObject+EntityParent.h"
 #import "PatchViewController.h"
 #import "NSMutableArray+Stack.h"
+#import "BbPatch+CPA.h"
 
 @interface SavedPatch ()
 
 @property (nonatomic,strong)NSMutableArray *patchStack;
+@property (nonatomic,strong)NSString *pasteboard;
 
 @end
 
 @implementation SavedPatch
+
+- (IBAction)copy:sender
+{
+    BbPatch *patch = [self.patchStack pop];
+    NSString *copy = [patch copySelected];
+    NSLog(@"copy: %@",copy);
+    self.pasteboard = copy;
+    [self.patchStack push:patch];
+}
+
+
+- (IBAction)paste:sender
+{
+    BbPatch *patch = [self.patchStack pop];
+    [patch pasteCopied:self.pasteboard];
+    [self.patchStack push:patch];
+}
 
 - (instancetype)init {
     self = [super init];
@@ -30,6 +49,7 @@
     }
     return self;
 }
+
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
     [super windowControllerDidLoadNib:aController];
@@ -47,12 +67,14 @@
     BbPatch *patch = [self.patchStack pop];
     
     if (!patch) {
-        patch = [[BbPatch alloc]initWithArguments:@"untitled patch"];
+        patch = [[BbPatch alloc]initWithArguments:@"untitled"];
     }
     
     if (patch) {
         [wc.contentViewController setRepresentedObject:patch];
     }
+    
+    [self.patchStack push:patch];
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError {

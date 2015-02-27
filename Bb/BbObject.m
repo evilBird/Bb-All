@@ -201,6 +201,28 @@
     return myDescription;
 }
 
+- (NSString *)copyWithOffset:(NSArray *)offset
+{
+    CGFloat x = [[self UIPosition].firstObject integerValue] + 5;
+    CGFloat y = [[self UIPosition].lastObject integerValue] + 5;
+    NSMutableString *myDescription = [NSMutableString
+                                      descBbObject:NSStringFromClass([self class])
+                                      ancestors:[self countAncestors]
+                                      position:@[@(x),@(y)]
+                                      size:[self UISize]
+                                      args:[self creationArguments]];
+    
+    if (self.childObjects_ && self.childObjects_.count) {
+        
+        for (BbObject *child in [self.childObjects_ array]) {
+            
+            [myDescription appendObject:[child textDescription]];
+        }
+    }
+    
+    return myDescription;
+}
+
 + (NSString *)UIType
 {
     return @"obj";

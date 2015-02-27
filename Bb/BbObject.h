@@ -39,6 +39,7 @@ typedef id (^BbCalculateOutputBlock)(id hotValue, NSArray *inlets);
 - (void)observeInlet:(BbInlet *)inlet;
 
 - (NSString *)textDescription;
+- (NSString *)copyWithOffset:(NSArray *)offset;
 - (BOOL)hasUI;
 - (BOOL)needsUI;
 - (BOOL)wantsUI;

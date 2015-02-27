@@ -160,6 +160,8 @@
 - (void)keyDown:(NSEvent *)theEvent
 {
     NSString *theKey = theEvent.characters;
+    NSLog(@"the key: %@",theKey);
+    
     NSArray *selectedConnections = [self.patch selectedConnections];
     if (!selectedConnections) {
         return;
@@ -172,6 +174,8 @@
         
         [self setNeedsDisplay:YES];
     }
+    
+    
 }
 
 @end

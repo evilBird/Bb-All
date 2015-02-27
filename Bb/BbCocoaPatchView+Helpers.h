@@ -24,4 +24,6 @@
 - (NSPoint)offsetScaledPoint:(NSPoint)point;
 - (NSPoint)myCenter;
 
+- (NSString *)copySelected;
+
 @end

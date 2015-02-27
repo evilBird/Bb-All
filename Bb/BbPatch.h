@@ -16,32 +16,7 @@
 
 - (void)addProxyPort:(id)port;
 
-//@property (nonatomic,strong)NSSet *BbConnections;
-//@property (nonatomic,strong)NSMutableSet *connectionIds;
 @property (nonatomic,strong)NSMutableDictionary *connections;
-//@property (nonatomic,strong)NSMutableDictionary *myConnections;
-
-//- (void)addConnectionsWithDescriptions:(NSArray *)descriptions;
-
-//- (void)addConnectionWithDescription:(id)desc;
-/*
-- (id)connectObject:(NSUInteger)senderObjectIndex
-               port:(NSUInteger)senderPortIndex
-           toObject:(NSUInteger)receiverObjectIndex
-               port:(NSUInteger)receiverPortIndex;
-
-- (id)disconnectObject:(NSUInteger)senderObjectIndex
-                    port:(NSUInteger)senderPortIndex
-              fromObject:(NSUInteger)receiverObjectIndex
-                    port:(NSUInteger)receiverPortIndex;
-
-- (BOOL)hasConnectionWithId:(NSString *)connectionId;
-
-- (void)deleteConnectionWithId:(NSString *)connectionId;
-
-- (void)connectOutlet:(BbOutlet *)outlet
-              toInlet:(BbInlet *)inlet;
-*/
 
 - (NSString *)textDescription;
 - (NSArray *)UISize;

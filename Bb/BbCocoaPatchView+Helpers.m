@@ -9,6 +9,7 @@
 #import "BbCocoaPatchView+Helpers.h"
 #import "BbCocoaObjectView.h"
 #import "BbCocoaPortView.h"
+#import "NSMutableString+Bb.h"
 
 @implementation BbCocoaPatchView (Helpers)
 
@@ -87,6 +88,36 @@
     y = self.intrinsicContentSize.height/2.0;
     CGPoint myCenter = CGPointMake([NSView roundFloat:x], [NSView roundFloat:y]);
     return NSPointFromCGPoint(myCenter);
+}
+
+- (NSArray *)selectedObjectViews
+{
+    NSMutableArray *selected = nil;
+    for (id subview in self.subviews) {
+        if ([subview respondsToSelector:@selector(selected)]) {
+            if ([subview selected]){
+                if (!selected){
+                    selected = [NSMutableArray array];
+                }
+                
+                [selected addObject:subview];
+            }
+        }
+    }
+    
+    return selected;
+}
+
+- (NSString *)copySelected
+{
+    NSArray *selected = [self selectedObjectViews];
+    NSMutableString *copied = [NSMutableString newDescription];
+    for (BbCocoaEntityView *view in selected) {
+        BbObject *object = (BbObject *)[view entity];
+        [copied appendString:[object copyWithOffset:nil]];
+    }
+    
+    return copied;
 }
 
 @end

@@ -10,6 +10,8 @@
 
 @interface SavedPatch : NSDocument
 
+- (IBAction)copy:sender;
+- (IBAction)paste:sender;
 
 @end
 
