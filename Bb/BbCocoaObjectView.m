@@ -146,6 +146,14 @@
     return self.viewDescription.text;
 }
 
+- (void)setDisplayedText:(NSString *)displayedText
+{
+    self.viewDescription.text = displayedText;
+    [self invalidateIntrinsicContentSize];
+    [self setNeedsLayout:YES];
+    [self setNeedsDisplay:YES];
+}
+
 + (instancetype)viewWithObject:(id)object parent:(id)parentView
 {
     BbObject *obj = object;

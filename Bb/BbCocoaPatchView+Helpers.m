@@ -10,6 +10,7 @@
 #import "BbCocoaObjectView.h"
 #import "BbCocoaPortView.h"
 #import "NSMutableString+Bb.h"
+#import "BbAbstraction.h"
 
 @implementation BbCocoaPatchView (Helpers)
 
@@ -118,8 +119,8 @@
         [copied appendThenNewLine:[object copyWithOffset:@[@(5),@(5)]]];
         i ++;
     }
-    
     return copied;
+    
 }
 
 - (void)pasteCopied:(NSString *)copied
@@ -130,6 +131,38 @@
     for (NSString *description in filtered) {
         [self addObjectWithText:description];
     }
+}
+
+- (void)abstractSelected
+{
+    NSArray *selectedObjects = [self selectedObjectViews];
+    for (BbObject *object in selectedObjects) {
+        [self.patch removeChildObject:object];
+    }
+    NSArray *selectedConnections = [self.patch selectedConnections];
+    for (BbConnection *connection in selectedConnections) {
+        [self.patch removeConnectionWithId:connection.connectionId];
+    }
+    
+    BbAbstraction *abstraction = [[BbAbstraction alloc]init];
+    for (BbObject *object in selectedObjects) {
+        [abstraction addChildObject:object];
+    }
+    
+    for (BbConnection *connection in selectedConnections) {
+        if (![connection isDirty]) {
+            if (!abstraction.connections) {
+                abstraction.connections = [NSMutableDictionary dictionary];
+            }
+            [abstraction.connections setObject:connection forKey:connection.connectionId];
+        }
+    }
+    
+    [self.patch addChildObject:abstraction];
+    [self addViewForObject:abstraction];
+    [self moveEntityView:(BbCocoaObjectView *)abstraction.view toPoint:NSPointFromCGPoint(CGPointMake(50, 50))];
+    [(BbCocoaObjectView *)[abstraction view]setDisplayedText:@"abstract"];
+    
 }
 
 @end

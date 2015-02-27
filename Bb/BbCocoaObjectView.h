@@ -22,7 +22,9 @@ static NSString *kBbUITypeOutlet                = @"outlet";
 
 @property (nonatomic,readonly)      NSArray                         *inletViews;
 @property (nonatomic,readonly)      NSArray                         *outletViews;
-@property (nonatomic,readonly)      NSString                        *displayedText;
+@property (nonatomic,strong)      NSString                        *displayedText;
+
+- (void)setDisplayedText:(NSString *)displayedText;
 
 + (instancetype)viewWithObject:(id)object
                         parent:(id)parentView;

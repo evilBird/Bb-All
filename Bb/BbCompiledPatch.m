@@ -15,6 +15,7 @@
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"";
+    self.creationArguments = arguments;
     if (arguments) {
         NSString *name = [arguments firstObject];
         NSString *patchName = [name stringByAppendingPathExtension:@"txt"];
@@ -27,12 +28,18 @@
     }
 }
 
+- (NSArray *)filterDescriptions:(NSArray *)descriptions
+{
+    NSMutableArray *desc = descriptions.mutableCopy;
+    [desc removeObjectAtIndex:0];
+    [desc removeObjectAtIndex:(desc.count - 1)];
+    return desc;
+}
+
 - (void)createChildObjectsWithText:(NSString *)text
 {
     NSMutableArray *rawDescriptions = [BbBasicParser descriptionsWithText:text].mutableCopy;
-    [rawDescriptions removeObjectAtIndex:0];
-    [rawDescriptions removeObjectAtIndex:(rawDescriptions.count - 1)];
-    NSArray *descriptions = rawDescriptions;
+    NSArray *descriptions = [self filterDescriptions:rawDescriptions];
     NSMutableArray *patches = [NSMutableArray array];
     NSMutableArray *childObjects = nil;
     NSMutableArray *connections = nil;
@@ -71,6 +78,7 @@
                 if (!childObjects) {
                     childObjects = [NSMutableArray array];
                 }
+                [childObjects addObject:child];
                 
                 BbPatch *patch = [patches pop];
                 [patch addChildObject:child];
@@ -79,6 +87,7 @@
         }
     }
 }
+
 
 + (NSString *)textForSavedPatchWithName:(NSString *)patchName
 {

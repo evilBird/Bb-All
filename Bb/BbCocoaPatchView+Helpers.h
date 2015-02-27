@@ -26,5 +26,6 @@
 
 - (NSString *)copySelected;
 - (void)pasteCopied:(NSString *)copied;
+- (void)abstractSelected;
 
 @end

@@ -12,7 +12,7 @@
 
 - (NSSize)intrinsicContentSize
 {
-    NSSize size = NSSizeFromCGSize(CGSizeMake(kDefaultCocoaObjectViewWidth, kDefaultCocoaObjectViewHeight));
+    NSSize size = NSSizeFromCGSize(CGSizeMake(85, kDefaultCocoaObjectViewHeight));
     return size;
 }
 
@@ -22,7 +22,7 @@
 
 - (NSSize)intrinsicContentSize
 {
-    NSSize size = NSSizeFromCGSize(CGSizeMake(kDefaultCocoaObjectViewWidth, kDefaultCocoaObjectViewHeight));
+    NSSize size = NSSizeFromCGSize(CGSizeMake(85, kDefaultCocoaObjectViewHeight));
     return size;
 }
 

@@ -30,6 +30,7 @@
 
 - (BbObject *)addObjectWithText:(NSString *)text;
 - (id)addPlaceholderAtPoint:(CGPoint)point;
+- (void)addViewForObject:(BbObject *)object;
 + (instancetype)patchViewWithPatch:(BbPatch *)patch inView:(id)view;
 
 @end

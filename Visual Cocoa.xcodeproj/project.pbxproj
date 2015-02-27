@@ -85,6 +85,7 @@
 		F28FB4BC1A9950AD00E37BA3 /* NSInvocation+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB4BA1A9950AD00E37BA3 /* NSInvocation+Bb.m */; };
 		F2E031BA1A999F42005A0BDB /* BbGET.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E031B91A999F42005A0BDB /* BbGET.m */; };
 		F2E031BD1A99AE5F005A0BDB /* BbDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E031BC1A99AE5F005A0BDB /* BbDictionary.m */; };
+		F2FDD89F1AA02BCD00C740B9 /* BbAbstraction.m in Sources */ = {isa = PBXBuildFile; fileRef = F2FDD89E1AA02BCD00C740B9 /* BbAbstraction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -257,6 +258,8 @@
 		F2E031B91A999F42005A0BDB /* BbGET.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbGET.m; sourceTree = "<group>"; };
 		F2E031BB1A99AE5F005A0BDB /* BbDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbDictionary.h; sourceTree = "<group>"; };
 		F2E031BC1A99AE5F005A0BDB /* BbDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbDictionary.m; sourceTree = "<group>"; };
+		F2FDD89D1AA02BCD00C740B9 /* BbAbstraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbAbstraction.h; sourceTree = "<group>"; };
+		F2FDD89E1AA02BCD00C740B9 /* BbAbstraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbAbstraction.m; sourceTree = "<group>"; };
 		F3927039BB9D834E2C3F36E5 /* libPods-Visual Cocoa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Visual Cocoa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -530,6 +533,8 @@
 				F25EC3AA1A9E6CB1009CC384 /* BbPatch+Connections.m */,
 				F24FD9FF1A9D699B0038D102 /* BbCompiledPatch.h */,
 				F24FDA001A9D699B0038D102 /* BbCompiledPatch.m */,
+				F2FDD89D1AA02BCD00C740B9 /* BbAbstraction.h */,
+				F2FDD89E1AA02BCD00C740B9 /* BbAbstraction.m */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -836,6 +841,7 @@
 				F28FB4B61A994F4800E37BA3 /* NSString+Bb.m in Sources */,
 				F28FB4B71A994F4800E37BA3 /* NSArray+Bb.m in Sources */,
 				F24FDA181A9D9C630038D102 /* BbPatch+BbConnection.m in Sources */,
+				F2FDD89F1AA02BCD00C740B9 /* BbAbstraction.m in Sources */,
 				F28FB4831A994BCE00E37BA3 /* BbLog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

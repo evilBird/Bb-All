@@ -24,4 +24,5 @@
 #import "BbArraySplit.h"
 #import "BbProxyPort.h"
 #import "BbCompiledPatch.h"
+#import "BbAbstraction.h"
 #endif

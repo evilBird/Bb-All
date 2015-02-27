@@ -10,4 +10,7 @@
 
 @interface BbCompiledPatch : BbPatch
 
+- (void)createChildObjectsWithText:(NSString *)text;
+- (NSArray *)filterDescriptions:(NSArray *)descriptions;
+
 @end

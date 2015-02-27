@@ -14,6 +14,7 @@
 #import "PatchViewController.h"
 #import "NSMutableArray+Stack.h"
 #import "BbCocoaPatchView+Helpers.h"
+#import "BbAbstraction.h"
 
 @interface SavedPatch ()
 
@@ -24,7 +25,7 @@
 
 @implementation SavedPatch
 
-- (IBAction)copy:sender
+- (IBAction)copy:(id)sender
 {
     BbPatch *patch = [self.patchStack pop];
     BbCocoaPatchView *patchView = (BbCocoaPatchView *)patch.view;
@@ -35,13 +36,21 @@
 }
 
 
-- (IBAction)paste:sender
+- (IBAction)paste:(id)sender
 {
     BbPatch *patch = [self.patchStack pop];
     BbCocoaPatchView *patchView = (BbCocoaPatchView *)patch.view;
     NSString *pasteboard = [NSString stringWithString:self.pasteboard];
     NSLog(@"paste:\n%@",pasteboard);
     [patchView pasteCopied:pasteboard];
+    [self.patchStack push:patch];
+}
+
+- (IBAction)abstract:(id)sender
+{
+    BbPatch *patch = [self.patchStack pop];
+    BbCocoaPatchView *patchView = (BbCocoaPatchView *)patch.view;
+    [patchView abstractSelected];
     [self.patchStack push:patch];
 }
 
