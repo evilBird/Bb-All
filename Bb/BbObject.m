@@ -203,8 +203,8 @@
 
 - (NSString *)copyWithOffset:(NSArray *)offset
 {
-    CGFloat x = [[self UIPosition].firstObject integerValue] + 5;
-    CGFloat y = [[self UIPosition].lastObject integerValue] + 5;
+    CGFloat x = [[self UIPosition].firstObject integerValue] + [offset.firstObject integerValue];
+    CGFloat y = [[self UIPosition].lastObject integerValue] + [offset.lastObject integerValue];
     NSMutableString *myDescription = [NSMutableString
                                       descBbObject:NSStringFromClass([self class])
                                       ancestors:[self countAncestors]

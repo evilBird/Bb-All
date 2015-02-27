@@ -85,7 +85,6 @@
 		F28FB4BC1A9950AD00E37BA3 /* NSInvocation+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F28FB4BA1A9950AD00E37BA3 /* NSInvocation+Bb.m */; };
 		F2E031BA1A999F42005A0BDB /* BbGET.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E031B91A999F42005A0BDB /* BbGET.m */; };
 		F2E031BD1A99AE5F005A0BDB /* BbDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E031BC1A99AE5F005A0BDB /* BbDictionary.m */; };
-		F2FDD89C1A9FEDEB00C740B9 /* BbPatch+CPA.m in Sources */ = {isa = PBXBuildFile; fileRef = F2FDD89B1A9FEDEB00C740B9 /* BbPatch+CPA.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -258,8 +257,6 @@
 		F2E031B91A999F42005A0BDB /* BbGET.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbGET.m; sourceTree = "<group>"; };
 		F2E031BB1A99AE5F005A0BDB /* BbDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbDictionary.h; sourceTree = "<group>"; };
 		F2E031BC1A99AE5F005A0BDB /* BbDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbDictionary.m; sourceTree = "<group>"; };
-		F2FDD89A1A9FEDEB00C740B9 /* BbPatch+CPA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbPatch+CPA.h"; sourceTree = "<group>"; };
-		F2FDD89B1A9FEDEB00C740B9 /* BbPatch+CPA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbPatch+CPA.m"; sourceTree = "<group>"; };
 		F3927039BB9D834E2C3F36E5 /* libPods-Visual Cocoa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Visual Cocoa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -529,8 +526,6 @@
 				F28FB45A1A994BCE00E37BA3 /* BbObject+EntityParent.m */,
 				F28FB45B1A994BCE00E37BA3 /* BbPatch.h */,
 				F28FB45C1A994BCE00E37BA3 /* BbPatch.m */,
-				F2FDD89A1A9FEDEB00C740B9 /* BbPatch+CPA.h */,
-				F2FDD89B1A9FEDEB00C740B9 /* BbPatch+CPA.m */,
 				F25EC3A91A9E6CB1009CC384 /* BbPatch+Connections.h */,
 				F25EC3AA1A9E6CB1009CC384 /* BbPatch+Connections.m */,
 				F24FD9FF1A9D699B0038D102 /* BbCompiledPatch.h */,
@@ -790,7 +785,6 @@
 				F28FB4A71A994ECF00E37BA3 /* BbParsers.m in Sources */,
 				F28FB46A1A994BCE00E37BA3 /* BbBasicMath.m in Sources */,
 				F24FD9F81A9D0EE60038D102 /* BbProxyPort.m in Sources */,
-				F2FDD89C1A9FEDEB00C740B9 /* BbPatch+CPA.m in Sources */,
 				F28FB4AA1A994ECF00E37BA3 /* BbTests.m in Sources */,
 				F28FB46D1A994BCE00E37BA3 /* BbCocoaEntityView+Autolayout.m in Sources */,
 				F24FD9F21A9D0B850038D102 /* BbCocoaInletView.m in Sources */,

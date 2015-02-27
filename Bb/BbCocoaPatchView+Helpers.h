@@ -25,5 +25,6 @@
 - (NSPoint)myCenter;
 
 - (NSString *)copySelected;
+- (void)pasteCopied:(NSString *)copied;
 
 @end

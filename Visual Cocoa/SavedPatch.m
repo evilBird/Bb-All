@@ -13,7 +13,7 @@
 #import "BbObject+EntityParent.h"
 #import "PatchViewController.h"
 #import "NSMutableArray+Stack.h"
-#import "BbPatch+CPA.h"
+#import "BbCocoaPatchView+Helpers.h"
 
 @interface SavedPatch ()
 
@@ -27,8 +27,9 @@
 - (IBAction)copy:sender
 {
     BbPatch *patch = [self.patchStack pop];
-    NSString *copy = [patch copySelected];
-    NSLog(@"copy: %@",copy);
+    BbCocoaPatchView *patchView = (BbCocoaPatchView *)patch.view;
+    NSString *copy = [patchView copySelected];
+    NSLog(@"copy: \n%@",copy);
     self.pasteboard = copy;
     [self.patchStack push:patch];
 }
@@ -37,7 +38,10 @@
 - (IBAction)paste:sender
 {
     BbPatch *patch = [self.patchStack pop];
-    [patch pasteCopied:self.pasteboard];
+    BbCocoaPatchView *patchView = (BbCocoaPatchView *)patch.view;
+    NSString *pasteboard = [NSString stringWithString:self.pasteboard];
+    NSLog(@"paste:\n%@",pasteboard);
+    [patchView pasteCopied:pasteboard];
     [self.patchStack push:patch];
 }
 

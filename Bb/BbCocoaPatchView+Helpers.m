@@ -112,12 +112,24 @@
 {
     NSArray *selected = [self selectedObjectViews];
     NSMutableString *copied = [NSMutableString newDescription];
+    NSUInteger i = 0;
     for (BbCocoaEntityView *view in selected) {
         BbObject *object = (BbObject *)[view entity];
-        [copied appendString:[object copyWithOffset:nil]];
+        [copied appendThenNewLine:[object copyWithOffset:@[@(5),@(5)]]];
+        i ++;
     }
     
     return copied;
+}
+
+- (void)pasteCopied:(NSString *)copied
+{
+    NSArray *descriptions = [copied componentsSeparatedByString:@"\n"];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"length > 1"];
+    NSArray *filtered = [descriptions filteredArrayUsingPredicate:pred];
+    for (NSString *description in filtered) {
+        [self addObjectWithText:description];
+    }
 }
 
 @end
