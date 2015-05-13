@@ -1,0 +1,59 @@
+userText
+
+displayedText
+
+subCount
+
+input
+
+output
+
+command
+
+commandArgs
+
+theMessage
+
+lastMessage
+
+if userText
+	input = @[set, userText]
+
+if input is bang
+	output = lastMessage
+	return
+
+if input is not array
+	output = nil;
+	return
+
+if input is array
+	command = array[0]
+	commandArgs = [array removeFirstobject];
+	
+	
+switch (command)
+	case set: 
+		displayedText = string(commandArgs)
+		subCount = countSubs(displayedText)
+		theMessage = parse(displayedText)
+		output = theMessage
+	case add2
+		displayedText = displayedText + string(commandArgs)
+		subCount += countSubs(displayedText)
+		theMessage = parse(displayedText)
+		output = theMessage
+	case addcomma
+		displayedText = displayedText + ,
+		theMessage = parse(displayedText)
+		output = theMessage
+	case notFound
+		if subCount = 0
+			return
+		interpretedText = makeSubs(input)
+		theMessage = parse(interpretedText)
+		output = theMessage
+
+	
+
+

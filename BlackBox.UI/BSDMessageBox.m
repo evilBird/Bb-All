@@ -28,6 +28,7 @@
         // Initialization code
         self.className = @"BSDMessage";
         [self makeObjectInstance];
+        self.boxClassString = @"BSDMessageBox";
         _textField = [[UITextField alloc]initWithFrame:self.bounds];
         _textField.textColor = [UIColor colorWithWhite:0.2 alpha:1];
         _textField.textAlignment = NSTextAlignmentCenter;
@@ -41,10 +42,6 @@
         _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _textField.keyboardType = UIKeyboardTypeDefault;
         [self addSubview:_textField];
-        NSArray *inletViews = [self inlets];
-        self.inletViews = [NSMutableArray arrayWithArray:inletViews];
-        NSArray *outletViews = [self outlets];
-        self.outletViews = [NSMutableArray arrayWithArray:outletViews];
         self.defaultColor = [UIColor colorWithWhite:0.9 alpha:1];
         self.selectedColor = [UIColor colorWithWhite:0.99 alpha:1];
         self.currentColor = self.defaultColor;
@@ -61,7 +58,7 @@
     if (pan == UIGestureRecognizerStateBegan || pan == UIGestureRecognizerStateChanged) {
         return NO;
     }
-    textField.text = @"";
+    //textField.text = @"";
     return YES;
 }
 
@@ -85,23 +82,31 @@
 - (void)handleText:(NSString *)text
 {
     if (!text || text.length == 0) {
+        [self.textField becomeFirstResponder];
+        [self resizeToFitText:text];
         return;
     }
-    
+    self.argString = text;
     id theMessage = nil;
-    NSString *quotesRemoved = [text stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-    NSInteger diff = text.length - quotesRemoved.length;
-    if (diff == 2) {
-        theMessage = quotesRemoved;
-    }else{
-        
+    theMessage = [self formatMessage:text];
+        /*
         NSArray *components = [text componentsSeparatedByString:@" "];
         if (components.count == 1) {
             id component = components.firstObject;
+            argText = [[NSMutableString alloc]initWithString:component];
             theMessage = [self setTypeForString:component];
         }else {
             NSMutableArray *temp = nil;
+            NSMutableString *argText = nil;
             for (id component in components) {
+                
+                if (!argText) {
+                    argText = [[NSMutableString alloc]init];
+                    [argText appendString:component];
+                }else{
+                    [argText appendFormat:@" %@",argText];
+                }
+                
                 
                 if (!temp) {
                     temp = [NSMutableArray array];
@@ -111,7 +116,7 @@
             }
             theMessage = [temp mutableCopy];
         }
-    }
+         */
     if (theMessage!=nil) {
         
         if ([theMessage respondsToSelector:@selector(count)]) {
@@ -121,9 +126,29 @@
         }
         
         if (self.object != nil) {
-            [[(BSDMessage *)self.object hotInlet]input:@{@"set":theMessage}];
+            NSMutableArray *toSend = [self.creationArguments mutableCopy];
+            [toSend insertObject:@"set" atIndex:0];
+            [[(BSDMessage *)self.object hotInlet]input:toSend];
         }
     }
+}
+
+- (void)resizeForText:(NSString *)text
+{
+    NSDictionary *attributes = @{NSFontAttributeName:self.textField.font};
+    
+    CGSize size = [text sizeWithAttributes:attributes];
+    CGSize minSize = [self minimumSize];
+    CGRect frame = self.frame;
+    frame.size.width = size.width * 1.3;
+    if (frame.size.width < minSize.width) {
+        frame.size.width = minSize.width;
+    }
+    CGPoint oldCenter = self.center;
+    self.frame = frame;
+    self.textField.frame = CGRectInset(self.bounds, size.width * 0.15, 0);
+    self.center = oldCenter;
+    [self.delegate boxDidMove:self];
 }
 
 - (void)resizeToFitText:(NSString *)messageText
@@ -142,8 +167,16 @@
             frame.size.width = minSize.width;
         }
         
+        CGFloat maxWidth = self.superview.bounds.size.width;
+        if (frame.size.width > maxWidth) {
+            frame.size.width = maxWidth;
+        }
         self.frame = frame;
-        self.textField.frame = CGRectInset(self.bounds, size.width * 0.15, 0);
+        CGFloat XinsetAmount = size.width * 0.15;
+        if (XinsetAmount > 30) {
+            XinsetAmount = 30;
+        }
+        self.textField.frame = CGRectInset(self.bounds, XinsetAmount, 0);
     }
 }
 
@@ -151,26 +184,111 @@
 {
     NSDictionary *changeInfo = notification.object;
     id val = changeInfo[@"value"];
-    if (val) {
-        NSString *displayText = [NSString stringWithFormat:@"%@",val];
-        NSString *nnl = [displayText stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        NSString *nt = [nnl stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-        NSString *nq = [nt stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-        self.textField.text = nq;
-        [self resizeToFitText:self.textField.text];
+    if (val && ![val isKindOfClass:[BSDBang class]]) {
+        self.textField.text = val;
+        //self.textField.text = [self formatValue:val];
+        [self resizeForText:self.textField.text];
+        [self setNeedsDisplay];
     }
+}
+
+- (id)formatMessage:(NSString *)message
+{
+    if (!message) {
+        return nil;
+    }
+    
+    NSString *quotesRemoved = [message stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    NSInteger diff = message.length - quotesRemoved.length;
+    if (diff == 2) {
+        self.argString = message;
+        return message;
+        //return quotesRemoved;
+    }
+    
+    NSMutableArray *result = [NSMutableArray array];
+    NSArray *comp = [message componentsSeparatedByString:@","];
+    
+    if (comp.count > 1) {
+        for (NSInteger i = 0; i < comp.count; i ++) {
+            [result addObject:[self formatMessage:comp[i]]];
+        }
+        
+        return result;
+    }
+    
+    NSArray *elems = [message componentsSeparatedByString:@" "];
+    for (NSInteger i  = 0; i < elems.count; i ++) {
+        NSString *e = elems[i];
+        
+        [result addObject:[self setTypeForString:e]];
+    }
+    
+    if (result.count > 1) {
+        return result;
+    }
+    
+    return result.firstObject;
+}
+
+- (NSString *)formatValue:(id)value
+{
+    NSMutableString *result = nil;
+    if ([value isKindOfClass:[NSArray class]]) {
+        NSArray *array = value;
+        for (NSInteger i = 0; i < array.count; i ++) {
+            id val = array[i];
+            if ([val isKindOfClass:[NSArray class]]) {
+                if (!result) {
+                    result = [[NSMutableString alloc]init];
+                    result = [NSMutableString stringWithFormat:@"%@",[self formatValue:val]];
+                }else{
+                    [result appendFormat:@", %@",[self formatValue:val]];
+                }
+            }else{
+                
+                if (!result) {
+                    result = [[NSMutableString alloc]init];
+                }
+                
+                if ((i + 1) == array.count) {
+                    [result appendFormat:@"%@",val];
+                }else{
+                    [result appendFormat:@"%@ ",val];
+                }
+            }
+        }
+    }else if ([value isKindOfClass:[NSString class]]||[value isKindOfClass:[NSNumber class]]){
+        result = [NSMutableString stringWithFormat:@"%@",value];
+    }
+    
+    return result;
 }
 
 - (id)setTypeForString:(NSString *)string
 {
     NSRange n = [string rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
+    NSRange s = [string rangeOfCharacterFromSet:[NSCharacterSet symbolCharacterSet]];
     
-    if (n.length > 0) {
+    if (n.length > 0 || s.length > 0) {
         return string;
     }else{
         return @([string doubleValue]);
     }
+    return nil;
 }
+
+- (void)initializeWithText:(NSString *)text
+{
+    [self makeObjectInstance];
+    [self createPortViewsForObject:self.object];
+    
+    if (text) {
+        self.argString = text;
+        [self handleText:text];
+    }
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

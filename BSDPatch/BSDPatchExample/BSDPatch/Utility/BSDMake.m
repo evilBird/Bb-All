@@ -31,24 +31,12 @@
     NSString *class = arguments;
     BSDObjectLookup *lookup = [[BSDObjectLookup alloc]init];
     if (class && [class isKindOfClass:[NSString class]]) {
+        self.name = @"make";
         self.className = [lookup classNameForString:class];
-        if (self.className) {
-            self.name = [NSString stringWithFormat:@"make %@",class];
-        }else{
-            self.name = @"make";
-        }
     }else{
         self.name = @"class";
     }
-        
-    NSString *key = @"superview";
-    NSString *base = @"com.birdSound.BlockBox-UI.compiledPatchNeedsSomethingNotification";
-    NSString *hollaBack = [NSString stringWithFormat:@"%@-reply-%@",base,self.objectId];
-    NSDictionary *noticationInfo = @{@"key":key,
-                                     @"hollaBack":hollaBack
-                                     };
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleCanvasResponseNotification:) name:hollaBack object:nil];
-    [[NSNotificationCenter defaultCenter]postNotificationName:base object:noticationInfo];
+    
     self.argsInlet = [[BSDInlet alloc]initHot];
     self.argsInlet.name = @"args inlet";
     [self addPort:self.argsInlet];
@@ -61,30 +49,15 @@
     return nil;
 }
 
-- (void)handleCanvasResponseNotification:(NSNotification *)notification
-{
-    id response = notification.object;
-    NSDictionary *dict = response;
-    if (dict) {
-        if ([dict.allKeys containsObject:@"superview"] && [dict.allKeys containsObject:@"canvas"]) {
-            self.superview = dict[@"superview"];
-            self.canvas = dict[@"canvas"];
-            
-        }
-    }
-    
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
-}
-
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
     if (inlet == self.hotInlet) {
-        if (self.className && self.superview) {
+        if (self.className) {
             
             [self makeObject];
             BSDObject *new = self.subobjects.lastObject;
-            BSDOutlet *leftOutlet = new.outlets.firstObject;
-            [self.mainOutlet output:leftOutlet.value];
+            //BSDOutlet *leftOutlet = new.outlets.firstObject;
+            [self.mainOutlet output:new];
         }
     }
 }
@@ -131,8 +104,7 @@
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:aSelector]];
     invocation.target = instance;
     invocation.selector = aSelector;
-    id creationArgs = nil;
-    creationArgs = @[self.superview];
+    id creationArgs = self.argsInlet.value;
     
     if (creationArgs != nil) {
         NSArray *a = creationArgs;

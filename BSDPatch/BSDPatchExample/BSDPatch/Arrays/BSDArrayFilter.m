@@ -7,36 +7,81 @@
 //
 
 #import "BSDArrayFilter.h"
+#import "BSDArrayInlet.h"
 
 @implementation BSDArrayFilter
 
-- (instancetype)initWithPredicates:(NSPredicate *)predicate
+- (instancetype)initWithArguments:(id)arguments
 {
-    return [super initWithArguments:predicate];
+    return [super initWithArguments:arguments];
 }
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"filter";
+    self.name = @"filter array";
     NSPredicate *predicate = arguments;
-    
-    if (predicate) {
-        self.coldInlet.value = arguments;
-    }else{
-        self.coldInlet.value = [NSPredicate predicateWithValue:YES];
-    }
+}
+
+- (BSDInlet *)makeLeftInlet
+{
+    BSDInlet *inlet = [[BSDArrayInlet alloc]initHot];
+    inlet.name = @"hot";
+    inlet.objectId = self.objectId;
+    inlet.delegate = self;
+    return inlet;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    BSDInlet *inlet = [[BSDArrayInlet alloc]initCold];
+    inlet.name = @"cold";
+    inlet.objectId = self.objectId;
+    inlet.delegate = self;
+    return inlet;
 }
 
 - (void)calculateOutput
 {
-    NSMutableArray *inputCopy = [self.hotInlet.value mutableCopy];
     NSArray *hot = self.hotInlet.value;
-    NSPredicate *cold = self.coldInlet.value;
-    if (hot && cold) {
-        self.mainOutlet.value = [hot filteredArrayUsingPredicate:cold];
+    NSArray *cold = self.coldInlet.value;
+    
+    if (!hot || ![hot isKindOfClass:[NSArray class]]) {
+        return;
     }
-
+    
+    if (!cold || ![cold isKindOfClass:[NSArray class]]) {
+        return;
+    }
+    
+    NSMutableArray *inputArray = hot.mutableCopy;
+    NSMutableArray *predicates = cold.mutableCopy;
+    NSArray *output = [self filterArray:inputArray withPredicates:predicates];
+    [self.mainOutlet output:output];
 }
 
+
+- (NSArray *)filterArray:(NSArray *)array withPredicates:(NSArray *)predicates
+{
+    NSMutableArray *result = nil;
+    for (NSPredicate *predicate in predicates) {
+        
+        if (!result) {
+            result = [self filterArray:array withPredicate:predicate].mutableCopy;
+        }else{
+            result = [self filterArray:result.mutableCopy withPredicate:predicate].mutableCopy;
+        }
+    }
+    
+    return result;
+}
+
+- (NSArray *)filterArray:(NSArray *)array withPredicate:(NSPredicate *)predicate
+{
+    if (!array || !predicate || ![predicate isKindOfClass:[NSPredicate class]]) {
+        return nil;
+    }
+    
+    return [array filteredArrayUsingPredicate:predicate];
+}
 
 @end

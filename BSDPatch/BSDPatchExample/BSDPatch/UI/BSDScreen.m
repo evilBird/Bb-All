@@ -8,6 +8,8 @@
 
 #import "BSDScreen.h"
 #import "NSValue+BSD.h"
+#import "PureLayout.h"
+
 @interface BSDScreen ()
 {
     UIInterfaceOrientation orientation;
@@ -30,9 +32,11 @@
 
 - (void)setDelegate:(id<BSDScreenDelegate>)delegate
 {
-    _delegate = delegate;
-    NSLog(@"window %@ got its delegate",[self objectId]);
-    [self.viewInlet input:[self.delegate canvasScreen]];
+    if (_delegate == nil) {
+        _delegate = delegate;
+        NSLog(@"screen %@ got delegate %@",[self objectId],[NSString stringWithFormat:@"%p",delegate]);
+        [self.viewInlet input:[self.delegate canvasScreen]];
+    }
 }
 
 - (instancetype)initWithArguments:(id)arguments
@@ -43,12 +47,22 @@
 -(void)notification_OrientationWillChange:(NSNotification*)n
 {
     orientation = (UIInterfaceOrientation)[[n.userInfo objectForKey:UIApplicationStatusBarOrientationUserInfoKey] intValue];
+    NSDictionary *toSend = @{@"interfaceOrientationWillChange":@(orientation)};
+    [self.getterOutlet output:toSend];
 }
 
 -(void)notification_OrientationDidChange:(NSNotification*)n
 {
     NSValue *rect = [NSValue wrapRect:[[UIScreen mainScreen]bounds]];
-    [self.setterInlet input:@{@"frame":rect}];
+    NSDictionary *newBounds = @{@"bounds":rect};
+    [self.viewInlet.value setBounds:rect.CGRectValue];
+    //[self.viewInlet.value layoutSubviews];
+    //[self.viewInlet.value layoutIfNeeded];
+    //[self.viewInlet.value setBackgroundColor:[UIColor redColor]];
+    
+    NSDictionary *toSend = @{@"interfaceOrientationDidChange":@(orientation)};
+    [self.getterOutlet output:toSend];
+    [self.getterOutlet output:newBounds];
 }
 
 - (void)setupWithArguments:(id)arguments
@@ -74,10 +88,10 @@
 
 - (void)tearDown
 {
+    [super tearDown];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     self.delegate = nil;
-    [super tearDown];
 }
 
 @end

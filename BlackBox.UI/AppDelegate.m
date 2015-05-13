@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-
-@interface AppDelegate ()
+#import <iCloud/iCloud.h>
+@interface AppDelegate ()<iCloudDelegate>
             
 
 @end
@@ -18,7 +18,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    iCloud *cloud = [iCloud sharedCloud];
+    cloud.delegate = self;
     return YES;
+}
+
+- (void)iCloudDidFinishInitializingWitUbiquityToken:(id)cloudToken withUbiquityContainer:(NSURL *)ubiquityContainer
+{
+    [[iCloud sharedCloud]setDelegate:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"com.birdSound.bb.cloudIsReadyNotification" object:nil];
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

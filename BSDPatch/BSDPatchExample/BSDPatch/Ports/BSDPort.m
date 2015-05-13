@@ -70,11 +70,13 @@
 {
     [port observePort:self];
     _connectionStatus = 1;
+    self.forwardPort = port;
 }
 
 - (void)removeForwardPort:(BSDPort *)port
 {
     [port stopObservingPort:self];
+    self.forwardPort = nil;
 }
 
 - (void)dealloc

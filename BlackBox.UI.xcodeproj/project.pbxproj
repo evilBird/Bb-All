@@ -8,7 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		5EC7E8FBB4FC43EB8F4060BE /* libPods-BlackBox.UI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */; };
+		A984AB56DC034B346759441D /* libPods-BlackBox.UITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0151EA1E4E1DCFBD2838C160 /* libPods-BlackBox.UITests.a */; };
+		F202D2131A1BB69500AED9C7 /* NSDictionary+BSDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F202D2121A1BB69500AED9C7 /* NSDictionary+BSDUtils.m */; };
+		F202D2161A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F202D2151A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.m */; };
+		F202D2191A1BE6DC00AED9C7 /* BSDPatchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F202D2181A1BE6DC00AED9C7 /* BSDPatchManager.m */; };
+		F202D21C1A1C1A9D00AED9C7 /* BSDDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F202D21B1A1C1A9D00AED9C7 /* BSDDisplayViewController.m */; };
+		F202D21F1A1C1CC200AED9C7 /* BSDComment.m in Sources */ = {isa = PBXBuildFile; fileRef = F202D21E1A1C1CC200AED9C7 /* BSDComment.m */; };
+		F20426D71A13E50400A455E7 /* BSDBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = F20426D61A13E50400A455E7 /* BSDBezierPath.m */; };
+		F20426DA1A13EC9400A455E7 /* BSDShapeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F20426D91A13EC9400A455E7 /* BSDShapeLayer.m */; };
+		F204D60419F71E7200175B24 /* BSDHSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = F204D60319F71E7200175B24 /* BSDHSlider.m */; };
+		F2079AD91A5E57CE00D9B608 /* BSDJSObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F2079AD71A5E57CE00D9B608 /* BSDJSObject.m */; };
+		F20D1A121A0B424500710F3A /* BSDSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = F20D1A111A0B424500710F3A /* BSDSortDescriptor.m */; };
+		F20D1A151A0B4D2200710F3A /* BSDPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = F20D1A141A0B4D2200710F3A /* BSDPredicate.m */; };
+		F21183611A79800D00B4F53F /* droplets.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183601A79800D00B4F53F /* droplets.png */; };
+		F211836A1A79AC6600B4F53F /* mandelbrot.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183631A79AC6600B4F53F /* mandelbrot.png */; };
+		F211836B1A79AC6600B4F53F /* phi.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183641A79AC6600B4F53F /* phi.png */; };
+		F211836C1A79AC6600B4F53F /* beach.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183651A79AC6600B4F53F /* beach.png */; };
+		F211836D1A79AC6600B4F53F /* shiba.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183661A79AC6600B4F53F /* shiba.png */; };
+		F211836E1A79AC6600B4F53F /* bird.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183671A79AC6600B4F53F /* bird.png */; };
+		F211836F1A79AC6600B4F53F /* city.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183681A79AC6600B4F53F /* city.png */; };
+		F21183701A79AC6600B4F53F /* frog.png in Resources */ = {isa = PBXBuildFile; fileRef = F21183691A79AC6600B4F53F /* frog.png */; };
 		F21A5B5E19DF86BA00E6F21B /* BSDPatchDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */; };
+		F21A5B6119E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */; };
+		F21BAEC31A1AAD1500F20FDD /* BSDTextMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F21BAEC21A1AAD1500F20FDD /* BSDTextMessage.m */; };
+		F21BAEC51A1AB18C00F20FDD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F21BAEC41A1AB18C00F20FDD /* CoreLocation.framework */; };
+		F21BAEC81A1AB62300F20FDD /* HBVImageBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = F21BAEC71A1AB62300F20FDD /* HBVImageBlur.m */; };
 		F21E4C5519C8FDD600D20D60 /* BSDClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E4C5419C8FDD600D20D60 /* BSDClient.m */; };
 		F21E4C5819C8FF4900D20D60 /* BSDGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E4C5719C8FF4900D20D60 /* BSDGPS.m */; };
 		F21E50D419C3F63200E51383 /* BSDBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E50D319C3F63200E51383 /* BSDBox.m */; };
@@ -94,15 +118,22 @@
 		F21E534319C51BC300E51383 /* BSDImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52E419C51BC300E51383 /* BSDImageView.m */; };
 		F21E534419C51BC300E51383 /* BSDLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52E619C51BC300E51383 /* BSDLabel.m */; };
 		F21E534519C51BC300E51383 /* BSDLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52E819C51BC300E51383 /* BSDLayer.m */; };
-		F21E534619C51BC300E51383 /* BSDVideoStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52EA19C51BC300E51383 /* BSDVideoStream.m */; };
+		F21E534619C51BC300E51383 /* BSDVideoLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52EA19C51BC300E51383 /* BSDVideoLayer.m */; };
 		F21E534719C51BC300E51383 /* BSDView.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52EC19C51BC300E51383 /* BSDView.m */; };
 		F21E534819C51BC300E51383 /* BSDBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52EF19C51BC300E51383 /* BSDBuffer.m */; };
 		F21E534919C51BC300E51383 /* BSDSpeedLimit.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52F119C51BC300E51383 /* BSDSpeedLimit.m */; };
 		F21E534A19C51BC300E51383 /* BSDTestVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52F319C51BC300E51383 /* BSDTestVariable.m */; };
 		F21E534B19C51BC300E51383 /* BSDVelocity.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E52F519C51BC300E51383 /* BSDVelocity.m */; };
 		F21E535119C5249100E51383 /* BSDBangControlBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F21E534F19C5249100E51383 /* BSDBangControlBox.m */; };
+		F22AA33219F01E80003E256A /* BSDStringReplace.m in Sources */ = {isa = PBXBuildFile; fileRef = F22AA33119F01E80003E256A /* BSDStringReplace.m */; };
+		F22FF24D1A648DD400C6EC52 /* BSDClassMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = F22FF24C1A648DD400C6EC52 /* BSDClassMethod.m */; };
+		F2389B0519EF5766008B51DB /* BSDLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2389B0419EF5766008B51DB /* BSDLogView.m */; };
+		F2389B0819EF8FCB008B51DB /* BSDAny2Array.m in Sources */ = {isa = PBXBuildFile; fileRef = F2389B0719EF8FCB008B51DB /* BSDAny2Array.m */; };
 		F241578919CB85B0003E32CA /* BSDObjectLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = F241578819CB85B0003E32CA /* BSDObjectLookup.m */; };
 		F241578C19CB8EEF003E32CA /* BSDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = F241578B19CB8EEF003E32CA /* BSDNumber.m */; };
+		F2415F471A26D6880070C1FB /* mandelbrot.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F2415F461A26D6880070C1FB /* mandelbrot.fsh */; };
+		F24A394F1A6728EA001EE5FF /* BSDViewControllerRoot.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A394E1A6728EA001EE5FF /* BSDViewControllerRoot.m */; };
+		F24A39521A67331E001EE5FF /* BSDDisplayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A39511A67331E001EE5FF /* BSDDisplayManager.m */; };
 		F24A3B0519D0B9CF00FBA887 /* BSDType.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B0419D0B9CF00FBA887 /* BSDType.m */; };
 		F24A3B0819D0C11900FBA887 /* BSDAny2String.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B0719D0C11900FBA887 /* BSDAny2String.m */; };
 		F24A3B0B19D0CB0200FBA887 /* BSDSplitDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B0A19D0CB0200FBA887 /* BSDSplitDictionary.m */; };
@@ -110,18 +141,49 @@
 		F24A3B1119D0E5C900FBA887 /* BSDDictionaryEnumerate.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B1019D0E5C900FBA887 /* BSDDictionaryEnumerate.m */; };
 		F24A3B1419D0EBD900FBA887 /* BSDAtomizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B1319D0EBD900FBA887 /* BSDAtomizer.m */; };
 		F24A3B1719D0FCFA00FBA887 /* BSDMake.m in Sources */ = {isa = PBXBuildFile; fileRef = F24A3B1619D0FCFA00FBA887 /* BSDMake.m */; };
+		F2597D6D1A2EB6B10015C057 /* BSDImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = F2597D6C1A2EB6B10015C057 /* BSDImageFilter.m */; };
+		F2597D701A2EC5470015C057 /* BSDSourceImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F2597D6F1A2EC5470015C057 /* BSDSourceImage.m */; };
+		F2597D731A303ACD0015C057 /* BSDShader.m in Sources */ = {isa = PBXBuildFile; fileRef = F2597D721A303ACD0015C057 /* BSDShader.m */; };
+		F2597D761A303D8E0015C057 /* BSDLayer2Image.m in Sources */ = {isa = PBXBuildFile; fileRef = F2597D751A303D8E0015C057 /* BSDLayer2Image.m */; };
+		F25F71B419EA06A5002B082A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25F71B319EA06A5002B082A /* CloudKit.framework */; };
+		F25F71B719EA24FA002B082A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25F71B619EA24FA002B082A /* MapKit.framework */; };
+		F25F71B919EA2509002B082A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25F71B819EA2509002B082A /* CoreMotion.framework */; };
+		F25F71BC19EA26AA002B082A /* BSDInstanceMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = F25F71BB19EA26AA002B082A /* BSDInstanceMethod.m */; };
+		F26516931A454AAB005FE1B5 /* BSDExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = F26516921A454AAB005FE1B5 /* BSDExpression.m */; };
+		F26BB6421A1D5B73000909F4 /* bb_stdlib 2.plist in Resources */ = {isa = PBXBuildFile; fileRef = F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */; };
+		F26BB6441A1D5B78000909F4 /* bb_stdlib.plist in Resources */ = {isa = PBXBuildFile; fileRef = F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */; };
 		F2789E4119C8D4C6006F6CA4 /* PopoverContentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */; };
+		F27D1FF11A0C3ACB0057EDFC /* SavedPatches.plist in Resources */ = {isa = PBXBuildFile; fileRef = F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */; };
+		F28094781A26398D00C3AFA1 /* BSDGPUImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F28094771A26398D00C3AFA1 /* BSDGPUImage.m */; };
+		F280947B1A263CF800C3AFA1 /* BSDAnnotationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = F280947A1A263CF800C3AFA1 /* BSDAnnotationFactory.m */; };
+		F280947E1A263DA700C3AFA1 /* BSDAnnotationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F280947D1A263DA700C3AFA1 /* BSDAnnotationObject.m */; };
+		F28094801A26711800C3AFA1 /* shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F280947F1A26711800C3AFA1 /* shader.fsh */; };
+		F28094821A26724E00C3AFA1 /* k1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F28094811A26724E00C3AFA1 /* k1.fsh */; };
 		F283A1FA19CA06DF005CC98B /* BSDPatchInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1F919CA06DF005CC98B /* BSDPatchInlet.m */; };
 		F283A1FD19CA0709005CC98B /* BSDPatchOutlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1FC19CA0709005CC98B /* BSDPatchOutlet.m */; };
 		F283A20019CA11C8005CC98B /* BSDInletBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A1FF19CA11C8005CC98B /* BSDInletBox.m */; };
 		F283A20319CA11DF005CC98B /* BSDOutletBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F283A20219CA11DF005CC98B /* BSDOutletBox.m */; };
+		F286235B1A32426B005737EE /* BSDimages2Gif.m in Sources */ = {isa = PBXBuildFile; fileRef = F286235A1A32426B005737EE /* BSDimages2Gif.m */; };
 		F289D8CC19D63FC800CA1BC0 /* BSDFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = F289D8CB19D63FC800CA1BC0 /* BSDFactory.m */; };
 		F28C00E119D21F6000BFA206 /* BSDDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C00E019D21F6000BFA206 /* BSDDelay.m */; };
 		F28C00E419D2823E00BFA206 /* BSDMapSuper.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C00E319D2823E00BFA206 /* BSDMapSuper.m */; };
+		F28C806219E25788001A578C /* BSDAbstractionBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C806119E25788001A578C /* BSDAbstractionBox.m */; };
+		F28C806E19E314DF001A578C /* BSD2WayPort.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C806D19E314DF001A578C /* BSD2WayPort.m */; };
+		F28C807119E3B1C7001A578C /* BSDPatchCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = F28C807019E3B1C7001A578C /* BSDPatchCompiler.m */; };
+		F2946D8F1A2D566700FBEE13 /* BSDTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2946D8E1A2D566700FBEE13 /* BSDTableView.m */; };
+		F2976C3E1A65FEAA00FE6960 /* NSString+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = F2976C3D1A65FEAA00FE6960 /* NSString+BSD.m */; };
+		F29EBE861A7A0E6C0070C7BF /* NSInvocation+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F29EBE841A7A0E6C0070C7BF /* NSInvocation+Bb.m */; };
+		F29EBE891A7A0E9D0070C7BF /* NSString+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F29EBE881A7A0E9D0070C7BF /* NSString+Bb.m */; };
+		F29EBE8C1A7A0FDF0070C7BF /* NSObject+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F29EBE8B1A7A0FDF0070C7BF /* NSObject+Bb.m */; };
+		F2A5A5061A64BEF500459331 /* BSDConstraintObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A5A5051A64BEF500459331 /* BSDConstraintObject.m */; };
 		F2AAF7A019C7CB97004EFE87 /* BSDPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF79F19C7CB97004EFE87 /* BSDPrint.m */; };
 		F2AAF7A319C7DD16004EFE87 /* BSDRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A219C7DD16004EFE87 /* BSDRandom.m */; };
 		F2AAF7A619C7FB4B004EFE87 /* BSDCanvasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */; };
 		F2AAF7A919C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F2AAF7A819C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m */; };
+		F2B0C46F1A145C0400FEE17F /* BSDControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C46E1A145C0400FEE17F /* BSDControl.m */; };
+		F2B0C4721A145D0500FEE17F /* BSDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C4711A145D0500FEE17F /* BSDButton.m */; };
+		F2C8A2F81A129AED00CAF039 /* BSDActionPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */; };
+		F2CFC8511A19E36A00FFAAC1 /* BSDArr2Dict.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFC8501A19E36A00FFAAC1 /* BSDArr2Dict.m */; };
 		F2CFDEB019DA1E7800A156DB /* BSDAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEAF19DA1E7800A156DB /* BSDAnimation.m */; };
 		F2CFDEB319DA29A800A156DB /* BSDTransform3d.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEB219DA29A800A156DB /* BSDTransform3d.m */; };
 		F2CFDEB619DA2B9600A156DB /* BSDTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CFDEB519DA2B9600A156DB /* BSDTrigger.m */; };
@@ -173,6 +235,9 @@
 		F2CFDF3919DCFF5400A156DB /* toolbar_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2CFDF1419DCFF5400A156DB /* toolbar_add@3x.png */; };
 		F2CFDF3A19DCFF5400A156DB /* toolbar_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2CFDF1519DCFF5400A156DB /* toolbar_add@2x.png */; };
 		F2CFDF3B19DCFF5400A156DB /* toolbar_add.png in Resources */ = {isa = PBXBuildFile; fileRef = F2CFDF1619DCFF5400A156DB /* toolbar_add.png */; };
+		F2D2E4111A42672C007B51CE /* MyCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = F2D2E4101A42672C007B51CE /* MyCloud.m */; };
+		F2DB32C21A65ADA000806498 /* NSObject+TypeConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = F2DB32C11A65ADA000806498 /* NSObject+TypeConversion.m */; };
+		F2E507C11A37F66A008D67D9 /* BSDCPUMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E507C01A37F66A008D67D9 /* BSDCPUMonitor.m */; };
 		F2EB85E419D34CA8007B8C3C /* BSDNumberInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85E319D34CA8007B8C3C /* BSDNumberInlet.m */; };
 		F2EB85E719D34EE8007B8C3C /* BSDStringInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85E619D34EE8007B8C3C /* BSDStringInlet.m */; };
 		F2EB85EA19D34F46007B8C3C /* BSDDictionaryInlet.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB85E919D34F46007B8C3C /* BSDDictionaryInlet.m */; };
@@ -188,9 +253,10 @@
 		F2EB860819D54813007B8C3C /* BSDAffineTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EB860719D54813007B8C3C /* BSDAffineTransform.m */; };
 		F2EE14B319C9EF9B008D83E2 /* BSDMessageBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EE14B219C9EF9B008D83E2 /* BSDMessageBox.m */; };
 		F2EE14B619C9F070008D83E2 /* BSDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F2EE14B519C9F070008D83E2 /* BSDMessage.m */; };
+		F2F461811A40D0110056C2CE /* BSDiCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F461801A40D0110056C2CE /* BSDiCloud.m */; };
 		F2F5131D19B8D97C00323096 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5131C19B8D97C00323096 /* main.m */; };
 		F2F5132019B8D97C00323096 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5131F19B8D97C00323096 /* AppDelegate.m */; };
-		F2F5132319B8D97C00323096 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5132219B8D97C00323096 /* ViewController.m */; };
+		F2F5132319B8D97C00323096 /* BSDRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5132219B8D97C00323096 /* BSDRootViewController.m */; };
 		F2F5132619B8D97C00323096 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2F5132419B8D97C00323096 /* Main.storyboard */; };
 		F2F5132819B8D97C00323096 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2F5132719B8D97C00323096 /* Images.xcassets */; };
 		F2F5133419B8D97C00323096 /* BlackBox_UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5133319B8D97C00323096 /* BlackBox_UITests.m */; };
@@ -201,6 +267,10 @@
 		F2F5139219B927A700323096 /* BSDObjectDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5139119B927A700323096 /* BSDObjectDescription.m */; };
 		F2F5139519B92C9600323096 /* BSDPortConnectionDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5139419B92C9600323096 /* BSDPortConnectionDescription.m */; };
 		F2F5139819B9342400323096 /* BSDCompiledPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5139719B9342400323096 /* BSDCompiledPatch.m */; };
+		F2F84AAE1A38DE0C00AFCD0A /* BSDStringComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F84AAD1A38DE0C00AFCD0A /* BSDStringComponents.m */; };
+		F2F84AB11A38E7A800AFCD0A /* BSDStringAppend.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F84AB01A38E7A800AFCD0A /* BSDStringAppend.m */; };
+		F2F84AB41A38F00600AFCD0A /* BSDArr2String.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F84AB31A38F00600AFCD0A /* BSDArr2String.m */; };
+		F2F84AB71A39159200AFCD0A /* BSDDynamicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F84AB61A39159200AFCD0A /* BSDDynamicObject.m */; };
 		F2FF09E619D149540095C3E4 /* BSDWebImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F2FF09E519D149540095C3E4 /* BSDWebImage.m */; };
 /* End PBXBuildFile section */
 
@@ -215,9 +285,51 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0151EA1E4E1DCFBD2838C160 /* libPods-BlackBox.UITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BlackBox.UITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0652CBEAF55A3F24F6A040D4 /* Pods-BlackBox.UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBox.UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlackBox.UITests/Pods-BlackBox.UITests.release.xcconfig"; sourceTree = "<group>"; };
 		0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BlackBox.UI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B7BFC171202632827E0FFE2 /* Pods-BlackBox.UI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBox.UI.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlackBox.UI/Pods-BlackBox.UI.release.xcconfig"; sourceTree = "<group>"; };
+		493BC0365B4EBD05D9315FFF /* Pods-BlackBox.UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBox.UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BlackBox.UITests/Pods-BlackBox.UITests.debug.xcconfig"; sourceTree = "<group>"; };
+		6490D4841FB3C553AB6DE6ED /* Pods-BlackBox.UI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBox.UI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BlackBox.UI/Pods-BlackBox.UI.debug.xcconfig"; sourceTree = "<group>"; };
+		F202D2111A1BB69500AED9C7 /* NSDictionary+BSDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+BSDUtils.h"; path = "../BSDPatch/BSDPatchExample/BSDPatch/UI/NSDictionary+BSDUtils.h"; sourceTree = "<group>"; };
+		F202D2121A1BB69500AED9C7 /* NSDictionary+BSDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+BSDUtils.m"; path = "../BSDPatch/BSDPatchExample/BSDPatch/UI/NSDictionary+BSDUtils.m"; sourceTree = "<group>"; };
+		F202D2141A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDNestedPatchTableViewController.h; sourceTree = "<group>"; };
+		F202D2151A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDNestedPatchTableViewController.m; sourceTree = "<group>"; };
+		F202D2171A1BE6DC00AED9C7 /* BSDPatchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchManager.h; sourceTree = "<group>"; };
+		F202D2181A1BE6DC00AED9C7 /* BSDPatchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchManager.m; sourceTree = "<group>"; };
+		F202D21A1A1C1A9D00AED9C7 /* BSDDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDDisplayViewController.h; sourceTree = "<group>"; };
+		F202D21B1A1C1A9D00AED9C7 /* BSDDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDDisplayViewController.m; sourceTree = "<group>"; };
+		F202D21D1A1C1CC200AED9C7 /* BSDComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDComment.h; sourceTree = "<group>"; };
+		F202D21E1A1C1CC200AED9C7 /* BSDComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDComment.m; sourceTree = "<group>"; };
+		F20426D51A13E50400A455E7 /* BSDBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDBezierPath.h; sourceTree = "<group>"; };
+		F20426D61A13E50400A455E7 /* BSDBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDBezierPath.m; sourceTree = "<group>"; };
+		F20426D81A13EC9400A455E7 /* BSDShapeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDShapeLayer.h; sourceTree = "<group>"; };
+		F20426D91A13EC9400A455E7 /* BSDShapeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDShapeLayer.m; sourceTree = "<group>"; };
+		F204D60219F71E7200175B24 /* BSDHSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDHSlider.h; sourceTree = "<group>"; };
+		F204D60319F71E7200175B24 /* BSDHSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDHSlider.m; sourceTree = "<group>"; };
+		F2079AD71A5E57CE00D9B608 /* BSDJSObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDJSObject.m; sourceTree = "<group>"; };
+		F2079AD81A5E57CE00D9B608 /* BSDJSObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDJSObject.h; sourceTree = "<group>"; };
+		F20D1A101A0B424500710F3A /* BSDSortDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDSortDescriptor.h; sourceTree = "<group>"; };
+		F20D1A111A0B424500710F3A /* BSDSortDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDSortDescriptor.m; sourceTree = "<group>"; };
+		F20D1A131A0B4D2200710F3A /* BSDPredicate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPredicate.h; sourceTree = "<group>"; };
+		F20D1A141A0B4D2200710F3A /* BSDPredicate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPredicate.m; sourceTree = "<group>"; };
+		F21183601A79800D00B4F53F /* droplets.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = droplets.png; sourceTree = "<group>"; };
+		F21183631A79AC6600B4F53F /* mandelbrot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mandelbrot.png; sourceTree = "<group>"; };
+		F21183641A79AC6600B4F53F /* phi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phi.png; sourceTree = "<group>"; };
+		F21183651A79AC6600B4F53F /* beach.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beach.png; sourceTree = "<group>"; };
+		F21183661A79AC6600B4F53F /* shiba.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shiba.png; sourceTree = "<group>"; };
+		F21183671A79AC6600B4F53F /* bird.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird.png; sourceTree = "<group>"; };
+		F21183681A79AC6600B4F53F /* city.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = city.png; sourceTree = "<group>"; };
+		F21183691A79AC6600B4F53F /* frog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frog.png; sourceTree = "<group>"; };
 		F21A5B5C19DF86BA00E6F21B /* BSDPatchDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchDescription.h; sourceTree = "<group>"; };
 		F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchDescription.m; sourceTree = "<group>"; };
+		F21A5B5F19E0AF4F00E6F21B /* BSDPatchDescriptionUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchDescriptionUtility.h; sourceTree = "<group>"; };
+		F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchDescriptionUtility.m; sourceTree = "<group>"; };
+		F21BAEC11A1AAD1500F20FDD /* BSDTextMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTextMessage.h; sourceTree = "<group>"; };
+		F21BAEC21A1AAD1500F20FDD /* BSDTextMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTextMessage.m; sourceTree = "<group>"; };
+		F21BAEC41A1AB18C00F20FDD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		F21BAEC61A1AB62300F20FDD /* HBVImageBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBVImageBlur.h; path = BlackBox.UI/HBVImageBlur.h; sourceTree = "<group>"; };
+		F21BAEC71A1AB62300F20FDD /* HBVImageBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBVImageBlur.m; path = BlackBox.UI/HBVImageBlur.m; sourceTree = "<group>"; };
 		F21E4C5319C8FDD600D20D60 /* BSDClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDClient.h; sourceTree = "<group>"; };
 		F21E4C5419C8FDD600D20D60 /* BSDClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDClient.m; sourceTree = "<group>"; };
 		F21E4C5619C8FF4900D20D60 /* BSDGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSDGPS.h; path = ../Utility/BSDGPS.h; sourceTree = "<group>"; };
@@ -391,8 +503,8 @@
 		F21E52E619C51BC300E51383 /* BSDLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDLabel.m; sourceTree = "<group>"; };
 		F21E52E719C51BC300E51383 /* BSDLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDLayer.h; sourceTree = "<group>"; };
 		F21E52E819C51BC300E51383 /* BSDLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDLayer.m; sourceTree = "<group>"; };
-		F21E52E919C51BC300E51383 /* BSDVideoStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDVideoStream.h; sourceTree = "<group>"; };
-		F21E52EA19C51BC300E51383 /* BSDVideoStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDVideoStream.m; sourceTree = "<group>"; };
+		F21E52E919C51BC300E51383 /* BSDVideoLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDVideoLayer.h; sourceTree = "<group>"; };
+		F21E52EA19C51BC300E51383 /* BSDVideoLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDVideoLayer.m; sourceTree = "<group>"; };
 		F21E52EB19C51BC300E51383 /* BSDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDView.h; sourceTree = "<group>"; };
 		F21E52EC19C51BC300E51383 /* BSDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDView.m; sourceTree = "<group>"; };
 		F21E52EE19C51BC300E51383 /* BSDBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDBuffer.h; sourceTree = "<group>"; };
@@ -405,10 +517,23 @@
 		F21E52F519C51BC300E51383 /* BSDVelocity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDVelocity.m; sourceTree = "<group>"; };
 		F21E534F19C5249100E51383 /* BSDBangControlBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDBangControlBox.m; sourceTree = "<group>"; };
 		F21E535019C5249100E51383 /* BSDBangControlBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDBangControlBox.h; sourceTree = "<group>"; };
+		F22AA33019F01E80003E256A /* BSDStringReplace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDStringReplace.h; sourceTree = "<group>"; };
+		F22AA33119F01E80003E256A /* BSDStringReplace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDStringReplace.m; sourceTree = "<group>"; };
+		F22FF24B1A648DD400C6EC52 /* BSDClassMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDClassMethod.h; sourceTree = "<group>"; };
+		F22FF24C1A648DD400C6EC52 /* BSDClassMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDClassMethod.m; sourceTree = "<group>"; };
+		F2389B0319EF5766008B51DB /* BSDLogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDLogView.h; sourceTree = "<group>"; };
+		F2389B0419EF5766008B51DB /* BSDLogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDLogView.m; sourceTree = "<group>"; };
+		F2389B0619EF8FCB008B51DB /* BSDAny2Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAny2Array.h; sourceTree = "<group>"; };
+		F2389B0719EF8FCB008B51DB /* BSDAny2Array.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAny2Array.m; sourceTree = "<group>"; };
 		F241578719CB85B0003E32CA /* BSDObjectLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDObjectLookup.h; sourceTree = "<group>"; };
 		F241578819CB85B0003E32CA /* BSDObjectLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDObjectLookup.m; sourceTree = "<group>"; };
 		F241578A19CB8EEF003E32CA /* BSDNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDNumber.h; sourceTree = "<group>"; };
 		F241578B19CB8EEF003E32CA /* BSDNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDNumber.m; sourceTree = "<group>"; };
+		F2415F461A26D6880070C1FB /* mandelbrot.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = mandelbrot.fsh; sourceTree = "<group>"; };
+		F24A394D1A6728EA001EE5FF /* BSDViewControllerRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDViewControllerRoot.h; sourceTree = "<group>"; };
+		F24A394E1A6728EA001EE5FF /* BSDViewControllerRoot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDViewControllerRoot.m; sourceTree = "<group>"; };
+		F24A39501A67331E001EE5FF /* BSDDisplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDDisplayManager.h; sourceTree = "<group>"; };
+		F24A39511A67331E001EE5FF /* BSDDisplayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDDisplayManager.m; sourceTree = "<group>"; };
 		F24A3B0319D0B9CF00FBA887 /* BSDType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDType.h; sourceTree = "<group>"; };
 		F24A3B0419D0B9CF00FBA887 /* BSDType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDType.m; sourceTree = "<group>"; };
 		F24A3B0619D0C11900FBA887 /* BSDAny2String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAny2String.h; sourceTree = "<group>"; };
@@ -423,8 +548,35 @@
 		F24A3B1319D0EBD900FBA887 /* BSDAtomizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAtomizer.m; sourceTree = "<group>"; };
 		F24A3B1519D0FCFA00FBA887 /* BSDMake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDMake.h; sourceTree = "<group>"; };
 		F24A3B1619D0FCFA00FBA887 /* BSDMake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDMake.m; sourceTree = "<group>"; };
+		F2597D6B1A2EB6B10015C057 /* BSDImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDImageFilter.h; sourceTree = "<group>"; };
+		F2597D6C1A2EB6B10015C057 /* BSDImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDImageFilter.m; sourceTree = "<group>"; };
+		F2597D6E1A2EC5470015C057 /* BSDSourceImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDSourceImage.h; sourceTree = "<group>"; };
+		F2597D6F1A2EC5470015C057 /* BSDSourceImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDSourceImage.m; sourceTree = "<group>"; };
+		F2597D711A303ACD0015C057 /* BSDShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSDShader.h; path = ../../../../BSDShader.h; sourceTree = "<group>"; };
+		F2597D721A303ACD0015C057 /* BSDShader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSDShader.m; path = ../../../../BSDShader.m; sourceTree = "<group>"; };
+		F2597D741A303D8E0015C057 /* BSDLayer2Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDLayer2Image.h; sourceTree = "<group>"; };
+		F2597D751A303D8E0015C057 /* BSDLayer2Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDLayer2Image.m; sourceTree = "<group>"; };
+		F25F71B219EA0661002B082A /* BlackBox.UI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BlackBox.UI.entitlements; sourceTree = "<group>"; };
+		F25F71B319EA06A5002B082A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		F25F71B619EA24FA002B082A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		F25F71B819EA2509002B082A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		F25F71BA19EA26AA002B082A /* BSDInstanceMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDInstanceMethod.h; sourceTree = "<group>"; };
+		F25F71BB19EA26AA002B082A /* BSDInstanceMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDInstanceMethod.m; sourceTree = "<group>"; };
+		F26516911A454AAB005FE1B5 /* BSDExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDExpression.h; sourceTree = "<group>"; };
+		F26516921A454AAB005FE1B5 /* BSDExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDExpression.m; sourceTree = "<group>"; };
+		F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "bb_stdlib 2.plist"; sourceTree = "<group>"; };
+		F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bb_stdlib.plist; sourceTree = "<group>"; };
 		F2789E3F19C8D4C6006F6CA4 /* PopoverContentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverContentTableViewController.h; sourceTree = "<group>"; };
 		F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverContentTableViewController.m; sourceTree = "<group>"; };
+		F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedPatches.plist; sourceTree = "<group>"; };
+		F28094761A26398D00C3AFA1 /* BSDGPUImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSDGPUImage.h; path = ../../../../BSDGPUImage.h; sourceTree = "<group>"; };
+		F28094771A26398D00C3AFA1 /* BSDGPUImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSDGPUImage.m; path = ../../../../BSDGPUImage.m; sourceTree = "<group>"; };
+		F28094791A263CF800C3AFA1 /* BSDAnnotationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnnotationFactory.h; sourceTree = "<group>"; };
+		F280947A1A263CF800C3AFA1 /* BSDAnnotationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnnotationFactory.m; sourceTree = "<group>"; };
+		F280947C1A263DA700C3AFA1 /* BSDAnnotationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnnotationObject.h; sourceTree = "<group>"; };
+		F280947D1A263DA700C3AFA1 /* BSDAnnotationObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnnotationObject.m; sourceTree = "<group>"; };
+		F280947F1A26711800C3AFA1 /* shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.fsh; sourceTree = "<group>"; };
+		F28094811A26724E00C3AFA1 /* k1.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = k1.fsh; sourceTree = "<group>"; };
 		F283A1F819CA06DF005CC98B /* BSDPatchInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchInlet.h; sourceTree = "<group>"; };
 		F283A1F919CA06DF005CC98B /* BSDPatchInlet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchInlet.m; sourceTree = "<group>"; };
 		F283A1FB19CA0709005CC98B /* BSDPatchOutlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchOutlet.h; sourceTree = "<group>"; };
@@ -433,12 +585,33 @@
 		F283A1FF19CA11C8005CC98B /* BSDInletBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDInletBox.m; sourceTree = "<group>"; };
 		F283A20119CA11DF005CC98B /* BSDOutletBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDOutletBox.h; sourceTree = "<group>"; };
 		F283A20219CA11DF005CC98B /* BSDOutletBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDOutletBox.m; sourceTree = "<group>"; };
+		F28623591A32426B005737EE /* BSDimages2Gif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDimages2Gif.h; sourceTree = "<group>"; };
+		F286235A1A32426B005737EE /* BSDimages2Gif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDimages2Gif.m; sourceTree = "<group>"; };
 		F289D8CA19D63FC800CA1BC0 /* BSDFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDFactory.h; sourceTree = "<group>"; };
 		F289D8CB19D63FC800CA1BC0 /* BSDFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDFactory.m; sourceTree = "<group>"; };
 		F28C00DF19D21F6000BFA206 /* BSDDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDDelay.h; sourceTree = "<group>"; };
 		F28C00E019D21F6000BFA206 /* BSDDelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDDelay.m; sourceTree = "<group>"; };
 		F28C00E219D2823E00BFA206 /* BSDMapSuper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDMapSuper.h; sourceTree = "<group>"; };
 		F28C00E319D2823E00BFA206 /* BSDMapSuper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDMapSuper.m; sourceTree = "<group>"; };
+		F28C806019E25788001A578C /* BSDAbstractionBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAbstractionBox.h; sourceTree = "<group>"; };
+		F28C806119E25788001A578C /* BSDAbstractionBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAbstractionBox.m; sourceTree = "<group>"; };
+		F28C806C19E314DF001A578C /* BSD2WayPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSD2WayPort.h; sourceTree = "<group>"; };
+		F28C806D19E314DF001A578C /* BSD2WayPort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSD2WayPort.m; sourceTree = "<group>"; };
+		F28C806F19E3B1C7001A578C /* BSDPatchCompiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPatchCompiler.h; sourceTree = "<group>"; };
+		F28C807019E3B1C7001A578C /* BSDPatchCompiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPatchCompiler.m; sourceTree = "<group>"; };
+		F28C839C1A159C66007BB297 /* BlackBoxCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackBoxCategories.h; sourceTree = "<group>"; };
+		F2946D8D1A2D566700FBEE13 /* BSDTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTableView.h; sourceTree = "<group>"; };
+		F2946D8E1A2D566700FBEE13 /* BSDTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTableView.m; sourceTree = "<group>"; };
+		F2976C3C1A65FEAA00FE6960 /* NSString+BSD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+BSD.h"; sourceTree = "<group>"; };
+		F2976C3D1A65FEAA00FE6960 /* NSString+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+BSD.m"; sourceTree = "<group>"; };
+		F29EBE841A7A0E6C0070C7BF /* NSInvocation+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Bb.m"; sourceTree = "<group>"; };
+		F29EBE851A7A0E6C0070C7BF /* NSInvocation+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Bb.h"; sourceTree = "<group>"; };
+		F29EBE871A7A0E9D0070C7BF /* NSString+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Bb.h"; sourceTree = "<group>"; };
+		F29EBE881A7A0E9D0070C7BF /* NSString+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Bb.m"; sourceTree = "<group>"; };
+		F29EBE8A1A7A0FDF0070C7BF /* NSObject+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Bb.h"; sourceTree = "<group>"; };
+		F29EBE8B1A7A0FDF0070C7BF /* NSObject+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Bb.m"; sourceTree = "<group>"; };
+		F2A5A5041A64BEF500459331 /* BSDConstraintObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDConstraintObject.h; sourceTree = "<group>"; };
+		F2A5A5051A64BEF500459331 /* BSDConstraintObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDConstraintObject.m; sourceTree = "<group>"; };
 		F2AAF79E19C7CB97004EFE87 /* BSDPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDPrint.h; sourceTree = "<group>"; };
 		F2AAF79F19C7CB97004EFE87 /* BSDPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPrint.m; sourceTree = "<group>"; };
 		F2AAF7A119C7DD16004EFE87 /* BSDRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDRandom.h; sourceTree = "<group>"; };
@@ -447,6 +620,14 @@
 		F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCanvasViewController.m; sourceTree = "<group>"; };
 		F2AAF7A719C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+HBVUtils.h"; sourceTree = "<group>"; };
 		F2AAF7A819C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+HBVUtils.m"; sourceTree = "<group>"; };
+		F2B0C46D1A145C0400FEE17F /* BSDControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDControl.h; sourceTree = "<group>"; };
+		F2B0C46E1A145C0400FEE17F /* BSDControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDControl.m; sourceTree = "<group>"; };
+		F2B0C4701A145D0500FEE17F /* BSDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDButton.h; sourceTree = "<group>"; };
+		F2B0C4711A145D0500FEE17F /* BSDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDButton.m; sourceTree = "<group>"; };
+		F2C8A2F61A129AED00CAF039 /* BSDActionPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDActionPopup.h; sourceTree = "<group>"; };
+		F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDActionPopup.m; sourceTree = "<group>"; };
+		F2CFC84F1A19E36A00FFAAC1 /* BSDArr2Dict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDArr2Dict.h; sourceTree = "<group>"; };
+		F2CFC8501A19E36A00FFAAC1 /* BSDArr2Dict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDArr2Dict.m; sourceTree = "<group>"; };
 		F2CFDEAE19DA1E7800A156DB /* BSDAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAnimation.h; sourceTree = "<group>"; };
 		F2CFDEAF19DA1E7800A156DB /* BSDAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAnimation.m; sourceTree = "<group>"; };
 		F2CFDEB119DA29A800A156DB /* BSDTransform3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTransform3d.h; sourceTree = "<group>"; };
@@ -512,6 +693,12 @@
 		F2CFDF1419DCFF5400A156DB /* toolbar_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar_add@3x.png"; sourceTree = "<group>"; };
 		F2CFDF1519DCFF5400A156DB /* toolbar_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar_add@2x.png"; sourceTree = "<group>"; };
 		F2CFDF1619DCFF5400A156DB /* toolbar_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_add.png; sourceTree = "<group>"; };
+		F2D2E40F1A42672C007B51CE /* MyCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCloud.h; sourceTree = "<group>"; };
+		F2D2E4101A42672C007B51CE /* MyCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCloud.m; sourceTree = "<group>"; };
+		F2DB32C01A65ADA000806498 /* NSObject+TypeConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TypeConversion.h"; sourceTree = "<group>"; };
+		F2DB32C11A65ADA000806498 /* NSObject+TypeConversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TypeConversion.m"; sourceTree = "<group>"; };
+		F2E507BF1A37F66A008D67D9 /* BSDCPUMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDCPUMonitor.h; sourceTree = "<group>"; };
+		F2E507C01A37F66A008D67D9 /* BSDCPUMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCPUMonitor.m; sourceTree = "<group>"; };
 		F2EB85E219D34CA8007B8C3C /* BSDNumberInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDNumberInlet.h; sourceTree = "<group>"; };
 		F2EB85E319D34CA8007B8C3C /* BSDNumberInlet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDNumberInlet.m; sourceTree = "<group>"; };
 		F2EB85E519D34EE8007B8C3C /* BSDStringInlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDStringInlet.h; sourceTree = "<group>"; };
@@ -542,13 +729,15 @@
 		F2EE14B219C9EF9B008D83E2 /* BSDMessageBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDMessageBox.m; sourceTree = "<group>"; };
 		F2EE14B419C9F070008D83E2 /* BSDMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDMessage.h; sourceTree = "<group>"; };
 		F2EE14B519C9F070008D83E2 /* BSDMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDMessage.m; sourceTree = "<group>"; };
+		F2F4617F1A40D0110056C2CE /* BSDiCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDiCloud.h; sourceTree = "<group>"; };
+		F2F461801A40D0110056C2CE /* BSDiCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDiCloud.m; sourceTree = "<group>"; };
 		F2F5131719B8D97C00323096 /* BlackBox.UI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackBox.UI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F5131B19B8D97C00323096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2F5131C19B8D97C00323096 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F2F5131E19B8D97C00323096 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F2F5131F19B8D97C00323096 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F2F5132119B8D97C00323096 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		F2F5132219B8D97C00323096 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F2F5132119B8D97C00323096 /* BSDRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSDRootViewController.h; sourceTree = "<group>"; };
+		F2F5132219B8D97C00323096 /* BSDRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSDRootViewController.m; sourceTree = "<group>"; };
 		F2F5132519B8D97C00323096 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F2F5132719B8D97C00323096 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F2F5132D19B8D97C00323096 /* BlackBox.UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlackBox.UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -568,9 +757,16 @@
 		F2F5139419B92C9600323096 /* BSDPortConnectionDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDPortConnectionDescription.m; sourceTree = "<group>"; };
 		F2F5139619B9342400323096 /* BSDCompiledPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDCompiledPatch.h; sourceTree = "<group>"; };
 		F2F5139719B9342400323096 /* BSDCompiledPatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDCompiledPatch.m; sourceTree = "<group>"; };
+		F2F84AAC1A38DE0C00AFCD0A /* BSDStringComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDStringComponents.h; sourceTree = "<group>"; };
+		F2F84AAD1A38DE0C00AFCD0A /* BSDStringComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDStringComponents.m; sourceTree = "<group>"; };
+		F2F84AAF1A38E7A800AFCD0A /* BSDStringAppend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDStringAppend.h; sourceTree = "<group>"; };
+		F2F84AB01A38E7A800AFCD0A /* BSDStringAppend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDStringAppend.m; sourceTree = "<group>"; };
+		F2F84AB21A38F00600AFCD0A /* BSDArr2String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDArr2String.h; sourceTree = "<group>"; };
+		F2F84AB31A38F00600AFCD0A /* BSDArr2String.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDArr2String.m; sourceTree = "<group>"; };
+		F2F84AB51A39159200AFCD0A /* BSDDynamicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDDynamicObject.h; sourceTree = "<group>"; };
+		F2F84AB61A39159200AFCD0A /* BSDDynamicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDDynamicObject.m; sourceTree = "<group>"; };
 		F2FF09E419D149540095C3E4 /* BSDWebImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDWebImage.h; sourceTree = "<group>"; };
 		F2FF09E519D149540095C3E4 /* BSDWebImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDWebImage.m; sourceTree = "<group>"; };
-		F7FDFF3A9D8F468DBAEB9C03 /* Pods-BlackBox.UI.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBox.UI.xcconfig"; path = "Pods/Pods-BlackBox.UI.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -578,7 +774,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F21BAEC51A1AB18C00F20FDD /* CoreLocation.framework in Frameworks */,
+				F25F71B919EA2509002B082A /* CoreMotion.framework in Frameworks */,
+				F25F71B719EA24FA002B082A /* MapKit.framework in Frameworks */,
 				5EC7E8FBB4FC43EB8F4060BE /* libPods-BlackBox.UI.a in Frameworks */,
+				F25F71B419EA06A5002B082A /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,6 +786,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A984AB56DC034B346759441D /* libPods-BlackBox.UITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,9 +796,42 @@
 		04119221047643E083A0AD2F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F21BAEC41A1AB18C00F20FDD /* CoreLocation.framework */,
+				F25F71B819EA2509002B082A /* CoreMotion.framework */,
+				F25F71B619EA24FA002B082A /* MapKit.framework */,
+				F25F71B319EA06A5002B082A /* CloudKit.framework */,
 				0F1DDEBE68B545E79A6432D5 /* libPods-BlackBox.UI.a */,
+				0151EA1E4E1DCFBD2838C160 /* libPods-BlackBox.UITests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		274C158579B960BBF3FAD100 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6490D4841FB3C553AB6DE6ED /* Pods-BlackBox.UI.debug.xcconfig */,
+				3B7BFC171202632827E0FFE2 /* Pods-BlackBox.UI.release.xcconfig */,
+				493BC0365B4EBD05D9315FFF /* Pods-BlackBox.UITests.debug.xcconfig */,
+				0652CBEAF55A3F24F6A040D4 /* Pods-BlackBox.UITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F2079AD61A5E57A100D9B608 /* Javascript */ = {
+			isa = PBXGroup;
+			children = (
+				F2079AD81A5E57CE00D9B608 /* BSDJSObject.h */,
+				F2079AD71A5E57CE00D9B608 /* BSDJSObject.m */,
+			);
+			name = Javascript;
+			path = ../../..;
+			sourceTree = "<group>";
+		};
+		F21183621A79AC4F00B4F53F /* pics */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = pics;
 			sourceTree = "<group>";
 		};
 		F21E523219C51BC300E51383 /* BSDPatch */ = {
@@ -610,6 +844,7 @@
 				F21E525619C51BC300E51383 /* Dictionaries */,
 				F21E525B19C51BC300E51383 /* Flow Control */,
 				F21E526E19C51BC300E51383 /* Generators */,
+				F2079AD61A5E57A100D9B608 /* Javascript */,
 				F21E527619C51BC300E51383 /* Main */,
 				F21E527D19C51BC300E51383 /* Numbers */,
 				F21E52CD19C51BC300E51383 /* Ports */,
@@ -652,6 +887,12 @@
 				F21E524B19C51BC300E51383 /* BSDArraySort.m */,
 				F21E524C19C51BC300E51383 /* BSDSplitArray.h */,
 				F21E524D19C51BC300E51383 /* BSDSplitArray.m */,
+				F2389B0619EF8FCB008B51DB /* BSDAny2Array.h */,
+				F2389B0719EF8FCB008B51DB /* BSDAny2Array.m */,
+				F20D1A101A0B424500710F3A /* BSDSortDescriptor.h */,
+				F20D1A111A0B424500710F3A /* BSDSortDescriptor.m */,
+				F20D1A131A0B4D2200710F3A /* BSDPredicate.h */,
+				F20D1A141A0B4D2200710F3A /* BSDPredicate.m */,
 			);
 			path = Arrays;
 			sourceTree = "<group>";
@@ -674,6 +915,10 @@
 			children = (
 				F21E525419C51BC300E51383 /* NSValue+BSD.h */,
 				F21E525519C51BC300E51383 /* NSValue+BSD.m */,
+				F2DB32C01A65ADA000806498 /* NSObject+TypeConversion.h */,
+				F2DB32C11A65ADA000806498 /* NSObject+TypeConversion.m */,
+				F2976C3C1A65FEAA00FE6960 /* NSString+BSD.h */,
+				F2976C3D1A65FEAA00FE6960 /* NSString+BSD.m */,
 			);
 			path = "Class Categories";
 			sourceTree = "<group>";
@@ -681,6 +926,8 @@
 		F21E525619C51BC300E51383 /* Dictionaries */ = {
 			isa = PBXGroup;
 			children = (
+				F2CFC84F1A19E36A00FFAAC1 /* BSDArr2Dict.h */,
+				F2CFC8501A19E36A00FFAAC1 /* BSDArr2Dict.m */,
 				F21E525719C51BC300E51383 /* BSDDictionarySerialize.h */,
 				F21E525819C51BC300E51383 /* BSDDictionarySerialize.m */,
 				F24A3B0F19D0E5C900FBA887 /* BSDDictionaryEnumerate.h */,
@@ -695,6 +942,8 @@
 				F28C00E319D2823E00BFA206 /* BSDMapSuper.m */,
 				F2CFDEB719DA521800A156DB /* BSDDictionaryAccum.h */,
 				F2CFDEB819DA521800A156DB /* BSDDictionaryAccum.m */,
+				F26516911A454AAB005FE1B5 /* BSDExpression.h */,
+				F26516921A454AAB005FE1B5 /* BSDExpression.m */,
 			);
 			path = Dictionaries;
 			sourceTree = "<group>";
@@ -868,6 +1117,8 @@
 				F21E52B819C51BC300E51383 /* BSDRectSplit.m */,
 				F21E52B919C51BC300E51383 /* BSDSplitPoint.h */,
 				F21E52BA19C51BC300E51383 /* BSDSplitPoint.m */,
+				F280947C1A263DA700C3AFA1 /* BSDAnnotationObject.h */,
+				F280947D1A263DA700C3AFA1 /* BSDAnnotationObject.m */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -917,6 +1168,8 @@
 				F283A1F919CA06DF005CC98B /* BSDPatchInlet.m */,
 				F283A1FB19CA0709005CC98B /* BSDPatchOutlet.h */,
 				F283A1FC19CA0709005CC98B /* BSDPatchOutlet.m */,
+				F28C806C19E314DF001A578C /* BSD2WayPort.h */,
+				F28C806D19E314DF001A578C /* BSD2WayPort.m */,
 			);
 			path = Ports;
 			sourceTree = "<group>";
@@ -928,6 +1181,14 @@
 				F21E52D619C51BC300E51383 /* BSDFormatString.m */,
 				F24A3B0619D0C11900FBA887 /* BSDAny2String.h */,
 				F24A3B0719D0C11900FBA887 /* BSDAny2String.m */,
+				F22AA33019F01E80003E256A /* BSDStringReplace.h */,
+				F22AA33119F01E80003E256A /* BSDStringReplace.m */,
+				F2F84AAC1A38DE0C00AFCD0A /* BSDStringComponents.h */,
+				F2F84AAD1A38DE0C00AFCD0A /* BSDStringComponents.m */,
+				F2F84AAF1A38E7A800AFCD0A /* BSDStringAppend.h */,
+				F2F84AB01A38E7A800AFCD0A /* BSDStringAppend.m */,
+				F2F84AB21A38F00600AFCD0A /* BSDArr2String.h */,
+				F2F84AB31A38F00600AFCD0A /* BSDArr2String.m */,
 			);
 			path = Strings;
 			sourceTree = "<group>";
@@ -946,6 +1207,10 @@
 		F21E52DA19C51BC300E51383 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				F28094761A26398D00C3AFA1 /* BSDGPUImage.h */,
+				F28094771A26398D00C3AFA1 /* BSDGPUImage.m */,
+				F2597D711A303ACD0015C057 /* BSDShader.h */,
+				F2597D721A303ACD0015C057 /* BSDShader.m */,
 				F21E52DB19C51BC300E51383 /* BSDBasicAnimation.h */,
 				F21E52DC19C51BC300E51383 /* BSDBasicAnimation.m */,
 				F2CFDEAE19DA1E7800A156DB /* BSDAnimation.h */,
@@ -956,10 +1221,16 @@
 				F21E52E019C51BC300E51383 /* BSDFont.m */,
 				F21E52E119C51BC300E51383 /* BSDImageBlur.h */,
 				F21E52E219C51BC300E51383 /* BSDImageBlur.m */,
-				F21E52E919C51BC300E51383 /* BSDVideoStream.h */,
-				F21E52EA19C51BC300E51383 /* BSDVideoStream.m */,
+				F21E52E919C51BC300E51383 /* BSDVideoLayer.h */,
+				F21E52EA19C51BC300E51383 /* BSDVideoLayer.m */,
 				F21E52EB19C51BC300E51383 /* BSDView.h */,
 				F21E52EC19C51BC300E51383 /* BSDView.m */,
+				F29EBE8A1A7A0FDF0070C7BF /* NSObject+Bb.h */,
+				F29EBE8B1A7A0FDF0070C7BF /* NSObject+Bb.m */,
+				F29EBE871A7A0E9D0070C7BF /* NSString+Bb.h */,
+				F29EBE881A7A0E9D0070C7BF /* NSString+Bb.m */,
+				F29EBE851A7A0E6C0070C7BF /* NSInvocation+Bb.h */,
+				F29EBE841A7A0E6C0070C7BF /* NSInvocation+Bb.m */,
 				F2CFDEE619DBAA2500A156DB /* BSDScreen.h */,
 				F2CFDEE719DBAA2500A156DB /* BSDScreen.m */,
 				F21E52E319C51BC300E51383 /* BSDImageView.h */,
@@ -974,6 +1245,26 @@
 				F2EB860719D54813007B8C3C /* BSDAffineTransform.m */,
 				F2CFDEB119DA29A800A156DB /* BSDTransform3d.h */,
 				F2CFDEB219DA29A800A156DB /* BSDTransform3d.m */,
+				F20426D51A13E50400A455E7 /* BSDBezierPath.h */,
+				F20426D61A13E50400A455E7 /* BSDBezierPath.m */,
+				F20426D81A13EC9400A455E7 /* BSDShapeLayer.h */,
+				F20426D91A13EC9400A455E7 /* BSDShapeLayer.m */,
+				F2B0C46D1A145C0400FEE17F /* BSDControl.h */,
+				F2B0C46E1A145C0400FEE17F /* BSDControl.m */,
+				F2B0C4701A145D0500FEE17F /* BSDButton.h */,
+				F2B0C4711A145D0500FEE17F /* BSDButton.m */,
+				F28094791A263CF800C3AFA1 /* BSDAnnotationFactory.h */,
+				F280947A1A263CF800C3AFA1 /* BSDAnnotationFactory.m */,
+				F2946D8D1A2D566700FBEE13 /* BSDTableView.h */,
+				F2946D8E1A2D566700FBEE13 /* BSDTableView.m */,
+				F2597D741A303D8E0015C057 /* BSDLayer2Image.h */,
+				F2597D751A303D8E0015C057 /* BSDLayer2Image.m */,
+				F28623591A32426B005737EE /* BSDimages2Gif.h */,
+				F286235A1A32426B005737EE /* BSDimages2Gif.m */,
+				F2A5A5041A64BEF500459331 /* BSDConstraintObject.h */,
+				F2A5A5051A64BEF500459331 /* BSDConstraintObject.m */,
+				F24A394D1A6728EA001EE5FF /* BSDViewControllerRoot.h */,
+				F24A394E1A6728EA001EE5FF /* BSDViewControllerRoot.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -981,6 +1272,8 @@
 		F21E52ED19C51BC300E51383 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				F202D21D1A1C1CC200AED9C7 /* BSDComment.h */,
+				F202D21E1A1C1CC200AED9C7 /* BSDComment.m */,
 				F21E52EE19C51BC300E51383 /* BSDBuffer.h */,
 				F21E52EF19C51BC300E51383 /* BSDBuffer.m */,
 				F21E52F019C51BC300E51383 /* BSDSpeedLimit.h */,
@@ -1005,8 +1298,25 @@
 				F2CFDEED19DCAA6700A156DB /* BSDSend.m */,
 				F2CFDEEF19DCACA000A156DB /* BSDReceive.h */,
 				F2CFDEF019DCACA000A156DB /* BSDReceive.m */,
+				F25F71BA19EA26AA002B082A /* BSDInstanceMethod.h */,
+				F25F71BB19EA26AA002B082A /* BSDInstanceMethod.m */,
+				F22FF24B1A648DD400C6EC52 /* BSDClassMethod.h */,
+				F22FF24C1A648DD400C6EC52 /* BSDClassMethod.m */,
+				F2E507BF1A37F66A008D67D9 /* BSDCPUMonitor.h */,
+				F2E507C01A37F66A008D67D9 /* BSDCPUMonitor.m */,
+				F2F84AB51A39159200AFCD0A /* BSDDynamicObject.h */,
+				F2F84AB61A39159200AFCD0A /* BSDDynamicObject.m */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		F26BB6401A1D5B67000909F4 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */,
+				F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */,
+			);
+			name = libs;
 			sourceTree = "<group>";
 		};
 		F289D8C919D5884F00CA1BC0 /* runtime */ = {
@@ -1025,6 +1335,8 @@
 				F2CFDEBB19DA56B200A156DB /* BSDFormatRequest.m */,
 				F2FF09E419D149540095C3E4 /* BSDWebImage.h */,
 				F2FF09E519D149540095C3E4 /* BSDWebImage.m */,
+				F21BAEC11A1AAD1500F20FDD /* BSDTextMessage.h */,
+				F21BAEC21A1AAD1500F20FDD /* BSDTextMessage.m */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -1095,15 +1407,21 @@
 		F2F5130E19B8D97C00323096 = {
 			isa = PBXGroup;
 			children = (
+				F21BAEC61A1AB62300F20FDD /* HBVImageBlur.h */,
+				F21BAEC71A1AB62300F20FDD /* HBVImageBlur.m */,
 				F2CFDEE219DB46DC00A156DB /* UIImage+Resize.h */,
 				F2CFDEE119DB46DC00A156DB /* UIImage+Resize.m */,
+				F2597D6B1A2EB6B10015C057 /* BSDImageFilter.h */,
+				F2597D6C1A2EB6B10015C057 /* BSDImageFilter.m */,
+				F2597D6E1A2EC5470015C057 /* BSDSourceImage.h */,
+				F2597D6F1A2EC5470015C057 /* BSDSourceImage.m */,
 				F289D8C919D5884F00CA1BC0 /* runtime */,
 				F21E523219C51BC300E51383 /* BSDPatch */,
 				F2F5131919B8D97C00323096 /* BlackBox.UI */,
 				F2F5133019B8D97C00323096 /* BlackBox.UITests */,
 				F2F5131819B8D97C00323096 /* Products */,
-				F7FDFF3A9D8F468DBAEB9C03 /* Pods-BlackBox.UI.xcconfig */,
 				04119221047643E083A0AD2F /* Frameworks */,
+				274C158579B960BBF3FAD100 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1119,20 +1437,39 @@
 		F2F5131919B8D97C00323096 /* BlackBox.UI */ = {
 			isa = PBXGroup;
 			children = (
+				F2415F461A26D6880070C1FB /* mandelbrot.fsh */,
+				F28094811A26724E00C3AFA1 /* k1.fsh */,
+				F280947F1A26711800C3AFA1 /* shader.fsh */,
+				F26BB6401A1D5B67000909F4 /* libs */,
+				F25F71B219EA0661002B082A /* BlackBox.UI.entitlements */,
 				F21E50DC19C433ED00E51383 /* UIColor+HBVHarmonies.h */,
 				F21E50DB19C433ED00E51383 /* UIColor+HBVHarmonies.m */,
+				F202D2111A1BB69500AED9C7 /* NSDictionary+BSDUtils.h */,
+				F202D2121A1BB69500AED9C7 /* NSDictionary+BSDUtils.m */,
 				F2AAF7A719C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.h */,
 				F2AAF7A819C8AAEB004EFE87 /* NSUserDefaults+HBVUtils.m */,
+				F2F4617F1A40D0110056C2CE /* BSDiCloud.h */,
+				F2F461801A40D0110056C2CE /* BSDiCloud.m */,
+				F2D2E40F1A42672C007B51CE /* MyCloud.h */,
+				F2D2E4101A42672C007B51CE /* MyCloud.m */,
 				F2F5131E19B8D97C00323096 /* AppDelegate.h */,
 				F2F5131F19B8D97C00323096 /* AppDelegate.m */,
 				F2789E3F19C8D4C6006F6CA4 /* PopoverContentTableViewController.h */,
 				F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */,
-				F2F5132119B8D97C00323096 /* ViewController.h */,
-				F2F5132219B8D97C00323096 /* ViewController.m */,
+				F2F5132119B8D97C00323096 /* BSDRootViewController.h */,
+				F2F5132219B8D97C00323096 /* BSDRootViewController.m */,
+				F202D2171A1BE6DC00AED9C7 /* BSDPatchManager.h */,
+				F202D2181A1BE6DC00AED9C7 /* BSDPatchManager.m */,
+				F24A39501A67331E001EE5FF /* BSDDisplayManager.h */,
+				F24A39511A67331E001EE5FF /* BSDDisplayManager.m */,
+				F202D21A1A1C1A9D00AED9C7 /* BSDDisplayViewController.h */,
+				F202D21B1A1C1A9D00AED9C7 /* BSDDisplayViewController.m */,
 				F2AAF7A419C7FB4B004EFE87 /* BSDCanvasViewController.h */,
 				F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */,
 				F2CFDEC719DB36A900A156DB /* BSDCanvasToolbarView.h */,
 				F2CFDEC819DB36A900A156DB /* BSDCanvasToolbarView.m */,
+				F2389B0319EF5766008B51DB /* BSDLogView.h */,
+				F2389B0419EF5766008B51DB /* BSDLogView.m */,
 				F2F5138719B9031C00323096 /* BSDCanvas.h */,
 				F2F5138819B9031C00323096 /* BSDCanvas.m */,
 				F2F5134019B8E54400323096 /* BSDPortView.h */,
@@ -1151,10 +1488,18 @@
 				F2EE14B219C9EF9B008D83E2 /* BSDMessageBox.m */,
 				F21E50D519C3FE1A00E51383 /* BSDNumberBox.h */,
 				F21E50D619C3FE1A00E51383 /* BSDNumberBox.m */,
+				F204D60219F71E7200175B24 /* BSDHSlider.h */,
+				F204D60319F71E7200175B24 /* BSDHSlider.m */,
 				F2F5133D19B8DAB800323096 /* BSDGraphBox.h */,
 				F2F5133E19B8DAB800323096 /* BSDGraphBox.m */,
+				F28C806019E25788001A578C /* BSDAbstractionBox.h */,
+				F28C806119E25788001A578C /* BSDAbstractionBox.m */,
+				F28C806F19E3B1C7001A578C /* BSDPatchCompiler.h */,
+				F28C807019E3B1C7001A578C /* BSDPatchCompiler.m */,
 				F21A5B5C19DF86BA00E6F21B /* BSDPatchDescription.h */,
 				F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */,
+				F21A5B5F19E0AF4F00E6F21B /* BSDPatchDescriptionUtility.h */,
+				F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */,
 				F2F5139019B927A700323096 /* BSDObjectDescription.h */,
 				F2F5139119B927A700323096 /* BSDObjectDescription.m */,
 				F2F5139319B92C9600323096 /* BSDPortConnectionDescription.h */,
@@ -1169,6 +1514,21 @@
 				F2EB860119D4CCDD007B8C3C /* BSDTextField.m */,
 				F2EB85FD19D35C79007B8C3C /* BSDTextParser.h */,
 				F2EB85FE19D35C79007B8C3C /* BSDTextParser.m */,
+				F2C8A2F61A129AED00CAF039 /* BSDActionPopup.h */,
+				F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */,
+				F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */,
+				F28C839C1A159C66007BB297 /* BlackBoxCategories.h */,
+				F202D2141A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.h */,
+				F202D2151A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.m */,
+				F21183631A79AC6600B4F53F /* mandelbrot.png */,
+				F21183641A79AC6600B4F53F /* phi.png */,
+				F21183651A79AC6600B4F53F /* beach.png */,
+				F21183661A79AC6600B4F53F /* shiba.png */,
+				F21183671A79AC6600B4F53F /* bird.png */,
+				F21183681A79AC6600B4F53F /* city.png */,
+				F21183691A79AC6600B4F53F /* frog.png */,
+				F21183601A79800D00B4F53F /* droplets.png */,
+				F21183621A79AC4F00B4F53F /* pics */,
 				F2CFDECA19DB3D2C00A156DB /* Assets */,
 				F2F5132419B8D97C00323096 /* Main.storyboard */,
 				F2F5132719B8D97C00323096 /* Images.xcassets */,
@@ -1229,9 +1589,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F2F5133A19B8D97C00323096 /* Build configuration list for PBXNativeTarget "BlackBox.UITests" */;
 			buildPhases = (
+				3EB3E6DE11A1AD77B8A64944 /* Check Pods Manifest.lock */,
 				F2F5132919B8D97C00323096 /* Sources */,
 				F2F5132A19B8D97C00323096 /* Frameworks */,
 				F2F5132B19B8D97C00323096 /* Resources */,
+				B5547F4566FE6B2DCD02298D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1255,6 +1617,11 @@
 					F2F5131619B8D97C00323096 = {
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = MB536HH275;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					F2F5132C19B8D97C00323096 = {
 						CreatedOnToolsVersion = 6.0;
@@ -1291,8 +1658,11 @@
 				F2CFDF3019DCFF5400A156DB /* toolbar_cut@3x.png in Resources */,
 				F2CFDF3319DCFF5400A156DB /* toolbar_copy@3x.png in Resources */,
 				F2CFDF3619DCFF5400A156DB /* toolbar_back@3x.png in Resources */,
+				F211836D1A79AC6600B4F53F /* shiba.png in Resources */,
 				F2CFDF3B19DCFF5400A156DB /* toolbar_add.png in Resources */,
 				F2CFDF2319DCFF5400A156DB /* toolbar_paste.png in Resources */,
+				F211836A1A79AC6600B4F53F /* mandelbrot.png in Resources */,
+				F27D1FF11A0C3ACB0057EDFC /* SavedPatches.plist in Resources */,
 				F2CFDF2D19DCFF5400A156DB /* toolbar_delete@3x.png in Resources */,
 				F2CFDF2B19DCFF5400A156DB /* toolbar_edit@2x.png in Resources */,
 				F2CFDF3719DCFF5400A156DB /* toolbar_back@2x.png in Resources */,
@@ -1303,21 +1673,32 @@
 				F2CFDF1D19DCFF5400A156DB /* toolbar_save.png in Resources */,
 				F2CFDF1719DCFF5400A156DB /* toolbar_view@3xpng.png in Resources */,
 				F2CFDF2A19DCFF5400A156DB /* toolbar_edit@3x.png in Resources */,
+				F211836F1A79AC6600B4F53F /* city.png in Resources */,
+				F211836E1A79AC6600B4F53F /* bird.png in Resources */,
 				F2CFDF2C19DCFF5400A156DB /* toolbar_edit.png in Resources */,
+				F21183701A79AC6600B4F53F /* frog.png in Resources */,
 				F2CFDF2219DCFF5400A156DB /* toolbar_paste@2x.png in Resources */,
 				F2CFDF2619DCFF5400A156DB /* toolbar_load.png in Resources */,
 				F2CFDF3219DCFF5400A156DB /* toolbar_cut.png in Resources */,
 				F2CFDF2E19DCFF5400A156DB /* toolbar_delete@2x.png in Resources */,
 				F2CFDF3519DCFF5400A156DB /* toolbar_copy.png in Resources */,
 				F2CFDF3919DCFF5400A156DB /* toolbar_add@3x.png in Resources */,
+				F211836C1A79AC6600B4F53F /* beach.png in Resources */,
 				F2CFDF1B19DCFF5400A156DB /* toolbar_save@3x.png in Resources */,
+				F211836B1A79AC6600B4F53F /* phi.png in Resources */,
 				F2CFDF1F19DCFF5400A156DB /* toolbar_patch@2x.png in Resources */,
 				F2CFDF2119DCFF5400A156DB /* toolbar_paste@3x.png in Resources */,
 				F2CFDF3A19DCFF5400A156DB /* toolbar_add@2x.png in Resources */,
+				F28094801A26711800C3AFA1 /* shader.fsh in Resources */,
+				F2415F471A26D6880070C1FB /* mandelbrot.fsh in Resources */,
+				F26BB6421A1D5B73000909F4 /* bb_stdlib 2.plist in Resources */,
 				F2CFDF3119DCFF5400A156DB /* toolbar_cut@2x.png in Resources */,
 				F2CFDF3819DCFF5400A156DB /* toolbar_back.png in Resources */,
+				F26BB6441A1D5B78000909F4 /* bb_stdlib.plist in Resources */,
 				F2CFDF1819DCFF5400A156DB /* toolbar_view@2x.png in Resources */,
 				F2CFDF2F19DCFF5400A156DB /* toolbar_delete.png in Resources */,
+				F28094821A26724E00C3AFA1 /* k1.fsh in Resources */,
+				F21183611A79800D00B4F53F /* droplets.png in Resources */,
 				F2F5132619B8D97C00323096 /* Main.storyboard in Resources */,
 				F2CFDF1A19DCFF5400A156DB /* toolbar_view @2x.png in Resources */,
 				F2CFDF2519DCFF5400A156DB /* toolbar_load@2x.png in Resources */,
@@ -1338,6 +1719,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3EB3E6DE11A1AD77B8A64944 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		68534D16C396424BB5D88124 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1350,7 +1746,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-BlackBox.UI-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlackBox.UI/Pods-BlackBox.UI-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5547F4566FE6B2DCD02298D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlackBox.UITests/Pods-BlackBox.UITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CDA6F22F2CDB437BA27823D2 /* Check Pods Manifest.lock */ = {
@@ -1377,18 +1788,27 @@
 			files = (
 				F21E531A19C51BC300E51383 /* BSDMod.m in Sources */,
 				F21E530A19C51BC300E51383 /* BSDCounter.m in Sources */,
+				F2C8A2F81A129AED00CAF039 /* BSDActionPopup.m in Sources */,
+				F202D2161A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.m in Sources */,
 				F283A20019CA11C8005CC98B /* BSDInletBox.m in Sources */,
 				F2F5133F19B8DAB800323096 /* BSDGraphBox.m in Sources */,
 				F21E50D419C3F63200E51383 /* BSDBox.m in Sources */,
 				F21E531719C51BC300E51383 /* BSDAdd.m in Sources */,
 				F2CFDEB919DA521800A156DB /* BSDDictionaryAccum.m in Sources */,
+				F29EBE8C1A7A0FDF0070C7BF /* NSObject+Bb.m in Sources */,
+				F202D21F1A1C1CC200AED9C7 /* BSDComment.m in Sources */,
+				F2079AD91A5E57CE00D9B608 /* BSDJSObject.m in Sources */,
+				F204D60419F71E7200175B24 /* BSDHSlider.m in Sources */,
+				F28C807119E3B1C7001A578C /* BSDPatchCompiler.m in Sources */,
 				F21E531019C51BC300E51383 /* BSDValue.m in Sources */,
 				F21E4C5519C8FDD600D20D60 /* BSDClient.m in Sources */,
 				F283A20319CA11DF005CC98B /* BSDOutletBox.m in Sources */,
 				F21E50D719C3FE1A00E51383 /* BSDNumberBox.m in Sources */,
+				F202D2131A1BB69500AED9C7 /* NSDictionary+BSDUtils.m in Sources */,
 				F21E534819C51BC300E51383 /* BSDBuffer.m in Sources */,
+				F2B0C4721A145D0500FEE17F /* BSDButton.m in Sources */,
 				F2AAF7A319C7DD16004EFE87 /* BSDRandom.m in Sources */,
-				F21E534619C51BC300E51383 /* BSDVideoStream.m in Sources */,
+				F21E534619C51BC300E51383 /* BSDVideoLayer.m in Sources */,
 				F21E533D19C51BC300E51383 /* BSDFormatString.m in Sources */,
 				F241578919CB85B0003E32CA /* BSDObjectLookup.m in Sources */,
 				F2CFDEE819DBAA2500A156DB /* BSDScreen.m in Sources */,
@@ -1397,30 +1817,46 @@
 				F21E533819C51BC300E51383 /* BSDClipSoft.m in Sources */,
 				F2EB85FC19D35227007B8C3C /* BSDDictionaryObject.m in Sources */,
 				F24A3B1419D0EBD900FBA887 /* BSDAtomizer.m in Sources */,
-				F2F5132319B8D97C00323096 /* ViewController.m in Sources */,
+				F2F5132319B8D97C00323096 /* BSDRootViewController.m in Sources */,
 				F21E532519C51BC300E51383 /* BSDMin.m in Sources */,
+				F2F461811A40D0110056C2CE /* BSDiCloud.m in Sources */,
 				F2EB85F019D34FB5007B8C3C /* BSDNumberOutlet.m in Sources */,
 				F21E52FC19C51BC300E51383 /* BSDArrayLength.m in Sources */,
+				F202D2191A1BE6DC00AED9C7 /* BSDPatchManager.m in Sources */,
 				F2EB85E719D34EE8007B8C3C /* BSDStringInlet.m in Sources */,
 				F2F5134219B8E54400323096 /* BSDPortView.m in Sources */,
+				F2597D761A303D8E0015C057 /* BSDLayer2Image.m in Sources */,
+				F2389B0519EF5766008B51DB /* BSDLogView.m in Sources */,
 				F21E532A19C51BC300E51383 /* BSDIntersect2CirclesHelper.m in Sources */,
+				F2389B0819EF8FCB008B51DB /* BSDAny2Array.m in Sources */,
+				F2F84AAE1A38DE0C00AFCD0A /* BSDStringComponents.m in Sources */,
 				F21E534719C51BC300E51383 /* BSDView.m in Sources */,
+				F21BAEC81A1AB62300F20FDD /* HBVImageBlur.m in Sources */,
 				F2EB85EA19D34F46007B8C3C /* BSDDictionaryInlet.m in Sources */,
 				F24A3B0819D0C11900FBA887 /* BSDAny2String.m in Sources */,
 				F21E531419C51BC300E51383 /* BSDCreate.m in Sources */,
 				F21E530B19C51BC300E51383 /* BSDRoute.m in Sources */,
 				F21E533A19C51BC300E51383 /* BSDInlet.m in Sources */,
 				F24A3B0519D0B9CF00FBA887 /* BSDType.m in Sources */,
+				F22AA33219F01E80003E256A /* BSDStringReplace.m in Sources */,
 				F21E532219C51BC300E51383 /* BSDGreater.m in Sources */,
+				F28C806E19E314DF001A578C /* BSD2WayPort.m in Sources */,
 				F21E530319C51BC300E51383 /* BSDBang.m in Sources */,
+				F2946D8F1A2D566700FBEE13 /* BSDTableView.m in Sources */,
+				F2597D6D1A2EB6B10015C057 /* BSDImageFilter.m in Sources */,
 				F21E533219C51BC300E51383 /* BSDAverage.m in Sources */,
 				F21E534319C51BC300E51383 /* BSDImageView.m in Sources */,
 				F21E52FE19C51BC300E51383 /* BSDArrayPack.m in Sources */,
 				F21E530619C51BC300E51383 /* BSDDictionarySerialize.m in Sources */,
+				F28C806219E25788001A578C /* BSDAbstractionBox.m in Sources */,
 				F21E531E19C51BC300E51383 /* BSDSubtract.m in Sources */,
+				F2B0C46F1A145C0400FEE17F /* BSDControl.m in Sources */,
+				F22FF24D1A648DD400C6EC52 /* BSDClassMethod.m in Sources */,
 				F24A3B0B19D0CB0200FBA887 /* BSDSplitDictionary.m in Sources */,
 				F2F5139219B927A700323096 /* BSDObjectDescription.m in Sources */,
+				F2DB32C21A65ADA000806498 /* NSObject+TypeConversion.m in Sources */,
 				F2EB860519D5034B007B8C3C /* BSDCollectionInlet.m in Sources */,
+				F2597D731A303ACD0015C057 /* BSDShader.m in Sources */,
 				F21E532819C51BC300E51383 /* BSDDistanceFrom2DPoint.m in Sources */,
 				F21E533119C51BC300E51383 /* BSDSplitPoint.m in Sources */,
 				F2CFDEC619DA78BC00A156DB /* BSDCommentBox.m in Sources */,
@@ -1438,38 +1874,51 @@
 				F24A3B1119D0E5C900FBA887 /* BSDDictionaryEnumerate.m in Sources */,
 				F21E534419C51BC300E51383 /* BSDLabel.m in Sources */,
 				F2CFDEC319DA724500A156DB /* BSDGradientLayer.m in Sources */,
+				F2597D701A2EC5470015C057 /* BSDSourceImage.m in Sources */,
 				F2EB85F619D35127007B8C3C /* BSDArrayObject.m in Sources */,
 				F2EB85E419D34CA8007B8C3C /* BSDNumberInlet.m in Sources */,
 				F21E532119C51BC300E51383 /* BSDEqualLess.m in Sources */,
 				F289D8CC19D63FC800CA1BC0 /* BSDFactory.m in Sources */,
 				F2CFDEB619DA2B9600A156DB /* BSDTrigger.m in Sources */,
+				F21BAEC31A1AAD1500F20FDD /* BSDTextMessage.m in Sources */,
 				F21E531919C51BC300E51383 /* BSDExponent.m in Sources */,
 				F21E533F19C51BC300E51383 /* BSDBasicAnimation.m in Sources */,
+				F202D21C1A1C1A9D00AED9C7 /* BSDDisplayViewController.m in Sources */,
 				F21E532B19C51BC300E51383 /* BSDSin.m in Sources */,
 				F21E531819C51BC300E51383 /* BSDDivide.m in Sources */,
 				F21E535119C5249100E51383 /* BSDBangControlBox.m in Sources */,
 				F21E533619C51BC300E51383 /* BSDAccum.m in Sources */,
 				F21E532619C51BC300E51383 /* BSDCos.m in Sources */,
+				F2F84AB71A39159200AFCD0A /* BSDDynamicObject.m in Sources */,
 				F2EB85F919D351CE007B8C3C /* BSDStringObject.m in Sources */,
+				F286235B1A32426B005737EE /* BSDimages2Gif.m in Sources */,
 				F21E532919C51BC300E51383 /* BSDIntersect2Circles.m in Sources */,
 				F21E530F19C51BC300E51383 /* BSDSwap.m in Sources */,
 				F21E530819C51BC300E51383 /* BSDAddKey.m in Sources */,
+				F24A394F1A6728EA001EE5FF /* BSDViewControllerRoot.m in Sources */,
 				F21E50DD19C433ED00E51383 /* UIColor+HBVHarmonies.m in Sources */,
 				F21E533719C51BC300E51383 /* BSDClipHard.m in Sources */,
 				F21E533019C51BC300E51383 /* BSDRectSplit.m in Sources */,
+				F2F84AB11A38E7A800AFCD0A /* BSDStringAppend.m in Sources */,
 				F21E533319C51BC300E51383 /* BSDMedian.m in Sources */,
 				F21E533419C51BC300E51383 /* BSDPTest.m in Sources */,
 				F21E531D19C51BC300E51383 /* BSDReciprocal.m in Sources */,
 				F2CFDEB019DA1E7800A156DB /* BSDAnimation.m in Sources */,
 				F283A1FD19CA0709005CC98B /* BSDPatchOutlet.m in Sources */,
+				F2976C3E1A65FEAA00FE6960 /* NSString+BSD.m in Sources */,
 				F21E532719C51BC300E51383 /* BSDDistance2D.m in Sources */,
 				F21E531519C51BC300E51383 /* BSDObject.m in Sources */,
 				F21E531F19C51BC300E51383 /* BSDEqual.m in Sources */,
 				F21E52F619C51BC300E51383 /* BSDArrayAccum.m in Sources */,
+				F2CFC8511A19E36A00FFAAC1 /* BSDArr2Dict.m in Sources */,
+				F2E507C11A37F66A008D67D9 /* BSDCPUMonitor.m in Sources */,
+				F2A5A5061A64BEF500459331 /* BSDConstraintObject.m in Sources */,
 				F21E531119C51BC300E51383 /* BSDGenerator.m in Sources */,
 				F2EB85F319D3507B007B8C3C /* BSDNumberObject.m in Sources */,
+				F280947E1A263DA700C3AFA1 /* BSDAnnotationObject.m in Sources */,
 				F2EE14B319C9EF9B008D83E2 /* BSDMessageBox.m in Sources */,
 				F2EE14B619C9F070008D83E2 /* BSDMessage.m in Sources */,
+				F26516931A454AAB005FE1B5 /* BSDExpression.m in Sources */,
 				F2CFDEEE19DCAA6700A156DB /* BSDSend.m in Sources */,
 				F2CFDEC019DA6E8900A156DB /* BSDTouchView.m in Sources */,
 				F21E533919C51BC300E51383 /* BSDInt.m in Sources */,
@@ -1478,33 +1927,44 @@
 				F2AAF7A619C7FB4B004EFE87 /* BSDCanvasViewController.m in Sources */,
 				F2F5139819B9342400323096 /* BSDCompiledPatch.m in Sources */,
 				F21E534219C51BC300E51383 /* BSDImageBlur.m in Sources */,
+				F280947B1A263CF800C3AFA1 /* BSDAnnotationFactory.m in Sources */,
 				F21E534919C51BC300E51383 /* BSDSpeedLimit.m in Sources */,
 				F21E533E19C51BC300E51383 /* BSDMetro.m in Sources */,
 				F21E534B19C51BC300E51383 /* BSDVelocity.m in Sources */,
 				F28C00E119D21F6000BFA206 /* BSDDelay.m in Sources */,
+				F28094781A26398D00C3AFA1 /* BSDGPUImage.m in Sources */,
 				F2EB85ED19D34F6C007B8C3C /* BSDArrayInlet.m in Sources */,
+				F20426D71A13E50400A455E7 /* BSDBezierPath.m in Sources */,
 				F2AAF7A019C7CB97004EFE87 /* BSDPrint.m in Sources */,
 				F21E532E19C51BC300E51383 /* BSDPoint3D.m in Sources */,
 				F2CFDEBC19DA56B200A156DB /* BSDFormatRequest.m in Sources */,
+				F29EBE891A7A0E9D0070C7BF /* NSString+Bb.m in Sources */,
 				F2EB860819D54813007B8C3C /* BSDAffineTransform.m in Sources */,
 				F21E52FF19C51BC300E51383 /* BSDArrayPrepend.m in Sources */,
 				F2CFDEE319DB46DC00A156DB /* UIImage+Resize.m in Sources */,
+				F29EBE861A7A0E6C0070C7BF /* NSInvocation+Bb.m in Sources */,
 				F2F5132019B8D97C00323096 /* AppDelegate.m in Sources */,
+				F20D1A121A0B424500710F3A /* BSDSortDescriptor.m in Sources */,
 				F241578C19CB8EEF003E32CA /* BSDNumber.m in Sources */,
 				F21E531219C51BC300E51383 /* BSDMotionGenerator.m in Sources */,
 				F21E534119C51BC300E51383 /* BSDFont.m in Sources */,
 				F21E531C19C51BC300E51383 /* BSDNaturalLog.m in Sources */,
 				F21E530419C51BC300E51383 /* BSDBangBox.m in Sources */,
 				F21E533C19C51BC300E51383 /* BSDPort.m in Sources */,
+				F2D2E4111A42672C007B51CE /* MyCloud.m in Sources */,
 				F2F5139519B92C9600323096 /* BSDPortConnectionDescription.m in Sources */,
 				F21E533519C51BC300E51383 /* BSDStdDev.m in Sources */,
+				F21A5B6119E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m in Sources */,
+				F2F84AB41A38F00600AFCD0A /* BSDArr2String.m in Sources */,
 				F21E531B19C51BC300E51383 /* BSDMultiply.m in Sources */,
 				F21E530119C51BC300E51383 /* BSDArraySort.m in Sources */,
 				F2789E4119C8D4C6006F6CA4 /* PopoverContentTableViewController.m in Sources */,
+				F20426DA1A13EC9400A455E7 /* BSDShapeLayer.m in Sources */,
 				F21E532D19C51BC300E51383 /* BSDPoint2D.m in Sources */,
 				F21E530E19C51BC300E51383 /* BSDSpigot.m in Sources */,
 				F21E533B19C51BC300E51383 /* BSDOutlet.m in Sources */,
 				F21E530219C51BC300E51383 /* BSDSplitArray.m in Sources */,
+				F20D1A151A0B4D2200710F3A /* BSDPredicate.m in Sources */,
 				F21E530D19C51BC300E51383 /* BSDSequence.m in Sources */,
 				F2FF09E619D149540095C3E4 /* BSDWebImage.m in Sources */,
 				F2CFDEF119DCACA000A156DB /* BSDReceive.m in Sources */,
@@ -1517,12 +1977,14 @@
 				F21E4C5819C8FF4900D20D60 /* BSDGPS.m in Sources */,
 				F283A1FA19CA06DF005CC98B /* BSDPatchInlet.m in Sources */,
 				F21E532C19C51BC300E51383 /* BSDTan.m in Sources */,
+				F24A39521A67331E001EE5FF /* BSDDisplayManager.m in Sources */,
 				F2CFDEEB19DC8D8800A156DB /* BSDLoadBang.m in Sources */,
 				F21E530C19C51BC300E51383 /* BSDSelect.m in Sources */,
 				F21E532019C51BC300E51383 /* BSDEqualGreater.m in Sources */,
 				F21E52FD19C51BC300E51383 /* BSDArrayNormalize.m in Sources */,
 				F21E534A19C51BC300E51383 /* BSDTestVariable.m in Sources */,
 				F21E530719C51BC300E51383 /* BSDMapObject.m in Sources */,
+				F25F71BC19EA26AA002B082A /* BSDInstanceMethod.m in Sources */,
 				F24A3B0E19D0DB9D00FBA887 /* BSDDictionaryLength.m in Sources */,
 				F21A5B5E19DF86BA00E6F21B /* BSDPatchDescription.m in Sources */,
 				F21E530519C51BC300E51383 /* NSValue+BSD.m in Sources */,
@@ -1642,36 +2104,43 @@
 		};
 		F2F5133819B8D97C00323096 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F7FDFF3A9D8F468DBAEB9C03 /* Pods-BlackBox.UI.xcconfig */;
+			baseConfigurationReference = 6490D4841FB3C553AB6DE6ED /* Pods-BlackBox.UI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = BlackBox.UI/BlackBox.UI.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = BlackBox.UI/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BlackBox.UI;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		F2F5133919B8D97C00323096 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F7FDFF3A9D8F468DBAEB9C03 /* Pods-BlackBox.UI.xcconfig */;
+			baseConfigurationReference = 3B7BFC171202632827E0FFE2 /* Pods-BlackBox.UI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = BlackBox.UI/BlackBox.UI.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = BlackBox.UI/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BlackBox.UI;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 		F2F5133B19B8D97C00323096 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 493BC0365B4EBD05D9315FFF /* Pods-BlackBox.UITests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/BlackBox.UI.app/BlackBox.UI";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1692,6 +2161,7 @@
 		};
 		F2F5133C19B8D97C00323096 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0652CBEAF55A3F24F6A040D4 /* Pods-BlackBox.UITests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/BlackBox.UI.app/BlackBox.UI";
 				FRAMEWORK_SEARCH_PATHS = (

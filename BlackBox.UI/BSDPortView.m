@@ -27,6 +27,25 @@
     return self;
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[BSDPortView class]]) {
+        return NO;
+    }
+    
+    return [self hash] == [object hash];
+}
+
+- (NSUInteger)hash
+{
+    return [self.portViewId hash];
+}
+
+- (NSString *)portViewId
+{
+    return [NSString stringWithFormat:@"%p",self];
+}
+
 - (void)handlePortConnectionStatusChangedNotification:(NSNotification *)notification
 {
     NSNumber *object = notification.object;
@@ -40,13 +59,17 @@
 
 - (void)addConnectionToPortView:(BSDPortView *)portView
 {
-    if (portView) {
-        if (![self.connectedPortViews containsObject:portView]) {
-            [self.connectedPortViews addObject:portView];
-        }
-    }else{
+    if (!portView) {
         NSLog(@"port view with parent %@ could not connect to non-existent port view with parent %@",[self.delegate parentClass],[portView.delegate parentClass]);
+        return;
     }
+    
+    if (!self.connectedPortViews) {
+        self.connectedPortViews = [NSMutableArray array];
+    }
+    
+    [self.connectedPortViews addObject:portView];
+    
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -89,7 +112,16 @@
 }
 
 
-
+- (void)tearDown
+{
+    self.delegate = nil;
+    if (self.connectedPortViews) {
+        [self.connectedPortViews removeAllObjects];
+    }
+    
+    self.connectedPortViews = nil;
+    
+}
 
 
 @end

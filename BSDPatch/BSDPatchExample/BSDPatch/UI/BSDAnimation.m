@@ -79,6 +79,7 @@
     }else{
         values = [NSMutableArray arrayWithObject:vals];
     }
+    
     animation.values = values;
     
     NSNumber *duration = self.durationInlet.value;
@@ -90,7 +91,7 @@
     animation.duration = duration.doubleValue;
     NSMutableArray *timingFunctions = [[NSMutableArray alloc] initWithCapacity:animation.values.count];
     for (NSUInteger i = 0; i < animation.values.count; i++) {
-        [timingFunctions addObject:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+        [timingFunctions addObject:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
     }
     [animation setTimingFunctions:timingFunctions.copy];
     animation.removedOnCompletion = NO;

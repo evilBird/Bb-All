@@ -11,6 +11,5 @@
 @interface BSDNumberBox : BSDBox <UITextFieldDelegate>
 
 @property (nonatomic,strong)UITextField *textField;
-@property (nonatomic,strong)UIStepper *stepper;
 
 @end

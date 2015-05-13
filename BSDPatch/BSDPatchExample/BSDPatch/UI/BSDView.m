@@ -9,6 +9,17 @@
 #import "BSDView.h"
 #import "BSDStringInlet.h"
 #import <objc/runtime.h>
+#import "BSDObjects.h"
+#import "NSInvocation+Bb.h"
+
+@interface BSDView ()
+
+{
+    //InstallConstraintsOnViewBlock installConstraintsOnView;
+    //BOOL kInstallConstraints;
+}
+
+@end
 
 @implementation BSDView
 
@@ -19,6 +30,7 @@
 
 - (void)setupWithArguments:(id)arguments
 {
+    //kInstallConstraints = NO;
     self.name = [self displayName];
     
     self.viewInlet = [[BSDInlet alloc]initHot];
@@ -28,14 +40,17 @@
     
     self.animationInlet = [[BSDInlet alloc]initHot];
     self.animationInlet.name = @"animation inlet";
+    self.animationInlet.delegate = self;
     [self addPort:self.animationInlet];
     
     self.viewSelectorInlet = [[BSDInlet alloc]initHot];
     self.viewSelectorInlet.name = @"view selector inlet";
+    self.viewSelectorInlet.delegate = self;
     [self addPort:self.viewSelectorInlet];
     
     self.setterInlet = [[BSDInlet alloc]initHot];
     self.setterInlet.name = @"setter inlet";
+    self.setterInlet.delegate = self;
     [self addPort:self.setterInlet];
     
     self.getterInlet = [[BSDInlet alloc]initHot];
@@ -71,7 +86,7 @@
         
         [self.mainOutlet output:self.viewInlet.value];
     }else if (inlet == self.getterInlet){
-        [self.getterOutlet output:[self mapView:self.viewInlet.value]];
+        //[self.getterOutlet output:[self mapView:self.viewInlet.value]];
     }
 }
 
@@ -101,7 +116,26 @@
         [self doSelector];
     }else if (inlet == self.animationInlet){
         [self doAnimation];
+    }else if (inlet == self.getterInlet){
+        [self getValue];
     }
+}
+
+- (void)getValue
+{
+    NSString *getter = self.getterInlet.value;
+    if (!getter || ![getter isKindOfClass:[NSString class]]) {
+        return;
+    }
+    UIView *view = self.viewInlet.value;
+    if (!view) {
+        return;
+    }
+    
+    NSString *keyPath = [NSString stringWithString:getter];
+    id value = [view valueForKeyPath:keyPath];
+    NSDictionary *output = @{keyPath:value};
+    [self.getterOutlet output:output];
 }
 
 - (void)doAnimation
@@ -118,12 +152,18 @@
         [layer addAnimation:animation forKey:animation.keyPath];
         [layer setValue:animation.toValue forKey:animation.keyPath];
     }else if ([a isKindOfClass:[CAKeyframeAnimation class]]){
-        CAKeyframeAnimation *animation = self.animationInlet.value;
+        CAKeyframeAnimation *animation = [self.animationInlet.value copy];
         UIView *myView = self.viewInlet.value;
-        //CALayer *layer = myView.layer;
         [myView.layer addAnimation:animation forKey:animation.keyPath];
         [myView.layer setValue:animation.values.lastObject forKey:animation.keyPath];
     }
+}
+
+- (void)addConstaintWithArgs:(NSArray *)args
+{
+    InstallConstraintsOnViewBlock constraintsBlock = args.firstObject;
+    UIView *view = self.view;
+    constraintsBlock(view);
 }
 
 - (void)doSelectorWithArray:(NSArray *)array
@@ -139,10 +179,16 @@
     }
     
     NSString *selectorName = [NSString stringWithString:first];
+    
     NSArray *args = nil;
     if (copy.count > 1) {
         [copy removeObject:first];
         args = [NSArray arrayWithArray:copy];
+    }
+    
+    if ([selectorName isEqualToString:kContraintsKey]) {
+        [self addConstaintWithArgs:args];
+        return;
     }
     
     SEL selector = NSSelectorFromString(selectorName);
@@ -154,15 +200,15 @@
     
     Class c = [myView class];
     
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:selector]];
+    NSMethodSignature *methodSig = [c instanceMethodSignatureForSelector:selector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
     invocation.target = myView;
     invocation.selector = selector;
     
     if (args != nil) {
         for (NSUInteger idx = 0; idx < args.count; idx ++) {
-            NSInteger argIdx = 2+idx;
-            id myArg = args[idx];
-            [invocation setArgument:&myArg atIndex:argIdx];
+            id arg = args[idx];
+            [invocation setArgumentWithObject:arg atIndex:idx];
         }
     }
     
@@ -229,7 +275,7 @@
 
 - (UIView *)makeMyViewWithFrame:(CGRect)frame
 {
-    UIView *myView = [[UILabel alloc]initWithFrame:frame];
+    UIView *myView = [[UIView alloc]initWithFrame:frame];
     myView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:1];
     return myView;
 }
@@ -248,14 +294,27 @@
         [result addObject:key];
     }
     
+    if (properties) {
+        free(properties);
+    }
+    
     return result;
 }
 
 - (NSDictionary *)mapView:(UIView *)view
 {
-    NSArray *properties = [self properties:view];
-    return [view dictionaryWithValuesForKeys:properties];
+    return [self mapObject:view];
 }
 
+- (NSDictionary *)mapObject:(id)obj
+{
+    NSMutableArray *properties = [self properties:obj].mutableCopy;
+    NSString *badKey = @"unsatisfiableConstraintsLoggingSuspended";
+    if ([properties containsObject:badKey]) {
+        [properties removeObject:badKey];
+    }
+    
+    return [obj dictionaryWithValuesForKeys:properties];
+}
 
 @end

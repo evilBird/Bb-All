@@ -21,6 +21,7 @@
     self.name = @"2d point";
     self.xInlet = [[BSDInlet alloc]initHot];
     self.xInlet.name = @"x";
+    self.xInlet.delegate = self;
     self.xInlet.value = @0;
     self.yInlet = [[BSDInlet alloc]initHot];
     self.yInlet.name = @"y";
@@ -47,7 +48,7 @@
 
 - (void)inletReceievedBang:(BSDInlet *)inlet
 {
-    if (inlet == self.hotInlet) {
+    if (inlet == self.xInlet) {
         [self calculateOutput];
     }
 }

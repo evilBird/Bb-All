@@ -9,7 +9,32 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-BlackBox.UI-GPUImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-BlackBox.UI-PureLayout.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-BlackBox.UI-iCloudDocumentSync.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-BlackBox.UI.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-BlackBox.UITests-iCloudDocumentSync.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-BlackBox.UITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -17,12 +42,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>B5B5DFF87F084753A141AF81</key>
+		<key>053F3E0F29D6949C880C6145</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F3A07249B90E46FCBD35F468</key>
+		<key>206A06125C00C8BAC6D7756B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2ADCFF248450FED0B7D4D54D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7C7F65CE8EEFE287D2460F53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7EB4E15A8DDC34788C8918ED</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>887456590FB126999A46C19D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>993D8B8DA38C8AF97FA77767</key>
 		<dict>
 			<key>primary</key>
 			<true/>

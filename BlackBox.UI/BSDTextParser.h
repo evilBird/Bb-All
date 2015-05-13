@@ -10,6 +10,9 @@
 
 @interface BSDTextParser : NSObject
 
++ (id)parseArgsString:(NSString *)argsString;
+
+
 + (NSDictionary *)getClassNameAndArgsFromText:(NSString *)text;
 + (NSArray *)argumentsFromArgsComponent:(NSString *)component;
 

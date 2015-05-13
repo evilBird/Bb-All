@@ -21,34 +21,53 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 
 - (UIView *)viewForCanvas:(id)canvas;
 - (void)canvas:(id)canvas editingStateChanged:(BSDCanvasEditState)editState;
-- (void)saveCurrentPatch;
-- (void)savePatch:(NSDictionary *)patch withName:(NSString *)name;
-- (void)saveAbstraction:(NSDictionary *)abtraction withName:(NSString *)name;
-- (void)loadAbstraction:(NSString *)abstraction;
+- (void)saveDescription:(NSString *)description withName:(NSString *)name;
+- (void)saveCanvas:(id)canvas description:(NSString *)description name:(NSString *)name;
+- (void)setCurrentCanvas:(id)canvas;
+- (void)newCanvasForPatch:(NSString *)patchName withBox:(BSDGraphBox *)graphBox;
+- (void)showCanvas:(BSDCanvas *)canvas;
+- (void)showCanvasForCompiledPatch:(BSDCompiledPatch *)patch;
+- (CGSize)defaultCanvasSize;
+- (NSString *)emptyCanvasDescription;
+- (NSString *)emptyCanvasDescriptionName:(NSString *)name;
+
 
 @end
 
-@interface BSDCanvas : UIView<BSDBoxDelegate>
+@interface BSDCanvas : UIView<BSDBoxDelegate,BSDPortDelegate>
 
 @property (nonatomic,strong)NSMutableArray *graphBoxes;
-@property (nonatomic,strong)NSMutableDictionary *boxes;
-@property (nonatomic,strong)NSMutableDictionary *selectedBoxes;
-@property (nonatomic,strong)NSMutableDictionary *copiedBoxes;
+@property (nonatomic,strong)NSMutableArray *subcanvases;
+@property (nonatomic,strong)NSMutableArray *inlets;
+@property (nonatomic,strong)NSMutableArray *outlets;
 @property (nonatomic,strong)UITapGestureRecognizer *singleTap;
 @property (nonatomic,strong)UITapGestureRecognizer *doubleTap;
+@property (nonatomic,strong)NSSet *absInletViewsCache;
+@property (nonatomic,strong)NSSet *absOutletViewsCache;
 @property (nonatomic,strong)id<BSDCanvasDelegate>delegate;
 @property (nonatomic)BSDCanvasEditState editState;
+@property (nonatomic,strong)NSString *name;
+@property (nonatomic)BSDCanvas *parentCanvas;
+@property (nonatomic,strong)NSNumber *isDirty;
+@property (nonatomic,strong)NSNumber *instanceId;
+@property (nonatomic,strong)NSArray *creationArgArray;
 
-- (NSDictionary *)currentPatch;
+//+ (NSString *)blankCanvasDescription;
+- (void)updateCompiledInstancesWithName:(NSString *)name;
++ (CGRect)frameWithEntry:(NSString *)entry;
++ (CGRect)rectForType:(NSString *)type;
+- (instancetype)initWithDescription:(NSString *)desc;
+- (instancetype)initWithArguments:(id)arguments;
 - (NSString *)canvasId;
-- (void)loadPatchWithDictionary:(NSDictionary *)dictionary;
+- (NSString *)objectId;
+- (void)tearDown;
 - (void)clearCurrentPatch;
+- (void)loadBang;
 
 - (void)deleteSelectedContent;
 - (void)copySelectedContent;
 - (void)pasteSelectedContent;
 - (void)encapsulatedCopiedContentWithName:(NSString *)name;
-- (void)encapsulateSelectedContent;
 
 - (CGPoint)optimalFocusPoint;
 - (void)addBangBoxAtPoint:(CGPoint)point;
@@ -58,6 +77,6 @@ typedef NS_ENUM(NSInteger, BSDCanvasEditState){
 - (void)addOutletBoxAtPoint:(CGPoint)point;
 - (void)addGraphBoxAtPoint:(CGPoint)point;
 - (void)addCommentBoxAtPoint:(CGPoint)point;
-- (void)addCanvasBox;
+- (void)addHSliderBoxAtPoint:(CGPoint)point;
 
 @end

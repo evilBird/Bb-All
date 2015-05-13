@@ -22,11 +22,7 @@
     if (self) {
         // Initialization code
         self.className = @"BSDBangBox";
-        [self makeObjectInstance];
-        NSArray *inletViews = [self inlets];
-        self.inletViews = [NSMutableArray arrayWithArray:inletViews];
-        NSArray *outletViews = [self outlets];
-        self.outletViews = [NSMutableArray arrayWithArray:outletViews];
+        self.boxClassString = @"BSDBangControlBox";
         _defaultCenterColor = [UIColor colorWithWhite:0.8 alpha:1];
         _highlightCenterColor = [UIColor colorWithWhite:0.55 alpha:1];
         _currentCenterColor = _defaultCenterColor;
@@ -80,7 +76,6 @@
     if (![view isKindOfClass:[BSDPortView class]]) {
         
         [[self.object hotInlet]input:[BSDBang bang]];
-        //[self doHighlight];
     }
 }
 
@@ -88,7 +83,6 @@
 {
     UIView *view = [self hitTest:[touches.allObjects.lastObject locationInView:self] withEvent:event];
     if (![view isKindOfClass:[BSDPortView class]]) {
-        //[self endHighlight];
     }
 }
 
@@ -97,7 +91,6 @@
     UIView *view = [self hitTest:[touches.allObjects.lastObject locationInView:self] withEvent:event];
     if (![view isKindOfClass:[BSDPortView class]]) {
         
-        //[self endHighlight];
     }
 }
 

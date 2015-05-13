@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import "BSDInlet.h"
 #import "BSDOutlet.h"
 
@@ -74,6 +75,8 @@
 - (void) connect:(BSDInlet *)inlet;
 - (void) disconnect:(BSDInlet *)inlet;
 - (void) connectOutlet:(BSDOutlet *)outlet toInlet:(BSDInlet *)inlet;
+
+- (void)loadBang;
 
 // Optionally implement to reset an object to a specified state
 - (void) reset;

@@ -8,8 +8,8 @@
 
 #import "BSDBox.h"
 
-@interface BSDCommentBox : BSDBox<UITextFieldDelegate>
+@interface BSDCommentBox : BSDBox<UITextViewDelegate>
 
-@property (nonatomic,strong)UITextField *textField;
+@property (nonatomic,strong)UITextView *textField;
 
 @end

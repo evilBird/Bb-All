@@ -23,11 +23,10 @@
 - (instancetype)initAndConnectWithRouteKeysAndInlets:(NSDictionary *)routeKeysAndInlets;
 //Get a specific outlet by route key
  */
-- (BSDOutlet *)outletForRouteKey:(NSString *)aRouteKey;
+- (BSDOutlet *)outletForRouteKey:(id)aRouteKey;
 
 //Add an outlet for a route key
-- (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey;
-- (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey connectToInlet:(BSDInlet *)inlet;
+- (BSDOutlet *)addOutletForRouteKey:(id)routeKey;
 
 @property (nonatomic,strong)BSDOutlet *passThroughOutlet;
 

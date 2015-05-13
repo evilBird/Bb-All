@@ -13,13 +13,18 @@
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"|x|";
-    self.coldInlet.open = NO;
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
 }
 
 - (void)calculateOutput
 {
     self.mainOutlet.value = @(fabs([self.hotInlet.value doubleValue]));
 }
+
 
 
 @end

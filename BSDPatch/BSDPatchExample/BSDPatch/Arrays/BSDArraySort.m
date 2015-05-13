@@ -10,26 +10,32 @@
 
 @implementation BSDArraySort
 
-- (instancetype)initWithSortDescriptors:(NSArray *)sortDescriptors
+- (instancetype)initWithArguments:(id)arguments
 {
-    return [super initWithArguments:sortDescriptors];
+    return [super initWithArguments:arguments];
 }
 
 - (void)setupWithArguments:(id)arguments
 {
-    self.name = @"sort";
+    self.name = @"sort array";
     NSArray *sortDescriptors = arguments;
-    if (sortDescriptors) {
-        self.coldInlet.value = sortDescriptors;
+    if (sortDescriptors && [sortDescriptors isKindOfClass:[NSArray class]]) {
+        self.coldInlet.value = sortDescriptors.mutableCopy;
     }
 }
 
 - (void)calculateOutput
 {
-    NSMutableArray *inputCopy = [self.hotInlet.value mutableCopy];
-    NSArray *args = self.coldInlet.value;
-    [inputCopy sortUsingDescriptors:args];
-    self.mainOutlet.value = inputCopy;
+    NSArray *hot = self.hotInlet.value;
+    NSArray *cold = self.coldInlet.value;
+    if (!hot || !cold || ![hot isKindOfClass:[NSArray class]] || ![cold isKindOfClass:[NSArray class]]) {
+        return;
+    }
+    
+    NSMutableArray *toSort = hot.mutableCopy;
+    NSMutableArray *sortDescriptors = cold.mutableCopy;
+    NSArray *output = [toSort sortedArrayUsingDescriptors:sortDescriptors];
+    [self.mainOutlet output:output];
 }
 
 

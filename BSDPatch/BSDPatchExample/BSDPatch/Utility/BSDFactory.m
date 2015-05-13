@@ -9,6 +9,11 @@
 #import "BSDFactory.h"
 #import "BSDStringInlet.h"
 #import "NSValue+BSD.h"
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import <UIKit/UIKit.h>
+#import <objc/runtime.h>
+#import "NSObject+TypeConversion.h"
 
 @interface BSDFactory ()
 
@@ -34,18 +39,19 @@
     if (className && [className isKindOfClass:[NSString class]]) {
         self.classNameInlet.value = className;
     }else{
-        self.classNameInlet.value = @"UIView";
+        self.classNameInlet.value = nil;
     }
+    
     [self addPort:self.classNameInlet];
     
     self.selectorInlet = [[BSDStringInlet alloc]initCold];
     self.selectorInlet.name = @"selector";
-    self.selectorInlet.value = @"initWithFrame:";
+    self.selectorInlet.value = nil;
     [self addPort:self.selectorInlet];
     
     self.creationArgsInlet = [[BSDInlet alloc]initCold];
     self.creationArgsInlet.name = @"creation args";
-    self.creationArgsInlet.value = [NSValue wrapRect:CGRectMake(0, 0, 44, 44)];
+    self.creationArgsInlet.value = nil;
     [self addPort:self.creationArgsInlet];
     
 }
@@ -86,13 +92,37 @@
     self.myInstance = nil;
     self.myInstance = instance;
     SEL aSelector = NSSelectorFromString(selectorName);
-    
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:aSelector]];
+    NSMethodSignature *methodSig = [c instanceMethodSignatureForSelector:aSelector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
     invocation.target = instance;
     invocation.selector = aSelector;
-
+    
     if (creationArgs != nil) {
-        [invocation setArgument:&creationArgs atIndex:2];
+        if ([creationArgs isKindOfClass:[NSArray class]]) {
+            NSArray *args = creationArgs;
+            for (NSInteger i = 0; i < args.count; i++) {
+                id arg = args[i];
+                NSInteger argIdx = i + 2;
+                if ([arg isKindOfClass:[NSValue class]]) {
+                    NSValue *val = arg;
+                    [invocation setArgument:&val atIndex:argIdx];
+                }else{
+                    [invocation setArgument:&arg atIndex:argIdx];
+                }
+            }
+        }else{
+            if ([creationArgs isKindOfClass:[NSValue class]]) {
+                NSValue *val = creationArgs;
+                if ([NSObject methodSignature:methodSig argumentAtIndexReturnsRect:2]) {
+                    CGRect rectVal = [NSObject rectFromObjectArg:val];
+                    [invocation setArgument:&rectVal atIndex:2];
+                }else{
+                    [invocation setArgument:&val atIndex:2];
+                }
+            }else{
+                [invocation setArgument:&creationArgs atIndex:2];
+            }
+        }
     }
     
     [invocation invoke];

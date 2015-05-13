@@ -11,17 +11,6 @@
 
 @implementation BSDRoute
 
-/*
-- (instancetype)initWithRouteKeys:(NSArray *)routeKeys
-{
-    return [super initWithArguments:routeKeys];
-}
-
-- (instancetype)initAndConnectWithRouteKeysAndInlets:(NSDictionary *)routeKeysAndInlets
-{
-    return [super initWithArguments:routeKeysAndInlets];
-}
-*/
 - (instancetype)initWithArguments:(id)arguments
 {
     return [super initWithArguments:arguments];
@@ -31,21 +20,14 @@
 {
     self.name = @"route";
     self.coldInlet.open = NO;
-    if ([arguments isKindOfClass:[NSArray class]]) {
+    if (arguments && [arguments isKindOfClass:[NSArray class]]) {
         NSArray *routeKeys = arguments;
-        for (NSString *aRouteKey in routeKeys) {
+        for (id aRouteKey in routeKeys) {
             
             [self addOutletForRouteKey:aRouteKey];
         }
-    }
-    
-    else if ([arguments isKindOfClass:[NSDictionary class]]){
-        NSDictionary *routeKeysAndInlets = arguments;
-        for (NSString *aRouteKey in routeKeysAndInlets.allKeys) {
-            BSDInlet *anInlet = routeKeysAndInlets[aRouteKey];
-            [self addOutletForRouteKey:aRouteKey connectToInlet:anInlet];
-        }
-    }else if ([arguments isKindOfClass:[NSString class]]){
+    }else if (arguments && ([arguments isKindOfClass:[NSString class]]||[arguments isKindOfClass:[NSNumber class]])){
+        
         [self addOutletForRouteKey:arguments];
     }
     
@@ -54,12 +36,6 @@
     [self addPort:self.passThroughOutlet];
 }
 
-- (BSDInlet *)makeLeftInlet
-{
-    BSDInlet *inlet = [[BSDCollectionInlet alloc]initHot];
-    inlet.name = @"hot";
-    return inlet;
-}
 
 - (BSDInlet *)makeRightInlet
 {
@@ -94,58 +70,47 @@
     }
     if ([val isKindOfClass:[NSArray class]]) {
         NSMutableArray *arr = [val mutableCopy];
-        if (![arr.firstObject isKindOfClass:[NSString class]] || arr.count == 0) {
+        if (arr.count == 0) {
             return;
         }
         
-        NSString *routeKey = arr.firstObject;
+        id routeKey = arr.firstObject;
+        [arr removeObject:routeKey];
         BSDOutlet *anOutlet = [self outletForRouteKey:routeKey];
         if (anOutlet != nil) {
-            if (arr.count < 2) {
+            if (arr.count == 0) {
                 [anOutlet output:[BSDBang bang]];
-            }else if (arr.count == 2){
-                [anOutlet output:arr[1]];
+            }else if (arr.count == 1){
+                [anOutlet output:arr.firstObject];
             }else {
-                [arr removeObject:arr.firstObject];
                 [anOutlet output:arr];
             }
         }else{
+            [arr insertObject:routeKey atIndex:0];
             [self.passThroughOutlet output:arr];
         }
-        
+        return;
     }
-    /*
-    for (NSString *aRouteKey in hot.allKeys) {
-        BSDOutlet *anOutlet = [self outletForRouteKey:aRouteKey];
-        id value = [hot valueForKeyPath:aRouteKey];
-        NSDictionary *output = @{aRouteKey:value};
-        if (anOutlet != nil) {
-            [anOutlet output:value];
-        }else{
-            [self.passThroughOutlet output:output];
+    if ([val isKindOfClass:[NSNumber class]]||[val isKindOfClass:[NSString class]]) {
+        NSString *routeKey = [NSString stringWithFormat:@"%@",val];
+        BSDOutlet *outlet = [self outletNamed:routeKey];
+        if (outlet) {
+            [outlet output:[BSDBang bang]];
         }
     }
-     */
 }
 
-- (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey
+- (BSDOutlet *)addOutletForRouteKey:(id)routeKey
 {
     BSDOutlet *outlet = [[BSDOutlet alloc]init];
-    outlet.name = routeKey;
+    outlet.name = [NSString stringWithFormat:@"%@",routeKey];
     [self addPort:outlet];
     return outlet;
 }
 
-- (BSDOutlet *)addOutletForRouteKey:(NSString *)routeKey connectToInlet:(BSDInlet *)inlet
+- (BSDOutlet *)outletForRouteKey:(id)aRouteKey
 {
-    BSDOutlet *outlet = [self addOutletForRouteKey:routeKey];
-    [outlet connectToInlet:inlet];
-    return outlet;
-}
-
-- (BSDOutlet *)outletForRouteKey:(NSString *)aRouteKey
-{
-    return [self outletNamed:aRouteKey];
+    return [self outletNamed:[NSString stringWithFormat:@"%@",aRouteKey]];
 }
 
 @end

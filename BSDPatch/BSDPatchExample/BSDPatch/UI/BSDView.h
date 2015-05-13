@@ -23,6 +23,7 @@
 - (NSDictionary *)mapView:(UIView *)view;
 - (UIView *)makeMyView;
 - (UIView *)makeMyViewWithFrame:(CGRect)frame;
+- (void)doSelector;
 
 @property (nonatomic,strong)BSDInlet *viewInlet;
 @property (nonatomic,strong)BSDInlet *animationInlet;

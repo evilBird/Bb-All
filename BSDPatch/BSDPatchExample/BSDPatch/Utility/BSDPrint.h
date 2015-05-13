@@ -8,6 +8,8 @@
 
 #import "BSDObject.h"
 
+static NSString *kPrintNotificationChannel = @"com.birdsound.bb.bsdprint";
+
 @interface BSDPrint : BSDObject
 
 @property (nonatomic,strong)NSString *text;

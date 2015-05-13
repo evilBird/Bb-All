@@ -15,7 +15,7 @@
 
 @interface BSDBox ()
 
-
+@property (nonatomic,strong)UILongPressGestureRecognizer *longPress;
 
 @end
 
@@ -27,14 +27,7 @@
     if (self) {
         // Initialization code
         _panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
-        //_panGesture.delegate = self;
-        //_panGesture.delaysTouchesBegan = NO;
         [self addGestureRecognizer:_panGesture];
-        //_longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
-        //_longPress.delegate = self;
-        //_doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
-        //_doubleTap.delegate = self;
-        //[self addGestureRecognizer:_doubleTap];
         kAllowEdit = YES;
         self.clipsToBounds = NO;
         self.defaultColor = [UIColor colorWithWhite:0.21 alpha:1];
@@ -44,9 +37,29 @@
         self.layer.borderWidth = 1.0f;
         self.layer.borderColor = self.defaultColor.CGColor;
         [self setSelected:NO];
+        
+        _longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+        _longPress.delegate = self;
+        _longPress.minimumPressDuration = 1.0;
+        _longPress.allowableMovement = 20;
+        [self addGestureRecognizer:_longPress];
     }
     
     return self;
+}
+
+- (void)handleLongPress:(id)sender
+{
+    UIGestureRecognizerState state = [(UILongPressGestureRecognizer *)sender state];
+    if (state == UIGestureRecognizerStateBegan) {
+        [self editingRequested];
+    }
+    
+}
+
+- (void)editingRequested
+{
+    
 }
 
 - (instancetype)initWithDescription:(BSDObjectDescription *)desc
@@ -61,11 +74,6 @@
         [self makeObjectInstanceArgs:self.creationArguments];
         
         if ([desc.className isEqualToString:@"BSDMessage"]) {
-            
-            //NSArray *inletViews = [self inlets];
-            //self.inletViews = [NSMutableArray arrayWithArray:inletViews];
-            //NSArray *outletViews = [self outlets];
-            //self.outletViews = [NSMutableArray arrayWithArray:outletViews];
             if (self.creationArguments != nil) {
                 if ([self.creationArguments respondsToSelector:@selector(count)]) {
                     NSInteger count = [self.creationArguments count];
@@ -80,7 +88,7 @@
         }else if ([desc.boxClassName isEqualToString:@"BSDCommentBox"]){
             
             if (self.creationArguments != nil) {
-                NSLog(@"comment box has creations args: %@",self.creationArguments);
+                //NSLog(@"comment box has creations args: %@",self.creationArguments);
                 NSArray *arr = self.creationArguments;
                 if (arr && [arr isKindOfClass:[NSArray class]]) {
                     NSString *comment = arr.firstObject;
@@ -142,10 +150,16 @@
     NSMutableArray *result = [NSMutableArray array];
     for (BSDInlet *inlet in inlets) {
         frame.origin.x = (CGFloat)idx * step;
-        BSDPortView *portView = [[BSDPortView alloc]initWithName:inlet.name delegate:self];
+        NSString *portName = [NSString stringWithFormat:@"%@-%@",self.className,inlet.name];
+        BSDPortView *portView = [self inletViewWithName:portName];
+        if (!portView) {
+            portView = [[BSDPortView alloc]initWithName:portName delegate:self];
+            portView.portName = inlet.name;
+            [self addSubview:portView];
+        }
+        portView.tag = idx;
         portView.frame = frame;
         [result addObject:portView];
-        [self addSubview:portView];
         idx ++;
     }
     
@@ -163,8 +177,6 @@
     CGRect frame;
     frame.size.width = 24;
     frame.size.height = 14;
-
-    //frame.size.height = bounds.size.height * 0.35;
     frame.origin.y = bounds.size.height - frame.size.height;
     CGFloat step = 0;
     if (outlets.count > 1) {
@@ -174,17 +186,60 @@
     NSMutableArray *result = [NSMutableArray array];
     for (BSDOutlet *outlet in outlets) {
         frame.origin.x = (CGFloat)idx * step;
-        BSDPortView *portView = [[BSDPortView alloc]initWithName:outlet.name delegate:self];
+        NSString *portName = [NSString stringWithFormat:@"%@-%@",self.className,outlet.name];
+        BSDPortView *portView = [self outletViewWithName:portName];
+        if (!portView) {
+            portView = [[BSDPortView alloc]initWithName:portName delegate:self];
+            portView.portName = outlet.name;
+            [self addSubview:portView];
+        }
         portView.frame = frame;
+        portView.tag = idx;
         [result addObject:portView];
-        [self addSubview:portView];
         idx ++;
     }
     
     return result;
 }
 
+- (BSDPortView *)inletViewWithName:(NSString *)name
+{
+    if (!name || !self.inletViews) {
+        return nil;
+    }
+    
+    for (BSDPortView *inletView in self.inletViews) {
+        if ([inletView.portName isEqualToString:name]) {
+            return inletView;
+        }
+    }
+    return nil;
+}
 
+- (BSDPortView *)outletViewWithName:(NSString *)name
+{
+    if (!name || !self.outletViews) {
+        return nil;
+    }
+    
+    for (BSDPortView *outletView in self.outletViews) {
+        if ([outletView.portName isEqualToString:name]) {
+            return outletView;
+        }
+    }
+    
+    return nil;
+}
+
+- (void)updateInletViews
+{
+    self.inletViews = [self inlets].mutableCopy;
+}
+
+- (void)updateOutletViews
+{
+    self.outletViews = [self outlets].mutableCopy;
+}
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
@@ -196,26 +251,32 @@
     return YES;
 }
 
-- (void)handleLongPress:(id)sender
-{
-    UIGestureRecognizer *gesture = sender;
-    if (gesture.state == UIGestureRecognizerStateBegan) {
-        NSLog(@"long press");
-    }
-}
-
-- (void)handleDoubleTap:(id)sender
-{
-    
-}
-
 - (void)handlePan:(id)sender
 {
+    static CGPoint initLoc;
+    static CGPoint initCenter;
     UIPanGestureRecognizer *recognizer = sender;
     CGPoint loc = [recognizer locationInView:self.superview];
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        initLoc = loc;
+        initCenter = self.center;
+        self.translation = nil;
+    }
+    
     if (selectedPort == nil) {
-        self.center = loc;
-        [self.delegate boxDidMove:self];
+        __weak BSDBox *weakself = self;
+        [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+            CGFloat dx = loc.x - initLoc.x;
+            CGFloat dy = loc.y - initLoc.y;
+            CGPoint trans = CGPointMake(dx, dy);
+            self.translation = [NSValue valueWithCGPoint:trans];
+            CGPoint newCenter;
+            newCenter.x = initCenter.x + dx;
+            newCenter.y = initCenter.y + dy;
+            weakself.center = newCenter;
+            [weakself.delegate boxDidMove:self];
+        }];
+
     }else{
         
         switch (recognizer.state) {
@@ -226,12 +287,18 @@
                 break;
             case UIGestureRecognizerStateChanged:
             {
-                [self.delegate box:self portView:selectedPort drawLineToPoint:loc];
+                __weak BSDBox *weakself = self;
+                [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+                    [weakself.delegate box:weakself portView:selectedPort drawLineToPoint:loc];
+                }];
             }
                 break;
             case UIGestureRecognizerStateEnded:
             {
-                [self.delegate box:self portView:selectedPort endedAtPoint:loc];
+                __weak BSDBox *weakself = self;
+                [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+                    [weakself.delegate box:weakself portView:selectedPort endedAtPoint:loc];
+                }];
             }
                 break;
                 
@@ -301,9 +368,8 @@
                 UIView *superview = connectedPortView.superview;
                 if (superview) {
                     
-                    BSDPortConnection *connection = [BSDPortConnection connectionWithOwner:portView target:connectedPortView];
-                    CGPoint o = [connection origin];
-                    CGPoint d = [connection destination];
+                    CGPoint o = portView.center;
+                    CGPoint d = connectedPortView.center;
                     CGPoint ao = [self.superview convertPoint:o fromView:portView.superview];
                     CGPoint ad = [self.superview convertPoint:d fromView:connectedPortView.superview];
                     NSArray *points = @[[NSValue valueWithCGPoint:ao],[NSValue valueWithCGPoint:ad]];
@@ -329,6 +395,18 @@
     }
     
     return temp;
+}
+
+- (void)connectOutlet:(NSInteger)outletIndex toInlet:(NSInteger)inletIndex inBox:(BSDBox *)box
+{
+    BSDObject *sender = self.object;
+    BSDOutlet *outlet = sender.outlets[outletIndex];
+    BSDObject *receiver = box.object;
+    BSDInlet *inlet = receiver.inlets[inletIndex];
+    BSDPortView *senderPortView = self.outletViews[outletIndex];
+    BSDPortView *receiverPortView = box.inletViews[inletIndex];
+    [outlet connectToInlet:inlet];
+    [senderPortView addConnectionToPortView:receiverPortView];
 }
 
 - (void)setSelectedPortView:(BSDPortView *)portview
@@ -378,7 +456,7 @@
 
 - (void)makeObjectInstanceArgs:(id)args
 {
-    if (!self.className) {
+    if (!self.className || [self.className isEqualToString:@"(null)"]) {
         return;
     }
     
@@ -386,9 +464,17 @@
     id c = objc_getClass(class);
     id instance = [c alloc];
     SEL aSelector = NSSelectorFromString(@"initWithArguments:");
+    if (![instance respondsToSelector:aSelector]) {
+        return;
+    }
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[c instanceMethodSignatureForSelector:aSelector]];
     invocation.target = instance;
     invocation.selector = aSelector;
+    
+    if (args && ![args isKindOfClass:[NSArray class]]) {
+        id a = args;
+        args = [NSArray arrayWithObject:a];
+    }
     
     if (args != NULL) {
         NSArray *a = args;
@@ -498,18 +584,40 @@
 {
     for (BSDPortView *inletView in self.inletViews) {
         [inletView removeFromSuperview];
+        [inletView tearDown];
         [[NSNotificationCenter defaultCenter]removeObserver:inletView];
     }
     for (BSDPortView *outletView in self.outletViews) {
+        [outletView tearDown];
         [outletView removeFromSuperview];
     }
-     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self.object tearDown];
     self.object = nil;
     self.inletViews = nil;
     self.outletViews = nil;
     self.delegate = nil;
     self.creationArguments = nil;
+}
+
+- (void)initializeWithText:(NSString *)text
+{
+    [self makeObjectInstance];
+    [self createPortViewsForObject:self.object];
+}
+
+- (void)createPortViewsForObject:(id)object
+{
+    NSArray *inletViews = [self inlets];
+    self.inletViews = [NSMutableArray arrayWithArray:inletViews];
+    NSArray *outletViews = [self outlets];
+    self.outletViews = [NSMutableArray arrayWithArray:outletViews];
+}
+
+- (NSString *)getDescription
+{
+    return nil;
 }
 
 - (void)dealloc

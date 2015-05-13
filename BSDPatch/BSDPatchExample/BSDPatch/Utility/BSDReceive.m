@@ -27,6 +27,8 @@
     self.name = @"r";
     if (arguments && [arguments isKindOfClass:[NSString class]]) {
         self.notificationExtension = [NSString stringWithString:arguments];
+    }else if (arguments && [arguments isKindOfClass:[NSArray class]]){
+        NSLog(@"args for receive object are of type array");
     }
     
     if (self.notificationExtension) {
@@ -66,4 +68,5 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:notificationName object:nil];
     [super tearDown];
 }
+
 @end

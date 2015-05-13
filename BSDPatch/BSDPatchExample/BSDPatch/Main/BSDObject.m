@@ -40,7 +40,7 @@
         }
 
         [self setupWithArguments:arguments];
-        
+                
     }
     
     return self;
@@ -102,6 +102,11 @@
 - (void) reset
 {
     //override
+}
+
+- (void)loadBang
+{
+    
 }
 
 - (void)test

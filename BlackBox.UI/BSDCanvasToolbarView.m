@@ -9,6 +9,7 @@
 #import "BSDCanvasToolbarView.h"
 #import "UIImage+Resize.h"
 #import <CoreGraphics/CoreGraphics.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface BSDCanvasToolbarView ()
 {
@@ -27,9 +28,40 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _toolbar = [[UIToolbar alloc]initWithFrame:self.bounds];
+        _toolbar.delegate = self;
+        _toolbar.backgroundColor = [UIColor clearColor];
+        NSArray *items = @[@"home",@"save",@"load",@"add",@"delete",@"edit",@"cut",@"copy",@"paste",@"patch",@"view"];
+        [self addItems:items toToolbar:_toolbar];
+        [self addSubview:_toolbar];
+        self.backgroundColor = [UIColor whiteColor];
+        kDefaultBarButtonColor = [UIColor colorWithWhite:0.3 alpha:1];
+        kSelectedBarButtonColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.9 alpha:1];
+        kDisabledBarButtonColor = [UIColor colorWithWhite:0.8 alpha:1];
+        self.layer.borderColor = [UIColor colorWithWhite:0.5 alpha:1].CGColor;
+        self.layer.borderWidth = 1.0;
+        
+        /*
+        bounds = self.bounds;
+        bounds.size.height = 20;
+        bounds.origin.y += 88;
+        frame = CGRectInset(bounds, 10, 0);
+        _titleLabel = [[UILabel alloc]initWithFrame:frame];
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_titleLabel];
+         */
+        
+        [self configureConstraints];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
         CGRect bounds = self.bounds;
-        bounds.size.height -= 40;
-        bounds.origin.y = 20;
         _toolbar = [[UIToolbar alloc]initWithFrame:bounds];
         _toolbar.delegate = self;
         _toolbar.backgroundColor = [UIColor clearColor];
@@ -40,13 +72,8 @@
         kDefaultBarButtonColor = [UIColor colorWithWhite:0.3 alpha:1];
         kSelectedBarButtonColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.9 alpha:1];
         kDisabledBarButtonColor = [UIColor colorWithWhite:0.8 alpha:1];
-        bounds = self.bounds;
-        bounds.size.height = 20;
-        bounds.origin.y += 88;
-        frame = CGRectInset(bounds, 10, 0);
-        _titleLabel = [[UILabel alloc]initWithFrame:frame];
-        _titleLabel.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:_titleLabel];
+        self.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:0.5].CGColor;
+        self.layer.borderWidth = 1.0;
         
         [self configureConstraints];
     }
@@ -154,26 +181,46 @@
 - (void)configureConstraints
 {
     self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-    self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *constraint = nil;
-    NSArray *constraints = nil;
-    NSDictionary *metrics = @{@"topinset":@(20),
-                              @"ypad":@(8),
-                              @"toolbarHt":@(64)
-                              };
-    NSDictionary *views = NSDictionaryOfVariableBindings(_toolbar,_titleLabel);
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_toolbar]|"
-                                                          options:0
-                                                          metrics:0
-                                                            views:views];
-    [self addConstraints:constraints];
+    constraint = [NSLayoutConstraint
+                  constraintWithItem:self.toolbar
+                  attribute:NSLayoutAttributeTop
+                  relatedBy:NSLayoutRelationEqual
+                  toItem:self
+                  attribute:NSLayoutAttributeTop
+                  multiplier:1
+                  constant:0];
+    [self addConstraint:constraint];
     
-    constraints = [NSLayoutConstraint
-                   constraintsWithVisualFormat:@"V:|-(topinset@999)-[_toolbar(toolbarHt)]-(ypad@999)-[_titleLabel]|"
-                   options:NSLayoutFormatAlignAllCenterX
-                   metrics:metrics
-                   views:views];
-    [self addConstraints:constraints];
+    constraint = [NSLayoutConstraint
+                  constraintWithItem:self.toolbar
+                  attribute:NSLayoutAttributeBottom
+                  relatedBy:NSLayoutRelationEqual
+                  toItem:self
+                  attribute:NSLayoutAttributeBottom
+                  multiplier:1
+                  constant:0];
+    [self addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint
+                  constraintWithItem:self.toolbar
+                  attribute:NSLayoutAttributeLeading
+                  relatedBy:NSLayoutRelationEqual
+                  toItem:self
+                  attribute:NSLayoutAttributeLeading
+                  multiplier:1
+                  constant:0];
+    [self addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint
+                  constraintWithItem:self.toolbar
+                  attribute:NSLayoutAttributeTrailing
+                  relatedBy:NSLayoutRelationEqual
+                  toItem:self
+                  attribute:NSLayoutAttributeTrailing
+                  multiplier:1
+                  constant:0];
+    [self addConstraint:constraint];
     
 }
 

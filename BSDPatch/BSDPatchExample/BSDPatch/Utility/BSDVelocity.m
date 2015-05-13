@@ -39,7 +39,7 @@ CGFloat getVector(CGFloat x, CGFloat y){
 
 - (void)setupWithArguments:(id)arguments
 {
-    
+    self.name = @"velocity";
 }
 
 - (id)init

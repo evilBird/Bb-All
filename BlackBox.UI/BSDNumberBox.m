@@ -17,7 +17,7 @@
     if (self) {
         // Initialization code
         self.className = @"BSDNumber";
-        [self makeObjectInstance];
+        self.boxClassString = @"BSDNumberBox";
         _textField = [[UITextField alloc]initWithFrame:self.bounds];
         _textField.textAlignment = NSTextAlignmentCenter;
         _textField.text = [NSString stringWithFormat:@"%@",@(0)];
@@ -28,13 +28,9 @@
         _textField.font = [UIFont fontWithName:@"Courier" size:[UIFont systemFontSize]];
         _textField.autocorrectionType = UITextAutocorrectionTypeNo;
         _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        _textField.keyboardType = UIKeyboardTypeDecimalPad;
+        _textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
         [self addSubview:_textField];
         [self setSelected:NO];
-        NSArray *inletViews = [self inlets];
-        self.inletViews = [NSMutableArray arrayWithArray:inletViews];
-        NSArray *outletViews = [self outlets];
-        self.outletViews = [NSMutableArray arrayWithArray:outletViews];
     }
     
     return self;
@@ -51,12 +47,6 @@
     return YES;
 }
 
-- (void)handleLongPress:(id)sender
-{
-    if (sender == self.longPress) {
-        [self.textField becomeFirstResponder];
-    }
-}
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     textField.text = @"";
 }
@@ -92,6 +82,7 @@
     [[self.object hotInlet]input:@(value)];
 }
 
+
 - (void)resizeToFitText:(NSString *)messageText
 {
     NSDictionary *attributes = @{NSFontAttributeName:self.textField.font};
@@ -116,7 +107,6 @@
     NSDictionary *changeInfo = notification.object;
     NSNumber *val = changeInfo[@"value"];
     if (val) {
-        self.stepper.value = val.doubleValue;
         double diff = val.doubleValue - val.integerValue;
         if (diff == 0) {
             self.textField.text = [NSString stringWithFormat:@"%@",val];

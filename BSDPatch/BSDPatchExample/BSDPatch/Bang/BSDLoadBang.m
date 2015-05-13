@@ -24,6 +24,11 @@
                                               object:nil];
 }
 
+- (void)loadBang
+{
+    [self.mainOutlet output:[BSDBang bang]];
+}
+
 - (void)parentPatchFinishedLoading
 {
     [self.mainOutlet output:[BSDBang bang]];
@@ -31,10 +36,7 @@
 
 - (void)handleLoadBangNotification:(NSNotification *)notification
 {
-    NSString *objectId = notification.object;
-    if ([objectId hash] == [[self objectId]hash]) {
-        [self parentPatchFinishedLoading];
-    }
+    [self loadBang];
 }
 
 - (BSDInlet *)makeLeftInlet

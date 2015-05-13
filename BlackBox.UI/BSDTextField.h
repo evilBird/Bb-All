@@ -12,6 +12,8 @@
 
 @property (nonatomic,strong)NSString *suggestedCompletion;
 @property (nonatomic,strong)NSString *suggestedText;
+@property (nonatomic,strong)NSString *className;
+@property (nonatomic,strong)NSMutableArray *arguments;
 
 - (void)editingWillEnd;
 - (void)editingWillBegin;

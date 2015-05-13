@@ -28,31 +28,46 @@
     kLocating = NO;
 }
 
-- (void)inletReceievedBang:(BSDInlet *)inlet
+- (void)hotInlet:(BSDInlet *)inlet receivedValue:(id)value
 {
     if (inlet == self.hotInlet) {
-        if (!kLocating) {
-            self.locationManager = nil;
-            if (!self.locationManager) {
-                self.locationManager = [[CLLocationManager alloc]init];
-                self.locationManager = [[CLLocationManager alloc]init];
-                self.locationManager.delegate = self;
-            }
-            
-            [self.locationManager startUpdatingLocation];
-            kLocating = YES;
-        }else{
-            [self.locationManager stopUpdatingLocation];
-            kLocating = NO;
+        NSNumber *value = inlet.value;
+        NSInteger newStatus = value.integerValue;
+        if (newStatus == 1 && !kLocating) {
+            [self beginLocationUpdates];
+            return;
         }
         
-        //[self calculateOutput];
+        if (newStatus == 0 && kLocating) {
+            [self endLocationUpdates];
+            return;
+        }
     }
 }
 
-- (void)calculateOutput{
-    
-    CLLocation *loc = self.locationManager.location;
+- (void)beginLocationUpdates
+{
+    kLocating = YES;
+    self.locationManager = nil;
+    self.locationManager = [[CLLocationManager alloc]init];
+    self.locationManager.delegate = self;
+    [self.locationManager startUpdatingLocation];
+}
+
+- (void)endLocationUpdates
+{
+    kLocating = NO;
+    [self.locationManager stopUpdatingLocation];
+}
+
+- (BSDInlet *)makeRightInlet
+{
+    return nil;
+}
+
+- (void)sendOutput:(id)output
+{
+    CLLocation *loc = (CLLocation *)output;
     CGPoint pt = CGPointMake(loc.coordinate.latitude, loc.coordinate.longitude);
     NSValue *wrapped = [NSValue wrapPoint:pt];
     [self.mainOutlet setValue:wrapped];
@@ -60,7 +75,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    [self calculateOutput];
+    [self sendOutput:locations.lastObject];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -70,7 +85,13 @@
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-    
+    SEL requestSelector = NSSelectorFromString(@"requestWhenInUseAuthorization");
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined &&
+        [self.locationManager respondsToSelector:requestSelector]) {
+        [self.locationManager performSelector:requestSelector withObject:NULL];
+    } else {
+        [self.locationManager startUpdatingLocation];
+    }
 }
 
 @end

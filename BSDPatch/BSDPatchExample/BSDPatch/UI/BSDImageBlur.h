@@ -10,8 +10,5 @@
 
 @interface BSDImageBlur : BSDObject
 
-- (instancetype)initWithBlurRadius:(NSNumber *)blurRadius saturation:(NSNumber*)saturation;
-
-@property (nonatomic,strong)NSMutableDictionary *parameters;
 
 @end
