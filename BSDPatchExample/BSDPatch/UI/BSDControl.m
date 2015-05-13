@@ -39,10 +39,14 @@
     if (inlet == self.viewInlet) {
         if (!myControl || myControl != self.viewInlet.value) {
             myControl = self.viewInlet.value;
-            //[myControl addTarget:self action:@selector(handleControlActionBegan:) forControlEvents:UIControlEventEditingDidBegin];
-            //[myControl addTarget:self action:@selector(handleControlActionChanged:) forControlEvents:UIControlEventEditingChanged];
-            //[myControl addTarget:self action:@selector(handleControlActionEnded:) forControlEvents:UIControlEventEditingDidEnd];
-            [myControl addTarget:self action:@selector(handleAction:) forControlEvents:UIControlEventAllEvents];
+            [myControl addTarget:self action:@selector(handleControlActionBegan:) forControlEvents:UIControlEventEditingDidBegin];
+            [myControl addTarget:self action:@selector(handleControlActionChanged:) forControlEvents:UIControlEventEditingChanged];
+            [myControl addTarget:self action:@selector(handleControlActionEnded:) forControlEvents:UIControlEventEditingDidEnd];
+            [myControl addTarget:self action:@selector(handleControlActionBegan:)forControlEvents:UIControlEventTouchDown];
+            [myControl addTarget:self action:@selector(handleControlActionChanged:)forControlEvents:UIControlEventValueChanged];
+            [myControl addTarget:self action:@selector(handleControlActionEnded:)forControlEvents:UIControlEventTouchUpInside];
+
+            //[myControl addTarget:self action:@selector(handleAction:) forControlEvents:UIControlEventAllEvents];
 
         }
     }
@@ -62,17 +66,17 @@
 
 - (void)handleControlActionBegan:(id)sender
 {
-    [self.eventOutlet output:@{@"begin":sender}];
+    [self.eventOutlet output:@[@(1),sender]];
 }
 
 - (void)handleControlActionChanged:(id)sender
 {
-    [self.eventOutlet output:@{@"change":sender}];
+    [self.eventOutlet output:@[@(2),sender]];
 }
 
 - (void)handleControlActionEnded:(id)sender
 {
-    [self.eventOutlet output:@{@"end":sender}];
+    [self.eventOutlet output:@[@(3),sender]];
 }
 
 @end
