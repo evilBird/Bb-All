@@ -7,7 +7,6 @@
 //
 
 #import "BSDCanvasToolbarView.h"
-#import "UIImage+Resize.h"
 #import <CoreGraphics/CoreGraphics.h>
 #import <QuartzCore/QuartzCore.h>
 
