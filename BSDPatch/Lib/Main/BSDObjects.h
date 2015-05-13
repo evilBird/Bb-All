@@ -125,7 +125,6 @@
 #import "BSDAnnotationFactory.h"
 #import "BSDGPUImage.h"
 #import "BSDTableView.h"
-#import "BSDShader.h"
 #import "BSDLayer2Image.h"
 #import "BSDimages2Gif.h"
 #import "BSDCPUMonitor.h"
