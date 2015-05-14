@@ -7,7 +7,7 @@
 //
 
 #import "BSDObject.h"
-#import <iCloud/iCloud.h>
+#import <iCloudDocumentSync/iCloud.h>
 
 //Get files:
 //Cold inlet args: none

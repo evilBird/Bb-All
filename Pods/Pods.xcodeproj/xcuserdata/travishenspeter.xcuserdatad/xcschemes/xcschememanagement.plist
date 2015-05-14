@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-BlackBox.UI-AFNetworking.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-BlackBox.UI-GPUImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,37 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>028DEB5B2C8A77EAFB2D41FA</key>
+		<key>203AEEBF12807206E6BEDB6B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>036E33EC3E7DB356C10D3ED0</key>
+		<key>24596193D9EB9B9CA4AF416A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>39EA8E31C2515CDE667E11BC</key>
+		<key>5421CFDFFC15C61C188FBB17</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>799C0CAE48AEC93DA557732A</key>
+		<key>7C44E69282923AF74F8DA408</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>837000886CC0322D13D1B247</key>
+		<key>813C35D0CF22867D80D69F3D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>979B93C6B386F86D566F3B4F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B5FB7EEA52D965C09E644923</key>
+		<key>9F1E94828B1396955127EC1F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <iCloud/iCloud.h>
+#import <iCloudDocumentSync/iCloud.h>
 #import "BSDCanvasViewController.h"
 #import "BlackBoxCategories.h"
 #import "NSDictionary+BSDUtils.h"

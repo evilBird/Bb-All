@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "39EA8E31C2515CDE667E11BC"
+               BlueprintIdentifier = "203AEEBF12807206E6BEDB6B"
                BuildableName = "libPods-BlackBox.UI-GPUImage.a"
                BlueprintName = "Pods-BlackBox.UI-GPUImage"
                ReferencedContainer = "container:Pods.xcodeproj">

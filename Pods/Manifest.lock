@@ -1,35 +1,14 @@
 PODS:
-  - AFNetworking (2.2.1):
-    - AFNetworking/NSURLConnection (= 2.2.1)
-    - AFNetworking/NSURLSession (= 2.2.1)
-    - AFNetworking/Reachability (= 2.2.1)
-    - AFNetworking/Security (= 2.2.1)
-    - AFNetworking/Serialization (= 2.2.1)
-    - AFNetworking/UIKit (= 2.2.1)
-  - AFNetworking/NSURLConnection (2.2.1):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.2.1):
-    - AFNetworking/NSURLConnection
-  - AFNetworking/Reachability (2.2.1)
-  - AFNetworking/Security (2.2.1)
-  - AFNetworking/Serialization (2.2.1)
-  - AFNetworking/UIKit (2.2.1):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
   - GPUImage (0.1.6)
   - iCloudDocumentSync (7.4.1)
   - PureLayout (2.0.6)
 
 DEPENDENCIES:
-  - AFNetworking (= 2.2.1)
   - GPUImage
   - iCloudDocumentSync
   - PureLayout
 
 SPEC CHECKSUMS:
-  AFNetworking: 59a0b8e9ecd4e194d64b4967232cd2cc83490113
   GPUImage: 4675ce4a5370ca92fcea8623b2a08b8f0c51b940
   iCloudDocumentSync: 961aac30ca09c221de4c236e94dae69912f2c589
   PureLayout: f25f0bb904d5ccfe6e31da3cb869185259f02e0d

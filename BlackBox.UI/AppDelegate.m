@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <iCloud/iCloud.h>
+#import <iCloudDocumentSync/iCloud.h>
 @interface AppDelegate ()<iCloudDelegate>
             
 
