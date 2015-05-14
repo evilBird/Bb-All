@@ -58,11 +58,11 @@
 #define COCOAPODS_POD_AVAILABLE_PureLayout
 #define COCOAPODS_VERSION_MAJOR_PureLayout 2
 #define COCOAPODS_VERSION_MINOR_PureLayout 0
-#define COCOAPODS_VERSION_PATCH_PureLayout 4
+#define COCOAPODS_VERSION_PATCH_PureLayout 6
 
 // iCloudDocumentSync
 #define COCOAPODS_POD_AVAILABLE_iCloudDocumentSync
 #define COCOAPODS_VERSION_MAJOR_iCloudDocumentSync 7
-#define COCOAPODS_VERSION_MINOR_iCloudDocumentSync 3
-#define COCOAPODS_VERSION_PATCH_iCloudDocumentSync 0
+#define COCOAPODS_VERSION_MINOR_iCloudDocumentSync 4
+#define COCOAPODS_VERSION_PATCH_iCloudDocumentSync 1
 

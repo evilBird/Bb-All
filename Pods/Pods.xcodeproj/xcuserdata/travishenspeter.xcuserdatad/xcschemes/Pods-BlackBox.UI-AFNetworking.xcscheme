@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0510"
+   LastUpgradeVersion = "0640"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "053F3E0F29D6949C880C6145"
+               BlueprintIdentifier = "979B93C6B386F86D566F3B4F"
                BuildableName = "libPods-BlackBox.UI-AFNetworking.a"
                BlueprintName = "Pods-BlackBox.UI-AFNetworking"
                ReferencedContainer = "container:Pods.xcodeproj">

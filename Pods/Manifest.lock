@@ -19,8 +19,8 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - GPUImage (0.1.6)
-  - iCloudDocumentSync (7.3)
-  - PureLayout (2.0.4)
+  - iCloudDocumentSync (7.4.1)
+  - PureLayout (2.0.6)
 
 DEPENDENCIES:
   - AFNetworking (= 2.2.1)
@@ -29,9 +29,9 @@ DEPENDENCIES:
   - PureLayout
 
 SPEC CHECKSUMS:
-  AFNetworking: 8dde8c8a6597ad95dac332a593c27e541bc87371
-  GPUImage: cecb0830bb9428f50192042e3c7b53810f51388e
-  iCloudDocumentSync: 76ebc7391e6a3d2246248263b35cb202b66fb05e
-  PureLayout: ddf4fedf7e2f5984f972bbd2205dda4fc3418347
+  AFNetworking: 59a0b8e9ecd4e194d64b4967232cd2cc83490113
+  GPUImage: 4675ce4a5370ca92fcea8623b2a08b8f0c51b940
+  iCloudDocumentSync: 961aac30ca09c221de4c236e94dae69912f2c589
+  PureLayout: f25f0bb904d5ccfe6e31da3cb869185259f02e0d
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.37.1

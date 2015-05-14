@@ -1,10 +1,10 @@
 //
 //  ALView+PureLayout.m
-//  v2.0.4
+//  v2.0.5
 //  https://github.com/smileyborg/PureLayout
 //
 //  Copyright (c) 2012 Richard Turton
-//  Copyright (c) 2013-2014 Tyler Fox
+//  Copyright (c) 2013-2015 Tyler Fox
 //
 //  This code is distributed under the terms and conditions of the MIT license.
 //
@@ -235,19 +235,19 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
  NOTE: This method will have no effect (and will NOT set the identifier) on constraints created or added
  without using the PureLayout API!
  
- @param identifer A string used to identify all constraints created in the constraints block.
+ @param identifier A string used to identify all constraints created in the constraints block.
  @param block A block of method calls to the PureLayout API that create and install constraints.
  */
-+ (void)autoSetIdentifier:(NSString *)identifer forConstraints:(ALConstraintsBlock)block
++ (void)autoSetIdentifier:(NSString *)identifier forConstraints:(ALConstraintsBlock)block
 {
     NSAssert(block, @"The constraints block cannot be nil.");
-    NSAssert(identifer, @"The identifier string cannot be nil.");
+    NSAssert(identifier, @"The identifier string cannot be nil.");
     if (block) {
-        if (identifer) {
-            [[self al_globalConstraintIdentifiers] addObject:identifer];
+        if (identifier) {
+            [[self al_globalConstraintIdentifiers] addObject:identifier];
         }
         block();
-        if (identifer) {
+        if (identifier) {
             [[self al_globalConstraintIdentifiers] removeLastObject];
         }
     }
@@ -1078,8 +1078,22 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
             NSAssert(axis == ALAxisVertical, @"Cannot align views that are distributed horizontally with ALAttributeTrailing.");
             constraint = [self autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:otherView];
             break;
+            
+        // All of the below attributes are invalid as alignment options. Listing them explicitly (even though they just fall through to the default case) to avoid an incomplete switch statement warning from the compiler.
+        case ALAttributeWidth:
+        case ALAttributeHeight:
+#if __PureLayout_MinBaseSDK_iOS_8_0
+        case ALAttributeMarginLeft:
+        case ALAttributeMarginRight:
+        case ALAttributeMarginTop:
+        case ALAttributeMarginBottom:
+        case ALAttributeMarginLeading:
+        case ALAttributeMarginTrailing:
+        case ALAttributeMarginAxisVertical:
+        case ALAttributeMarginAxisHorizontal:
+#endif /* __PureLayout_MinBaseSDK_iOS_8_0 */
         default:
-            NSAssert(nil, @"Unsupported alignment option.");
+            NSAssert(nil, @"Unsupported attribute for alignment.");
             break;
     }
     return constraint;

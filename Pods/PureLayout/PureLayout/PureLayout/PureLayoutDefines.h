@@ -1,9 +1,9 @@
 //
 //  PureLayoutDefines.h
-//  v2.0.4
+//  v2.0.5
 //  https://github.com/smileyborg/PureLayout
 //
-//  Copyright (c) 2014 Tyler Fox
+//  Copyright (c) 2014-2015 Tyler Fox
 //
 //  This code is distributed under the terms and conditions of the MIT license.
 //
@@ -31,16 +31,18 @@
 
 #import <Foundation/Foundation.h>
 
-#define __PureLayout_MinBaseSDK_iOS_8_0                   TARGET_OS_IPHONE && __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
-#define __PureLayout_MinSysVer_iOS_7_0                    TARGET_OS_IPHONE && floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1
-#define __PureLayout_MinSysVer_iOS_8_0                    TARGET_OS_IPHONE && floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1
+// Define some preprocessor macros to check for a minimum Base SDK. These are used to prevent compile-time errors in older versions of Xcode.
+#define __PureLayout_MinBaseSDK_iOS_8_0                   (TARGET_OS_IPHONE && __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1)
+#define __PureLayout_MinBaseSDK_OSX_10_10                 (!TARGET_OS_IPHONE && __MAC_OS_X_VERSION_MAX_ALLOWED > __MAC_10_9)
 
-#define __PureLayout_MinBaseSDK_OSX_10_10                 !TARGET_OS_IPHONE && __MAC_OS_X_VERSION_MAX_ALLOWED > __MAC_10_9
-#define __PureLayout_MinSysVer_OSX_10_9                   !TARGET_OS_IPHONE && floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_8_4
+// Define some preprocessor macros to check for a minimum System Version. These are used to prevent runtime crashes on older versions of iOS/OS X.
+#define __PureLayout_MinSysVer_iOS_7_0                    (TARGET_OS_IPHONE && floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+#define __PureLayout_MinSysVer_iOS_8_0                    (TARGET_OS_IPHONE && floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1)
+#define __PureLayout_MinSysVer_OSX_10_9                   (!TARGET_OS_IPHONE && floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_8_4)
 
+// Define generic AL-prefixed macros for the types/constants/etc that have slight naming variations across iOS and OS X, which allows the same code to be platform-independent
 #if TARGET_OS_IPHONE
 #   import <UIKit/UIKit.h>
-
 #   define ALView                                      UIView
 #   define ALEdgeInsets                                UIEdgeInsets
 #   define ALEdgeInsetsZero                            UIEdgeInsetsZero
@@ -59,7 +61,6 @@
 #   define ALLayoutPriorityFittingSizeCompression      ALLayoutPriorityFittingSizeLevel
 #else
 #   import <Cocoa/Cocoa.h>
-
 #   define ALView                                      NSView
 #   define ALEdgeInsets                                NSEdgeInsets
 #   define ALEdgeInsetsZero                            NSEdgeInsetsMake(0, 0, 0, 0)

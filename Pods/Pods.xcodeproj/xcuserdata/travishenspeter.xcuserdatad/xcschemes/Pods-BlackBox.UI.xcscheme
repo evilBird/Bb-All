@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0510"
+   LastUpgradeVersion = "0640"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "206A06125C00C8BAC6D7756B"
+               BlueprintIdentifier = "036E33EC3E7DB356C10D3ED0"
                BuildableName = "libPods-BlackBox.UI.a"
                BlueprintName = "Pods-BlackBox.UI"
                ReferencedContainer = "container:Pods.xcodeproj">

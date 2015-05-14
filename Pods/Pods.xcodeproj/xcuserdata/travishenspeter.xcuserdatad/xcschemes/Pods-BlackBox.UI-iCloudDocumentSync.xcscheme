@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0510"
+   LastUpgradeVersion = "0640"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "993D8B8DA38C8AF97FA77767"
+               BlueprintIdentifier = "837000886CC0322D13D1B247"
                BuildableName = "libPods-BlackBox.UI-iCloudDocumentSync.a"
                BlueprintName = "Pods-BlackBox.UI-iCloudDocumentSync"
                ReferencedContainer = "container:Pods.xcodeproj">
