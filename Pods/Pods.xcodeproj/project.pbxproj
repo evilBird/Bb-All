@@ -422,7 +422,7 @@
 		9AFC60FCE108750291F0AF03 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0630;
 			};
 			buildConfigurationList = 318A706E2F1C992037C75B0A /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -502,6 +502,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EFD0EC993968C11AF5029B0 /* Pods-Visual Cocoa-AFNetworking-Private.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXECUTABLE_PREFIX = lib;
@@ -519,6 +520,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9B96A7AF8E497FE869D6FF60 /* Pods-Visual Cocoa-PureLayout-Private.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXECUTABLE_PREFIX = lib;
@@ -536,6 +538,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 215E66E84D032A25AB430955 /* Pods-Visual Cocoa.debug.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXECUTABLE_PREFIX = lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -592,6 +595,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EFD0EC993968C11AF5029B0 /* Pods-Visual Cocoa-AFNetworking-Private.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREFIX_HEADER = "Target Support Files/Pods-Visual Cocoa-AFNetworking/Pods-Visual Cocoa-AFNetworking-prefix.pch";
@@ -642,6 +646,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2FE7B8DD8F0AB41F4BACE59D /* Pods-Visual Cocoa.release.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXECUTABLE_PREFIX = lib;
@@ -660,6 +665,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9B96A7AF8E497FE869D6FF60 /* Pods-Visual Cocoa-PureLayout-Private.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREFIX_HEADER = "Target Support Files/Pods-Visual Cocoa-PureLayout/Pods-Visual Cocoa-PureLayout-prefix.pch";

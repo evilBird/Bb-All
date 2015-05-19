@@ -17,7 +17,7 @@
                      toPoint:(VCPoint)toPoint;
 
 - (VCSize)initOffsetObjectView:(BbCocoaObjectView *)view
-                         event:(UIEvent *)theEvent;
+                         event:(VCEvent *)theEvent;
 
 - (VCPoint)normalizePoint:(VCPoint)point;
 - (VCPoint)scaleNormalizedPoint:(VCPoint)point;

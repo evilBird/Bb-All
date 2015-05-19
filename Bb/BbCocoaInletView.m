@@ -8,24 +8,6 @@
 
 #import "BbCocoaInletView.h"
 
-#if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-#define VCView          UIView
-#define VCColor         UIColor
-#define VCPoint         CGPoint
-#define VCTextField     UITextField
-#define VCRect          CGRect
-#define VCSize          CGSize
-#else
-#import <AppKit/AppKit.h>
-#define VCView          UIView
-#define VCColor         UIColor
-#define VCPoint         CGPoint
-#define VCTextField     UITextField
-#define VCRect          CGRect
-#define VCSize          NSSize
-#endif
-
 @implementation BbCocoaInletView
 
 - (VCSize)intrinsicContentSize
