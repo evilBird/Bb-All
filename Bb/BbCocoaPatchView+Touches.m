@@ -22,7 +22,9 @@
 
 #pragma mark - mouse down
 
-- (void)mouseDown:(NSEvent *)theEvent
+#if TARGET_OS_IPHONE == 0
+
+- (void)mouseDown:(VCEvent *)theEvent
 {
     CGPoint loc = theEvent.locationInWindow;
     id theView = [self hitTest:loc];
@@ -59,7 +61,7 @@
     kPreviousLoc = theEvent.locationInWindow;
 }
 
-- (void)clickDown:(NSEvent *)theEvent inView:(id)theView
+- (void)clickDown:(VCEvent *)theEvent inView:(id)theView
 {
     self.initialTouchView = theView;
     BbViewType viewType = [theView viewType];
@@ -80,14 +82,14 @@
 
 #pragma mark - Right click down
 
-- (void)rightMouseDown:(NSEvent *)theEvent {}
+- (void)rightMouseDown:(VCEvent *)theEvent {}
 
-- (void)rightClickDown:(NSEvent *)theEvent inView:(id)theView {}
+- (void)rightClickDown:(VCEvent *)theEvent inView:(id)theView {}
 
 
 #pragma mark - Mouse dragged
 
-- (void)mouseDragged:(NSEvent *)theEvent
+- (void)mouseDragged:(VCEvent *)theEvent
 {
     if (self.initialTouchView == nil) {
         return;
@@ -117,7 +119,7 @@
 
 #pragma mark - mouse up
 
-- (void)mouseUp:(NSEvent *)theEvent
+- (void)mouseUp:(VCEvent *)theEvent
 {
     if (!self.initialTouchView) {
         return;
@@ -133,7 +135,7 @@
     kPreviousLoc = theEvent.locationInWindow;
 }
 
-- (void)touchesEnded:(NSEvent *)theEvent
+- (void)touchesEnded:(VCEvent *)theEvent
 {
     
     if (self.initialTouchView == self && theEvent.clickCount == 2) {
@@ -157,7 +159,7 @@
 
 #pragma mark - Key down
 
-- (void)keyDown:(NSEvent *)theEvent
+- (void)keyDown:(VCEvent *)theEvent
 {
     NSString *theKey = theEvent.characters;
     NSLog(@"the key: %@",theKey);
@@ -177,5 +179,7 @@
     
     
 }
+
+#endif
 
 @end

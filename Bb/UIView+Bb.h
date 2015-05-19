@@ -1,16 +1,17 @@
 //
-//  NSView+Bb.h
-//  Bb_Desktop
+//  UIView+Bb.h
+//  Visual Cocoa for iOS
 //
-//  Created by Travis Henspeter on 2/10/15.
-//  Copyright (c) 2015 birdSound. All rights reserved.
+//  Created by Travis Henspeter on 5/14/15.
+//  Copyright (c) 2015 birdSound LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#if TARGET_OS_IPHONE == 0
-#import <AppKit/AppKit.h>
-@interface NSView (Bb)
 
+#if TARGET_OS_IPHONE == 1
+#import <UIKit/UIKit.h>
+
+@interface UIView (Bb)
 
 + (CGPoint)centerForFrame:(CGRect)frame;
 + (CGRect)rect:(CGRect)rect withCenter:(CGPoint)center;
@@ -20,4 +21,5 @@
 - (void)pinHeight:(CGFloat)height width:(CGFloat)width;
 
 @end
+
 #endif

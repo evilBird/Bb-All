@@ -12,8 +12,8 @@
 
 @interface BbCocoaPatchView : BbCocoaEntityView <BbPlaceholderViewDelegate>
 {
-    CGPoint                kPreviousLoc;
-    NSSize                 kInitOffset;
+    VCPoint                kPreviousLoc;
+    VCSize                 kInitOffset;
     NSUInteger             kClickCount;
 }
 
@@ -29,7 +29,7 @@
 @property (nonatomic,weak) BbCocoaPortView      *selectedPortViewReceiver;
 
 - (BbObject *)addObjectWithText:(NSString *)text;
-- (id)addPlaceholderAtPoint:(CGPoint)point;
+- (id)addPlaceholderAtPoint:(VCPoint)point;
 - (void)addViewForObject:(BbObject *)object;
 + (instancetype)patchViewWithPatch:(BbPatch *)patch inView:(id)view;
 

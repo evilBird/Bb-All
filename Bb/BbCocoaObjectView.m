@@ -40,7 +40,7 @@
     self.outletViews_ = [self addViewsForBbPortEntities:myEntity.outlets].mutableCopy;
 }
 
-- (void)setupConstraintsInParentView:(NSView *)parent
+- (void)setupConstraintsInParentView:(VCView *)parent
 {
     [super setupConstraintsInParentView:parent];
     [self layoutInletViews:self.inletViews];
@@ -51,12 +51,16 @@
     }
 }
 
-- (NSSize)intrinsicContentSize
+- (VCSize)intrinsicContentSize
 {
     CGSize size;
     size.width = [self contentWidthFromViewDescription:self.viewDescription];
     size.height = [self contentHeightFromViewDescription:self.viewDescription];
+#if TARGET_OS_IPHONE
+    return size;
+#else
     return NSSizeFromCGSize(size);
+#endif
 }
 
 - (CGFloat)contentWidthFromViewDescription:(BbCocoaEntityViewDescription *)viewDescription
@@ -92,7 +96,7 @@
 - (CGFloat)contentHeightFromViewDescription:(BbCocoaEntityViewDescription *)viewDescription
 {
     CGFloat contentHeight = kPortViewHeightConstraint * 2.0 + kMinVerticalSpacerSize;
-    return [NSView roundFloat:contentHeight];
+    return [VCView roundFloat:contentHeight];
 }
 
 - (CGFloat)editingTextExpansionFactor
@@ -118,22 +122,32 @@
 }
 
 #pragma mark - Overrides
-- (NSColor *)defaultColor
+- (VCColor *)defaultColor
 {
-    return [NSColor blackColor];
+    return [VCColor blackColor];
 }
 
-- (NSColor *)selectedColor
+- (VCColor *)selectedColor
 {
-    return [NSColor colorWithWhite:0.4 alpha:1];
+    return [VCColor colorWithWhite:0.4 alpha:1];
 }
 
 + (NSDictionary *)textAttributes
 {
-    NSFont *font = [NSFont fontWithName:@"Courier" size:[NSFont systemFontSize]];
-    NSColor *color = [NSColor whiteColor];
+    
+#if TARGET_OS_IPHONE
+    VCFont *font = [VCFont fontWithName:@"Courier" size:[VCFont systemFontSize]];
+#else
+    VCFont *font = [VCFont fontWithName:@"Courier" size:[VCFont systemFontSize]];
+
+#endif
+    VCColor *color = [VCColor whiteColor];
     NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+#if TARGET_OS_IPHONE
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+#else
     paragraphStyle.alignment = NSCenterTextAlignment;
+#endif
     NSDictionary *textAttributes = @{NSFontAttributeName:font,
                                      NSForegroundColorAttributeName:color,
                                      NSParagraphStyleAttributeName:paragraphStyle
@@ -150,8 +164,14 @@
 {
     self.viewDescription.text = displayedText;
     [self invalidateIntrinsicContentSize];
+#if TARGET_OS_IPHONE
+    [self setNeedsLayout];
+    [self setNeedsDisplay];
+#else
     [self setNeedsLayout:YES];
     [self setNeedsDisplay:YES];
+#endif
+
 }
 
 + (instancetype)viewWithObject:(id)object parent:(id)parentView
@@ -197,7 +217,8 @@
 
 #pragma drawing
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(VCRect)dirtyRect {
+    
     [super drawRect:dirtyRect];
     // Drawing code here.
     if (!self.textField) {

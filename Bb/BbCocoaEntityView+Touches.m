@@ -11,9 +11,15 @@
 
 @implementation BbCocoaEntityView (Touches)
 
-- (id)clickDown:(NSEvent *)theEvent
+- (id)clickDown:(VCEvent *)theEvent
 {
+#if TARGET_OS_IPHONE
+    switch (theEvent.allTouches.count) {
+
+#else
     switch (theEvent.clickCount) {
+
+#endif
         case 1:
             if (self.selected) {
                 self.selected = NO;
@@ -39,9 +45,15 @@
     return nil;
 }
 
-- (id)clickUp:(NSEvent *)theEvent
+- (id)clickUp:(VCEvent *)theEvent
 {
-    if (theEvent.clickCount == 0) {
+#if TARGET_OS_IPHONE
+    if (theEvent.allTouches.count == 0)
+#else
+    if (theEvent.clickCount == 0)
+
+#endif
+    {
         self.selected = NO;
     }
     
@@ -51,12 +63,12 @@
     return nil;
 }
 
-- (id)boundsWereEntered:(NSEvent *)theEvent
+- (id)boundsWereEntered:(VCEvent *)theEvent
 {
     return nil;
 }
 
-- (id)boundsWereExited:(NSEvent *)theEvent
+- (id)boundsWereExited:(VCEvent *)theEvent
 {
     return nil;
 }
@@ -66,12 +78,17 @@
     return YES;
 }
 
-- (void)keyDown:(NSEvent *)theEvent
+- (void)keyDown:(VCEvent *)theEvent
 {
-    NSString *theKey = theEvent.characters;
-    if ([theKey isEqualToString:@"\x7f"] && self.selected) {
-        [self.entity.parent removeChildObject:(BbObject *)self.entity];
-    }
+#if TARGET_OS_IPHONE
+        
+#else
+        NSString *theKey = theEvent.characters;
+        if ([theKey isEqualToString:@"\x7f"] && self.selected) {
+            [self.entity.parent removeChildObject:(BbObject *)self.entity];
+        }
+#endif
+        
 }
 
 - (BbViewType)viewType

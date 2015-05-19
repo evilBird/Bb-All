@@ -67,7 +67,11 @@
     }
     
     CGSize size;
+#if TARGET_OS_IPHONE == 1
+    size = [(UIView *)self.view intrinsicContentSize];
+#else
     size = [(NSView *)self.view intrinsicContentSize];
+#endif
     return @[@(size.width),@(size.height)];
 }
 

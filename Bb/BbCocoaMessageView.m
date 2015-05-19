@@ -11,6 +11,7 @@
 #import "NSObject+Bb.h"
 #import "NSString+Bb.h"
 #import "NSMutableString+Bb.h"
+#import "BbCocoaEntityView+TextDelegate.h"
 
 @interface BbCocoaMessageView () <BbObjectDisplayDelegate>
 
@@ -25,13 +26,19 @@
     [super commonInitEntity:entity viewDescription:viewDescription];
     [(BbMessage *)entity setDisplayDelegate:self];
     kMinWidth = 100.0;
-    [self setupTextField];
     
+    [self setupTextField];
     __weak BbCocoaMessageView *weakself = self;
-    self.textEditingChangedHandler = ^(NSTextField *textField){
+    self.textEditingChangedHandler = ^(VCTextField *textField){
         [weakself invalidateIntrinsicContentSize];
+#if TARGET_OS_IPHONE == 1
+        [weakself setNeedsDisplay];
+        [weakself.superview setNeedsDisplay];
+#else
         [weakself setNeedsDisplay:YES];
         [weakself.superview setNeedsDisplay:YES];
+#endif
+
     };
     
     self.textEditingEndedHandler = ^(NSString *text){
@@ -40,21 +47,29 @@
         [mutable trimWhiteSpace];
         NSString *message = [NSString stringWithString:mutable.mutableCopy];
         [(BbMessage *)weakself.entity setMessageBuffer:message];
+#if TARGET_OS_IPHONE == 0
         weakself.textField.stringValue = message;
         [weakself invalidateIntrinsicContentSize];
         [weakself setNeedsDisplay:YES];
         [weakself.superview setNeedsDisplay:YES];
+#else
+        //TODO
+        weakself.textField.text = message;
+        [weakself.textField invalidateIntrinsicContentSize];
+        [weakself setNeedsDisplay];
+        [weakself.superview setNeedsDisplay];
+#endif
     };
     
     self.editing = NO;
 }
 
-- (NSSize)intrinsicContentSize
+- (VCSize)intrinsicContentSize
 {
-    CGSize size;
+    VCSize size;
     size.height = [self intrinsicContentHeight];
     size.width = [self intrinsicContentWidth];
-    return NSSizeFromCGSize(size);
+    return size;
 }
 
 - (CGFloat)editingTextExpansionFactor
@@ -67,26 +82,28 @@
     return 1.07;
 }
 
-- (NSColor *)defaultColor
+- (VCColor *)defaultColor
 {
-    return [NSColor colorWithWhite:0.9 alpha:1];
+    return [VCColor colorWithWhite:0.9 alpha:1];
 }
 
-- (NSColor *)selectedColor
+- (VCColor *)selectedColor
 {
-    return [NSColor colorWithWhite:0.8 alpha:1];
+    return [VCColor colorWithWhite:0.8 alpha:1];
 }
 
-- (NSColor *)sendingColor
+- (VCColor *)sendingColor
 {
-    return [NSColor colorWithWhite:0.7 alpha:1];
+    return [VCColor colorWithWhite:0.7 alpha:1];
 }
 
-- (NSColor *)editingColor
+- (VCColor *)editingColor
 {
-    return [NSColor whiteColor];
+    return [VCColor whiteColor];
 }
+#if TARGET_OS_IPHONE == 1
 
+#else
 - (void)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector
 {
     NSLog(@"Selector method is (%@)", NSStringFromSelector( commandSelector ) );
@@ -100,12 +117,18 @@
         }
     }
 }
+#endif
+
 
 - (void)sendMessage
 {
     [[(BbMessage *)self.entity hotInlet]input:[BbBang bang]];
     self.sending = YES;
+#if TARGET_OS_IPHONE == 0
     [self setNeedsDisplay:YES];
+#else
+    [self setNeedsDisplay];
+#endif
     __weak BbCocoaMessageView *weakself = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakself endMessage];
@@ -115,10 +138,14 @@
 - (void)endMessage
 {
     self.sending = NO;
+#if TARGET_OS_IPHONE == 0
     [self setNeedsDisplay:YES];
+#else
+    [self setNeedsDisplay];
+#endif
 }
 
-- (id)clickDown:(NSEvent *)theEvent
+- (id)clickDown:(VCEvent *)theEvent
 {
     [super clickDown:theEvent];
     [self sendMessage];
@@ -131,10 +158,16 @@
 
 + (NSDictionary *)textAttributes
 {
-    NSFont *font = [NSFont fontWithName:@"Courier" size:[NSFont systemFontSize]];
-    NSColor *color = [NSColor blackColor];
+    VCFont *font = [VCFont fontWithName:@"Courier" size:[VCFont systemFontSize]];
+    VCColor *color = [VCColor blackColor];
     NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+    
+    #if TARGET_OS_IPHONE == 1
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+
+#else
     paragraphStyle.alignment = NSCenterTextAlignment;
+#endif
     NSDictionary *textAttributes = @{NSFontAttributeName:font,
                                      NSForegroundColorAttributeName:color,
                                      NSParagraphStyleAttributeName:paragraphStyle
@@ -142,11 +175,11 @@
     return textAttributes;
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(VCRect)dirtyRect {
     //[super drawRect:dirtyRect];
     // Drawing code here.
     
-    NSColor *fillColor;
+    VCColor *fillColor;
     if (self.sending) {
         fillColor = [self sendingColor];
     }else if (self.editing){
@@ -158,10 +191,14 @@
     }
     
     [fillColor setFill];
+    #if TARGET_OS_IPHONE == 0
     NSRectFill(dirtyRect);
+#else
+    //TODO
+#endif
     
-    NSBezierPath *outlinePath = [NSBezierPath bezierPathWithRect:self.bounds];
-    [[NSColor blackColor]setStroke];
+    VCBezierPath *outlinePath = [VCBezierPath bezierPathWithRect:self.bounds];
+    [[VCColor blackColor]setStroke];
     [outlinePath setLineWidth:1];
     [outlinePath stroke];
 }
@@ -171,11 +208,24 @@
 
 - (void)object:(id)sender didUpdate:(NSString *)updateToDisplay
 {
-    if (sender == self.entity && ![updateToDisplay isEqualToString:self.textField.stringValue]) {
+    NSString *textFieldText = nil;
+#if TARGET_OS_IPHONE == 0
+    textFieldText = self.textField.stringValue;
+#else
+    textFieldText = self.textField.text;
+#endif
+    if (sender == self.entity && ![updateToDisplay isEqualToString:textFieldText]) {
+#if TARGET_OS_IPHONE == 0
         [self.textField setStringValue:updateToDisplay];
         [self invalidateIntrinsicContentSize];
         [self setNeedsDisplay:YES];
         [self.superview setNeedsDisplay:YES];
+#else
+        [self.textField setText:updateToDisplay];
+        [self.textField invalidateIntrinsicContentSize];
+        [self setNeedsDisplay];
+        [self.superview setNeedsDisplay];
+#endif
     }
 }
 

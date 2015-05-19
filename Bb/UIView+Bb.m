@@ -1,15 +1,15 @@
 //
-//  NSView+Bb.m
-//  Bb_Desktop
+//  UIView+Bb.m
+//  Visual Cocoa for iOS
 //
-//  Created by Travis Henspeter on 2/10/15.
-//  Copyright (c) 2015 birdSound. All rights reserved.
+//  Created by Travis Henspeter on 5/14/15.
+//  Copyright (c) 2015 birdSound LLC. All rights reserved.
 //
 
-#import "NSView+Bb.h"
-#if TARGET_OS_IPHONE == 0
+#import "UIView+Bb.h"
+#if TARGET_OS_IPHONE == 1
 
-@implementation NSView (Bb)
+@implementation UIView (Bb)
 
 + (CGPoint)centerForFrame:(CGRect)frame
 {
@@ -23,7 +23,7 @@
 
 + (CGRect)rect:(CGRect)rect withCenter:(CGPoint)center
 {
-    CGPoint currentCenter = [NSView centerForFrame:rect];
+    CGPoint currentCenter = [UIView centerForFrame:rect];
     CGFloat dx = currentCenter.x - center.x;
     CGFloat dy = currentCenter.y - center.y;
     return CGRectOffset(rect, dx, dy);
@@ -39,7 +39,7 @@
     CGRect superViewBounds = self.superview.bounds;
     CGFloat superViewWidth = CGRectGetWidth(superViewBounds);
     CGFloat multiplier = (horizontalCenter/superViewWidth) * 2.0f;
-    CGFloat m = [NSView roundFloat:multiplier];
+    CGFloat m = [UIView roundFloat:multiplier];
     constraint = [NSLayoutConstraint
                   constraintWithItem:self
                   attribute:NSLayoutAttributeCenterX
@@ -61,7 +61,7 @@
     CGRect superViewBounds = self.superview.bounds;
     CGFloat superViewHeight = CGRectGetHeight(superViewBounds);
     CGFloat multiplier = (verticalCenter/superViewHeight) * 2.0f;
-    CGFloat m = [NSView roundFloat:multiplier];
+    CGFloat m = [UIView roundFloat:multiplier];
     constraint = [NSLayoutConstraint
                   constraintWithItem:self
                   attribute:NSLayoutAttributeCenterY

@@ -1,19 +1,17 @@
 //
-//  NSBezierPath+Array.m
-//  Visual Cocoa
+//  UIBezierPath+Array.m
+//  Visual Cocoa for iOS
 //
-//  Created by Travis Henspeter on 2/25/15.
-//  Copyright (c) 2015 birdSound. All rights reserved.
+//  Created by Travis Henspeter on 5/14/15.
+//  Copyright (c) 2015 birdSound LLC. All rights reserved.
 //
+#import "UIBezierPath+Array.h"
 
-#import "NSBezierPath+Array.h"
+#if TARGET_OS_IPHONE
 
-#if TARGET_OS_IPHONE == 0
+@implementation UIBezierPath (Array)
 
-
-@implementation NSBezierPath (Array)
-
-+ (NSBezierPath *)pathWithArray:(NSArray *)array
++ (UIBezierPath *)pathWithArray:(NSArray *)array
 {
     if (!array || array.count != 4) {
         return nil;
@@ -26,11 +24,12 @@
     y2 = [array[3] doubleValue];
     
     CGPoint point = CGPointMake(x1, y1);
-    NSBezierPath *path = [NSBezierPath bezierPath];
+    UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:point];
     point.x = x2;
     point.y = y2;
-    [path lineToPoint:point];
+    
+    [path addLineToPoint:point];
     [path setLineWidth:4];
     return path;
 }

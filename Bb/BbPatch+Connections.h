@@ -18,8 +18,16 @@
 - (void)removeConnectionWithId:(NSString *)connectionId;
 
 - (NSArray *)selectedConnections;
+#if TARGET_OS_IPHONE == 1
+
+- (UIBezierPath *)pathForConnectionWithId:(NSString *)connectionId;
+
+#else
 
 - (NSBezierPath *)pathForConnectionWithId:(NSString *)connectionId;
+
+#endif
+
 - (NSArray *)pathCoordinatesForConnectionWithId:(NSString *)connectionId;
 
 - (void)addConnectionWithDescription:(BbConnectionDescription *)description;

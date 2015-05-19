@@ -172,7 +172,13 @@
 
 - (NSArray *)UIPosition
 {
+#if TARGET_OS_IPHONE == 1
+    
+    CGPoint point = [self.view normalizedPosition];
+#else
     NSPoint point = [self.view normalizedPosition];
+
+#endif
     return @[@(point.x),@(point.y)];
 }
 

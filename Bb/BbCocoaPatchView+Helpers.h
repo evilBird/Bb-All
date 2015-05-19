@@ -8,21 +8,21 @@
 
 #import "BbCocoaPatchView.h"
 
+
 @interface BbCocoaPatchView (Helpers)
 
 - (void)moveEntityView:(BbCocoaEntityView *)entityView
-               toPoint:(NSPoint)point;
-
+               toPoint:(VCPoint)point;
 - (void)drawPathFromPortView:(BbCocoaPortView *)portView
-                     toPoint:(NSPoint)toPoint;
+                     toPoint:(VCPoint)toPoint;
 
-- (NSSize)initOffsetObjectView:(BbCocoaObjectView *)view
-                         event:(NSEvent *)theEvent;
+- (VCSize)initOffsetObjectView:(BbCocoaObjectView *)view
+                         event:(UIEvent *)theEvent;
 
-- (NSPoint)normalizePoint:(NSPoint)point;
-- (NSPoint)scaleNormalizedPoint:(NSPoint)point;
-- (NSPoint)offsetScaledPoint:(NSPoint)point;
-- (NSPoint)myCenter;
+- (VCPoint)normalizePoint:(VCPoint)point;
+- (VCPoint)scaleNormalizedPoint:(VCPoint)point;
+- (VCPoint)offsetScaledPoint:(VCPoint)point;
+- (VCPoint)myCenter;
 
 - (NSString *)copySelected;
 - (void)pasteCopied:(NSString *)copied;

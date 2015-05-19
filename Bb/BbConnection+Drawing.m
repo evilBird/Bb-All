@@ -11,9 +11,9 @@
 #import "BbCocoaPortView.h"
 #import "BbPatch.h"
 
-@implementation BbConnection (Drawing)
 
-- (NSBezierPath *)bezierPath
+@implementation BbConnection (Drawing)
+- (VCBezierPath *)bezierPath
 {
     if (self.status == BbConnectionStatus_Dirty)
     {
@@ -25,15 +25,14 @@
     if (!coordinates || coordinates.count != 4) {
         return nil;
     }
-    
-    NSBezierPath *path = [NSBezierPath pathWithArray:coordinates];
+
+    VCBezierPath *path = [VCBezierPath pathWithArray:coordinates];
     
     if (!self.selected) {
-        [[NSColor blackColor]setStroke];
+        [[VCColor blackColor]setStroke];
     }else if (self.selected){
-        [[NSColor colorWithWhite:0.5 alpha:1]setStroke];
+        [[VCColor colorWithWhite:0.5 alpha:1]setStroke];
     }
-    
     return path;
 }
 
@@ -62,8 +61,11 @@
     
     return result;
 }
-
+#if TARGET_OS_IPHONE == 1
+- (BOOL)hitTest:(CGPoint)point
+#else
 - (BOOL)hitTest:(NSPoint)point
+#endif
 {
     NSArray *array = [self pathCoordinates];
     

@@ -12,14 +12,16 @@
 #import "BbBase.h"
 #import "BbUI.h"
 
-#if TARGET_OS_IPHONE
+#import <Foundation/Foundation.h>
+
+#if TARGET_OS_IPHONE == 1
 // iOS code
 #import <UIKit/UIKit.h>
 #import <UIKit/UIKitDefines.h>
 
 #else
 // OSX code
-#import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
 #endif
 
 @implementation NSInvocation (Bb)

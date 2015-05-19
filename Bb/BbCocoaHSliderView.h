@@ -10,6 +10,6 @@
 
 @interface BbCocoaHSliderView : BbCocoaObjectView
 
-@property (nonatomic,strong)NSSlider *slider;
+@property (nonatomic,strong)VCSlider *slider;
 
 @end

@@ -14,16 +14,22 @@
 - (void)commonInitEntity:(BbEntity *)entity viewDescription:(id)viewDescription
 {
     [super commonInitEntity:entity viewDescription:viewDescription];
-    self.slider = [[NSSlider alloc]init];
+    self.slider = [[VCSlider alloc]init];
     self.slider.translatesAutoresizingMaskIntoConstraints = NO;
+    #if TARGET_OS_IPHONE == 1
+    
+#else
     self.slider.minValue = 0.0;
     self.slider.maxValue = 1.0;
     [self.slider setDoubleValue:0.5];
-    self.slider.continuous = YES;
-    [(NSView *)self addSubview:self.slider];
     [self.slider setTarget:entity];
     SEL selector = NSSelectorFromString(@"sliderValueDidChange:");
     [self.slider setAction:selector];
+#endif
+
+    self.slider.continuous = YES;
+    [(VCView *)self addSubview:self.slider];
+
 }
 
 - (void)setupConstraintsInParentView:(id)parent
@@ -34,29 +40,29 @@
     [self.slider autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:kPortViewWidthConstraint/2];
 }
 
-- (NSSize)intrinsicContentSize
+- (VCSize)intrinsicContentSize
 {
     CGFloat width = kDefaultCocoaObjectViewWidth * 2.5;
     CGFloat height = kDefaultCocoaObjectViewHeight/1.5;
-    CGSize size;
+    VCSize size;
     size.width = width;
     size.height = height;
-    return NSSizeFromCGSize(size);
+    return size;
 }
 
-- (NSColor *)defaultColor
+- (VCColor *)defaultColor
 {
-    return [NSColor colorWithWhite:0.92 alpha:1];
+    return [VCColor colorWithWhite:0.92 alpha:1];
 }
 
-- (NSColor *)selectedColor
+- (VCColor *)selectedColor
 {
-    return [NSColor colorWithWhite:0.8 alpha:1];
+    return [VCColor colorWithWhite:0.8 alpha:1];
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(VCRect)dirtyRect {
     // Drawing code here.
-    NSColor *fillColor;
+    VCColor *fillColor;
     if (self.selected) {
         fillColor = self.selectedColor;
     }else{
@@ -64,11 +70,15 @@
     }
     
     [fillColor setFill];
+#if TARGET_OS_IPHONE == 1
+    //TODO
+#else
     NSRectFill(dirtyRect);
+#endif
     
-    NSBezierPath *outlinePath = [NSBezierPath bezierPathWithRect:self.bounds];
+    VCBezierPath *outlinePath = [VCBezierPath bezierPathWithRect:self.bounds];
     [outlinePath setLineWidth:1];
-    [[NSColor colorWithWhite:0.5 alpha:1]setStroke];
+    [[VCColor colorWithWhite:0.5 alpha:1]setStroke];
     [outlinePath stroke];
 }
 

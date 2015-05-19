@@ -44,7 +44,7 @@
         return;
     }
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    [(NSView *)parent addSubview:self];
+    [(VCView *)parent addSubview:self];
 }
 
 
@@ -56,19 +56,19 @@
     _entity.view = self;
 }
 
-- (NSColor *)defaultColor
+- (VCColor *)defaultColor
 {
-    return [NSColor blackColor];
+    return [VCColor blackColor];
 }
 
-- (NSColor *)selectedColor
+- (VCColor *)selectedColor
 {
-    return [NSColor colorWithWhite:0.3 alpha:1];
+    return [VCColor colorWithWhite:0.3 alpha:1];
 }
 
-- (NSColor *)editingColor
+- (VCColor *)editingColor
 {
-    return [NSColor colorWithRed:97.0/255.0 green:90.0/255.0f blue:11.0f/255.0f alpha:1];
+    return [VCColor colorWithRed:97.0/255.0 green:90.0/255.0f blue:11.0f/255.0f alpha:1];
 }
 
 - (CGFloat)textExpansionFactor
@@ -89,7 +89,7 @@
     return 1.0;
 }
 
-- (NSColor *)blendColor:(NSColor *)color1 weight:(CGFloat)weight1 withColor:(NSColor *)color2 weight:(CGFloat)weight2
+- (VCColor *)blendColor:(VCColor *)color1 weight:(CGFloat)weight1 withColor:(VCColor *)color2 weight:(CGFloat)weight2
 {
     CGFloat sumOfWeights = weight1+weight2;
     CGFloat normWeight1 = weight1/sumOfWeights;
@@ -102,7 +102,7 @@
         new[i] = c3;
     }
     
-    return [NSColor colorWithRed:new[0] green:new[1] blue:new[2] alpha:new[3]];
+    return [VCColor colorWithRed:new[0] green:new[1] blue:new[2] alpha:new[3]];
 }
 
 #pragma mark BbEntityView Methods
@@ -128,22 +128,29 @@
 
 - (CGPoint)center
 {
-    return [NSView centerForFrame:self.frame];
+    return [VCView centerForFrame:self.frame];
 }
 
 - (void)addSubview:(id<BbEntityView>)subview
 {
-    [super addSubview:(NSView *)subview];
+    [super addSubview:(VCView *)subview];
 }
 
 - (void)refresh
 {
-    if (!self.translatesAutoresizingMaskIntoConstraints) {
-        [self setNeedsLayout:YES];
+    if (!self.translatesAutoresizingMaskIntoConstraints)
+#if TARGET_OS_IPHONE == 1
+    {
+        [self setNeedsLayout];
     }
     
+    [self setNeedsDisplay];
+#else
+    {
+        [self setNeedsLayout:YES];
+    }
     [self setNeedsDisplay:YES];
-    
+#endif
 }
 
 #pragma mark - KVO
@@ -175,7 +182,6 @@
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
-
 - (void)entityView:(id)sender didBeginEditingObject:(id)object
 {
     if (sender == self && object == self.textField){
@@ -219,9 +225,9 @@
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(VCRect)dirtyRect {
     
-    NSColor *fillColor;
+    VCColor *fillColor;
     if (self.editing) {
         fillColor = self.editingColor;
     }else if (self.selected){
@@ -231,7 +237,11 @@
     }
     
     [fillColor setFill];
+#if TARGET_OS_IPHONE == 1
+    //TODO
+#else
     NSRectFill(dirtyRect);
+#endif
     [super drawRect:dirtyRect];
 }
 

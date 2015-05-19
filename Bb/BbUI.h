@@ -6,12 +6,13 @@
 //  Copyright (c) 2015 birdSound. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
+#import <Foundation/Foundation.h>
+#if TARGET_OS_IPHONE == 1
 // iOS code
 #import <UIKit/UIKit.h>
 #else
 // OSX code
-#import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
 #endif
 
 @class BbEntity,BbPatch;
@@ -27,9 +28,18 @@
 - (CGPoint)center;
 - (void)setCenter:(CGPoint)center;
 
+#if TARGET_OS_IPHONE
+// iOS code
+- (CGPoint)normalizedPosition;
+
+- (CGRect)convertRect:(CGRect)rect fromView:(UIView *)view;
+#else
+// OSX code
 - (NSPoint)normalizedPosition;
 
 - (NSRect)convertRect:(NSRect)rect fromView:(NSView *)view;
+
+#endif
 
 - (BOOL)selected;
 - (void)setSelected:(BOOL)selected;

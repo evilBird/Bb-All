@@ -41,7 +41,11 @@
 
 - (void)setHorizontalCenter:(CGFloat)horizontalCenter;
 - (void)setVerticalCenter:(CGFloat)verticalCenter;
+#if TARGET_OS_IPHONE == 1
++ (CGPoint)position:(CGPoint)position forView:(UIView *)view inSuperview:(UIView *)superview;
+#else
 + (NSPoint)position:(NSPoint)position forView:(NSView *)view inSuperview:(NSView *)superview;
+#endif
 - (CGFloat)roundFloat:(CGFloat)aFloat;
 
 

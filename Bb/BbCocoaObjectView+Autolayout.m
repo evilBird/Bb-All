@@ -8,7 +8,11 @@
 
 #import "BbCocoaObjectView+Autolayout.h"
 #import "BbCocoaPortView.h"
+#if TARGET_OS_IPHONE == 1
+
+#else
 #import "NSView+Bb.h"
+#endif
 #import "PureLayout.h"
 #import "BbPorts.h"
 
@@ -188,7 +192,7 @@
     self.centerYConstraint = [self verticalCenterConstraint:verticalCenter];
 }
 
-+ (NSPoint)position:(NSPoint)position forView:(NSView *)view inSuperview:(NSView *)superview
++ (VCPoint)position:(VCPoint)position forView:(VCView *)view inSuperview:(VCView *)superview
 {
     return [view convertPoint:position fromView:superview];
 }

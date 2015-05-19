@@ -66,7 +66,16 @@
     return selected;
 }
 
+#if TARGET_OS_IPHONE == 1
+
+- (UIBezierPath *)pathForConnectionWithId:(NSString *)connectionId
+
+#else
+
 - (NSBezierPath *)pathForConnectionWithId:(NSString *)connectionId
+
+#endif
+
 {
     if (!self.connections || !connectionId || ![self hasConnectionWithId:connectionId]) {
         return nil;

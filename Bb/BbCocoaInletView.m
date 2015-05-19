@@ -8,11 +8,33 @@
 
 #import "BbCocoaInletView.h"
 
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#define VCView          UIView
+#define VCColor         UIColor
+#define VCPoint         CGPoint
+#define VCTextField     UITextField
+#define VCRect          CGRect
+#define VCSize          CGSize
+#else
+#import <AppKit/AppKit.h>
+#define VCView          UIView
+#define VCColor         UIColor
+#define VCPoint         CGPoint
+#define VCTextField     UITextField
+#define VCRect          CGRect
+#define VCSize          NSSize
+#endif
+
 @implementation BbCocoaInletView
 
-- (NSSize)intrinsicContentSize
+- (VCSize)intrinsicContentSize
 {
-    NSSize size = NSSizeFromCGSize(CGSizeMake(85, kDefaultCocoaObjectViewHeight));
+#if TARGET_OS_IPHONE
+    VCSize size = CGSizeMake(85, kDefaultCocoaObjectViewHeight);
+#else
+    VCSize size = NSSizeFromCGSize(CGSizeMake(85, kDefaultCocoaObjectViewHeight));
+#endif
     return size;
 }
 
@@ -20,9 +42,13 @@
 
 @implementation BbCocoaOutletView
 
-- (NSSize)intrinsicContentSize
+- (VCSize)intrinsicContentSize
 {
-    NSSize size = NSSizeFromCGSize(CGSizeMake(85, kDefaultCocoaObjectViewHeight));
+#if TARGET_OS_IPHONE
+    VCSize size = CGSizeMake(85, kDefaultCocoaObjectViewHeight);
+#else
+    VCSize size = NSSizeFromCGSize(CGSizeMake(85, kDefaultCocoaObjectViewHeight));
+#endif
     return size;
 }
 

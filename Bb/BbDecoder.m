@@ -12,12 +12,12 @@
 
 + (BbObject *)objectWithText:(NSString *)text
 {
-    
+    return nil;
 }
 
 + (BbObject *)objectWithDescription:(BbObjectDescription *)description
 {
-    
+    return nil;
 }
 
 

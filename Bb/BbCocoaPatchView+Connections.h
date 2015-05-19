@@ -14,8 +14,7 @@
 
 - (void)connectOutletView:(BbCocoaPortView *)outletView
              toInletView:(BbCocoaPortView *)inletView;
-
-- (BOOL)hitTestConnections:(NSPoint)point;
+- (BOOL)hitTestConnections:(VCPoint)point;
 - (void)patch:(BbPatch *)patch connectionsDidChange:(id)connections;
 
 @end

@@ -6,11 +6,47 @@
 //  Copyright (c) 2015 birdSound. All rights reserved.
 //
 
-//#ifndef TARGET_OS_IPHONE
+#import <Foundation/Foundation.h>
 
+#if TARGET_OS_IPHONE == 1
+#import <UIKit/UIKit.h>
+#import "UIView+Bb.h"
 
-#import <Cocoa/Cocoa.h>
+#define VCView              UIView
+#define VCColor             UIColor
+#define VCPoint             CGPoint
+#define VCTextField         UITextField
+#define VCRect              CGRect
+#define VCBezierPath        UIBezierPath
+#define VCSize              CGSize
+#define VCControl           UIControl
+#define VCEvent             UIEvent
+#define VCEdgeInsets        UIEdgeInsets
+#define VCFont              UIFont
+#define VCSlider            UISlider
+#define VCEdgeInsetsZero    UIEdgeInsetsZero
+#define VCEdgeInsets        UIEdgeInsets
+#else
+
+#import <AppKit/AppKit.h>
 #import "NSView+Bb.h"
+
+#define VCView              NSView
+#define VCColor             NSColor
+#define VCPoint             NSPoint
+#define VCTextField         NSTextField
+#define VCRect              NSRect
+#define VCBezierPath        NSBezierPath
+#define VCSize              NSSize
+#define VCControl           NSControl
+#define VCEvent             NSEvent
+#define VCEdgeInsets        NSEdgeInsets
+#define VCFont              NSFont
+#define VCSlider            NSSlider
+#define VCEdgeInsetsZero    NSEdgeInsetsZero
+#define VCEdgeInsets        NSEdgeInsets
+#endif
+
 #import "BbUI.h"
 #import "PureLayout.h"
 #import "BbCocoaEntityViewDescription.h"
@@ -18,30 +54,31 @@
 static CGFloat kDefaultMinWidth = 100.0;
 
 typedef void (^BbTextEditingDidEndHandler)(NSString *text);
-typedef void (^BbTextEditingDidChangeHandler)(NSTextField *textField);
-typedef void (^BbTextEditingDidBeginHandler)(NSTextField *textField);
+typedef void (^BbTextEditingDidChangeHandler)(VCTextField *textField);
+typedef void (^BbTextEditingDidBeginHandler)(VCTextField *textField);
 
 typedef NS_ENUM(NSInteger, BbEntityViewSelectionState) {
     BbEntityViewSelectionState_DEFAULT,
     BbEntityViewSelectionState_SELECTED
 };
 
-@interface BbCocoaEntityView : NSView <BbEntityView> {
-    //BOOL kSelected;
+@interface BbCocoaEntityView : VCView <BbEntityView> {
+
     CGPoint kCenter;
     CGFloat kMinWidth;
 }
 
 @property (nonatomic,weak)          BbEntity                        *entity;
 @property (nonatomic,strong)        BbCocoaEntityViewDescription    *viewDescription;
-@property (nonatomic)               NSPoint                         normalizedPosition;
-@property (nonatomic,readonly)      NSColor                         *defaultColor;
-@property (nonatomic,readonly)      NSColor                         *selectedColor;
-@property (nonatomic,readonly)      NSColor                         *editingColor;
+
+@property (nonatomic)               VCPoint                         normalizedPosition;
+@property (nonatomic,readonly)      VCColor                         *defaultColor;
+@property (nonatomic,readonly)      VCColor                         *selectedColor;
+@property (nonatomic,readonly)      VCColor                         *editingColor;
+@property (nonatomic,strong)        VCTextField                     *textField;
+
 @property (nonatomic,strong)        NSLayoutConstraint              *centerXConstraint;
 @property (nonatomic,strong)        NSLayoutConstraint              *centerYConstraint;
-
-@property (nonatomic,strong)        NSTextField                     *textField;
 @property (nonatomic,strong)        BbTextEditingDidEndHandler      textEditingEndedHandler;
 @property (nonatomic,strong)        BbTextEditingDidChangeHandler   textEditingChangedHandler;
 @property (nonatomic,strong)        BbTextEditingDidBeginHandler    textEditingBeganHandler;
@@ -78,12 +115,10 @@ typedef NS_ENUM(NSInteger, BbEntityViewSelectionState) {
 
 #pragma BbEntityView Methods
 
-- (CGPoint)center;
-- (void)setCenter:(CGPoint)center;
+- (VCPoint)center;
+- (void)setCenter:(VCPoint)center;
 - (BOOL)selected;
 - (void)setSelected:(BOOL)selected;
 - (void)addSubview:(id<BbEntityView>)subview;
 
 @end
-
-//#endif

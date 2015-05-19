@@ -50,7 +50,7 @@
 {
     BbCocoaObjectView *view = [BbCocoaObjectView viewWithObject:object
                                                          parent:self];
-    NSPoint viewPosition = [self scaleNormalizedPoint:view.normalizedPosition];
+    VCPoint viewPosition = [self scaleNormalizedPoint:view.normalizedPosition];
     [self moveEntityView:view toPoint:viewPosition];
 }
 
@@ -75,7 +75,7 @@
     [self.patch addChildObject:object];
     BbCocoaObjectView *view = [BbCocoaObjectView viewWithObject:object
                                                          parent:self];
-    NSPoint viewPosition = [self scaleNormalizedPoint:view.normalizedPosition];
+    VCPoint viewPosition = [self scaleNormalizedPoint:view.normalizedPosition];
     
     [self moveEntityView:view toPoint:viewPosition];
 
@@ -91,7 +91,11 @@
     }
     
     if (!self.viewDescription) {
+#if TARGET_OS_IPHONE
+        self.normalizedPosition = CGPointMake(50, 50);
+#else
         self.normalizedPosition = NSPointFromCGPoint(CGPointMake(50, 50));
+#endif
     }
 }
 
@@ -99,7 +103,7 @@
 {
     [super setupConstraintsInParentView:parent];
     if (self.superview) {
-        [self autoPinEdgesToSuperviewEdgesWithInsets:NSEdgeInsetsZero];
+        [self autoPinEdgesToSuperviewEdgesWithInsets:VCEdgeInsetsZero];
         [self refresh];
     }
 }
@@ -109,19 +113,19 @@
     return (BbPatch *)self.entity;
 }
 
-- (NSColor *)defaultColor
+- (VCColor *)defaultColor
 {
-    return [NSColor whiteColor];
+    return [VCColor whiteColor];
 }
 
-- (NSColor *)selectedColor
+- (VCColor *)selectedColor
 {
-    return [NSColor colorWithWhite:0.9 alpha:1];
+    return [VCColor colorWithWhite:0.9 alpha:1];
 }
 
-- (NSSize)intrinsicContentSize
+- (VCSize)intrinsicContentSize
 {
-    return NSSizeFromCGSize(self.superview.bounds.size);
+    return self.superview.bounds.size;
 }
 
 #pragma mark - BbPlaceholderViewDelegate
@@ -170,7 +174,12 @@
 - (void)swapPlaceholderView:(BbCocoaPlaceholderObjectView *)placeholderView
   withObjectCreatedFromText:(NSString *)text
 {
+#if TARGET_OS_IPHONE
+    [placeholderView removeFromSuperview];
+#else
     [placeholderView removeFromSuperviewWithoutNeedingDisplay];
+
+#endif
     [self addObjectWithText:text];
 }
 

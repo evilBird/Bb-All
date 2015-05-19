@@ -9,15 +9,16 @@
 #import "NSScanner+Bb.h"
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <Foundation/Foundation.h>
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE == 1
 // iOS code
 #import <UIKit/UIKit.h>
 #import <UIKit/UIKitDefines.h>
 
 #else
 // OSX code
-#import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
 #endif
 
 @implementation NSScanner (Bb)

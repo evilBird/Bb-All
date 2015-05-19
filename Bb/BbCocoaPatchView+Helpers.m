@@ -16,79 +16,96 @@
 
 #pragma mark - helpers
 
-- (void)moveEntityView:(BbCocoaEntityView *)entityView toPoint:(NSPoint)point
+- (void)moveEntityView:(BbCocoaEntityView *)entityView toPoint:(VCPoint)point
 {
     CGFloat dx,dy;
-    NSPoint myCenter = [self myCenter];
+    VCPoint myCenter = [self myCenter];
     dx = point.x - myCenter.x;
     dy = point.y - myCenter.y;
     [entityView.centerXConstraint autoRemove];
     [entityView.centerYConstraint autoRemove];
-    entityView.centerXConstraint = [entityView autoAlignAxis:ALAxisVertical toSameAxisOfView:self withOffset:[NSView roundFloat:dx]];
-    entityView.centerYConstraint = [entityView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self withOffset:-[NSView roundFloat:dy]];
+    entityView.centerXConstraint = [entityView autoAlignAxis:ALAxisVertical toSameAxisOfView:self withOffset:[VCView roundFloat:dx]];
+    entityView.centerYConstraint = [entityView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self withOffset:-[VCView roundFloat:dy]];
     [entityView.centerXConstraint autoInstall];
     [entityView.centerYConstraint autoInstall];
+#if TARGET_OS_IPHONE == 1
+    [self setNeedsDisplay];
+#else
     entityView.normalizedPosition = [self normalizePoint:point];
     [self setNeedsDisplay:YES];
     [self layoutSubtreeIfNeeded];
+#endif
 }
 
-- (void)drawPathFromPortView:(BbCocoaPortView *)portView toPoint:(NSPoint)toPoint
+- (void)drawPathFromPortView:(BbCocoaPortView *)portView toPoint:(VCPoint)toPoint
 {
-    CGRect bounds = portView.bounds;
-    CGRect senderBounds = [self convertRect:bounds fromView:portView];
-    CGPoint point = CGPointMake(CGRectGetMidX(senderBounds), CGRectGetMidY(senderBounds));
+    VCRect bounds = portView.bounds;
+    VCRect senderBounds = [self convertRect:bounds fromView:portView];
+    VCPoint point = CGPointMake(CGRectGetMidX(senderBounds), CGRectGetMidY(senderBounds));
     CGFloat x1,y1,x2,y2;
     x1 = point.x;
     y1 = point.y;
     x2 = toPoint.x;
     y2 = toPoint.y;
-    self.drawThisConnection = @[@(x1),@(y1),@(x2),@(y2)];
+ #if TARGET_OS_IPHONE == 1
+    [self setNeedsDisplay];
+#else
     [self setNeedsDisplay:YES];
+#endif
+    self.drawThisConnection = @[@(x1),@(y1),@(x2),@(y2)];
 }
 
-- (NSSize)initOffsetObjectView:(BbCocoaObjectView *)view event:(NSEvent *)theEvent
+- (VCSize)initOffsetObjectView:(BbCocoaObjectView *)view event:(VCEvent *)theEvent
 {
-    NSSize result;
-    NSPoint objectCenter = [self scaleNormalizedPoint:view.normalizedPosition];
+    VCSize result;
+    VCPoint objectCenter = [self scaleNormalizedPoint:view.normalizedPosition];
+#if TARGET_OS_IPHONE == 0
     result.width = (theEvent.locationInWindow.x - objectCenter.x);
     result.height = (theEvent.locationInWindow.y - objectCenter.y);
+#else
+    UITouch *touch = [theEvent touchesForView:self].allObjects.lastObject;
+    VCPoint loc = [touch locationInView:self];
+    result.width = loc.x - objectCenter.x;
+    result.height = loc.y - objectCenter.y;
+#endif
     return result;
 }
 
-- (NSPoint)normalizePoint:(NSPoint)point
+- (VCPoint)normalizePoint:(VCPoint)point
 {
     CGFloat x,y;
     x = (point.x * 100.0)/self.intrinsicContentSize.width;
     y = (point.y * 100.0)/self.intrinsicContentSize.height;
-    CGPoint normPoint = CGPointMake([NSView roundFloat:x], [NSView roundFloat:y]);
-    return NSPointFromCGPoint(normPoint);
+    VCPoint normPoint = CGPointMake([VCView roundFloat:x], [VCView roundFloat:y]);
+    return normPoint;
 }
 
-- (NSPoint)scaleNormalizedPoint:(NSPoint)point
+- (VCPoint)scaleNormalizedPoint:(VCPoint)point
 {
     CGFloat x,y;
     x = point.x * 0.01 * self.intrinsicContentSize.width;
     y = point.y * 0.01 * self.intrinsicContentSize.height;
-    CGPoint scaledPoint = CGPointMake([NSView roundFloat:x], [NSView roundFloat:y]);
-    return NSPointFromCGPoint(scaledPoint);
+    
+    VCPoint scaledPoint = CGPointMake([VCView roundFloat:x], [VCView roundFloat:y]);
+    return scaledPoint;
+
 }
 
-- (NSPoint)offsetScaledPoint:(NSPoint)point
+- (VCPoint)offsetScaledPoint:(VCPoint)point
 {
-    NSPoint p = point;
+    VCPoint p = point;
     p.x -= kInitOffset.width;
     p.y -= kInitOffset.height;
     return p;
 }
 
-- (NSPoint)myCenter
+- (VCPoint)myCenter
 {
     CGFloat x,y;
     x = self.intrinsicContentSize.width/2.0;
     y = self.intrinsicContentSize.height/2.0;
-    CGPoint myCenter = CGPointMake([NSView roundFloat:x], [NSView roundFloat:y]);
-    return NSPointFromCGPoint(myCenter);
+    VCPoint myCenter = CGPointMake([VCView roundFloat:x], [VCView roundFloat:y]);
+    return myCenter;
 }
 
 - (NSArray *)selectedObjectViews
@@ -160,9 +177,11 @@
     
     [self.patch addChildObject:abstraction];
     [self addViewForObject:abstraction];
+#if TARGET_OS_IPHONE == 0
     [self moveEntityView:(BbCocoaObjectView *)abstraction.view toPoint:NSPointFromCGPoint(CGPointMake(50, 50))];
     [(BbCocoaObjectView *)[abstraction view]setDisplayedText:@"abstract"];
-    
+#endif
+
 }
 
 @end

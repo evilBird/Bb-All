@@ -22,10 +22,17 @@
     __weak BbCocoaPlaceholderObjectView *weakself = self;
     
     
-    self.textEditingChangedHandler = ^(NSTextField *text){
+    self.textEditingChangedHandler = ^(VCTextField *text){
         [weakself invalidateIntrinsicContentSize];
+#if TARGET_OS_IPHONE == 1
+        [weakself setNeedsDisplay];
+        [weakself.superview setNeedsDisplay];
+        
+#else
         [weakself setNeedsDisplay:YES];
         [weakself.superview setNeedsDisplay:YES];
+#endif
+
     };
     
     self.textEditingEndedHandler = ^(NSString *text){
@@ -45,29 +52,39 @@
 
 - (CGFloat)intrinsicTextWidth
 {
+#if TARGET_OS_IPHONE
+    NSString *text = [NSString stringWithString:self.textField.text];
+#else
     NSString *text = [NSString stringWithString:self.textField.stringValue];
+#endif
     NSDictionary *textAttributes = [[self class]textAttributes];
     CGFloat textWidthRaw = [text sizeWithAttributes:textAttributes].width;
     CGFloat textWidth = pow(textWidthRaw, 1.1);
     return textWidth;
 }
 
-- (NSColor *)defaultColor
+- (VCColor *)defaultColor
 {
-    return [NSColor blackColor];
+    return [VCColor blackColor];
 }
 
-- (NSColor *)selectedColor
+- (VCColor *)selectedColor
 {
-    return [NSColor colorWithWhite:0.4 alpha:1.0];
+    return [VCColor colorWithWhite:0.4 alpha:1.0];
 }
 
 + (NSDictionary *)textAttributes
 {
-    NSFont *font = [NSFont fontWithName:@"Courier" size:[NSFont systemFontSize]];
-    NSColor *color = [NSColor whiteColor];
+    VCFont *font = [VCFont fontWithName:@"Courier" size:[VCFont systemFontSize]];
+    VCColor *color = [VCColor whiteColor];
+    
     NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+#if TARGET_OS_IPHONE
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+#else
     paragraphStyle.alignment = NSCenterTextAlignment;
+
+#endif
     NSDictionary *textAttributes = @{NSFontAttributeName:font,
                                      NSForegroundColorAttributeName:color,
                                      NSParagraphStyleAttributeName:paragraphStyle

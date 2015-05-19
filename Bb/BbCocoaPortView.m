@@ -7,10 +7,15 @@
 //
 
 #import "BbCocoaPortView.h"
-#import "NSView+Bb.h"
 #import "BbObject.h"
 #import "NSString+Bb.h"
 #import "BbCocoaPatchView.h"
+
+#if TARGET_OS_IPHONE
+#import "UIView+Bb.h"
+#else
+#import "NSView+Bb.h"
+#endif
 
 @interface BbCocoaPortView ()
 
@@ -20,144 +25,106 @@
 
 #pragma mark - Public Methods
 
-- (CGPoint)center
+- (VCPoint)center
 {
     BbEntity *port = self.entity;
     BbEntity *parent =  port.parent;
     BbEntity *grandParent = parent.parent;
     if (!grandParent) {
-        return [NSView centerForFrame:self.frame];
+        return [VCView centerForFrame:self.frame];
     }else{
-        CGRect p_frame = [(NSView *)[parent view] convertRect:self.bounds fromView:self];
-        CGRect gp_frame = [(NSView *)[grandParent view] convertRect:p_frame fromView:(NSView *)[parent view]];
-        return [NSView centerForFrame:gp_frame];
+        VCRect p_frame = [(VCView *)[parent view] convertRect:self.bounds fromView:self];
+        VCRect gp_frame = [(VCView *)[grandParent view] convertRect:p_frame fromView:(VCView *)[parent view]];
+        return [VCView centerForFrame:gp_frame];
     }
 }
 
-- (NSSize)intrinsicContentSize
+- (VCSize)intrinsicContentSize
 {
-    CGSize size;
+    VCSize size;
     size.width = kPortViewWidthConstraint;
     size.height = kPortViewHeightConstraint;
-    return NSSizeFromCGSize(size);
+    return size;
 }
 
-- (NSDictionary *)userInfo
-{
-    if (!self.entity) {
-        return nil;
-    }
-    
-    BbEntity *port = self.entity;
-    BbEntity *parent =  port.parent;
-    BbEntity *grandParent = parent.parent;
-    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-    NSUInteger portIndex,parentIndex;
-    
-    if ([port isKindOfClass:[BbInlet class]]) {
-        result[@"port_type"] = @"inlet";
-    }else if ([port isKindOfClass:[BbOutlet class]]){
-        result[@"port_type"] = @"outlet";
-    }else{
-        result[@"port_type"] = @"unknown";
-    }
-    
-    result[@"port_id"] = @(port.objectId);
-    
-    if (parent) {
-        portIndex = [parent indexOfChild:port];
-        result[@"port_index"] = @(portIndex);
-        NSSet *types = [parent allowedTypesForPort:(BbPort *)port];
-        if (types) {
-            result[@"allowed_types"] = types;
-        }else{
-            result[@"allowed_types"] = @[[NSString encodeType:@encode(id)]];
-        }
-        
-        NSString *class = [parent className];
-        if (class) {
-            result[@"parent_class"] = class;
-        }else{
-            result[@"parent_class"] = @"Well it's not a duck.";
-        }
-        
-        result[@"parent_id"] = @(parent.objectId);
-        
-    }else{
-        result[@"port_index"] = @(-1);
-        result[@"allowed_types"] = @[[NSString encodeType:@encode(id)]];
-        result[@"parent_class"] = @"Well it's not a duck.";
-        result[@"parent_id"] = @(-1);
-    }
-
-    CGPoint center = [self center];
-    if (grandParent) {
-        parentIndex = [grandParent indexOfChild:parent];
-        center = [self convertPoint:center toView:(NSView *)[grandParent view]];
-        result[@"parent_index"] = @(parentIndex);
-        result[@"patch_id"] = @(grandParent.objectId);
-    }else{
-        result[@"parent_index"] = @(-1);
-        result[@"patch_id"] = @(-1);
-        NSLog(@"using non-converted center point");
-    }
-    
-    result[@"center"] = @[@([NSView roundFloat:center.x]),@([NSView roundFloat:center.y])];
-    return result;
-}
 
 #pragma mark - Overrides
-- (NSColor *)defaultColor
+- (VCColor *)defaultColor
 {
-    return [NSColor whiteColor];
+    return [VCColor whiteColor];
 }
 
-- (NSColor *)selectedColor
+- (VCColor *)selectedColor
 {
-    return [NSColor colorWithWhite:0.7 alpha:1];
+    return [VCColor colorWithWhite:0.7 alpha:1];
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(VCRect)dirtyRect {
     [super drawRect:dirtyRect];
-    NSBezierPath *outlinePath = [NSBezierPath bezierPathWithRect:self.bounds];
+    VCBezierPath *outlinePath = [VCBezierPath bezierPathWithRect:self.bounds];
     [outlinePath setLineWidth:1.0];
-    [[NSColor blackColor]setStroke];
+    [[VCColor blackColor]setStroke];
     [outlinePath stroke];
 }
 
-- (id)clickDown:(NSEvent *)theEvent
+- (id)clickDown:(VCEvent *)theEvent
 {
     if ([self.entity isKindOfClass:[BbInlet class]]) {
         return nil;
     }else{
         [self setSelected:YES];
+        
+#if TARGET_OS_IPHONE == 1
+        [self setNeedsDisplay];
+        
+#else
         [self setNeedsDisplay:YES];
+#endif
+        
         return self;
     }
 }
 
-- (id)clickUp:(NSEvent *)theEvent
+- (id)clickUp:(VCEvent *)theEvent
 {
     [self setSelected:NO];
+#if TARGET_OS_IPHONE == 1
+    [self setNeedsDisplay];
+    
+#else
     [self setNeedsDisplay:YES];
+#endif
     return nil;
 }
 
-- (id)boundsWereEntered:(NSEvent *)theEvent
+- (id)boundsWereEntered:(VCEvent *)theEvent
 {
     if (![self.entity isKindOfClass:[BbInlet class]]) {
         return nil;
     }
     
     [self setSelected:YES];
-    [self setNeedsDisplay:YES];
+    
+    #if TARGET_OS_IPHONE == 1
+        [self setNeedsDisplay];
+        
+#else
+        [self setNeedsDisplay:YES];
+#endif
+    
     return self;
 }
 
-- (id)boundsWereExited:(NSEvent *)theEvent
+- (id)boundsWereExited:(VCEvent *)theEvent
 {
     [self setSelected:NO];
-    [self setNeedsDisplay:YES];
+    #if TARGET_OS_IPHONE == 1
+        [self setNeedsDisplay];
+        
+#else
+        [self setNeedsDisplay:YES];
+#endif
+    
     return nil;
 }
 
