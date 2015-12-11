@@ -725,25 +725,33 @@
 - (IBAction)handleLogControlPan:(id)sender {
     
     static CGFloat prevConst;
-    
+    static GLfloat prevTrans;
     UIPanGestureRecognizer *pan = sender;
     if (pan.state == UIGestureRecognizerStateChanged) {
+        
         CGPoint translation = [pan translationInView:pan.view];
         CGFloat constant = self.logViewHeight.constant;
-        constant -= (translation.y);
+        constant -= (translation.y - prevTrans);
+        if (constant < 0.0) {
+            constant = 0.0;
+        }else if (constant > self.view.bounds.size.height){
+            constant = self.view.bounds.size.height;
+        }
+        /*
         if (constant < 200) {
             constant = 0;
         }else{
             constant = self.view.bounds.size.height;
         }
-        
+        */
         if (constant == prevConst) {
             return;
         }
         
         prevConst = constant;
+        prevTrans = translation.y;
         
-        [UIView animateWithDuration:0.1
+        [UIView animateWithDuration:0.066
                          animations:^{
                              self.logViewHeight.constant = constant;
                          }];

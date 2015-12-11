@@ -1544,6 +1544,7 @@
 				F2F5131419B8D97C00323096 /* Frameworks */,
 				F2F5131519B8D97C00323096 /* Resources */,
 				68534D16C396424BB5D88124 /* Copy Pods Resources */,
+				BDBA650C74D1D681EA22CB5D /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1563,6 +1564,7 @@
 				F2F5132A19B8D97C00323096 /* Frameworks */,
 				F2F5132B19B8D97C00323096 /* Resources */,
 				B5547F4566FE6B2DCD02298D /* Copy Pods Resources */,
+				DE1C3F69DBB6A65802CA2F25 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1733,6 +1735,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlackBox.UITests/Pods-BlackBox.UITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BDBA650C74D1D681EA22CB5D /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlackBox.UI/Pods-BlackBox.UI-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		CDA6F22F2CDB437BA27823D2 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1746,6 +1763,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DE1C3F69DBB6A65802CA2F25 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlackBox.UITests/Pods-BlackBox.UITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
