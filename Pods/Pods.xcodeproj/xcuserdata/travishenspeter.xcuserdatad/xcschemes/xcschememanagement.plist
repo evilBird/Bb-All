@@ -29,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>UIView+Layout.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>iCloudDocumentSync.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,7 +42,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>34DB32C49F990332690A80D11086DCD9</key>
+		<key>085005FFC936B7A3361A7C5FFE4BBED5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -57,7 +62,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B456CC6C5733592B1F403C63F03B9572</key>
+		<key>9CCECA451FABDFB1D256C6554CAB9E83</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CFC4980186107915B22BD29CD5153CEA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

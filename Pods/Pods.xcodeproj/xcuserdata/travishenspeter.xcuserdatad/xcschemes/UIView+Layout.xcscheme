@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'B85168F7193339AF4AC5C2A2'
-               BlueprintName = 'Pods-BlackBox.UI'
+               BlueprintIdentifier = '8BA35EBD0CF44C4BAC32D7D6'
+               BlueprintName = 'UIView+Layout'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libPods-BlackBox.UI.a'>
+               BuildableName = 'libUIView+Layout.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

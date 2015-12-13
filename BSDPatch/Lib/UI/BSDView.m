@@ -172,6 +172,7 @@
         return;
     }
     
+
     NSMutableArray *copy = array.mutableCopy;
     id first = copy.firstObject;
     if (![first isKindOfClass:[NSString class]]) {
@@ -215,7 +216,6 @@
     if ([myView respondsToSelector:selector]) {
         [invocation invoke];
     }
-    
     
 }
 

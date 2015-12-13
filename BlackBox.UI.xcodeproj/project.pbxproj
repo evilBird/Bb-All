@@ -37,6 +37,9 @@
 		F25F71B919EA2509002B082A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25F71B819EA2509002B082A /* CoreMotion.framework */; };
 		F26BB6421A1D5B73000909F4 /* bb_stdlib 2.plist in Resources */ = {isa = PBXBuildFile; fileRef = F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */; };
 		F26BB6441A1D5B78000909F4 /* bb_stdlib.plist in Resources */ = {isa = PBXBuildFile; fileRef = F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */; };
+		F27602D61C1B796F00E50E47 /* NSInvocation+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F27602D51C1B796F00E50E47 /* NSInvocation+Bb.m */; };
+		F27602DC1C1B7BA300E50E47 /* NSObject+ObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = F27602DB1C1B7BA300E50E47 /* NSObject+ObjC.m */; };
+		F27602DE1C1B7F0B00E50E47 /* EncodingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F27602DD1C1B7F0B00E50E47 /* EncodingTests.m */; };
 		F277445A1B041DFA008AA5AA /* BSDAny2Array.m in Sources */ = {isa = PBXBuildFile; fileRef = F27742F81B041DFA008AA5AA /* BSDAny2Array.m */; };
 		F277445B1B041DFA008AA5AA /* BSDArrayAccum.m in Sources */ = {isa = PBXBuildFile; fileRef = F27742FA1B041DFA008AA5AA /* BSDArrayAccum.m */; };
 		F277445C1B041DFA008AA5AA /* BSDArrayBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F27742FC1B041DFA008AA5AA /* BSDArrayBox.m */; };
@@ -178,7 +181,6 @@
 		F27744E41B041DFA008AA5AA /* BSDViewControllerRoot.m in Sources */ = {isa = PBXBuildFile; fileRef = F27744211B041DFA008AA5AA /* BSDViewControllerRoot.m */; };
 		F27744E51B041DFA008AA5AA /* BSDWebImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F27744231B041DFA008AA5AA /* BSDWebImage.m */; };
 		F27744E61B041DFA008AA5AA /* HBVImageBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = F27744251B041DFA008AA5AA /* HBVImageBlur.m */; };
-		F27744E71B041DFA008AA5AA /* NSInvocation+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F27744271B041DFA008AA5AA /* NSInvocation+Bb.m */; };
 		F27744E81B041DFA008AA5AA /* NSObject+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F27744291B041DFA008AA5AA /* NSObject+Bb.m */; };
 		F27744E91B041DFA008AA5AA /* NSString+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F277442B1B041DFA008AA5AA /* NSString+Bb.m */; };
 		F27744EA1B041DFA008AA5AA /* BSDAtomizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F277442E1B041DFA008AA5AA /* BSDAtomizer.m */; };
@@ -334,6 +336,11 @@
 		F25F71B819EA2509002B082A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		F26BB6411A1D5B73000909F4 /* bb_stdlib 2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "bb_stdlib 2.plist"; sourceTree = "<group>"; };
 		F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bb_stdlib.plist; sourceTree = "<group>"; };
+		F27602D41C1B796F00E50E47 /* NSInvocation+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSInvocation+Bb.h"; path = "../../../BlackBox.UI/NSInvocation+Bb.h"; sourceTree = "<group>"; };
+		F27602D51C1B796F00E50E47 /* NSInvocation+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSInvocation+Bb.m"; path = "../../../BlackBox.UI/NSInvocation+Bb.m"; sourceTree = "<group>"; };
+		F27602DA1C1B7BA300E50E47 /* NSObject+ObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ObjC.h"; sourceTree = "<group>"; };
+		F27602DB1C1B7BA300E50E47 /* NSObject+ObjC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ObjC.m"; sourceTree = "<group>"; };
+		F27602DD1C1B7F0B00E50E47 /* EncodingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EncodingTests.m; sourceTree = "<group>"; };
 		F27742F71B041DFA008AA5AA /* BSDAny2Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDAny2Array.h; sourceTree = "<group>"; };
 		F27742F81B041DFA008AA5AA /* BSDAny2Array.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDAny2Array.m; sourceTree = "<group>"; };
 		F27742F91B041DFA008AA5AA /* BSDArrayAccum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDArrayAccum.h; sourceTree = "<group>"; };
@@ -619,8 +626,6 @@
 		F27744231B041DFA008AA5AA /* BSDWebImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDWebImage.m; sourceTree = "<group>"; };
 		F27744241B041DFA008AA5AA /* HBVImageBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBVImageBlur.h; sourceTree = "<group>"; };
 		F27744251B041DFA008AA5AA /* HBVImageBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBVImageBlur.m; sourceTree = "<group>"; };
-		F27744261B041DFA008AA5AA /* NSInvocation+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Bb.h"; sourceTree = "<group>"; };
-		F27744271B041DFA008AA5AA /* NSInvocation+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Bb.m"; sourceTree = "<group>"; };
 		F27744281B041DFA008AA5AA /* NSObject+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Bb.h"; sourceTree = "<group>"; };
 		F27744291B041DFA008AA5AA /* NSObject+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Bb.m"; sourceTree = "<group>"; };
 		F277442A1B041DFA008AA5AA /* NSString+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Bb.h"; sourceTree = "<group>"; };
@@ -826,6 +831,100 @@
 				F26BB6431A1D5B78000909F4 /* bb_stdlib.plist */,
 			);
 			name = libs;
+			sourceTree = "<group>";
+		};
+		F276029E1C1B775800E50E47 /* UI Components */ = {
+			isa = PBXGroup;
+			children = (
+				F2789E3F19C8D4C6006F6CA4 /* PopoverContentTableViewController.h */,
+				F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */,
+				F2F5132119B8D97C00323096 /* BSDRootViewController.h */,
+				F2F5132219B8D97C00323096 /* BSDRootViewController.m */,
+				F24A39501A67331E001EE5FF /* BSDDisplayManager.h */,
+				F24A39511A67331E001EE5FF /* BSDDisplayManager.m */,
+				F202D21A1A1C1A9D00AED9C7 /* BSDDisplayViewController.h */,
+				F202D21B1A1C1A9D00AED9C7 /* BSDDisplayViewController.m */,
+				F2AAF7A419C7FB4B004EFE87 /* BSDCanvasViewController.h */,
+				F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */,
+				F2CFDEC719DB36A900A156DB /* BSDCanvasToolbarView.h */,
+				F2CFDEC819DB36A900A156DB /* BSDCanvasToolbarView.m */,
+				F2389B0319EF5766008B51DB /* BSDLogView.h */,
+				F2389B0419EF5766008B51DB /* BSDLogView.m */,
+				F2F5138719B9031C00323096 /* BSDCanvas.h */,
+				F2F5138819B9031C00323096 /* BSDCanvas.m */,
+				F2F5134019B8E54400323096 /* BSDPortView.h */,
+				F2F5134119B8E54400323096 /* BSDPortView.m */,
+				F21E50D219C3F63200E51383 /* BSDBox.h */,
+				F21E50D319C3F63200E51383 /* BSDBox.m */,
+				F2CFDEC419DA78BC00A156DB /* BSDCommentBox.h */,
+				F2CFDEC519DA78BC00A156DB /* BSDCommentBox.m */,
+				F283A1FE19CA11C8005CC98B /* BSDInletBox.h */,
+				F283A1FF19CA11C8005CC98B /* BSDInletBox.m */,
+				F283A20119CA11DF005CC98B /* BSDOutletBox.h */,
+				F283A20219CA11DF005CC98B /* BSDOutletBox.m */,
+				F21E535019C5249100E51383 /* BSDBangControlBox.h */,
+				F21E534F19C5249100E51383 /* BSDBangControlBox.m */,
+				F2EE14B119C9EF9B008D83E2 /* BSDMessageBox.h */,
+				F2EE14B219C9EF9B008D83E2 /* BSDMessageBox.m */,
+				F21E50D519C3FE1A00E51383 /* BSDNumberBox.h */,
+				F21E50D619C3FE1A00E51383 /* BSDNumberBox.m */,
+				F204D60219F71E7200175B24 /* BSDHSlider.h */,
+				F204D60319F71E7200175B24 /* BSDHSlider.m */,
+				F2F5133D19B8DAB800323096 /* BSDGraphBox.h */,
+				F2F5133E19B8DAB800323096 /* BSDGraphBox.m */,
+				F28C806019E25788001A578C /* BSDAbstractionBox.h */,
+				F28C806119E25788001A578C /* BSDAbstractionBox.m */,
+				F2EB860019D4CCDD007B8C3C /* BSDTextField.h */,
+				F2EB860119D4CCDD007B8C3C /* BSDTextField.m */,
+				F2C8A2F61A129AED00CAF039 /* BSDActionPopup.h */,
+				F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */,
+				F202D2141A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.h */,
+				F202D2151A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.m */,
+			);
+			name = "UI Components";
+			sourceTree = "<group>";
+		};
+		F27602D31C1B789D00E50E47 /* Glue */ = {
+			isa = PBXGroup;
+			children = (
+				F202D2171A1BE6DC00AED9C7 /* BSDPatchManager.h */,
+				F202D2181A1BE6DC00AED9C7 /* BSDPatchManager.m */,
+				F28C806F19E3B1C7001A578C /* BSDPatchCompiler.h */,
+				F28C807019E3B1C7001A578C /* BSDPatchCompiler.m */,
+				F21A5B5C19DF86BA00E6F21B /* BSDPatchDescription.h */,
+				F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */,
+				F21A5B5F19E0AF4F00E6F21B /* BSDPatchDescriptionUtility.h */,
+				F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */,
+				F2F5139019B927A700323096 /* BSDObjectDescription.h */,
+				F2F5139119B927A700323096 /* BSDObjectDescription.m */,
+				F2F5139319B92C9600323096 /* BSDPortConnectionDescription.h */,
+				F2F5139419B92C9600323096 /* BSDPortConnectionDescription.m */,
+				F2F5138A19B90F3300323096 /* BSDPortConnection.h */,
+				F2F5138B19B90F3300323096 /* BSDPortConnection.m */,
+				F241578719CB85B0003E32CA /* BSDObjectLookup.h */,
+				F241578819CB85B0003E32CA /* BSDObjectLookup.m */,
+				F2F5139619B9342400323096 /* BSDCompiledPatch.h */,
+				F2F5139719B9342400323096 /* BSDCompiledPatch.m */,
+				F2EB85FD19D35C79007B8C3C /* BSDTextParser.h */,
+				F2EB85FE19D35C79007B8C3C /* BSDTextParser.m */,
+			);
+			name = Glue;
+			sourceTree = "<group>";
+		};
+		F27602DF1C1B871800E50E47 /* Runtime */ = {
+			isa = PBXGroup;
+			children = (
+				F27744311B041DFA008AA5AA /* BSDClassMethod.h */,
+				F27744321B041DFA008AA5AA /* BSDClassMethod.m */,
+				F27744411B041DFA008AA5AA /* BSDInstanceMethod.h */,
+				F27744421B041DFA008AA5AA /* BSDInstanceMethod.m */,
+				F27602DA1C1B7BA300E50E47 /* NSObject+ObjC.h */,
+				F27602DB1C1B7BA300E50E47 /* NSObject+ObjC.m */,
+				F27602D41C1B796F00E50E47 /* NSInvocation+Bb.h */,
+				F27602D51C1B796F00E50E47 /* NSInvocation+Bb.m */,
+			);
+			name = Runtime;
+			path = ../BSDPatch/Lib/Utility;
 			sourceTree = "<group>";
 		};
 		F27742F41B041DFA008AA5AA /* BSDPatch */ = {
@@ -1278,8 +1377,6 @@
 				F27744231B041DFA008AA5AA /* BSDWebImage.m */,
 				F27744241B041DFA008AA5AA /* HBVImageBlur.h */,
 				F27744251B041DFA008AA5AA /* HBVImageBlur.m */,
-				F27744261B041DFA008AA5AA /* NSInvocation+Bb.h */,
-				F27744271B041DFA008AA5AA /* NSInvocation+Bb.m */,
 				F27744281B041DFA008AA5AA /* NSObject+Bb.h */,
 				F27744291B041DFA008AA5AA /* NSObject+Bb.m */,
 				F277442A1B041DFA008AA5AA /* NSString+Bb.h */,
@@ -1295,8 +1392,6 @@
 				F277442E1B041DFA008AA5AA /* BSDAtomizer.m */,
 				F277442F1B041DFA008AA5AA /* BSDBuffer.h */,
 				F27744301B041DFA008AA5AA /* BSDBuffer.m */,
-				F27744311B041DFA008AA5AA /* BSDClassMethod.h */,
-				F27744321B041DFA008AA5AA /* BSDClassMethod.m */,
 				F27744331B041DFA008AA5AA /* BSDClient.h */,
 				F27744341B041DFA008AA5AA /* BSDClient.m */,
 				F27744351B041DFA008AA5AA /* BSDComment.h */,
@@ -1311,8 +1406,6 @@
 				F277443E1B041DFA008AA5AA /* BSDFormatRequest.m */,
 				F277443F1B041DFA008AA5AA /* BSDGPS.h */,
 				F27744401B041DFA008AA5AA /* BSDGPS.m */,
-				F27744411B041DFA008AA5AA /* BSDInstanceMethod.h */,
-				F27744421B041DFA008AA5AA /* BSDInstanceMethod.m */,
 				F27744431B041DFA008AA5AA /* BSDJSObject.h */,
 				F27744441B041DFA008AA5AA /* BSDJSObject.m */,
 				F27744451B041DFA008AA5AA /* BSDMake.h */,
@@ -1424,72 +1517,11 @@
 				F2D2E4101A42672C007B51CE /* MyCloud.m */,
 				F2F5131E19B8D97C00323096 /* AppDelegate.h */,
 				F2F5131F19B8D97C00323096 /* AppDelegate.m */,
-				F2789E3F19C8D4C6006F6CA4 /* PopoverContentTableViewController.h */,
-				F2789E4019C8D4C6006F6CA4 /* PopoverContentTableViewController.m */,
-				F2F5132119B8D97C00323096 /* BSDRootViewController.h */,
-				F2F5132219B8D97C00323096 /* BSDRootViewController.m */,
-				F202D2171A1BE6DC00AED9C7 /* BSDPatchManager.h */,
-				F202D2181A1BE6DC00AED9C7 /* BSDPatchManager.m */,
-				F24A39501A67331E001EE5FF /* BSDDisplayManager.h */,
-				F24A39511A67331E001EE5FF /* BSDDisplayManager.m */,
-				F202D21A1A1C1A9D00AED9C7 /* BSDDisplayViewController.h */,
-				F202D21B1A1C1A9D00AED9C7 /* BSDDisplayViewController.m */,
-				F2AAF7A419C7FB4B004EFE87 /* BSDCanvasViewController.h */,
-				F2AAF7A519C7FB4B004EFE87 /* BSDCanvasViewController.m */,
-				F2CFDEC719DB36A900A156DB /* BSDCanvasToolbarView.h */,
-				F2CFDEC819DB36A900A156DB /* BSDCanvasToolbarView.m */,
-				F2389B0319EF5766008B51DB /* BSDLogView.h */,
-				F2389B0419EF5766008B51DB /* BSDLogView.m */,
-				F2F5138719B9031C00323096 /* BSDCanvas.h */,
-				F2F5138819B9031C00323096 /* BSDCanvas.m */,
-				F2F5134019B8E54400323096 /* BSDPortView.h */,
-				F2F5134119B8E54400323096 /* BSDPortView.m */,
-				F21E50D219C3F63200E51383 /* BSDBox.h */,
-				F21E50D319C3F63200E51383 /* BSDBox.m */,
-				F2CFDEC419DA78BC00A156DB /* BSDCommentBox.h */,
-				F2CFDEC519DA78BC00A156DB /* BSDCommentBox.m */,
-				F283A1FE19CA11C8005CC98B /* BSDInletBox.h */,
-				F283A1FF19CA11C8005CC98B /* BSDInletBox.m */,
-				F283A20119CA11DF005CC98B /* BSDOutletBox.h */,
-				F283A20219CA11DF005CC98B /* BSDOutletBox.m */,
-				F21E535019C5249100E51383 /* BSDBangControlBox.h */,
-				F21E534F19C5249100E51383 /* BSDBangControlBox.m */,
-				F2EE14B119C9EF9B008D83E2 /* BSDMessageBox.h */,
-				F2EE14B219C9EF9B008D83E2 /* BSDMessageBox.m */,
-				F21E50D519C3FE1A00E51383 /* BSDNumberBox.h */,
-				F21E50D619C3FE1A00E51383 /* BSDNumberBox.m */,
-				F204D60219F71E7200175B24 /* BSDHSlider.h */,
-				F204D60319F71E7200175B24 /* BSDHSlider.m */,
-				F2F5133D19B8DAB800323096 /* BSDGraphBox.h */,
-				F2F5133E19B8DAB800323096 /* BSDGraphBox.m */,
-				F28C806019E25788001A578C /* BSDAbstractionBox.h */,
-				F28C806119E25788001A578C /* BSDAbstractionBox.m */,
-				F28C806F19E3B1C7001A578C /* BSDPatchCompiler.h */,
-				F28C807019E3B1C7001A578C /* BSDPatchCompiler.m */,
-				F21A5B5C19DF86BA00E6F21B /* BSDPatchDescription.h */,
-				F21A5B5D19DF86BA00E6F21B /* BSDPatchDescription.m */,
-				F21A5B5F19E0AF4F00E6F21B /* BSDPatchDescriptionUtility.h */,
-				F21A5B6019E0AF4F00E6F21B /* BSDPatchDescriptionUtility.m */,
-				F2F5139019B927A700323096 /* BSDObjectDescription.h */,
-				F2F5139119B927A700323096 /* BSDObjectDescription.m */,
-				F2F5139319B92C9600323096 /* BSDPortConnectionDescription.h */,
-				F2F5139419B92C9600323096 /* BSDPortConnectionDescription.m */,
-				F2F5138A19B90F3300323096 /* BSDPortConnection.h */,
-				F2F5138B19B90F3300323096 /* BSDPortConnection.m */,
-				F241578719CB85B0003E32CA /* BSDObjectLookup.h */,
-				F241578819CB85B0003E32CA /* BSDObjectLookup.m */,
-				F2F5139619B9342400323096 /* BSDCompiledPatch.h */,
-				F2F5139719B9342400323096 /* BSDCompiledPatch.m */,
-				F2EB860019D4CCDD007B8C3C /* BSDTextField.h */,
-				F2EB860119D4CCDD007B8C3C /* BSDTextField.m */,
-				F2EB85FD19D35C79007B8C3C /* BSDTextParser.h */,
-				F2EB85FE19D35C79007B8C3C /* BSDTextParser.m */,
-				F2C8A2F61A129AED00CAF039 /* BSDActionPopup.h */,
-				F2C8A2F71A129AED00CAF039 /* BSDActionPopup.m */,
+				F27602DF1C1B871800E50E47 /* Runtime */,
+				F276029E1C1B775800E50E47 /* UI Components */,
+				F27602D31C1B789D00E50E47 /* Glue */,
 				F27D1FF01A0C3ACB0057EDFC /* SavedPatches.plist */,
 				F28C839C1A159C66007BB297 /* BlackBoxCategories.h */,
-				F202D2141A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.h */,
-				F202D2151A1BD52B00AED9C7 /* BSDNestedPatchTableViewController.m */,
 				F21183631A79AC6600B4F53F /* mandelbrot.png */,
 				F21183641A79AC6600B4F53F /* phi.png */,
 				F21183651A79AC6600B4F53F /* beach.png */,
@@ -1519,6 +1551,7 @@
 			isa = PBXGroup;
 			children = (
 				F2F5133319B8D97C00323096 /* BlackBox_UITests.m */,
+				F27602DD1C1B7F0B00E50E47 /* EncodingTests.m */,
 				F2F5133119B8D97C00323096 /* Supporting Files */,
 			);
 			path = BlackBox.UITests;
@@ -1806,6 +1839,7 @@
 				F27744C81B041DFA008AA5AA /* BSDAffineTransform.m in Sources */,
 				F21E50D419C3F63200E51383 /* BSDBox.m in Sources */,
 				F27744BD1B041DFA008AA5AA /* BSDPatchOutlet.m in Sources */,
+				F27602D61C1B796F00E50E47 /* NSInvocation+Bb.m in Sources */,
 				F204D60419F71E7200175B24 /* BSDHSlider.m in Sources */,
 				F27744A41B041DFA008AA5AA /* BSDTan.m in Sources */,
 				F27744A81B041DFA008AA5AA /* BSDRect.m in Sources */,
@@ -1823,7 +1857,6 @@
 				F27744D41B041DFA008AA5AA /* BSDGradientLayer.m in Sources */,
 				F27744831B041DFA008AA5AA /* BSDGenerator.m in Sources */,
 				F27744C61B041DFA008AA5AA /* BSDDelay.m in Sources */,
-				F27744E71B041DFA008AA5AA /* NSInvocation+Bb.m in Sources */,
 				F27744E91B041DFA008AA5AA /* NSString+Bb.m in Sources */,
 				F27744A61B041DFA008AA5AA /* BSDPoint2D.m in Sources */,
 				F283A20319CA11DF005CC98B /* BSDOutletBox.m in Sources */,
@@ -1845,6 +1878,7 @@
 				F277446F1B041DFA008AA5AA /* NSValue+BSD.m in Sources */,
 				F277446D1B041DFA008AA5AA /* NSObject+TypeConversion.m in Sources */,
 				F2F461811A40D0110056C2CE /* BSDiCloud.m in Sources */,
+				F27602DC1C1B7BA300E50E47 /* NSObject+ObjC.m in Sources */,
 				F27744F51B041DFA008AA5AA /* BSDJSObject.m in Sources */,
 				F27744DA1B041DFA008AA5AA /* BSDLayer.m in Sources */,
 				F27744E41B041DFA008AA5AA /* BSDViewControllerRoot.m in Sources */,
@@ -2000,6 +2034,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F27602DE1C1B7F0B00E50E47 /* EncodingTests.m in Sources */,
 				F2F5133419B8D97C00323096 /* BlackBox_UITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

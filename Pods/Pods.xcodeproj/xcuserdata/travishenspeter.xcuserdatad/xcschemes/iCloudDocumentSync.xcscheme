@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '21A410EFDD51865F1CEC3047'
+               BlueprintIdentifier = '0C0ECCBB9EFD4AD5AF3069EB'
                BlueprintName = 'iCloudDocumentSync'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libiCloudDocumentSync.a'>
