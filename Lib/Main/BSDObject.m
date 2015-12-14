@@ -7,7 +7,6 @@
 //
 
 #import "BSDObject.h"
-#import "BSDOutlet.h"
 
 @implementation BSDObject
 
