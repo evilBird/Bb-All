@@ -7,7 +7,6 @@
 //
 
 #import "BSDRoute.h"
-#import "BSDCollectionInlet.h"
 
 @implementation BSDRoute
 

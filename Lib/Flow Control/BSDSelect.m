@@ -7,7 +7,6 @@
 //
 
 #import "BSDSelect.h"
-#import "BSDCreate.h"
 
 @implementation BSDSelect
 
@@ -92,37 +91,6 @@
     return [self outletNamed:outletName];
 }
 
-- (void)test
-{
-    BSDValue *box1 = [BSDCreate valueBoxCold:@(10)];
-    box1.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
-        NSLog(@"box 1 emitted value %@",outlet.value);
-    };
-    BSDValue *box2 = [BSDCreate valueBoxCold:@(100)];
-    box2.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
-        NSLog(@"box 2 emitted value %@",outlet.value);
-    };
-    BSDValue *box3 = [BSDCreate valueBoxCold:@(1000)];
-    box3.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
-        NSLog(@"box 3 emitted value %@",outlet.value);
-    };
-    
-    NSArray *vals = @[@(0),@(1),@(2)];
-    NSArray *inlets = @[box1.hotInlet,box2.hotInlet,box3.hotInlet];
-    BSDSelect *select = [[BSDSelect alloc]initAndConnectWithSelectorsAndInlets:@{vals[0]:inlets[0],
-                                                                                 vals[1]:inlets[1],
-                                                                                 vals[2]:inlets[2]
-                                                                                 }];
-    [select.hotInlet input:@(2)];
-    NSLog(@"select in: %@",select.hotInlet.value);
-    [select.hotInlet input:@(1)];
-    NSLog(@"select in: %@",select.hotInlet.value);
-    [select.hotInlet input:@(0)];
-    NSLog(@"select in: %@",select.hotInlet.value);
-    [select.hotInlet input:@(4)];
-    NSLog(@"select in: %@",select.hotInlet.value);
-    [select.hotInlet input:@(-1)];
-    NSLog(@"select in: %@",select.hotInlet.value);
-}
+
 
 @end
