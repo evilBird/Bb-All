@@ -8,7 +8,7 @@
 
 #import "BSDNumberObject.h"
 
-@interface BSDAdd : BSDNumberObject
+@interface BSDAdd : BSDObject
 
 - (instancetype)initWithPlusValue:(NSNumber *)plusValue;
 

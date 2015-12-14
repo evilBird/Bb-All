@@ -8,6 +8,6 @@
 
 #import "BSDNumberObject.h"
 
-@interface BSDAbs : BSDNumberObject
+@interface BSDAbs : BSDObject
 
 @end
