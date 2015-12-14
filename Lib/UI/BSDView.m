@@ -172,6 +172,7 @@
         return;
     }
     
+
     NSMutableArray *copy = array.mutableCopy;
     id first = copy.firstObject;
     if (![first isKindOfClass:[NSString class]]) {
@@ -197,9 +198,10 @@
     if (!myView) {
         return;
     }
+    [NSInvocation doInstanceMethodTarget:myView selectorName:selectorName args:args];
+    return;
     
     Class c = [myView class];
-    
     NSMethodSignature *methodSig = [c instanceMethodSignatureForSelector:selector];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
     invocation.target = myView;
@@ -215,7 +217,6 @@
     if ([myView respondsToSelector:selector]) {
         [invocation invoke];
     }
-    
     
 }
 

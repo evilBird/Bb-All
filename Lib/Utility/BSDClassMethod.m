@@ -7,7 +7,12 @@
 //
 
 #import "BSDClassMethod.h"
+#import "NSObject+ObjC.h"
 #import "NSInvocation+Bb.h"
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import <CoreData/CoreData.h>
 
 @interface BSDClassMethod()
 
@@ -45,28 +50,32 @@
 - (void)calculateOutput
 {
     NSString *className = self.coldInlet.value;
-    
     NSString *selectorName = self.selectorInlet.value;
     NSArray *arguments = self.argumentsInlet.value;
     
-    if (!className || !selectorName) {
+    if ( nil == className || nil == selectorName  )  {
         return;
     }
-    if (![arguments isKindOfClass:[NSArray class]]) {
-        arguments = [NSArray arrayWithObject:self.argumentsInlet.value];
+    
+    id output = nil;
+    
+    if ( nil != arguments ) {
+        if ( ![arguments isKindOfClass:[NSArray class]] ) {
+            id arg = self.argumentsInlet.value;
+            arguments = @[arg];
+        }
     }
     
-    id output =[self doSelectorWithClassName:className selectorName:[NSString stringWithString:selectorName] arguments:[NSMutableArray arrayWithArray:arguments]];
+    output = [NSInvocation doClassMethod:className selectorName:selectorName args:arguments];
     
-    if (output) {
+    if (nil != output) {
         [self.mainOutlet output:output];
     }else{
         [self.mainOutlet output:[BSDBang bang]];
     }
     
-    self.coldInlet.value = nil;
 }
-
+/*
 - (id)doSelectorWithClassName:(NSString *)className selectorName:(NSString *)selectorName arguments:(NSArray *)arguments
 {
     SEL aSelector = NSSelectorFromString(selectorName);
@@ -107,7 +116,6 @@
                     [invocation setArgument:&a atIndex:(2+idx)];
                 }
             }
-             */
         }
     }
     
@@ -125,5 +133,5 @@
 }
 
 
-
+*/
 @end

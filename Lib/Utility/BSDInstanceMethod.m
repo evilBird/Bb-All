@@ -7,7 +7,7 @@
 //
 
 #import "BSDInstanceMethod.h"
-#import <objc/runtime.h>
+#import "NSInvocation+Bb.h"
 
 @interface BSDInstanceMethod ()
 
@@ -47,11 +47,19 @@
     NSString *selectorName = self.selectorInlet.value;
     NSArray *arguments = self.argumentsInlet.value;
     
-    if (!pointer || !selectorName) {
+    if ( nil == pointer || nil == selectorName) {
         return;
     }
     
-    id output = [self doSelectorWithPointer:pointer selectorName:[NSString stringWithString:selectorName] arguments:[NSMutableArray arrayWithArray:arguments]];
+    if ( nil != arguments ) {
+        if ( ![arguments isKindOfClass:[NSArray class]] ) {
+            id arg = self.argumentsInlet.value;
+            arguments = @[arg];
+        }
+    }
+    
+    
+    id output = [NSInvocation doInstanceMethodTarget:pointer selectorName:selectorName args:arguments];
     
     if (output) {
         self.returnVal = output;
