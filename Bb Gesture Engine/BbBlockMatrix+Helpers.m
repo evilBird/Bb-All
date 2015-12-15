@@ -10,6 +10,16 @@
 
 @implementation BbBlockMatrix (Helpers)
 
++ (BbBlockMatrixEvaluator)evaluatorWithExpression:(NSString *)expression
+{
+    BbBlockMatrixEvaluator evaluator = ^( id value){
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:expression,value];
+        NSNumber *result = ( [predicate evaluateWithObject:value] ) ? @(1) : @(0);
+        return result;
+    };
+    return evaluator;
+}
+
 + (BbBlockMatrixEvaluator)evaluatorWithMinValue:(double)minValue
 {
     BbBlockMatrixEvaluator evaluator = ^( id value){

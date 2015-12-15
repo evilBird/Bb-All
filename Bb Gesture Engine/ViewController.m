@@ -26,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
+    [self.touchHandler testExpression];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -53,17 +54,19 @@
 {
     CGFloat w = self.view.bounds.size.width;
     CGFloat h = self.view.bounds.size.height;
-    CGFloat uw = (u_int32_t)(w);
-    CGFloat uh = (u_int32_t)(h);
+    CGFloat uw = (u_int32_t)(w*0.8);
+    CGFloat uh = (u_int32_t)(h*0.8);
+    NSUInteger tag = 0;
+    self.view.tag = tag++;
     for ( NSString *className in classNames ) {
         BbDummyView *dummyView = [[BbDummyView alloc]initWithDummyClass:className];
+        dummyView.tag = tag++;
         [self.view addSubview:dummyView];
         CGFloat offsetX = ((CGFloat)arc4random_uniform(uw) - w/2.0);
         CGFloat offsetY = ((CGFloat)arc4random_uniform(uh) - h/2.0);
         [self.view addConstraint:[dummyView alignCenterXToSuperOffset:offsetX]];
         [self.view addConstraint:[dummyView alignCenterYToSuperOffset:offsetY]];
     }
-    
 }
 
 - (void)didReceiveMemoryWarning {

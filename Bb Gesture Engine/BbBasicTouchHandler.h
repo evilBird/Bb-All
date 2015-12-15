@@ -13,6 +13,7 @@
 
 - (void)touchHandler:(id)sender recognizedGestureWithTag:(NSString *)gestureTag;
 - (void)touchHandler:(id)sender possibleGesturesWithTags:(NSArray *)gestureTags;
+
 - (void)touchHandlerCancelTouchesInView:(id)sender;
 
 @end
@@ -22,5 +23,6 @@
 @property (nonatomic,weak)          id<BbBasicTouchHandlerDelegate>             delegate;
 
 - (instancetype)initWithTouchView:(BbTouchView *)touchView delegate:(id<BbBasicTouchHandlerDelegate>)delegate;
+- (void)testExpression;
 
 @end

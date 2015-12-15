@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-
+#import "BbBlockMatrix+Helpers.h"
 @interface Bb_Gesture_EngineTests : XCTestCase
 
 @end
@@ -22,6 +22,15 @@
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+}
+
+- (void)testExpressionEvaluator
+{
+    id value = @(10);
+    NSExpression *expression = [NSExpression expressionWithFormat:@"5 < %@",value];
+    BbBlockMatrixEvaluator evaluator = [BbBlockMatrix evaluatorWithExpression:expression];
+    NSNumber *result = evaluator(value);
+    XCTAssertEqual(result.integerValue, 0);
 }
 
 - (void)testExample {

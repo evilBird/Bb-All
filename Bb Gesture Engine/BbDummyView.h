@@ -13,5 +13,6 @@
 - (instancetype)initWithDummyClass:(NSString *)dummyClass;
 
 @property (nonatomic,strong)        NSString        *dummyClass;
+@property (nonatomic)               NSUInteger      dummyTag;
 
 @end

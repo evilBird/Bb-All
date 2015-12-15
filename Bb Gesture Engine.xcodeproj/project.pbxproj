@@ -20,6 +20,7 @@
 		F20FDCF81C20B165001B8CF6 /* BbBasicTouchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCF71C20B165001B8CF6 /* BbBasicTouchHandler.m */; };
 		F20FDCFB1C20B557001B8CF6 /* BbBlockMatrix+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCFA1C20B557001B8CF6 /* BbBlockMatrix+Helpers.m */; };
 		F20FDCFE1C20C81C001B8CF6 /* BbDummyView.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCFD1C20C81C001B8CF6 /* BbDummyView.m */; };
+		F20FDCFF1C20D64C001B8CF6 /* BbBlockMatrix+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCFA1C20B557001B8CF6 /* BbBlockMatrix+Helpers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -257,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F20FDCFF1C20D64C001B8CF6 /* BbBlockMatrix+Helpers.m in Sources */,
 				F20FDCE31C20911A001B8CF6 /* Bb_Gesture_EngineTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

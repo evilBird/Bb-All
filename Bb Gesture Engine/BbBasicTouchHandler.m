@@ -26,50 +26,62 @@ static NSString *kPanTag = @"pan";
 
 @implementation BbBasicTouchHandler
 
+- (void)testExpression
+{
+
+}
+
 - (void)commonInit
 {
     self.gestureTags = @[kTapTag,kLongPressTag,kSwipeLeftTag,kSwipeRightTag,kSwipeUpTag,kSwipeDownTag,kPanTag];
-    self.evaluationMatrix = [[BbBlockMatrix alloc]initWithRows:self.gestureTags.count columns:3];
+    self.evaluationMatrix = [[BbBlockMatrix alloc]initWithRows:self.gestureTags.count columns:4];
     
     [self.evaluationMatrix setEvaluators:@[[BbBlockMatrix evaluatorWithMaxValue:0.2],
                                            [BbBlockMatrix evaluatorWithMaxValue:0.01],
-                                           [BbBlockMatrix evaluatorWithMaxValue:0.01]
+                                           [BbBlockMatrix evaluatorWithMaxValue:0.01],
+                                           [BbBlockMatrix evaluatorWithExactValue:3]
                                            ]
                         forElementsInRow:[self.gestureTags indexOfObject:kTapTag]];
     
     [self.evaluationMatrix setEvaluators:@[[BbBlockMatrix evaluatorWithMinValue:0.5],
                                            [BbBlockMatrix evaluatorWithMaxValue:0.01],
-                                           [BbBlockMatrix evaluatorWithMaxValue:0.01]
+                                           [BbBlockMatrix evaluatorWithMaxValue:0.01],
+                                           [BbBlockMatrix evaluatorWithExactValue:3]
                                            ]
                         forElementsInRow:[self.gestureTags indexOfObject:kLongPressTag]];
     
     [self.evaluationMatrix setEvaluators:@[[BbBlockMatrix evaluatorTrue],
                                            [BbBlockMatrix evaluatorWithMaxValue:-0.01],
-                                           [BbBlockMatrix evaluatorWithMaxAbsValue:0.02]
+                                           [BbBlockMatrix evaluatorWithMaxAbsValue:0.02],
+                                           [BbBlockMatrix evaluatorWithExactValue:1]
                                            ]
                         forElementsInRow:[self.gestureTags indexOfObject:kSwipeLeftTag]];
     
     [self.evaluationMatrix setEvaluators:@[[BbBlockMatrix evaluatorTrue],
                                            [BbBlockMatrix evaluatorWithMinValue:0.01],
-                                           [BbBlockMatrix evaluatorWithMaxAbsValue:0.02]
+                                           [BbBlockMatrix evaluatorWithMaxAbsValue:0.02],
+                                           [BbBlockMatrix evaluatorWithExactValue:1]
                                            ]
                         forElementsInRow:[self.gestureTags indexOfObject:kSwipeRightTag]];
     
     [self.evaluationMatrix setEvaluators:@[[BbBlockMatrix evaluatorTrue],
                                            [BbBlockMatrix evaluatorWithMaxAbsValue:0.02],
-                                           [BbBlockMatrix evaluatorWithMaxValue:-0.01]
+                                           [BbBlockMatrix evaluatorWithMaxValue:-0.01],
+                                           [BbBlockMatrix evaluatorWithExactValue:1]
                                            ]
                         forElementsInRow:[self.gestureTags indexOfObject:kSwipeUpTag]];
     
     [self.evaluationMatrix setEvaluators:@[[BbBlockMatrix evaluatorTrue],
                                            [BbBlockMatrix evaluatorWithMaxAbsValue:0.02],
-                                           [BbBlockMatrix evaluatorWithMinValue:0.01]
+                                           [BbBlockMatrix evaluatorWithMinValue:0.01],
+                                           [BbBlockMatrix evaluatorWithExactValue:1]
                                            ]
                         forElementsInRow:[self.gestureTags indexOfObject:kSwipeDownTag]];
     
     [self.evaluationMatrix setEvaluators:@[[BbBlockMatrix evaluatorWithMinValue:0.1],
                                            [BbBlockMatrix evaluatorWithMinAbsValue:0.01],
-                                           [BbBlockMatrix evaluatorWithMinAbsValue:0.01]
+                                           [BbBlockMatrix evaluatorWithMinAbsValue:0.01],
+                                           [BbBlockMatrix evaluatorWithExactValue:1]
                                            ]
                         forElementsInRow:[self.gestureTags indexOfObject:kPanTag]];
     
@@ -110,27 +122,6 @@ static NSString *kPanTag = @"pan";
 #pragma mark - BbTouchViewDelegate
 
 - (void)touch:(UITouch *)touch inView:(id)sender data:(NSArray *)data
-{
-    NSArray *eval = [self.evaluationMatrix rowProductsByEvaluatingInputArray:data];
-    NSArray *tags = [self tagsForPossibleGesturesWithResults:eval];
-    [self handleGestureTags:tags];
-}
-
-- (void)touch:(UITouch *)touch changedInView:(id)sender data:(NSArray *)data
-{
-    NSArray *eval = [self.evaluationMatrix rowProductsByEvaluatingInputArray:data];
-    NSArray *tags = [self tagsForPossibleGesturesWithResults:eval];
-    [self handleGestureTags:tags];
-}
-
-- (void)touch:(UITouch *)touch cancelledInView:(id)sender data:(NSArray *)data
-{
-    NSArray *eval = [self.evaluationMatrix rowProductsByEvaluatingInputArray:data];
-    NSArray *tags = [self tagsForPossibleGesturesWithResults:eval];
-    [self handleGestureTags:tags];
-}
-
-- (void)touch:(UITouch *)touch endedInView:(id)sender data:(NSArray *)data
 {
     NSArray *eval = [self.evaluationMatrix rowProductsByEvaluatingInputArray:data];
     NSArray *tags = [self tagsForPossibleGesturesWithResults:eval];

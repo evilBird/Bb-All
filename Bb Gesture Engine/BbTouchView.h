@@ -10,9 +10,6 @@
 
 @protocol BbTouchViewDelegate <NSObject>
 
-- (void)touch:(UITouch *)touch changedInView:(id)sender data:(NSArray *)data;
-- (void)touch:(UITouch *)touch cancelledInView:(id)sender data:(NSArray *)data;
-- (void)touch:(UITouch *)touch endedInView:(id)sender data:(NSArray *)data;
 - (void)touch:(UITouch *)touch inView:(id)sender data:(NSArray *)data;
 
 @end
