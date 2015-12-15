@@ -8,14 +8,46 @@
 
 #import "BbTouchView.h"
 
+@interface UITouch (TouchKey)
+
+- (NSString *)touchKey;
+
+@end
+
+@implementation UITouch (TouchKey)
+
+- (NSString *)touchKey
+{
+    NSUInteger hash = [self hash];
+    return [NSString stringWithFormat:@"%@",@(hash)];
+}
+
+@end
+
 @interface BbTouchView ()
 
-@property (nonatomic, strong)           NSMutableDictionary        *touchDurationDictionary;
-@property (nonatomic, strong)           NSMutableDictionary        *touchMovementDictionary;
+@property (nonatomic, strong)                                       NSMutableDictionary        *touchDurationDictionary;
+@property (nonatomic, strong)                                       NSMutableDictionary        *touchMovementDictionary;
+@property (nonatomic, getter=isIgnoringTouches)                     BOOL                        ignoringTouches;
 
 @end
 
 @implementation BbTouchView
+
+- (void)gestureWasRecognized
+{
+    [self startIgnoringTouches];
+}
+
+- (void)startIgnoringTouches
+{
+    self.ignoringTouches = YES;
+}
+
+- (void)stopIgnoringTouches
+{
+    self.ignoringTouches = NO;
+}
 
 - (BOOL)validateTouchIsNew:(UITouch *)touch
 {
@@ -46,26 +78,22 @@
 
 - (BOOL)dictionary:(NSDictionary *)dictionary containsTouch:(UITouch *)touch
 {
-    NSValue *touchValue = [NSValue valueWithNonretainedObject:touch];
-    return [dictionary.allKeys containsObject:touchValue];
+    return [dictionary.allKeys containsObject:[touch touchKey]];
 }
 
 - (void)addTouch:(UITouch *)touch toDictionary:(NSMutableDictionary *)dictionary asKeyForValue:(id)value
 {
-    NSValue *touchValue = [NSValue valueWithNonretainedObject:touch];
-    [dictionary setValue:value forKey:touchValue];
+    [dictionary setValue:value forKey:[touch touchKey]];
 }
 
 - (void)removeTouch:(UITouch *)touch fromDictionary:(NSMutableDictionary *)dictionary
 {
-    NSValue *touchValue = [NSValue valueWithNonretainedObject:touch];
-    [dictionary removeObjectForKey:touchValue];
+    [dictionary removeObjectForKey:[touch touchKey]];
 }
 
 - (id)getValueForTouch:(UITouch *)touch fromDictionary:(NSDictionary *)dictionary
 {
-    NSValue *touchValue = [NSValue valueWithNonretainedObject:touch];
-    return [dictionary valueForKey:touchValue];
+    return [dictionary valueForKey:[touch touchKey]];
 }
 
 - (NSTimeInterval)getTouchDuration:(UITouch *)touch
@@ -85,6 +113,36 @@
     movement.x = (currentPoint.x - startPoint.x);
     movement.y = (currentPoint.y - startPoint.y);
     return movement;
+}
+
+- (CGPoint)getNormalizedTouchMovement:(UITouch *)touch
+{
+    NSValue *startPointValue = [self getValueForTouch:touch fromDictionary:self.touchMovementDictionary];
+    CGPoint startPoint = startPointValue.CGPointValue;
+    CGPoint currentPoint = [touch locationInView:self];
+    CGSize mySize = self.bounds.size;
+    CGPoint movement = [BbTouchView unitVectorWithPoint:currentPoint center:startPoint size:mySize];
+    return movement;
+}
+
++ (CGPoint)unitVectorWithPoint:(CGPoint)point center:(CGPoint)center size:(CGSize)size
+{
+    CGPoint uv;
+    CGFloat dx = (point.x-center.x)/size.width*2.0;
+    CGFloat dy = (point.y-center.y)/size.height*2.0;
+    uv.x = dx;
+    uv.y = dy;
+    return uv;
+}
+
+- (void)startReceivingTouches
+{
+    [[UIApplication sharedApplication]endIgnoringInteractionEvents];
+}
+
+- (void)stopReceivingTouches
+{
+    [[UIApplication sharedApplication]beginIgnoringInteractionEvents];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -108,26 +166,36 @@
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    
     for (UITouch *touch in touches.allObjects ) {
         if ( [self validateHaveTouch:touch] == YES ) {
             NSTimeInterval duration = [self getTouchDuration:touch];
-            CGPoint movement = [self getTouchMovement:touch];
-            NSLog(@"Updated touch vector:\t%@\t\t%@\t\t%@\t\t",@(duration),@(movement.x),@(movement.y));
+            CGPoint movement = [self getNormalizedTouchMovement:touch];
+            if ( self.isIgnoringTouches == NO ) {
+                [self.delegate touch:touch inView:self data:@[@(duration),@(movement.x),@(movement.y),@(touch.phase)]];
+            }
+            //NSLog(@"Updated touch vector:\t%.2f\t%.2f\t%.2f\t",duration,movement.x,movement.y);
         }
     }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    
     for (UITouch *touch in touches.allObjects) {
         if ( [self validateHaveTouch:touch] == YES ) {
             NSTimeInterval duration = [self getTouchDuration:touch];
-            CGPoint movement = [self getTouchMovement:touch];
-            NSLog(@"Cancelled touch vector:\t%@\t\t%@\t\t%@\t\t",@(duration),@(movement.x),@(movement.y));
+            CGPoint movement = [self getNormalizedTouchMovement:touch];
+            if ( self.isIgnoringTouches == NO ) {
+                [self.delegate touch:touch inView:self data:@[@(duration),@(movement.x),@(movement.y),@(touch.phase)]];
+            }
+            //NSLog(@"Cancelled touch vector:\t%.2f\t%.2f\t%.2f\t",duration,movement.x,movement.y);
             [self removeTouch:touch fromDictionary:self.touchDurationDictionary];
             [self removeTouch:touch fromDictionary:self.touchMovementDictionary];
         }
     }
+    
+    [self stopIgnoringTouches];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -135,12 +203,16 @@
     for (UITouch *touch in touches.allObjects) {
         if ( [self validateHaveTouch:touch] == YES ) {
             NSTimeInterval duration = [self getTouchDuration:touch];
-            CGPoint movement = [self getTouchMovement:touch];
-            NSLog(@"Ending touch vector:\t%@\t\t%@\t\t%@\t\t",@(duration),@(movement.x),@(movement.y));
+            CGPoint movement = [self getNormalizedTouchMovement:touch];
+            //NSLog(@"Ending touch vector:\t%.2f\t%.2f\t%.2f\t",duration,movement.x,movement.y);
+            if ( self.isIgnoringTouches == NO ) {
+                [self.delegate touch:touch inView:self data:@[@(duration),@(movement.x),@(movement.y),@(touch.phase)]];
+            }
             [self removeTouch:touch fromDictionary:self.touchDurationDictionary];
             [self removeTouch:touch fromDictionary:self.touchMovementDictionary];
         }
     }
+    [self stopIgnoringTouches];
 }
 
 @end

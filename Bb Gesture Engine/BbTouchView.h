@@ -8,6 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol BbTouchViewDelegate <NSObject>
+
+- (void)touch:(UITouch *)touch changedInView:(id)sender data:(NSArray *)data;
+- (void)touch:(UITouch *)touch cancelledInView:(id)sender data:(NSArray *)data;
+- (void)touch:(UITouch *)touch endedInView:(id)sender data:(NSArray *)data;
+- (void)touch:(UITouch *)touch inView:(id)sender data:(NSArray *)data;
+
+@end
+
 @interface BbTouchView : UIView
+
+@property (nonatomic,weak)  id<BbTouchViewDelegate> delegate;
+
+- (void)gestureWasRecognized;
 
 @end
