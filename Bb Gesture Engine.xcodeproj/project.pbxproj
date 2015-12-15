@@ -14,6 +14,9 @@
 		F20FDCD51C209119001B8CF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F20FDCD41C209119001B8CF6 /* Assets.xcassets */; };
 		F20FDCD81C209119001B8CF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F20FDCD61C209119001B8CF6 /* LaunchScreen.storyboard */; };
 		F20FDCE31C20911A001B8CF6 /* Bb_Gesture_EngineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCE21C20911A001B8CF6 /* Bb_Gesture_EngineTests.m */; };
+		F20FDCEF1C20913F001B8CF6 /* BbBlockMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCEE1C20913E001B8CF6 /* BbBlockMatrix.m */; };
+		F20FDCF21C20A157001B8CF6 /* BbTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCF11C20A157001B8CF6 /* BbTouchView.m */; };
+		F20FDCF51C20A6EB001B8CF6 /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCF31C20A6EB001B8CF6 /* UIView+Layout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,12 @@
 		F20FDCDE1C20911A001B8CF6 /* Bb Gesture EngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bb Gesture EngineTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F20FDCE21C20911A001B8CF6 /* Bb_Gesture_EngineTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bb_Gesture_EngineTests.m; sourceTree = "<group>"; };
 		F20FDCE41C20911A001B8CF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F20FDCED1C20913E001B8CF6 /* BbBlockMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbBlockMatrix.h; sourceTree = "<group>"; };
+		F20FDCEE1C20913E001B8CF6 /* BbBlockMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbBlockMatrix.m; sourceTree = "<group>"; };
+		F20FDCF01C20A157001B8CF6 /* BbTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbTouchView.h; sourceTree = "<group>"; };
+		F20FDCF11C20A157001B8CF6 /* BbTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbTouchView.m; sourceTree = "<group>"; };
+		F20FDCF31C20A6EB001B8CF6 /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
+		F20FDCF41C20A6EB001B8CF6 /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,15 +90,21 @@
 		F20FDCC71C209119001B8CF6 /* Bb Gesture Engine */ = {
 			isa = PBXGroup;
 			children = (
+				F20FDCF31C20A6EB001B8CF6 /* UIView+Layout.m */,
+				F20FDCF41C20A6EB001B8CF6 /* UIView+Layout.h */,
 				F20FDCCB1C209119001B8CF6 /* AppDelegate.h */,
 				F20FDCCC1C209119001B8CF6 /* AppDelegate.m */,
 				F20FDCCE1C209119001B8CF6 /* ViewController.h */,
 				F20FDCCF1C209119001B8CF6 /* ViewController.m */,
+				F20FDCF01C20A157001B8CF6 /* BbTouchView.h */,
+				F20FDCF11C20A157001B8CF6 /* BbTouchView.m */,
 				F20FDCD11C209119001B8CF6 /* Main.storyboard */,
 				F20FDCD41C209119001B8CF6 /* Assets.xcassets */,
 				F20FDCD61C209119001B8CF6 /* LaunchScreen.storyboard */,
 				F20FDCD91C209119001B8CF6 /* Info.plist */,
 				F20FDCC81C209119001B8CF6 /* Supporting Files */,
+				F20FDCED1C20913E001B8CF6 /* BbBlockMatrix.h */,
+				F20FDCEE1C20913E001B8CF6 /* BbBlockMatrix.m */,
 			);
 			path = "Bb Gesture Engine";
 			sourceTree = "<group>";
@@ -211,8 +226,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F20FDCF21C20A157001B8CF6 /* BbTouchView.m in Sources */,
 				F20FDCD01C209119001B8CF6 /* ViewController.m in Sources */,
+				F20FDCF51C20A6EB001B8CF6 /* UIView+Layout.m in Sources */,
 				F20FDCCD1C209119001B8CF6 /* AppDelegate.m in Sources */,
+				F20FDCEF1C20913F001B8CF6 /* BbBlockMatrix.m in Sources */,
 				F20FDCCA1C209119001B8CF6 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

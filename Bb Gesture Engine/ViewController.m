@@ -7,8 +7,12 @@
 //
 
 #import "ViewController.h"
+#import "BbTouchView.h"
+#import "UIView+Layout.h"
 
 @interface ViewController ()
+
+@property (nonatomic,strong)        BbTouchView         *touchView;
 
 @end
 
@@ -16,6 +20,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.touchView = [BbTouchView new];
+    self.touchView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.touchView.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:self.touchView];
+    [self.view addConstraints:[self.touchView pinEdgesToSuperWithInsets:UIEdgeInsetsZero]];
+    [self.view layoutIfNeeded];
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -23,5 +34,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 @end
