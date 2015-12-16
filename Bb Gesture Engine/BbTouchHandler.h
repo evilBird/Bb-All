@@ -17,6 +17,9 @@
 
 @protocol BbTouchHandlerDataSource <NSObject>
 
+- (BOOL)canvasIsEditing:(id)sender;
+- (BOOL)canvasHasActiveOutlet:(id)sender;
+
 @end
 
 @interface BbTouchHandler : NSObject

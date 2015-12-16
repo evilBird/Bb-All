@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BbTouchView.h"
 
 @protocol BbCanvasViewDelegate <NSObject>
 
@@ -16,7 +17,7 @@
 
 @end
 
-@interface BbCanvasView : UIView
+@interface BbCanvasView : UIView <BbTouchView>
 
 @property (nonatomic,weak)                              id<BbCanvasViewDelegate>        delegate;
 @property (nonatomic, readonly)                         NSInteger                       touchPhase;

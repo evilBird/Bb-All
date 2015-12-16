@@ -65,6 +65,7 @@
 		F20FDD041C220029001B8CF6 /* BbTouchHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbTouchHandler.m; sourceTree = "<group>"; };
 		F20FDD061C22060B001B8CF6 /* NSInvocation+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Bb.m"; sourceTree = "<group>"; };
 		F20FDD071C22060B001B8CF6 /* NSInvocation+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Bb.h"; sourceTree = "<group>"; };
+		F20FDD091C221131001B8CF6 /* BbTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbTouchView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +119,7 @@
 				F20FDCFD1C20C81C001B8CF6 /* BbDummyView.m */,
 				F20FDD031C220029001B8CF6 /* BbTouchHandler.h */,
 				F20FDD041C220029001B8CF6 /* BbTouchHandler.m */,
+				F20FDD091C221131001B8CF6 /* BbTouchView.h */,
 				F20FDCF01C20A157001B8CF6 /* BbCanvasView.h */,
 				F20FDCF11C20A157001B8CF6 /* BbCanvasView.m */,
 				F20FDD001C21FAF6001B8CF6 /* BbGesture.h */,

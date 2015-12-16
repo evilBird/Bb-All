@@ -16,6 +16,7 @@ typedef NSNumber* (^BbBlockMatrixEvaluator) (id input);
 
 - (void) setEvaluator:(BbBlockMatrixEvaluator)evaluator forElementAtRow:(NSUInteger)aRow column:(NSUInteger)aColumn;
 - (void) setEvaluators:(NSArray *)evaluators forElementsInRow:(NSUInteger)aRow;
+
 - (NSArray *)rowProductsByEvaluatingInputArray:(NSArray *)inputArray;
 - (NSArray *)rowSumsByEvaluationInputArray:(NSArray *)inputArray;
 

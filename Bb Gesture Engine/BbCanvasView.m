@@ -330,4 +330,66 @@
     return self;
 }
 
+#pragma mark - BbTouchView
+
+- (NSUInteger)canRecognizeGesture:(BbGestureType)gesture givenTouchPhase:(NSUInteger)touchPhase
+{
+    NSUInteger result;
+    switch ( gesture ) {
+        case BbGestureType_Tap:
+            result = ( touchPhase == 3 ) ? 1 : 0;
+            break;
+            
+        case BbGestureType_SwipeDown:
+        case BbGestureType_SwipeLeft:
+        case BbGestureType_SwipeUp:
+        case BbGestureType_SwipeRight:
+            result = ( touchPhase == 1 ) ? 1 : 0;
+            break;
+            
+        default:
+            result = 0;
+            break;
+    }
+    
+    return result;
+}
+
+- (NSUInteger)canRecognizeGesture:(BbGestureType)gesture givenCanvasEditingState:(NSUInteger)editingState
+{
+    NSUInteger result;
+    switch ( gesture ) {
+        case BbGestureType_Tap:
+            result = ( editingState == 0 ) ? 1 : 0;
+            break;
+        case BbGestureType_Pan:
+            result = ( editingState == 1 ) ? 1 : 0;
+        default:
+            result = 0;
+            break;
+    }
+    return result;
+}
+
+- (NSUInteger)canRecognizeGesture:(BbGestureType)gesture givenGestureRepeatCount:(NSUInteger)repeatCount
+{
+    NSUInteger result;
+    switch ( gesture ) {
+        case BbGestureType_Tap:
+            result = ( repeatCount == 2 ) ? 1 : 0;
+            break;
+            
+        default:
+            result = 0;
+            break;
+    }
+    return result;
+}
+
+- (NSUInteger)canRecognizeGesture:(BbGestureType)gesture givenOutletIsActiveInCanvas:(BOOL)outletIsActive
+{
+    NSUInteger result = 0;
+    return result;
+}
+
 @end

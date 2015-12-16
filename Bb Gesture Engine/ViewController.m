@@ -101,7 +101,10 @@
 #pragma mark - Touch handler delegate
 
 #pragma mark - Touch handler datasource
-
+- (BOOL)canvasIsEditing:(id)sender
+{
+    return self.isEditing;
+}
 
 
 @end

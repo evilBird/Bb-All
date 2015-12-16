@@ -9,6 +9,7 @@
 #import "BbTouchHandler.h"
 #import "BbCanvasView.h"
 #import "BbGesture.h"
+#import "NSInvocation+Bb.h"
 
 @interface BbTouchHandler () <BbCanvasViewDelegate>
 
@@ -44,7 +45,14 @@
 - (void)canvasView:(id)sender evaluateTouch:(id)touch withObservedData:(id)data
 {
     NSArray *possibleGestures = [self.touchDataEvaluationMatrix rowProductsByEvaluatingInputArray:data];
-    NSLog(@"possible gestures: %@",possibleGestures);
+    
+    UITouch *myTouch = (UITouch *)touch;
+    if ( [myTouch.view conformsToProtocol:@protocol(BbTouchView)] == NO ) {
+        return;
+    }
+    
+    id <BbTouchView> touchView = (id<BbTouchView>)myTouch.view;
+    
 }
 
 - (void)canvasView:(id)sender touchPhaseWillChangeToPhase:(NSInteger)touchPhase
