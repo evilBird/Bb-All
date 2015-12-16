@@ -61,7 +61,7 @@
     for ( NSString *className in classNames ) {
         BbDummyView *dummyView = [[BbDummyView alloc]initWithDummyClass:className];
         dummyView.tag = tag++;
-        [self.view addSubview:dummyView];
+        [self.touchView addSubview:dummyView];
         CGFloat offsetX = ((CGFloat)arc4random_uniform(uw) - w/2.0);
         CGFloat offsetY = ((CGFloat)arc4random_uniform(uh) - h/2.0);
         [self.view addConstraint:[dummyView alignCenterXToSuperOffset:offsetX]];

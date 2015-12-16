@@ -172,8 +172,7 @@
             NSTimeInterval duration = [self getTouchDuration:touch];
             CGPoint movement = [self getNormalizedTouchMovement:touch];
             if ( self.isIgnoringTouches == NO ) {
-                [self.delegate touch:touch inView:self data:@[@(duration),@(movement.x),@(movement.y),@(touch.phase)]];
-            }
+                [self.delegate touch:touch inView:self data:@[@(duration),@(movement.x),@(movement.y),@(touch.phase),touch.view]];            }
             //NSLog(@"Updated touch vector:\t%.2f\t%.2f\t%.2f\t",duration,movement.x,movement.y);
         }
     }
@@ -187,7 +186,7 @@
             NSTimeInterval duration = [self getTouchDuration:touch];
             CGPoint movement = [self getNormalizedTouchMovement:touch];
             if ( self.isIgnoringTouches == NO ) {
-                [self.delegate touch:touch inView:self data:@[@(duration),@(movement.x),@(movement.y),@(touch.phase)]];
+                [self.delegate touch:touch inView:self data:@[@(duration),@(movement.x),@(movement.y),@(touch.phase),touch.view]];
             }
             //NSLog(@"Cancelled touch vector:\t%.2f\t%.2f\t%.2f\t",duration,movement.x,movement.y);
             [self removeTouch:touch fromDictionary:self.touchDurationDictionary];
@@ -206,7 +205,7 @@
             CGPoint movement = [self getNormalizedTouchMovement:touch];
             //NSLog(@"Ending touch vector:\t%.2f\t%.2f\t%.2f\t",duration,movement.x,movement.y);
             if ( self.isIgnoringTouches == NO ) {
-                [self.delegate touch:touch inView:self data:@[@(duration),@(movement.x),@(movement.y),@(touch.phase)]];
+                [self.delegate touch:touch inView:self data:@[@(duration),@(movement.x),@(movement.y),@(touch.phase),touch.view]];
             }
             [self removeTouch:touch fromDictionary:self.touchDurationDictionary];
             [self removeTouch:touch fromDictionary:self.touchMovementDictionary];
