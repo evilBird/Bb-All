@@ -11,7 +11,6 @@
 @interface BbBlockMatrix (Helpers)
 
 + (BbBlockMatrixEvaluator)evaluatorWithExpression:(NSString *)expression;
-+ (BbBlockMatrixEvaluator)evaluatorWithExpressions:(NSArray *)expressions;
 + (BbBlockMatrixEvaluator)evaluatorWithMinValue:(double)minValue;
 + (BbBlockMatrixEvaluator)evaluatorWithMaxValue:(double)maxValue;
 + (BbBlockMatrixEvaluator)evaluatorWithMinAbsValue:(double)minAbsValue;

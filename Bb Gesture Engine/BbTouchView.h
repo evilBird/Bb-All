@@ -10,7 +10,7 @@
 
 @protocol BbTouchViewDelegate <NSObject>
 
-- (void)touch:(UITouch *)touch inView:(id)sender data:(NSArray *)data;
+- (void)touchView:(id)sender evaluateTouch:(id)touch withObservedData:(id)data;
 
 @end
 
@@ -18,6 +18,10 @@
 
 @property (nonatomic,weak)  id<BbTouchViewDelegate> delegate;
 
-- (void)gestureWasRecognized;
+- (void) startIgnoringTouches;
+
+- (void) stopIgnoringTouches;
+
+- (NSSet *) subviewClasses;
 
 @end

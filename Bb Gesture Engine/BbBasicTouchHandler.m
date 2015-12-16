@@ -27,19 +27,10 @@ static NSString *kPanTag = @"pan";
 
 @implementation BbBasicTouchHandler
 
-- (void)testExpression
-{
-    BbDummyView *dummyView = [[BbDummyView alloc]initWithDummyClass:@"class"];
-    dummyView.tag = 3;
-    BbBlockMatrixEvaluator e = [BbBlockMatrix evaluatorWithExpression:@"tag == 2 OR tag == 4"];
-    NSNumber *r = e(dummyView);
-    NSInteger result = r.integerValue;
-    
-}
-
 - (void)commonInit
 {
     self.gestureTags = @[kTapTag,kLongPressTag,kSwipeLeftTag,kSwipeRightTag,kSwipeUpTag,kSwipeDownTag,kPanTag];
+    
     self.evaluationMatrix = [[BbBlockMatrix alloc]initWithRows:self.gestureTags.count columns:3];
     
     [self.evaluationMatrix setEvaluators:@[[BbBlockMatrix evaluatorWithMaxValue:0.2],
@@ -120,7 +111,7 @@ static NSString *kPanTag = @"pan";
 
 #pragma mark - BbTouchViewDelegate
 
-- (void)touch:(UITouch *)touch inView:(id)sender data:(NSArray *)data
+- (void)touchView:(id)sender evaluateTouch:(id)touch withObservedData:(id)data
 {
     NSArray *eval = [self.evaluationMatrix rowProductsByEvaluatingInputArray:data];
     NSArray *tags = [self tagsForPossibleGesturesWithResults:eval];

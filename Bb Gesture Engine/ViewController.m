@@ -9,13 +9,13 @@
 #import "ViewController.h"
 #import "BbTouchView.h"
 #import "UIView+Layout.h"
-#import "BbBasicTouchHandler.h"
 #import "BbDummyView.h"
+#import "BbTouchHandler.h"
 
-@interface ViewController () <BbBasicTouchHandlerDelegate>
+@interface ViewController () <BbTouchHandlerDelegate,BbTouchHandlerDataSource>
 
 @property (nonatomic,strong)                BbTouchView         *touchView;
-@property (nonatomic,strong)                BbBasicTouchHandler *touchHandler;
+@property (nonatomic,strong)                BbTouchHandler      *touchHandler;
 @property (nonatomic,strong)                UIButton            *toggleEditStateButton;
 @property (nonatomic,getter=isEditing)      BOOL                editing;
 @property (nonatomic,strong)                NSArray             *dummyViews;
@@ -26,32 +26,43 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
-    [self.touchHandler testExpression];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
 
 - (void)setupUI
 {
+    [self setupTouchViewAndHandler];
+    [self setupEditToggle];
+    [self.view layoutIfNeeded];
+}
+
+- (void)setupTouchViewAndHandler
+{
     self.touchView = [BbTouchView new];
     self.touchView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.touchView];
     [self.view addConstraints:[self.touchView pinEdgesToSuperWithInsets:UIEdgeInsetsZero]];
-    self.touchHandler = [[BbBasicTouchHandler alloc]initWithTouchView:self.touchView delegate:self];
+    self.touchHandler = [[BbTouchHandler alloc]initWithTouchView:self.touchView delegate:self datasouce:self];
+}
+
+- (void)setupEditToggle
+{
     self.toggleEditStateButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.toggleEditStateButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view insertSubview:self.toggleEditStateButton aboveSubview:self.touchView];
     [self.toggleEditStateButton setTitle:@"Not Editing" forState:UIControlStateNormal];
     [self.toggleEditStateButton setTitle:@"Editing" forState:UIControlStateSelected];
     [self.toggleEditStateButton addTarget:self action:@selector(toggleEditingState:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addConstraint:[self.toggleEditStateButton pinEdge:LayoutEdge_Top toEdge:LayoutEdge_Top ofView:self.view withInset:20]];
     [self.view addConstraint:[self.toggleEditStateButton pinEdge:LayoutEdge_Left toEdge:LayoutEdge_Left ofView:self.view withInset:20]];
-    [self addDummyViewsWithClassNames:@[@"object",@"message",@"number",@"slider",@"bang"]];
-    [self.view layoutIfNeeded];
+
 }
 
-- (void)addDummyViewsWithClassNames:(NSArray *)classNames
+- (void)setupDummyViews
 {
+    NSArray *classNames = @[@"object",@"message",@"number",@"slider",@"bang"];
     CGFloat w = self.view.bounds.size.width;
     CGFloat h = self.view.bounds.size.height;
     CGFloat uw = (u_int32_t)(w*0.8);
@@ -87,21 +98,10 @@
     button.selected = self.isEditing;
 }
 
-#pragma mark - Basic touch handler delegate
+#pragma mark - Touch handler delegate
 
-- (void)touchHandler:(id)sender recognizedGestureWithTag:(NSString *)gestureTag
-{
-    NSLog(@"GESTURE RECOGNIZED: %@",gestureTag);
-}
+#pragma mark - Touch handler datasource
 
-- (void)touchHandler:(id)sender possibleGesturesWithTags:(NSArray *)gestureTags
-{
-    NSString *tags = [gestureTags componentsJoinedByString:@", "];
-    NSLog(@"POSSIBLE GESTURES: %@",tags);
-}
 
-- (void)touchHandlerCancelTouchesInView:(id)sender
-{
-    [self.touchView gestureWasRecognized];
-}
+
 @end
