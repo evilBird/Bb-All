@@ -7,14 +7,14 @@
 //
 
 #import "ViewController.h"
-#import "BbTouchView.h"
+#import "BbCanvasView.h"
 #import "UIView+Layout.h"
 #import "BbDummyView.h"
 #import "BbTouchHandler.h"
 
 @interface ViewController () <BbTouchHandlerDelegate,BbTouchHandlerDataSource>
 
-@property (nonatomic,strong)                BbTouchView         *touchView;
+@property (nonatomic,strong)                BbCanvasView         *canvasView;
 @property (nonatomic,strong)                BbTouchHandler      *touchHandler;
 @property (nonatomic,strong)                UIButton            *toggleEditStateButton;
 @property (nonatomic,getter=isEditing)      BOOL                editing;
@@ -32,25 +32,25 @@
 
 - (void)setupUI
 {
-    [self setupTouchViewAndHandler];
+    [self setupCanvasViewAndTouchHandler];
     [self setupEditToggle];
     [self.view layoutIfNeeded];
 }
 
-- (void)setupTouchViewAndHandler
+- (void)setupCanvasViewAndTouchHandler
 {
-    self.touchView = [BbTouchView new];
-    self.touchView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.touchView];
-    [self.view addConstraints:[self.touchView pinEdgesToSuperWithInsets:UIEdgeInsetsZero]];
-    self.touchHandler = [[BbTouchHandler alloc]initWithTouchView:self.touchView delegate:self datasouce:self];
+    self.canvasView = [BbCanvasView new];
+    self.canvasView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.canvasView];
+    [self.view addConstraints:[self.canvasView pinEdgesToSuperWithInsets:UIEdgeInsetsZero]];
+    self.touchHandler = [[BbTouchHandler alloc]initWithCanvasView:self.canvasView delegate:self datasouce:self];
 }
 
 - (void)setupEditToggle
 {
     self.toggleEditStateButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.toggleEditStateButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view insertSubview:self.toggleEditStateButton aboveSubview:self.touchView];
+    [self.view insertSubview:self.toggleEditStateButton aboveSubview:self.canvasView];
     [self.toggleEditStateButton setTitle:@"Not Editing" forState:UIControlStateNormal];
     [self.toggleEditStateButton setTitle:@"Editing" forState:UIControlStateSelected];
     [self.toggleEditStateButton addTarget:self action:@selector(toggleEditingState:) forControlEvents:UIControlEventTouchUpInside];
@@ -72,7 +72,7 @@
     for ( NSString *className in classNames ) {
         BbDummyView *dummyView = [[BbDummyView alloc]initWithDummyClass:className];
         dummyView.tag = tag++;
-        [self.touchView addSubview:dummyView];
+        [self.canvasView addSubview:dummyView];
         CGFloat offsetX = ((CGFloat)arc4random_uniform(uw) - w/2.0);
         CGFloat offsetY = ((CGFloat)arc4random_uniform(uh) - h/2.0);
         [self.view addConstraint:[dummyView alignCenterXToSuperOffset:offsetX]];

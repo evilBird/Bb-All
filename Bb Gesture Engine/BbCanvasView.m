@@ -6,7 +6,7 @@
 //  Copyright © 2015 birdSound. All rights reserved.
 //
 
-#import "BbTouchView.h"
+#import "BbCanvasView.h"
 
 @interface UITouch (TouchKey)
 
@@ -24,27 +24,18 @@
 
 @end
 
-@interface BbTouchView ()
+@interface BbCanvasView ()
 
 @property (nonatomic, strong)                                       NSMutableDictionary        *touchDurationDictionary;
 @property (nonatomic, strong)                                       NSMutableDictionary        *touchMovementDictionary;
-@property (nonatomic, getter=isIgnoringTouches)                     BOOL                        ignoringTouches;
 
 @end
 
-@implementation BbTouchView
+@implementation BbCanvasView
+
+@synthesize touchPhase = touchPhase_;
 
 #pragma mark - Public methods
-
-- (void)startIgnoringTouches
-{
-    self.ignoringTouches = YES;
-}
-
-- (void)stopIgnoringTouches
-{
-    self.ignoringTouches = NO;
-}
 
 - (NSSet *)subviewClasses
 {
@@ -71,6 +62,14 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    NSInteger oldPhase = touchPhase_;
+    NSInteger newPhase = 0;
+    
+    if ( newPhase != oldPhase ) {
+        [self.delegate canvasView:self touchPhaseWillChangeToPhase:newPhase];
+    }
+    
+    touchPhase_ = newPhase;
     
     if ( nil == self.touchDurationDictionary ){
         self.touchDurationDictionary = [NSMutableDictionary dictionary];
@@ -89,7 +88,7 @@
             
             if ( self.isIgnoringTouches == NO ) {
                 
-                [self.delegate touchView:self
+                [self.delegate canvasView:self
                            evaluateTouch:touch
                         withObservedData:[self dataArrayWithTouch:touch]
                  ];
@@ -97,15 +96,25 @@
             }
         }
     }
+    if ( newPhase != oldPhase ) {
+        [self.delegate canvasView:self touchPhaseDidChangeToPhase:touchPhase_];
+    }
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    NSInteger oldPhase = touchPhase_;
+    NSInteger newPhase = 1;
+    if ( newPhase != oldPhase ) {
+        [self.delegate canvasView:self touchPhaseWillChangeToPhase:newPhase];
+    }
+    
+    touchPhase_ = newPhase;
     
     for (UITouch *touch in touches.allObjects ) {
         if ( [self validateHaveTouch:touch] == YES ) {
             if ( self.isIgnoringTouches == NO ) {
-                [self.delegate touchView:self
+                [self.delegate canvasView:self
                            evaluateTouch:touch
                         withObservedData:[self dataArrayWithTouch:touch]
                  ];
@@ -114,10 +123,21 @@
             }
         }
     }
+    
+    if ( newPhase != oldPhase ) {
+        [self.delegate canvasView:self touchPhaseDidChangeToPhase:touchPhase_];
+    }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    NSInteger oldPhase = touchPhase_;
+    NSInteger newPhase = 2;
+    if ( newPhase != oldPhase ) {
+        [self.delegate canvasView:self touchPhaseWillChangeToPhase:newPhase];
+    }
+    
+    touchPhase_ = newPhase;
     
     for (UITouch *touch in touches.allObjects) {
         
@@ -125,7 +145,7 @@
 
             if ( self.isIgnoringTouches == NO ) {
                 
-                [self.delegate touchView:self
+                [self.delegate canvasView:self
                            evaluateTouch:touch
                         withObservedData:[self dataArrayWithTouch:touch]
                  ];
@@ -136,17 +156,27 @@
         }
     }
     
-    [self stopIgnoringTouches];
+    if ( newPhase != oldPhase ) {
+        [self.delegate canvasView:self touchPhaseDidChangeToPhase:touchPhase_];
+    }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    NSInteger oldPhase = touchPhase_;
+    NSInteger newPhase = 3;
+    if ( newPhase != oldPhase ) {
+        [self.delegate canvasView:self touchPhaseWillChangeToPhase:newPhase];
+    }
+    
+    touchPhase_ = newPhase;
+    
     for (UITouch *touch in touches.allObjects) {
         if ( [self validateHaveTouch:touch] == YES ) {
 
             if ( self.isIgnoringTouches == NO ) {
                 
-                [self.delegate touchView:self
+                [self.delegate canvasView:self
                            evaluateTouch:touch
                         withObservedData:[self dataArrayWithTouch:touch]
                  ];
@@ -157,7 +187,10 @@
             [self removeTouch:touch fromDictionary:self.touchMovementDictionary];
         }
     }
-    [self stopIgnoringTouches];
+    
+    if ( newPhase != oldPhase ) {
+        [self.delegate canvasView:self touchPhaseDidChangeToPhase:touchPhase_];
+    }
 }
 
 
@@ -188,7 +221,7 @@
     CGPoint startPoint = startPointValue.CGPointValue;
     CGPoint currentPoint = [touch locationInView:self];
     CGSize mySize = self.bounds.size;
-    CGPoint movement = [BbTouchView unitVectorWithPoint:currentPoint center:startPoint size:mySize];
+    CGPoint movement = [BbCanvasView unitVectorWithPoint:currentPoint center:startPoint size:mySize];
     return movement;
 }
 
@@ -260,5 +293,41 @@
     return YES;
 }
 
+#pragma mark - Constructors
+
+- (void)commonInit
+{
+    touchPhase_ = -1;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if ( self ) {
+        [self commonInit];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if ( self ) {
+        [self commonInit];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if ( self ){
+        [self commonInit];
+    }
+    
+    return self;
+}
 
 @end

@@ -7,25 +7,25 @@
 //
 
 #import "BbTouchHandler.h"
-#import "BbTouchView.h"
+#import "BbCanvasView.h"
 #import "BbGesture.h"
 
-@interface BbTouchHandler () <BbTouchViewDelegate>
+@interface BbTouchHandler () <BbCanvasViewDelegate>
 
-@property (nonatomic,weak)              BbTouchView             *touchView;
+@property (nonatomic,weak)              BbCanvasView            *canvasView;
 @property (nonatomic,strong)            BbBlockMatrix           *touchDataEvaluationMatrix;
 
 @end
 
 @implementation BbTouchHandler
 
-- (instancetype)initWithTouchView:(BbTouchView *)touchView
+- (instancetype)initWithCanvasView:(BbCanvasView *)canvasView
                          delegate:(id<BbTouchHandlerDelegate>)delegate
                         datasouce:(id<BbTouchHandlerDataSource>)datasource
 {
     self = [super init];
     if ( self ) {
-        _touchView = touchView;
+        _canvasView = canvasView;
         _delegate = delegate;
         _datasource = datasource;
         [self commonInit];
@@ -36,15 +36,26 @@
 - (void)commonInit
 {
     self.touchDataEvaluationMatrix = [BbGesture gesturePossibleEvaluationMatrix];
-    self.touchView.delegate = self;
+    self.canvasView.delegate = self;
 }
 
-#pragma mark - BbTouchViewDelegate
+#pragma mark - BbCanvasViewDelegate
 
-- (void)touchView:(id)sender evaluateTouch:(id)touch withObservedData:(id)data
+- (void)canvasView:(id)sender evaluateTouch:(id)touch withObservedData:(id)data
 {
     NSArray *possibleGestures = [self.touchDataEvaluationMatrix rowProductsByEvaluatingInputArray:data];
     NSLog(@"possible gestures: %@",possibleGestures);
+}
+
+- (void)canvasView:(id)sender touchPhaseWillChangeToPhase:(NSInteger)touchPhase
+{
+    BbCanvasView *view = sender;
+    NSLog(@"Touch phase will change from %@ to %@",@(view.touchPhase),@(touchPhase));
+}
+
+- (void)canvasView:(id)sender touchPhaseDidChangeToPhase:(NSInteger)touchPhase
+{
+    NSLog(@"Touch phase did change to %@",@(touchPhase));
 }
 
 

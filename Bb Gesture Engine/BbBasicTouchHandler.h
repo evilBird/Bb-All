@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BbTouchView.h"
+#import "BbCanvasView.h"
 
 @protocol BbBasicTouchHandlerDelegate <NSObject>
 
@@ -23,6 +23,6 @@
 
 @property (nonatomic,weak)          id<BbBasicTouchHandlerDelegate>             delegate;
 
-- (instancetype)initWithTouchView:(BbTouchView *)touchView delegate:(id<BbBasicTouchHandlerDelegate>)delegate;
+- (instancetype)initWithTouchView:(BbCanvasView *)touchView delegate:(id<BbBasicTouchHandlerDelegate>)delegate;
 
 @end

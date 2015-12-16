@@ -15,9 +15,8 @@
 		F20FDCD81C209119001B8CF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F20FDCD61C209119001B8CF6 /* LaunchScreen.storyboard */; };
 		F20FDCE31C20911A001B8CF6 /* Bb_Gesture_EngineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCE21C20911A001B8CF6 /* Bb_Gesture_EngineTests.m */; };
 		F20FDCEF1C20913F001B8CF6 /* BbBlockMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCEE1C20913E001B8CF6 /* BbBlockMatrix.m */; };
-		F20FDCF21C20A157001B8CF6 /* BbTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCF11C20A157001B8CF6 /* BbTouchView.m */; };
+		F20FDCF21C20A157001B8CF6 /* BbCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCF11C20A157001B8CF6 /* BbCanvasView.m */; };
 		F20FDCF51C20A6EB001B8CF6 /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCF31C20A6EB001B8CF6 /* UIView+Layout.m */; };
-		F20FDCF81C20B165001B8CF6 /* BbBasicTouchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCF71C20B165001B8CF6 /* BbBasicTouchHandler.m */; };
 		F20FDCFB1C20B557001B8CF6 /* BbBlockMatrix+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCFA1C20B557001B8CF6 /* BbBlockMatrix+Helpers.m */; };
 		F20FDCFE1C20C81C001B8CF6 /* BbDummyView.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCFD1C20C81C001B8CF6 /* BbDummyView.m */; };
 		F20FDCFF1C20D64C001B8CF6 /* BbBlockMatrix+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDCFA1C20B557001B8CF6 /* BbBlockMatrix+Helpers.m */; };
@@ -52,12 +51,10 @@
 		F20FDCE41C20911A001B8CF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F20FDCED1C20913E001B8CF6 /* BbBlockMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbBlockMatrix.h; sourceTree = "<group>"; };
 		F20FDCEE1C20913E001B8CF6 /* BbBlockMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbBlockMatrix.m; sourceTree = "<group>"; };
-		F20FDCF01C20A157001B8CF6 /* BbTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbTouchView.h; sourceTree = "<group>"; };
-		F20FDCF11C20A157001B8CF6 /* BbTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbTouchView.m; sourceTree = "<group>"; };
+		F20FDCF01C20A157001B8CF6 /* BbCanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbCanvasView.h; sourceTree = "<group>"; };
+		F20FDCF11C20A157001B8CF6 /* BbCanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbCanvasView.m; sourceTree = "<group>"; };
 		F20FDCF31C20A6EB001B8CF6 /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
 		F20FDCF41C20A6EB001B8CF6 /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
-		F20FDCF61C20B165001B8CF6 /* BbBasicTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbBasicTouchHandler.h; sourceTree = "<group>"; };
-		F20FDCF71C20B165001B8CF6 /* BbBasicTouchHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbBasicTouchHandler.m; sourceTree = "<group>"; };
 		F20FDCF91C20B557001B8CF6 /* BbBlockMatrix+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BbBlockMatrix+Helpers.h"; sourceTree = "<group>"; };
 		F20FDCFA1C20B557001B8CF6 /* BbBlockMatrix+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BbBlockMatrix+Helpers.m"; sourceTree = "<group>"; };
 		F20FDCFC1C20C81C001B8CF6 /* BbDummyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbDummyView.h; sourceTree = "<group>"; };
@@ -119,12 +116,10 @@
 				F20FDCCF1C209119001B8CF6 /* ViewController.m */,
 				F20FDCFC1C20C81C001B8CF6 /* BbDummyView.h */,
 				F20FDCFD1C20C81C001B8CF6 /* BbDummyView.m */,
-				F20FDCF61C20B165001B8CF6 /* BbBasicTouchHandler.h */,
-				F20FDCF71C20B165001B8CF6 /* BbBasicTouchHandler.m */,
 				F20FDD031C220029001B8CF6 /* BbTouchHandler.h */,
 				F20FDD041C220029001B8CF6 /* BbTouchHandler.m */,
-				F20FDCF01C20A157001B8CF6 /* BbTouchView.h */,
-				F20FDCF11C20A157001B8CF6 /* BbTouchView.m */,
+				F20FDCF01C20A157001B8CF6 /* BbCanvasView.h */,
+				F20FDCF11C20A157001B8CF6 /* BbCanvasView.m */,
 				F20FDD001C21FAF6001B8CF6 /* BbGesture.h */,
 				F20FDD011C21FAF6001B8CF6 /* BbGesture.m */,
 				F20FDCED1C20913E001B8CF6 /* BbBlockMatrix.h */,
@@ -257,7 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F20FDCF21C20A157001B8CF6 /* BbTouchView.m in Sources */,
+				F20FDCF21C20A157001B8CF6 /* BbCanvasView.m in Sources */,
 				F20FDCD01C209119001B8CF6 /* ViewController.m in Sources */,
 				F20FDCF51C20A6EB001B8CF6 /* UIView+Layout.m in Sources */,
 				F20FDCCD1C209119001B8CF6 /* AppDelegate.m in Sources */,
@@ -268,7 +263,6 @@
 				F20FDCCA1C209119001B8CF6 /* main.m in Sources */,
 				F20FDD051C220029001B8CF6 /* BbTouchHandler.m in Sources */,
 				F20FDD081C22060B001B8CF6 /* NSInvocation+Bb.m in Sources */,
-				F20FDCF81C20B165001B8CF6 /* BbBasicTouchHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

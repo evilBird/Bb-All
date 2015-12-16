@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@class BbTouchView;
+@class BbCanvasView;
 
 @protocol BbTouchHandlerDelegate <NSObject>
+
 
 @end
 
@@ -20,7 +21,7 @@
 
 @interface BbTouchHandler : NSObject
 
-- (instancetype)initWithTouchView:(BbTouchView *)touchView
+- (instancetype)initWithCanvasView:(BbCanvasView *)canvasView
                          delegate:(id<BbTouchHandlerDelegate>)delegate
                         datasouce:(id<BbTouchHandlerDataSource>)datasource;
 

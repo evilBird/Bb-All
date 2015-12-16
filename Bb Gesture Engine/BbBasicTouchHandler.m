@@ -77,7 +77,7 @@ static NSString *kPanTag = @"pan";
     
 }
 
-- (instancetype)initWithTouchView:(BbTouchView *)touchView delegate:(id<BbBasicTouchHandlerDelegate>)delegate
+- (instancetype)initWithTouchView:(BbCanvasView *)touchView delegate:(id<BbBasicTouchHandlerDelegate>)delegate
 {
     self = [super init];
     if ( self ) {
