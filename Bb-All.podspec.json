@@ -1,6 +1,6 @@
 {
   "name": "Bb-All",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "summary": "All source objects used in Bb - Visual Programming on iOS and OSX.",
   "authors": { 
     "Traivs Henspeter": "developer@birdsoundmusic.com"
@@ -16,8 +16,8 @@
   },
   "requires_arc": true,
   "source": {
-    "git": "https://bitbucket.org/evilBird/Bb-All.git",
-    "tag": "0.0.1"
+    "git": "https://github.com/evilBird/Bb-All.git",
+    "tag": "0.1.0"
   },
   "frameworks": [
     "Foundation"
@@ -36,7 +36,7 @@
       {
         "name": "Numbers",
 	   "dependencies": {
-		   "Bb-Objects/Core" : [
+		   "Bb-All/Core" : [
 		   	
 		   ]
 	   },
@@ -51,7 +51,7 @@
       {
         "name": "Arrays",
 	   "dependencies": {
-		   "Bb-Objects/Core" : [
+		   "Bb-All/Core" : [
 		   ]
 	   },
         "source_files": [
@@ -62,7 +62,7 @@
       {
         "name": "FlowControl",
 	   "dependencies": {
-		   "Bb-Objects/Core" : [
+		   "Bb-All/Core" : [
 		   ]
 	   },
         "source_files": [
@@ -76,7 +76,7 @@
 		   "ios": "8.0"
 	   },
 	   "dependencies": {
-		   "Bb-Objects/Core" : [
+		   "Bb-All/Core" : [
 		   ],
 		   "UIView+Layout" : [
 		   	
