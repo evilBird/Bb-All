@@ -25,11 +25,11 @@
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"i method";    
-    self.selectorInlet = [[BSDStringInlet alloc]initCold];
+    self.selectorInlet = [[BSInlet alloc]initCold];
     self.selectorInlet.name = @"selector";
     [self addPort:self.selectorInlet];
     
-    self.argumentsInlet = [[BSDArrayInlet alloc]initCold];
+    self.argumentsInlet = [[BSDInlet alloc]initCold];
     self.argumentsInlet.name = @"arguments";
     [self addPort:self.argumentsInlet];
 }

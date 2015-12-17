@@ -7,8 +7,6 @@
 //
 
 #import "BSDSplitArray.h"
-#import "BSDNumberInlet.h"
-#import "BSDArrayInlet.h"
 
 @implementation BSDSplitArray
 
@@ -35,21 +33,6 @@
     }else{
         self.coldInlet.value = @0;
     }
-}
-
-- (BSDInlet *)makeRightInlet
-{
-    BSDNumberInlet *numberInlet = [[BSDNumberInlet alloc]initCold];
-    numberInlet.name = @"cold";
-    return numberInlet;
-}
-
-- (BSDInlet *)makeLeftInlet
-{
-    BSDArrayInlet *inlet = [[BSDArrayInlet alloc]initHot];
-    inlet.name = @"hot";
-    inlet.delegate = self;
-    return inlet;
 }
 
 - (void)calculateOutput

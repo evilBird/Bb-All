@@ -7,7 +7,6 @@
 //
 
 #import "BSDArrayPack.h"
-#import "BSDCreate.h"
 
 @interface BSDArrayPack ()
 
@@ -94,28 +93,6 @@
         [self.mainOutlet output:output.mutableCopy];
     }
     self.hotInlet.open = YES;
-}
-
-- (void)test
-{
-    BSDValue *box1 = [BSDCreate valueBoxCold:@(1)];
-    BSDValue *box2 = [BSDCreate valueBoxCold:@(100)];
-    BSDValue *box3 = [BSDCreate valueBoxCold:@(1000)];
-    [self setupWithArguments:@[@"not an outlet",box1.mainOutlet,box2.mainOutlet,box3.mainOutlet]];
-    self.outputBlock = ^(BSDObject *object, BSDOutlet *outlet){
-        NSLog(@"composed array: %@",outlet.value);
-    };
-    
-    NSLog(@"will bang box 2");
-    [box2.hotInlet input:[BSDBang bang]];
-    NSLog(@"will bang box 1");
-    [box1.hotInlet input:[BSDBang bang]];
-    NSLog(@"will bang box 3");
-    [box3.hotInlet input:[BSDBang bang]];
-    NSLog(@"will change box 1 value to 10");
-    [box1.coldInlet input:@(10)];
-    NSLog(@"will bang box 1");
-    [box1.hotInlet input:[BSDBang bang]];
 }
 
 @end

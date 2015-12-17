@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 birdSound LLC. All rights reserved.
 //
 
-#import "BSDNumberObject.h"
+#import "BSDObject.h"
 
-@interface BSDAbs : BSDNumberObject
+@interface BSDAbs : BSDObject
 
 @end
