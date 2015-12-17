@@ -7,6 +7,7 @@
 //
 
 #import "BSDArrayLength.h"
+#import "BSDArrayInlet.h"
 
 @implementation BSDArrayLength
 
@@ -30,7 +31,7 @@
 
 - (BSDInlet *)makeLeftInlet
 {
-    BSDInlet *inlet = [[BSDInlet alloc]initHot];
+    BSDInlet *inlet = [[BSDArrayInlet alloc]initHot];
     inlet.name = @"hot";
     return inlet;
 }

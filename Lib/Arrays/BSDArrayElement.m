@@ -7,6 +7,7 @@
 //
 
 #import "BSDArrayElement.h"
+#import "BSDCreate.h"
 
 @implementation BSDArrayElement
 
@@ -26,7 +27,7 @@
 
 - (BSDInlet *)makeLeftInlet
 {
-    BSDInlet *inlet = [[BSDInlet alloc]initHot];
+    BSDInlet *inlet = [[BSDArrayInlet alloc]initHot];
     inlet.name = @"hot";
     inlet.objectId = self.objectId;
     inlet.delegate = self;
@@ -35,7 +36,7 @@
 
 - (BSDInlet *)makeRightInlet
 {
-    BSDInlet *inlet = [[BSDInlet alloc]initCold];
+    BSDInlet *inlet = [[BSDNumberInlet alloc]initCold];
     inlet.name = @"cold";
     inlet.objectId = self.objectId;
     inlet.delegate = self;

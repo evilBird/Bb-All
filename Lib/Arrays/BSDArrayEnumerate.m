@@ -7,6 +7,7 @@
 //
 
 #import "BSDArrayEnumerate.h"
+#import "BSDArrayInlet.h"
 
 @implementation BSDArrayEnumerate
 
@@ -31,7 +32,7 @@
 
 - (BSDInlet *)makeRightInlet
 {
-    BSDInlet *inlet = [[BSDInlet alloc]initCold];
+    BSDInlet *inlet = [[BSDArrayInlet alloc]initCold];
     inlet.name = @"cold";
     return inlet;
 }

@@ -7,6 +7,8 @@
 //
 
 #import "BSDObject.h"
+#import "BSDStringInlet.h"
+#import "BSDArrayInlet.h"
 
 @interface BSDInstanceMethod : BSDObject
 // hot inlet: takes a bang, performs selector with cold inlet value
@@ -14,7 +16,7 @@
 // selector inlet: takes a selector as NSString
 // arguments inlet: takes an array of args passed to selector in order of input
 // mainoutlet: outputs the return value of the selector, if non-void, else outputs a bang
-@property (nonatomic,strong)BSDInlet *selectorInlet;
-@property (nonatomic,strong)BSDInlet *argumentsInlet;
+@property (nonatomic,strong)BSDStringInlet *selectorInlet;
+@property (nonatomic,strong)BSDArrayInlet *argumentsInlet;
 
 @end

@@ -15,11 +15,6 @@
     return [super initWithArguments:plusValue];
 }
 
-- (instancetype)initWithArguments:(id)arguments
-{
-    return [super initWithArguments:arguments];
-}
-
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"+";
