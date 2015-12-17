@@ -9,10 +9,22 @@
 #import <Foundation/Foundation.h>
 #import "BbBlockMatrix+Helpers.h"
 
+typedef NS_ENUM(NSUInteger, BbGestureType) {
+    BbGestureType_Tap           =   0,
+    BbGestureType_LongPress     =   1,
+    BbGestureType_SwipeLeft     =   2,
+    BbGestureType_SwipeRight    =   3,
+    BbGestureType_SwipeUp       =   4,
+    BbGestureType_SwipeDown     =   5,
+    BbGestureType_Pan           =   6,
+    BbGestureNumTypes           =   7
+};
+
 @interface BbGesture : NSObject
 
 + (NSArray *) allGestureClasses;
 + (NSArray *) gesturePossibleEvaluators;
++ (BbGestureType) gestureType;
 + (BbBlockMatrix *) gesturePossibleEvaluationMatrix;
 
 @end

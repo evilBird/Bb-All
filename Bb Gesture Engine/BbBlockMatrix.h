@@ -10,17 +10,8 @@
 
 typedef NSNumber* (^BbBlockMatrixEvaluator) (id input);
 
-@interface BbBlockMatrix : NSObject
+#import "BbMatrix.h"
 
-- (instancetype) initWithRows:(NSUInteger)rows columns:(NSUInteger)columns;
-
-- (void) setEvaluator:(BbBlockMatrixEvaluator)evaluator forElementAtRow:(NSUInteger)aRow column:(NSUInteger)aColumn;
-- (void) setEvaluators:(NSArray *)evaluators forElementsInRow:(NSUInteger)aRow;
-
-- (NSArray *)rowProductsByEvaluatingInputArray:(NSArray *)inputArray;
-- (NSArray *)rowSumsByEvaluationInputArray:(NSArray *)inputArray;
-
-@property (nonatomic)               NSUInteger                  nRows;
-@property (nonatomic)               NSUInteger                  nCols;
+@interface BbBlockMatrix : BbMatrix
 
 @end

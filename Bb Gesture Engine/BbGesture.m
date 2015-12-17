@@ -14,6 +14,11 @@ static NSString     *kGesturePossibleEvaluatorSelector = @"gesturePossibleEvalua
 
 @implementation BbGesture
 
++ (BbGestureType)gestureType
+{
+    return -1;
+}
+
 + (NSArray *)allGestureClasses
 {
     NSArray *classes = @[
@@ -45,7 +50,7 @@ static NSString     *kGesturePossibleEvaluatorSelector = @"gesturePossibleEvalua
         NSArray *evaluators = [NSInvocation doClassMethod:aGestureClass
                                              selectorName:kGesturePossibleEvaluatorSelector
                                                      args:nil];
-        [evaluationMatrix setEvaluators:evaluators forElementsInRow:row];
+        [evaluationMatrix setValues:evaluators forElementsInRow:row];
     }
     
     return evaluationMatrix;
@@ -54,6 +59,11 @@ static NSString     *kGesturePossibleEvaluatorSelector = @"gesturePossibleEvalua
 @end
 
 @implementation BbTapGesture
+
++ (BbGestureType) gestureType
+{
+    return BbGestureType_Tap;
+}
 
 + (NSArray *) gesturePossibleEvaluators
 {
@@ -67,6 +77,11 @@ static NSString     *kGesturePossibleEvaluatorSelector = @"gesturePossibleEvalua
 
 @implementation BbLongPressGesture
 
++ (BbGestureType) gestureType
+{
+    return BbGestureType_LongPress;
+}
+
 + (NSArray *) gesturePossibleEvaluators
 {
     return @[[BbBlockMatrix evaluatorWithMinValue:0.5],
@@ -78,6 +93,11 @@ static NSString     *kGesturePossibleEvaluatorSelector = @"gesturePossibleEvalua
 @end
 
 @implementation BbSwipeLeftGesture
+
++ (BbGestureType) gestureType
+{
+    return BbGestureType_SwipeLeft;
+}
 
 + (NSArray *) gesturePossibleEvaluators
 {
@@ -91,6 +111,11 @@ static NSString     *kGesturePossibleEvaluatorSelector = @"gesturePossibleEvalua
 
 @implementation BbSwipeRightGesture
 
++ (BbGestureType) gestureType
+{
+    return BbGestureType_SwipeRight;
+}
+
 + (NSArray *) gesturePossibleEvaluators
 {
     return @[[BbBlockMatrix evaluatorWithMaxValue:0.25],
@@ -102,6 +127,11 @@ static NSString     *kGesturePossibleEvaluatorSelector = @"gesturePossibleEvalua
 @end
 
 @implementation BbSwipeUpGesture
+
++ (BbGestureType) gestureType
+{
+    return BbGestureType_SwipeUp;
+}
 
 + (NSArray *) gesturePossibleEvaluators
 {
@@ -115,6 +145,11 @@ static NSString     *kGesturePossibleEvaluatorSelector = @"gesturePossibleEvalua
 
 @implementation BbSwipeDownGesture
 
++ (BbGestureType) gestureType
+{
+    return BbGestureType_SwipeDown;
+}
+
 + (NSArray *) gesturePossibleEvaluators
 {
     return @[[BbBlockMatrix evaluatorWithMaxValue:0.25],
@@ -126,6 +161,11 @@ static NSString     *kGesturePossibleEvaluatorSelector = @"gesturePossibleEvalua
 @end
 
 @implementation BbPanGesture
+
++ (BbGestureType) gestureType
+{
+    return BbGestureType_Pan;
+}
 
 + (NSArray *) gesturePossibleEvaluators
 {

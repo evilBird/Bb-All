@@ -344,6 +344,7 @@
         case BbGestureType_SwipeLeft:
         case BbGestureType_SwipeUp:
         case BbGestureType_SwipeRight:
+        case BbGestureType_Pan:
             result = ( touchPhase == 1 ) ? 1 : 0;
             break;
             
@@ -364,6 +365,7 @@
             break;
         case BbGestureType_Pan:
             result = ( editingState == 1 ) ? 1 : 0;
+            break;
         default:
             result = 0;
             break;
@@ -380,7 +382,7 @@
             break;
             
         default:
-            result = 0;
+            result = 1;
             break;
     }
     return result;
@@ -388,7 +390,7 @@
 
 - (NSUInteger)canRecognizeGesture:(BbGestureType)gesture givenOutletIsActiveInCanvas:(BOOL)outletIsActive
 {
-    NSUInteger result = 0;
+    NSUInteger result = 1;
     return result;
 }
 

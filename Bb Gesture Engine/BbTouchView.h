@@ -9,15 +9,7 @@
 #ifndef BbTouchView_h
 #define BbTouchView_h
 
-typedef NS_ENUM(NSUInteger, BbGestureType) {
-    BbGestureType_Tap           =   0,
-    BbGestureType_LongPress     =   1,
-    BbGestureType_SwipeLeft     =   2,
-    BbGestureType_SwipeRight    =   3,
-    BbGestureType_SwipeUp       =   4,
-    BbGestureType_SwipeDown     =   5,
-    BbGestureType_Pan           =   6
-};
+#import "BbGesture.h"
 
 @protocol BbTouchView <NSObject>
 

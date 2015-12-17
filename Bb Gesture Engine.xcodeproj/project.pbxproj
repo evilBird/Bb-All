@@ -23,6 +23,8 @@
 		F20FDD021C21FAF6001B8CF6 /* BbGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDD011C21FAF6001B8CF6 /* BbGesture.m */; };
 		F20FDD051C220029001B8CF6 /* BbTouchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDD041C220029001B8CF6 /* BbTouchHandler.m */; };
 		F20FDD081C22060B001B8CF6 /* NSInvocation+Bb.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDD061C22060B001B8CF6 /* NSInvocation+Bb.m */; };
+		F20FDD0C1C221953001B8CF6 /* BbMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDD0B1C221953001B8CF6 /* BbMatrix.m */; };
+		F20FDD0F1C221F98001B8CF6 /* BbNumberMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = F20FDD0E1C221F98001B8CF6 /* BbNumberMatrix.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,10 @@
 		F20FDD061C22060B001B8CF6 /* NSInvocation+Bb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Bb.m"; sourceTree = "<group>"; };
 		F20FDD071C22060B001B8CF6 /* NSInvocation+Bb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Bb.h"; sourceTree = "<group>"; };
 		F20FDD091C221131001B8CF6 /* BbTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbTouchView.h; sourceTree = "<group>"; };
+		F20FDD0A1C221953001B8CF6 /* BbMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = BbMatrix.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		F20FDD0B1C221953001B8CF6 /* BbMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = BbMatrix.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		F20FDD0D1C221F98001B8CF6 /* BbNumberMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BbNumberMatrix.h; sourceTree = "<group>"; };
+		F20FDD0E1C221F98001B8CF6 /* BbNumberMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BbNumberMatrix.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +130,10 @@
 				F20FDCF11C20A157001B8CF6 /* BbCanvasView.m */,
 				F20FDD001C21FAF6001B8CF6 /* BbGesture.h */,
 				F20FDD011C21FAF6001B8CF6 /* BbGesture.m */,
+				F20FDD0A1C221953001B8CF6 /* BbMatrix.h */,
+				F20FDD0B1C221953001B8CF6 /* BbMatrix.m */,
+				F20FDD0D1C221F98001B8CF6 /* BbNumberMatrix.h */,
+				F20FDD0E1C221F98001B8CF6 /* BbNumberMatrix.m */,
 				F20FDCED1C20913E001B8CF6 /* BbBlockMatrix.h */,
 				F20FDCEE1C20913E001B8CF6 /* BbBlockMatrix.m */,
 				F20FDCF91C20B557001B8CF6 /* BbBlockMatrix+Helpers.h */,
@@ -255,11 +265,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F20FDCF21C20A157001B8CF6 /* BbCanvasView.m in Sources */,
+				F20FDD0F1C221F98001B8CF6 /* BbNumberMatrix.m in Sources */,
 				F20FDCD01C209119001B8CF6 /* ViewController.m in Sources */,
 				F20FDCF51C20A6EB001B8CF6 /* UIView+Layout.m in Sources */,
 				F20FDCCD1C209119001B8CF6 /* AppDelegate.m in Sources */,
 				F20FDCFE1C20C81C001B8CF6 /* BbDummyView.m in Sources */,
 				F20FDD021C21FAF6001B8CF6 /* BbGesture.m in Sources */,
+				F20FDD0C1C221953001B8CF6 /* BbMatrix.m in Sources */,
 				F20FDCFB1C20B557001B8CF6 /* BbBlockMatrix+Helpers.m in Sources */,
 				F20FDCEF1C20913F001B8CF6 /* BbBlockMatrix.m in Sources */,
 				F20FDCCA1C209119001B8CF6 /* main.m in Sources */,

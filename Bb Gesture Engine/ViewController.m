@@ -106,5 +106,9 @@
     return self.isEditing;
 }
 
+- (BOOL)canvasHasActiveOutlet:(id)sender
+{
+    return NO;
+}
 
 @end
