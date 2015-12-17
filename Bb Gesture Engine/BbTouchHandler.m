@@ -243,6 +243,7 @@ static NSString   *kCancelWhenRecognizedSelector = @"cancelsTouchesWhenRecognize
         if ( result == 4 ) {
             //NSLog(@"Candidate %@ = %@",aCandidate,@(result));
             NSLog(@"Recognized gesture %@",aCandidate);
+            
             if ( [[NSInvocation doClassMethod:aCandidate
                                                selectorName:kCancelWhenRecognizedSelector
                                          args:nil]boolValue] == YES ){

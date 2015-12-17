@@ -8,6 +8,7 @@
 
 #import "BbDummyView.h"
 #import "UIView+Layout.h"
+#import "UIView+PortViews.h"
 
 @interface BbDummyView ()
 
@@ -31,10 +32,12 @@
     [self addSubview:self.classLabel];
     self.classLabel.text = self.dummyClass;
     [self.classLabel sizeToFit];
-    [self addConstraint:[self pinEdge:LayoutEdge_Top toEdge:LayoutEdge_Top ofView:self.classLabel withInset:0]];
-    [self addConstraint:[self pinEdge:LayoutEdge_Left toEdge:LayoutEdge_Left ofView:self.classLabel withInset:0]];
-    [self addConstraint:[self pinEdge:LayoutEdge_Bottom toEdge:LayoutEdge_Bottom ofView:self.classLabel withInset:0]];
-    [self addConstraint:[self pinEdge:LayoutEdge_Right toEdge:LayoutEdge_Right ofView:self.classLabel withInset:0]];
+    [self addConstraint:[self pinEdge:LayoutEdge_Top toEdge:LayoutEdge_Top ofView:self.classLabel withInset:-30]];
+    [self addConstraint:[self pinEdge:LayoutEdge_Left toEdge:LayoutEdge_Left ofView:self.classLabel withInset:-30]];
+    [self addConstraint:[self pinEdge:LayoutEdge_Bottom toEdge:LayoutEdge_Bottom ofView:self.classLabel withInset:30]];
+    [self addConstraint:[self pinEdge:LayoutEdge_Right toEdge:LayoutEdge_Right ofView:self.classLabel withInset:30]];
+    [self addAndLayoutInletViews:[UIView createPortViews:2]];
+    [self addAndLayoutOutletViews:[UIView createPortViews:1]];
     [self layoutIfNeeded];
 }
 
