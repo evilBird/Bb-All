@@ -31,10 +31,10 @@
     [self addSubview:self.classLabel];
     self.classLabel.text = self.dummyClass;
     [self.classLabel sizeToFit];
-    [self addConstraint:[self pinEdge:LayoutEdge_Top toEdge:LayoutEdge_Top ofView:self.classLabel withInset:-50]];
-    [self addConstraint:[self pinEdge:LayoutEdge_Left toEdge:LayoutEdge_Left ofView:self.classLabel withInset:-50]];
-    [self addConstraint:[self pinEdge:LayoutEdge_Bottom toEdge:LayoutEdge_Bottom ofView:self.classLabel withInset:50]];
-    [self addConstraint:[self pinEdge:LayoutEdge_Right toEdge:LayoutEdge_Right ofView:self.classLabel withInset:50]];
+    [self addConstraint:[self pinEdge:LayoutEdge_Top toEdge:LayoutEdge_Top ofView:self.classLabel withInset:0]];
+    [self addConstraint:[self pinEdge:LayoutEdge_Left toEdge:LayoutEdge_Left ofView:self.classLabel withInset:0]];
+    [self addConstraint:[self pinEdge:LayoutEdge_Bottom toEdge:LayoutEdge_Bottom ofView:self.classLabel withInset:0]];
+    [self addConstraint:[self pinEdge:LayoutEdge_Right toEdge:LayoutEdge_Right ofView:self.classLabel withInset:0]];
     [self layoutIfNeeded];
 }
 
@@ -47,6 +47,60 @@
     }
     
     return self;
+}
+
+- (NSUInteger)canRecognizeGesture:(BbGestureType)gesture givenTouchPhase:(NSUInteger)touchPhase
+{
+    NSUInteger result;
+    switch ( gesture ) {
+        case BbGestureType_Tap:
+            result = ( touchPhase == 3 ) ? 1 : 0;
+            break;
+        case BbGestureType_LongPress:
+            return 1;
+            break;
+        case BbGestureType_Pan:
+            result = 1;
+            break;
+            
+        default:
+            result = 0;
+            break;
+    }
+    
+    return result;
+}
+
+- (NSUInteger)canRecognizeGesture:(BbGestureType)gesture givenCanvasEditingState:(NSUInteger)editingState
+{
+    NSUInteger result;
+    switch ( gesture ) {
+        case BbGestureType_Tap:
+            result = 1;
+            break;
+        case BbGestureType_LongPress:
+            result = ( editingState == 0 ) ? 1 : 0;
+            break;
+        case BbGestureType_Pan:
+            result = 1;
+            break;
+            
+        default:
+            result = 0;
+            break;
+    }
+    
+    return result;
+}
+
+- (NSUInteger)canRecognizeGesture:(BbGestureType)gesture givenGestureRepeatCount:(NSUInteger)repeatCount
+{
+    return 1;
+}
+
+- (NSUInteger)canRecognizeGesture:(BbGestureType)gesture givenOutletIsActiveInCanvas:(BOOL)outletIsActive
+{
+    return 1;
 }
 
 /*

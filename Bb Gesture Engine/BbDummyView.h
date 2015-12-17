@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BbTouchView.h"
 
-@interface BbDummyView : UIView
+
+
+@interface BbDummyView : UIView <BbTouchView>
 
 - (instancetype)initWithDummyClass:(NSString *)dummyClass;
 

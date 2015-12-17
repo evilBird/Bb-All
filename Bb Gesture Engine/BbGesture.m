@@ -19,6 +19,11 @@ static NSString     *kGesturePossibleEvaluatorSelector = @"gesturePossibleEvalua
     return -1;
 }
 
++ (BOOL) cancelsTouchesWhenRecognized
+{
+    return YES;
+}
+
 + (NSArray *)allGestureClasses
 {
     NSArray *classes = @[
@@ -71,6 +76,11 @@ static NSString     *kGesturePossibleEvaluatorSelector = @"gesturePossibleEvalua
              [BbBlockMatrix evaluatorWithMaxValue:0.01],
              [BbBlockMatrix evaluatorWithMaxValue:0.01]
              ];
+}
+
++ (BOOL) cancelsTouchesWhenRecognized
+{
+    return NO;
 }
 
 @end
@@ -173,6 +183,11 @@ static NSString     *kGesturePossibleEvaluatorSelector = @"gesturePossibleEvalua
              [BbBlockMatrix evaluatorWithMinAbsValue:0.01],
              [BbBlockMatrix evaluatorWithMinAbsValue:0.01]
              ];
+}
+
++ (BOOL) cancelsTouchesWhenRecognized
+{
+    return NO;
 }
 
 @end

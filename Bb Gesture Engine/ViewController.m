@@ -34,6 +34,7 @@
 {
     [self setupCanvasViewAndTouchHandler];
     [self setupEditToggle];
+    [self setupDummyViews];
     [self.view layoutIfNeeded];
 }
 

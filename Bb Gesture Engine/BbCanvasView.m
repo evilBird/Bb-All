@@ -344,6 +344,8 @@
         case BbGestureType_SwipeLeft:
         case BbGestureType_SwipeUp:
         case BbGestureType_SwipeRight:
+            result = ( touchPhase == 1 ) ? 1 : 0;
+            break;
         case BbGestureType_Pan:
             result = ( touchPhase == 1 ) ? 1 : 0;
             break;
@@ -366,6 +368,12 @@
         case BbGestureType_Pan:
             result = ( editingState == 1 ) ? 1 : 0;
             break;
+        case BbGestureType_SwipeLeft:
+        case BbGestureType_SwipeRight:
+        case BbGestureType_SwipeUp:
+        case BbGestureType_SwipeDown:
+            result = ( editingState == 0 ) ? 1 : 0;
+            break;
         default:
             result = 0;
             break;
@@ -380,7 +388,6 @@
         case BbGestureType_Tap:
             result = ( repeatCount == 2 ) ? 1 : 0;
             break;
-            
         default:
             result = 1;
             break;

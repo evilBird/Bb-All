@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, BbGestureType) {
 
 + (NSArray *) allGestureClasses;
 + (NSArray *) gesturePossibleEvaluators;
++ (BOOL) cancelsTouchesWhenRecognized;
 + (BbGestureType) gestureType;
 + (BbBlockMatrix *) gesturePossibleEvaluationMatrix;
 

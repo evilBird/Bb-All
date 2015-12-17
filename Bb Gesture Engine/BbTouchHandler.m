@@ -13,6 +13,7 @@
 #import "NSInvocation+Bb.h"
 
 static NSUInteger kNumTouchPhases = 4;
+static NSString   *kCancelWhenRecognizedSelector = @"cancelsTouchesWhenRecognized";
 
 @interface BbTouchHandler () <BbCanvasViewDelegate>
 
@@ -239,8 +240,15 @@ static NSUInteger kNumTouchPhases = 4;
     //NSLog(@"Will evaluate candidate gestures: %@",candidatesString);
     for ( NSString *aCandidate in candidates) {
         NSUInteger result = [self evaluateCandidateGesture:aCandidate withTouch:touch];
-        if ( result ) {
-            NSLog(@"Candidate %@ = %@",aCandidate,@(result));
+        if ( result == 4 ) {
+            //NSLog(@"Candidate %@ = %@",aCandidate,@(result));
+            NSLog(@"Recognized gesture %@",aCandidate);
+            if ( [[NSInvocation doClassMethod:aCandidate
+                                               selectorName:kCancelWhenRecognizedSelector
+                                         args:nil]boolValue] == YES ){
+                [self.canvasView setIgnoringTouches:YES];
+                break;
+            }
         }
     }
 }
@@ -266,6 +274,9 @@ static NSUInteger kNumTouchPhases = 4;
 
 - (void)canvasView:(id)sender touchPhaseDidChangeToPhase:(NSInteger)touchPhase
 {
+    if ( touchPhase == 3 && [(BbCanvasView *)sender isIgnoringTouches] == YES ) {
+        [(BbCanvasView *)sender setIgnoringTouches:NO];
+    }
     //NSLog(@"Touch phase did change to %@",@(touchPhase));
 }
 
