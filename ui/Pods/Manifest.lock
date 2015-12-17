@@ -1,0 +1,36 @@
+PODS:
+  - AFNetworking (3.0.0):
+    - AFNetworking/NSURLSession (= 3.0.0)
+    - AFNetworking/Reachability (= 3.0.0)
+    - AFNetworking/Security (= 3.0.0)
+    - AFNetworking/Serialization (= 3.0.0)
+    - AFNetworking/UIKit (= 3.0.0)
+  - AFNetworking/NSURLSession (3.0.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.0.0)
+  - AFNetworking/Security (3.0.0)
+  - AFNetworking/Serialization (3.0.0)
+  - AFNetworking/UIKit (3.0.0):
+    - AFNetworking/NSURLSession
+  - GPUImage (0.1.7)
+  - iCloudDocumentSync (7.4.1)
+  - PureLayout (3.0.1)
+  - UIView+Layout (0.1.0)
+
+DEPENDENCIES:
+  - AFNetworking
+  - GPUImage
+  - iCloudDocumentSync
+  - PureLayout
+  - UIView+Layout
+
+SPEC CHECKSUMS:
+  AFNetworking: 932ff751f9d6fb1dad0b3af58b7e3ffba0a4e7fd
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  iCloudDocumentSync: 961aac30ca09c221de4c236e94dae69912f2c589
+  PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
+  UIView+Layout: c9a1ad733c51ff29dffeb6ec96b081ad50009b1e
+
+COCOAPODS: 0.39.0
