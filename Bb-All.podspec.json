@@ -1,0 +1,97 @@
+{
+  "name": "Bb-All",
+  "version": "0.0.1",
+  "summary": "All source objects used in Bb - Visual Programming on iOS and OSX.",
+  "authors": { 
+    "Traivs Henspeter": "developer@birdsoundmusic.com"
+  },
+  "homepage": "https://github.com/evilBird/Bb-All",
+  "license": {
+    "type": "Commerical",
+    "file": "LICENSE"
+  },
+  "platforms": {
+    "ios": "8.0",
+    "osx": "10.10"
+  },
+  "requires_arc": true,
+  "source": {
+    "git": "https://bitbucket.org/evilBird/Bb-All.git",
+    "tag": "0.0.1"
+  },
+  "frameworks": [
+    "Foundation"
+  ],
+  "subspecs": [
+       {
+         "name": "Core",
+	    "source_files": [
+	    		"bb_lib/Lib/Main/BSDObject.{h,m}",
+	  		"bb_lib/Lib/Ports/BSDPort.{h,m}",
+	  		"bb_lib/Lib/Ports/BSDInlet.{h,m}",
+	  		"bb_lib/Lib/Ports/BSDOutlet.{h,m}",
+	  		"bb_lib/Lib/Bang/BSDBang.{h,m}"
+	     ]
+       },
+      {
+        "name": "Numbers",
+	   "dependencies": {
+		   "Bb-Objects/Core" : [
+		   	
+		   ]
+	   },
+        "source_files": [
+		   "bb_lib/Lib/Numbers/Basic Math/*.{h,m}",
+		   "bb_lib/Lib/Numbers/Compare/*.{h,m}",
+		   "bb_lib/Lib/Numbers/Geometry/BSDCos.{h,m}",
+		   "bb_lib/Lib/Numbers/Geometry/BSDTan.{h,m}",
+		   "bb_lib/Lib/Numbers/Geometry/BSDSin.{h,m}"
+	   ]
+      },
+      {
+        "name": "Arrays",
+	   "dependencies": {
+		   "Bb-Objects/Core" : [
+		   ]
+	   },
+        "source_files": [
+		   "bb_lib/Lib/Arrays/*.{h,m}"
+	   ],
+	   "exclude_files" : "bb_lib/Lib/Arrays/*{BSDArrayBox,BSDArrayClassify,BSDArrayNormalize,BSDArraySort,BSDPredicate,BSDSortDescriptor}*"
+      },
+      {
+        "name": "FlowControl",
+	   "dependencies": {
+		   "Bb-Objects/Core" : [
+		   ]
+	   },
+        "source_files": [
+		   "bb_lib/Lib/Flow Control/*.{h,m}"
+	   ],
+	   "exclude_files" : "bb_lib/Lib/Flow Control/*{BSDSequence}*"
+      },
+      {
+        "name": "Cocoa-iOS",
+	   "platforms": {
+		   "ios": "8.0"
+	   },
+	   "dependencies": {
+		   "Bb-Objects/Core" : [
+		   ],
+		   "UIView+Layout" : [
+		   	
+		   ]
+	   },
+        "source_files": [
+		   "bb_lib/Lib/Utility/*.{h,m}"
+	   ],
+	   "exclude_files" : "bb_lib/Lib/Utility/*{BSDAtomizer,BSDBuffer,BSDClient,BSDComment,BSDCPUMonitor,BSDFactory,BSDFormatRequest,BSDGPS,BSDJSObject,BSDMake,BSDMessage,BSDSpeedLimit,BSDSubstitutionArg,BSDTestVariable,BSDVelocity,BSDDynamicObject,BSDArrayFilter}*",
+	   "frameworks": [
+		   "Foundation",
+		   "UIKit",
+		   "AVFoundation",
+		   "MapKit"
+	   ]
+      }
+    ]
+}

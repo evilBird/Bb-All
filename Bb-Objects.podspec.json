@@ -1,0 +1,131 @@
+{
+  "name": "Bb-Objects",
+  "version": "0.0.7",
+  "summary": "Source objects used in Bb - Visual Programming on iOS and OSX.",
+  "authors": { 
+    "Traivs Henspeter": "developer@birdsoundmusic.com"
+  },
+  "homepage": "https://bitbucket.org/evilBird/bb_lib",
+  "license": {
+    "type": "Commerical",
+    "file": "LICENSE"
+  },
+  "platforms": {
+    "ios": "8.0",
+    "osx": "10.10"
+  },
+  "requires_arc": true,
+  "source": {
+    "git": "https://bitbucket.org/evilBird/bb_lib.git",
+    "tag": "0.0.7"
+  },
+  "frameworks": [
+    "Foundation"
+  ],
+  "subspecs": [
+       {
+         "name": "Core",
+	    "source_files": [
+	    		"Lib/Main/BSDObject.{h,m}",
+	  		"Lib/Ports/BSDPort.{h,m}",
+	  		"Lib/Ports/BSDInlet.{h,m}",
+	  		"Lib/Ports/BSDOutlet.{h,m}",
+	  		"Lib/Bang/BSDBang.{h,m}"
+	     ]
+       },
+      {
+        "name": "Numbers",
+	   "dependencies": {
+		   "Bb-Objects/Core" : [
+		   	
+		   ]
+	   },
+        "source_files": [
+		   "Lib/Numbers/Basic Math/*.{h,m}",
+		   "Lib/Numbers/Compare/*.{h,m}",
+		   "Lib/Numbers/Geometry/BSDCos.{h,m}",
+		   "Lib/Numbers/Geometry/BSDTan.{h,m}",
+		   "Lib/Numbers/Geometry/BSDSin.{h,m}"
+	   ]
+      },
+      {
+        "name": "Arrays",
+	   "dependencies": {
+		   "Bb-Objects/Core" : [
+		   ]
+	   },
+        "source_files": [
+		   "Lib/Arrays/*.{h,m}"
+	   ],
+	   "exclude_files" : "Lib/Arrays/*{BSDArrayBox,BSDArrayClassify,BSDArrayNormalize,BSDArraySort,BSDPredicate,BSDSortDescriptor}*"
+      },
+      {
+        "name": "FlowControl",
+	   "dependencies": {
+		   "Bb-Objects/Core" : [
+		   ]
+	   },
+        "source_files": [
+		   "Lib/Flow Control/*.{h,m}"
+	   ],
+	   "exclude_files" : "Lib/Flow Control/*{BSDSequence}*"
+      },
+      {
+        "name": "Cocoa-iOS",
+	   "platforms": {
+		   "ios": "8.0"
+	   },
+	   "dependencies": {
+		   "Bb-Objects/Core" : [
+		   ],
+		   "UIView+Layout" : [
+		   	
+		   ]
+	   },
+        "source_files": [
+		   "Lib/Utility/*.{h,m}"
+	   ],
+	   "exclude_files" : "Lib/Utility/*{BSDAtomizer,BSDBuffer,BSDClient,BSDComment,BSDCPUMonitor,BSDFactory,BSDFormatRequest,BSDGPS,BSDJSObject,BSDMake,BSDMessage,BSDSpeedLimit,BSDSubstitutionArg,BSDTestVariable,BSDVelocity,BSDDynamicObject,BSDArrayFilter}*",
+	   "frameworks": [
+		   "Foundation",
+		   "UIKit",
+		   "AVFoundation",
+		   "MapKit"
+	   ]
+      },
+      {
+        "name": "GestureEngine",
+	   "homepage": "https://bitbucket.org/evilBird/Bb-Gesture-Engine",
+	   "license": {
+	     "type": "Commerical",
+	     "file": "LICENSE"
+	   },
+	   "platforms": {
+	     "ios": "8.0"
+	   },
+	   "requires_arc": true,
+	   "source": {
+	     "git": "https://bitbucket.org/evilBird/Bb-Gesture-Engine.git",
+	     "tag": "0.0.1"
+	   },
+        "source_files": [
+		   "Bb Gesture Engine/Bb*Matrix*.{h,m}",
+		   "Bb Gesture Engine/BbCanvasView.{h,m}",
+		   "Bb Gesture Engine/BbGesture.{h,m}",
+		   "Bb Gesture Engine/BbTouch*.{h,m}",
+		   "Bb Gesture Engine/UIView+PortViews.{h,m}"
+	   ],
+	   "dependencies": {
+		   "Bb-Objects/Cocoa-iOS" : [
+		   ],
+		   "UIView+Layout" : [
+		   	
+		   ]
+	   },
+	   "frameworks": [
+	     "Foundation",
+		"UIKit"
+	   ]
+      }
+    ]
+}
