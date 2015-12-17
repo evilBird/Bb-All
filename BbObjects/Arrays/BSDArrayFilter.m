@@ -7,7 +7,6 @@
 //
 
 #import "BSDArrayFilter.h"
-#import "BSDArrayInlet.h"
 
 @implementation BSDArrayFilter
 
@@ -20,24 +19,6 @@
 {
     self.name = @"filter array";
     NSPredicate *predicate = arguments;
-}
-
-- (BSDInlet *)makeLeftInlet
-{
-    BSDInlet *inlet = [[BSDArrayInlet alloc]initHot];
-    inlet.name = @"hot";
-    inlet.objectId = self.objectId;
-    inlet.delegate = self;
-    return inlet;
-}
-
-- (BSDInlet *)makeRightInlet
-{
-    BSDInlet *inlet = [[BSDArrayInlet alloc]initCold];
-    inlet.name = @"cold";
-    inlet.objectId = self.objectId;
-    inlet.delegate = self;
-    return inlet;
 }
 
 - (void)calculateOutput

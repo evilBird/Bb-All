@@ -1,6 +1,6 @@
 {
   "name": "Bb-All",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "All source objects used in Bb - Visual Programming on iOS and OSX.",
   "authors": { 
     "Traivs Henspeter": "developer@birdsoundmusic.com"
@@ -17,7 +17,7 @@
   "requires_arc": true,
   "source": {
     "git": "https://github.com/evilBird/Bb-All.git",
-    "tag": "0.1.1"
+    "tag": "0.1.2"
   },
   "frameworks": [
     "Foundation"

@@ -24,23 +24,6 @@
     }
 }
 
-- (BSDInlet *)makeLeftInlet
-{
-    BSDInlet *inlet = [[BSDArrayInlet alloc]initHot];
-    inlet.name = @"hot";
-    inlet.objectId = self.objectId;
-    inlet.delegate = self;
-    return inlet;
-}
-
-- (BSDInlet *)makeRightInlet
-{
-    BSDInlet *inlet = [[BSDNumberInlet alloc]initCold];
-    inlet.name = @"cold";
-    inlet.objectId = self.objectId;
-    inlet.delegate = self;
-    return inlet;
-}
 
 - (void)calculateOutput
 {
