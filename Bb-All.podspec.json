@@ -1,6 +1,6 @@
 {
   "name": "Bb-All",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "summary": "All source objects used in Bb - Visual Programming on iOS and OSX.",
   "authors": { 
     "Traivs Henspeter": "developer@birdsoundmusic.com"
@@ -17,7 +17,7 @@
   "requires_arc": true,
   "source": {
     "git": "https://github.com/evilBird/Bb-All.git",
-    "tag": "0.1.6"
+    "tag": "0.1.7"
   },
   "frameworks": [
     "Foundation"
@@ -31,7 +31,11 @@
 	  		"BbObjects/Ports/BSDInlet.{h,m}",
 	  		"BbObjects/Ports/BSDOutlet.{h,m}",
 	  		"BbObjects/Bang/BSDBang.{h,m}"
-	     ]
+	     ],
+  	   "dependencies": {
+  		   "NSInvocation+Bb" : [
+  		   ]
+  	   }	
        },
       {
         "name": "Numbers",
