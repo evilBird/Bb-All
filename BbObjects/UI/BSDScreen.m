@@ -7,8 +7,6 @@
 //
 
 #import "BSDScreen.h"
-#import "NSValue+BSD.h"
-#import "PureLayout.h"
 
 @interface BSDScreen ()
 {
@@ -53,6 +51,7 @@
 
 -(void)notification_OrientationDidChange:(NSNotification*)n
 {
+    /*
     NSValue *rect = [NSValue wrapRect:[[UIScreen mainScreen]bounds]];
     NSDictionary *newBounds = @{@"bounds":rect};
     [self.viewInlet.value setBounds:rect.CGRectValue];
@@ -63,6 +62,7 @@
     NSDictionary *toSend = @{@"interfaceOrientationDidChange":@(orientation)};
     [self.getterOutlet output:toSend];
     [self.getterOutlet output:newBounds];
+     */
 }
 
 - (void)setupWithArguments:(id)arguments

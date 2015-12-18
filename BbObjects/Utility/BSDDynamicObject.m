@@ -8,7 +8,6 @@
 
 #import "BSDDynamicObject.h"
 #import "BSD2WayPort.h"
-#import "BSDObjects.h"
 #import "BSDObjectLookup.h"
 
 @interface BSDDynamicObject ()

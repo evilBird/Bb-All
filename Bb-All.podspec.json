@@ -1,6 +1,6 @@
 {
   "name": "Bb-All",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "summary": "All source objects used in Bb - Visual Programming on iOS and OSX.",
   "authors": { 
     "Traivs Henspeter": "developer@birdsoundmusic.com"
@@ -11,13 +11,12 @@
     "file": "LICENSE"
   },
   "platforms": {
-    "ios": "8.0",
-    "osx": "10.10"
+    "ios": "8.0"
   },
   "requires_arc": true,
   "source": {
     "git": "https://github.com/evilBird/Bb-All.git",
-    "tag": "0.1.7"
+    "tag": "0.1.8"
   },
   "frameworks": [
     "Foundation"
@@ -27,10 +26,10 @@
          "name": "Core",
 	    "source_files": [
 	    		"BbObjects/Main/BSDObject.{h,m}",
-	  		"BbObjects/Ports/BSDPort.{h,m}",
-	  		"BbObjects/Ports/BSDInlet.{h,m}",
-	  		"BbObjects/Ports/BSDOutlet.{h,m}",
-	  		"BbObjects/Bang/BSDBang.{h,m}"
+	  		"BbObjects/Ports/BSD*Port.{h,m}",
+	  		"BbObjects/Ports/BSD*Inlet.{h,m}",
+	  		"BbObjects/Ports/BSD*Outlet.{h,m}",
+	  		"BbObjects/Bang/BSD*Bang.{h,m}"
 	     ],
   	   "dependencies": {
   		   "NSInvocation+Bb" : [
@@ -81,15 +80,13 @@
 	   },
 	   "dependencies": {
 		   "Bb-All/Core" : [
-		   ],
-		   "UIView+Layout" : [
-		   	
 		   ]
 	   },
         "source_files": [
-		   "BbObjects/Utility/*.{h,m}"
+		   "BbObjects/Utility/*.{h,m}",
+		   "BbObjects/Class Categories/NSString+BSD.{h,m}"
 	   ],
-	   "exclude_files" : "BbObjects/Utility/*{BSDAtomizer,BSDBuffer,BSDClient,BSDComment,BSDCPUMonitor,BSDFactory,BSDFormatRequest,BSDGPS,BSDJSObject,BSDMake,BSDMessage,BSDSpeedLimit,BSDSubstitutionArg,BSDTestVariable,BSDVelocity,BSDDynamicObject,BSDArrayFilter}*",
+	   "exclude_files" : "BbObjects/Utility/*{BSDAtomizer,BSDBuffer,NSObject+ObjC,BSDDynamicObject,BSDClient,BSDCPUMonitor,BSDFactory,BSDFormatRequest,BSDGPS,BSDJSObject,BSDMake,BSDSpeedLimit,BSDSubstitutionArg,BSDTestVariable,BSDVelocity,BSDArrayFilter}*",
 	   "frameworks": [
 		   "Foundation",
 		   "UIKit",
@@ -118,6 +115,20 @@
 	     "Foundation",
 		"UIKit"
 	   ]
-      }
+      },
+	 {
+		 "name": "UIKit",
+		 "source_files": [
+			 "BbObjects/UI/BSDView*.{h,m}",
+			 "BbObjects/UI/BSDScreen.{h,m}"
+		 ],
+   	   	 "dependencies": {
+   		   "Bb-All/Core" : [
+   		   ],
+		   "Bb-All/Cocoa-iOS" : [
+		   	
+		   ]
+   	   	}
+	 }
     ]
 }
