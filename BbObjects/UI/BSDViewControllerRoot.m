@@ -7,8 +7,9 @@
 //
 
 #import "BSDViewControllerRoot.h"
-#import "BSDObjects.h"
+
 typedef void(^PresentChildVCBlock)(void);
+
 @interface BSDViewControllerRoot ()
 {
     NSInteger kIsPresented;

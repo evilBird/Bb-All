@@ -159,9 +159,7 @@
 
 - (void)addConstaintWithArgs:(NSArray *)args
 {
-    InstallConstraintsOnViewBlock constraintsBlock = args.firstObject;
-    UIView *view = self.view;
-    constraintsBlock(view);
+
 }
 
 - (void)doSelectorWithArray:(NSArray *)array
@@ -185,11 +183,6 @@
         args = [NSArray arrayWithArray:copy];
     }
     
-    if ([selectorName isEqualToString:kContraintsKey]) {
-        [self addConstaintWithArgs:args];
-        return;
-    }
-    
     SEL selector = NSSelectorFromString(selectorName);
     UIView *myView = [self view];
     
@@ -197,25 +190,6 @@
         return;
     }
     [NSInvocation doInstanceMethodTarget:myView selectorName:selectorName args:args];
-    return;
-    
-    Class c = [myView class];
-    NSMethodSignature *methodSig = [c instanceMethodSignatureForSelector:selector];
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
-    invocation.target = myView;
-    invocation.selector = selector;
-    
-    if (args != nil) {
-        for (NSUInteger idx = 0; idx < args.count; idx ++) {
-            id arg = args[idx];
-            [invocation setArgumentWithObject:arg atIndex:idx];
-        }
-    }
-    
-    if ([myView respondsToSelector:selector]) {
-        [invocation invoke];
-    }
-    
 }
 
 - (void)doSelector
