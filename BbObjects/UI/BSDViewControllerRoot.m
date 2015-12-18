@@ -7,6 +7,9 @@
 //
 
 #import "BSDViewControllerRoot.h"
+#import "BSDView.h"
+#import "BSDRoute.h"
+#import "BSDArrayPrepend.h"
 
 typedef void(^PresentChildVCBlock)(void);
 
