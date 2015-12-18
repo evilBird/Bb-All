@@ -10,6 +10,5 @@
 
 @interface BSDAdd : BSDObject
 
-- (instancetype)initWithPlusValue:(NSNumber *)plusValue;
 
 @end

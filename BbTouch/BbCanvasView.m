@@ -7,7 +7,8 @@
 //
 
 #import "BbCanvasView.h"
-
+#import "NSInvocation+Bb.h"
+#import "UIView+Layout.h"
 @interface UITouch (TouchKey)
 
 - (NSString *)touchKey;
@@ -36,6 +37,14 @@
 @synthesize touchPhase = touchPhase_;
 
 #pragma mark - Public methods
+
+- (void)addObjectView:(UIView *)objectView withOffset:(CGPoint)offset
+{
+    [self addSubview:objectView];
+    [NSInvocation doInstanceMethodTarget:objectView selectorName:@"setupLayout" args:nil];
+    [self addConstraint:[objectView alignCenterXToSuperOffset:offset.x]];
+    [self addConstraint:[objectView alignCenterYToSuperOffset:offset.y]];
+}
 
 - (NSSet *)subviewClasses
 {
@@ -328,6 +337,13 @@
     }
     
     return self;
+}
+
+#pragma mark - BbObjectViewDelegate
+
+- (BOOL)canvasIsEditing
+{
+    return NO;
 }
 
 #pragma mark - BbTouchView

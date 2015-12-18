@@ -23,6 +23,7 @@
 @property (nonatomic, readonly)                         NSInteger                       touchPhase;
 @property (nonatomic, getter=isIgnoringTouches)         BOOL                            ignoringTouches;
 
+- (void)addObjectView:(UIView *)objectView withOffset:(CGPoint)offset;
 - (NSSet *) subviewClasses;
 
 @end

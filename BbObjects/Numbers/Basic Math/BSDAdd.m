@@ -10,11 +10,6 @@
 
 @implementation BSDAdd
 
-- (instancetype)initWithPlusValue:(NSNumber *)plusValue
-{
-    return [super initWithArguments:plusValue];
-}
-
 - (void)setupWithArguments:(id)arguments
 {
     self.name = @"+";

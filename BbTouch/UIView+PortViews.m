@@ -70,10 +70,17 @@
         UIView *leftSpacer = ( tag > 1 ) ? ( [self viewWithTag:( tag - 1 )]) : nil;
         UIView *leftPin = ( nil != leftSpacer ) ? leftSpacer : self;
         LayoutEdge pinEdge = ( leftPin == self ) ? LayoutEdge_Left : LayoutEdge_Right;
-        [constraints addObject:[aPortView pinEdge:LayoutEdge_Left
-                                           toEdge:pinEdge
-                                           ofView:leftPin
-                                        withInset:0]];
+        if ( pinEdge == LayoutEdge_Left ) {
+            [constraints addObject:[leftPin pinEdge:pinEdge
+                                             toEdge:LayoutEdge_Left
+                                             ofView:leftPin
+                                          withInset:0]];
+        }else{
+            [constraints addObject:[aPortView pinEdge:LayoutEdge_Left
+                                               toEdge:pinEdge
+                                               ofView:leftPin
+                                            withInset:0]];
+        }
         
         UIView *rightSpacer = [spacerViewEnum nextObject];
         
@@ -103,7 +110,9 @@
     }
     
     if ( nil != lastRightPin ) {
-        [constraints addObject:[lastRightPin pinEdge:LayoutEdge_Right toSuperviewEdge:LayoutEdge_Right]];
+        //[constraints addObject:[lastRightPin pinEdge:LayoutEdge_Right toSuperviewEdge:LayoutEdge_Right]];
+        [constraints addObject:[self pinEdge:LayoutEdge_Right toEdge:LayoutEdge_Right ofView:lastRightPin withInset:0]];
+
     }
     
     [self addConstraints:constraints];

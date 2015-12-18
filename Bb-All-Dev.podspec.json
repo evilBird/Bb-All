@@ -1,5 +1,5 @@
 {
-  "name": "Bb-All",
+  "name": "Bb-All-Dev",
   "version": "0.1.5",
   "summary": "All source objects used in Bb - Visual Programming on iOS and OSX.",
   "authors": { 
@@ -36,7 +36,7 @@
       {
         "name": "Numbers",
 	   "dependencies": {
-		   "Bb-All/Core" : [
+		   "Bb-All-Dev/Core" : [
 		   	
 		   ]
 	   },
@@ -51,7 +51,7 @@
       {
         "name": "Arrays",
 	   "dependencies": {
-		   "Bb-All/Core" : [
+		   "Bb-All-Dev/Core" : [
 		   ]
 	   },
         "source_files": [
@@ -62,7 +62,7 @@
       {
         "name": "FlowControl",
 	   "dependencies": {
-		   "Bb-All/Core" : [
+		   "Bb-All-Dev/Core" : [
 		   ]
 	   },
         "source_files": [
@@ -76,7 +76,7 @@
 		   "ios": "8.0"
 	   },
 	   "dependencies": {
-		   "Bb-All/Core" : [
+		   "Bb-All-Dev/Core" : [
 		   ],
 		   "UIView+Layout" : [
 		   	
@@ -103,13 +103,57 @@
 		   "BbTouch/*.{h,m}"
 	   ],
 	   "dependencies": {
-		   "Bb-All/Cocoa-iOS" : [
+		   "Bb-All-Dev/Cocoa-iOS" : [
 		   ],
 		   "UIView+Layout" : [
 		   	
 		   ]
 	   },
 	   "exclude_files" : "BbTouch/NSInvocation+Bb*",
+	   "frameworks": [
+	     "Foundation",
+		"UIKit"
+	   ]
+      },
+      {
+        "name": "BbPatch",
+	   "platforms": {
+	     "ios": "8.0"
+	   },
+	   "requires_arc": true,
+        "source_files": [
+		   "BbObjects/Ports/BSDPatch*.{h,m}"
+	   ],
+	   "dependencies": {
+		   "Bb-All-Dev/Core" : [
+		   ]
+	   },	   
+	   "frameworks": [
+	     "Foundation"
+	   ]
+      },
+      {
+        "name": "BbUI-iOS",
+	   "platforms": {
+	     "ios": "8.0"
+	   },
+	   "requires_arc": true,
+        "source_files": [
+		   "BbUI-iOS/*.{h,m}"
+	   ],
+	   "dependencies": {
+		   "Bb-All-Dev/Core" : [
+		   ],
+		   "Bb-All-Dev/Cocoa-iOS" : [
+		   	
+		   ],
+		   "Bb-All-Dev/BbPatch" : [
+		   	
+		   ],
+		   "UIView+Layout" : [
+		   	
+		   ]
+	   },	   
 	   "frameworks": [
 	     "Foundation",
 		"UIKit"

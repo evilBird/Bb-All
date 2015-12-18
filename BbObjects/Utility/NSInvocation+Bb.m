@@ -7,6 +7,8 @@
 //
 
 #import "NSInvocation+Bb.h"
+#import "BSDObject.h"
+#import "BbGesture.h"
 #import <objc/runtime.h>
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
@@ -16,6 +18,16 @@
 #import "UIView+Layout.h"
 
 @implementation NSInvocation (Bb)
+
++ (NSError *)classError
+{
+    return [NSError errorWithDomain:@"Class name not found" code:0 userInfo:nil];
+}
+
++ (NSError *)selectorError
+{
+    return [NSError errorWithDomain:@"Selector not found" code:0 userInfo:nil];
+}
 
 + (NSString*)encodeType:(char *)encodedType
 {
@@ -37,6 +49,40 @@
     }
     
     return NSClassFromString(className);
+}
+
++ (NSMethodSignature *)lookupClassMethodSignature:(Class)class selector:(NSString *)selectorName
+{
+    
+    NSMethodSignature *methodSig = nil;
+    SEL selector = NSSelectorFromString(selectorName);
+    
+    if ( class_respondsToSelector(class, selector) == YES ) {
+        methodSig = [class methodSignatureForSelector:selector];
+    }else{
+        Class superclass = class_getSuperclass(class);
+        if ( superclass != 0 ) {
+            return [NSInvocation lookupClassMethodSignature:superclass selector:selectorName];
+        }
+    }
+    return methodSig;
+}
+
++ (NSMethodSignature *)lookupInstanceMethodSignature:(Class)class selector:(NSString *)selectorName
+{
+    
+    NSMethodSignature *methodSig = nil;
+    SEL selector = NSSelectorFromString(selectorName);
+    
+    if ( [class instancesRespondToSelector:selector] == YES ) {
+        methodSig = [class methodSignatureForSelector:selector];
+    }else{
+        Class superclass = class_getSuperclass(class);
+        if ( superclass != 0 ) {
+            return [NSInvocation lookupInstanceMethodSignature:class selector:selectorName];
+        }
+    }
+    return methodSig;
 }
 
 + (SEL)lookupSelector:(NSString *)selectorName forClass:(Class)class
@@ -64,14 +110,14 @@
     }
     
     Class c = [target class];
-    SEL theSelector = [NSInvocation lookupSelector:selectorName forClass:c];
-    
-    if ( NULL == theSelector || NULL == c ) {
-        return nil;
+    if ( NULL == c ) {
+        return [NSInvocation classError];
     }
     
-    if ( [c instancesRespondToSelector:theSelector] == NO ) {
-        return nil;
+    SEL theSelector = NSSelectorFromString(selectorName);// [NSInvocation lookupSelector:selectorName forClass:c];
+
+    if ( NULL == theSelector || [c instancesRespondToSelector:theSelector] == NO ) {
+        return [NSInvocation selectorError];
     }
     
     NSMethodSignature *methodSig = [c instanceMethodSignatureForSelector:theSelector];
@@ -90,21 +136,25 @@
                args:(NSArray *)args
 {
     if ( nil == className || nil == selectorName ) {
-        return nil;
+        return [NSInvocation selectorError];
     }
     
-    Class c = [NSInvocation lookupClass:className];
-    SEL theSelector = [NSInvocation lookupSelector:selectorName forClass:c];
+    Class c = NSClassFromString(className);
     
-    if ( NULL == theSelector || NULL == c ) {
-        return nil;
+    if ( NULL == c ) {
+        return [NSInvocation classError];
     }
     
-    NSMethodSignature *methodSig = [c methodSignatureForSelector:theSelector];
+    SEL selector = NSSelectorFromString(selectorName);
+    NSMethodSignature *methodSig = [c methodSignatureForSelector:selector];
+    
+    if ( nil == methodSig ) {
+        return [NSInvocation selectorError];
+    }
+    
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
     invocation.target = c;
-    invocation.selector = theSelector;
-    
+    invocation.selector = selector;
     [invocation setArgumentsWithArray:args];
     
     [invocation invoke];
