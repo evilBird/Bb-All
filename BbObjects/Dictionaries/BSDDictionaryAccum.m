@@ -7,7 +7,6 @@
 //
 
 #import "BSDDictionaryAccum.h"
-#import "BSDDictionaryInlet.h"
 
 @interface BSDDictionaryAccum ()
 
@@ -21,7 +20,7 @@
 {
     self.name = @"dict accum";
     
-    self.dictionaryInlet = [[BSDDictionaryInlet alloc]initHot];
+    self.dictionaryInlet = [[BSDInlet alloc]initHot];
     self.dictionaryInlet.name = @"dict";
     self.dictionaryInlet.delegate = self;
     [self addPort:self.dictionaryInlet];

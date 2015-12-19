@@ -7,7 +7,6 @@
 //
 
 #import "BSDDictionarySerialize.h"
-#import "BSDCreate.h"
 
 @implementation BSDDictionarySerialize
 
@@ -41,19 +40,6 @@
         
         self.doneOutlet.value = [BSDBang bang];
     }
-}
-
-- (void)test
-{
-    self.outputBlock = ^(BSDObject *object,BSDOutlet *outlet){
-        
-        NSLog(@"emitted output %@",outlet.value);
-        
-    };
-    
-    NSDictionary *testDict = @{@"do": @"deer",@"re":@"drop of sun",@"mi":@"name",@"fa":@"long run"};
-    self.coldInlet.value = testDict;
-    [self.hotInlet input:[BSDBang bang]];
 }
 
 @end

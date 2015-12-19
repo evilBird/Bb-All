@@ -1,6 +1,6 @@
 {
   "name": "Bb-All",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "summary": "All source objects used in Bb - Visual Programming on iOS and OSX.",
   "authors": { 
     "Traivs Henspeter": "developer@birdsoundmusic.com"
@@ -16,7 +16,7 @@
   "requires_arc": true,
   "source": {
     "git": "https://github.com/evilBird/Bb-All.git",
-    "tag": "0.2.0"
+    "tag": "0.2.1"
   },
   "frameworks": [
     "Foundation"
@@ -29,7 +29,7 @@
 	  		"BbObjects/Ports/BSD*Port.{h,m}",
 	  		"BbObjects/Ports/BSD*Inlet.{h,m}",
 	  		"BbObjects/Ports/BSD*Outlet.{h,m}",
-	  		"BbObjects/Bang/BSD*Bang.{h,m}"
+	  		"BbObjects/Bang/BSD*Bang*.{h,m}"
 	     ],
   	   "dependencies": {
   		   "NSInvocation+Bb" : [
@@ -135,6 +135,28 @@
 		   	
 		   ]
    	   	}
+	 },
+	 {
+		 "name": "Time",
+		 "source_files": [
+			 "BbObjects/Time/*{h,m}"
+		 ],
+		 "dependencies": {
+			 "Bb-All/Core" : [
+			 	
+			 ]
+		 }
+	 },
+	 {
+		 "name": "Dictionaries",
+		 "source_files": [
+			 "BbObjects/Dictionaries/BSD*Dict*.{h,m}"
+		 ],
+		 "dependencies":{
+			 "Bb-All/Core" :[
+			 	
+			 ]
+		 }
 	 }
     ]
 }
